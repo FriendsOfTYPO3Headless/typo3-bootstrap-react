@@ -41,8 +41,6 @@
     "build-storybook": "build-storybook",
     "build": "rollup -c"
   },
-  "main": "./build/index.js",
-  "module": "./build/index.es.js",
   "peerDependencies": {
     "react": "16.13.1",
     "react-dom": "16.13.1"
