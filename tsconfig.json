@@ -9,11 +9,13 @@
     "jsx": "react",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
   },
   "include": ["src/**/*"],
   "exclude": [
     "node_modules",
-    "build"
+    "build",
+    ".storybook",
+    "storybook-static"
   ]
 }
