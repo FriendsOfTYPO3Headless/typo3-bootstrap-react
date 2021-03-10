@@ -4,6 +4,8 @@
   "repository": "https://github.com/TYPO3-Bootstrap/react.git",
   "author": "Niels Seelhöfer <dev@seeli.net>",
   "license": "MIT",
+  "main": "./build/index.js",
+  "module": "./build/index.es.js",
   "dependencies": {
     "bootstrap": "^4.6.0",
     "react": "^17.0.1",
@@ -32,6 +34,7 @@
     "fork-ts-checker-webpack-plugin": "^6.1.1",
     "jest": "^26.6.3",
     "prettier": "^2.2.1",
+    "rollup": "^2.41.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-typescript2": "^0.30.0",
     "ts-jest": "^26.5.3"
@@ -39,7 +42,8 @@
   "scripts": {
     "storybook": "start-storybook -p 6007",
     "build-storybook": "build-storybook",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "dev": "rollup -c -w"
   },
   "peerDependencies": {
     "react": "16.13.1",

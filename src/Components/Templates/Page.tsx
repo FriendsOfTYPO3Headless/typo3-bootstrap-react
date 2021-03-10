@@ -21,7 +21,12 @@ const Page: React.FC<TYPO3PageProps> = props => {
     }
 
 
-    return layout(props.config, pageTemplate(props.config, props.contentElementLayouts, props.contentElementTemplates), props.contentElementLayouts, props.contentElementTemplates);
+    return layout(
+        props.config,
+        pageTemplate(props.config, props.contentElementLayouts, props.contentElementTemplates),
+        props.contentElementLayouts,
+        props.contentElementTemplates
+    );
     // return <>Page: {props.config.navigations.navigation1[0].title}</>
 }
 Page.defaultProps = {

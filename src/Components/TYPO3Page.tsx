@@ -21,21 +21,12 @@ const pageLayouts = {
     //'layout-0': (TYPO3PageConfig) => <__GenericLayout config={TYPO3PageConfig} />,
 
     __generic: (config, pageTemplate, contentElementLayouts, contentElementTemplates) => <>
-        <header>
-            <div className={'logo'}> ...Logo</div>
-            {/*<div className={'Navigation'} config={config.navigations.navigation1}/>*/}
-        </header>
-        <section>
-            {/*<div className={'breadcrumb'} config={config.navigations.breadcrumbs}/>*/}
-            <p>MAIN</p>
-            {pageTemplate.main}
-            {/*<section name="main" config={config} pageTemplates={pageTemplates}/>*/}
-        </section>
-        <footer>
-            <p>footer</p>
-            {/*<div className={'Navigation'} config={config.navigations.navigation2}/>*/}
-            {/*<section name="footer" config={config} pageTemplates={pageTemplates}/>*/}
-        </footer>
+        <__GenericLayout
+            config={config}
+            pageTemplate={pageTemplate}
+            contentElementLayouts={contentElementLayouts}
+            contentElementTemplates={contentElementTemplates}
+        />
     </>
 
 }
