@@ -1,9 +1,10 @@
-import TYPO3Page, {TYPO3PageConfig, TYPO3PageProps} from "./Components/TYPO3Page";
+import TYPO3Page from "./Components/TYPO3Page";
 import Page from './Components/Templates/Page';
+import {TYPO3PagePropsInterface, TYPO3PageConfigInterface} from "./Components/Interfaces";
 
 export {
     TYPO3Page,
-    TYPO3PageConfig,
-    TYPO3PageProps,
+    TYPO3PageConfigInterface,
+    TYPO3PagePropsInterface,
     Page
 };

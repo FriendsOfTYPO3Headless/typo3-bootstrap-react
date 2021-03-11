@@ -34,12 +34,6 @@ var Page = function (props) {
     return layout(props.config, pageTemplate(props.config, props.contentElementLayouts, props.contentElementTemplates), props.contentElementLayouts, props.contentElementTemplates);
     // return <>Page: {props.config.navigations.navigation1[0].title}</>
 };
-Page.defaultProps = {
-    pageLayouts: pageLayouts,
-    pageTemplates: pageTemplates,
-    contentElementLayouts: contentElementLayouts,
-    contentElementTemplates: contentElementTemplates,
-};
 
 var pageLayouts = {
     //TODO: implement example
@@ -87,15 +81,10 @@ var contentElementTemplates = {
     __generic: ''
 };
 var TYPO3Page = function (props) {
-    // console.log(props.config.navigations.navigation1[0].title);
     var _pageLayouts = Object.assign({}, pageLayouts, props.pageLayouts);
     var _pageTemplates = Object.assign({}, pageTemplates, props.pageTemplates);
     Object.assign({}, contentElementLayouts, props.contentElementLayouts);
     Object.assign({}, contentElementTemplates, props.contentElementTemplates);
-    //console.log(_pageLayouts);
-    // console.log(_pageTemplates);
-    // console.log(_contentElementLayouts);
-    // console.log(_contentElementTemplates);
     return React.createElement(Page, { config: props.config, pageLayouts: _pageLayouts, pageTemplates: _pageTemplates, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates });
 };
 TYPO3Page.defaultProps = {

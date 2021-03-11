@@ -1,7 +1,7 @@
 import React from "react";
-import { TYPO3PageConfig } from "../../TYPO3Page";
+import { TYPO3PageConfigInterface } from "../../Interfaces";
 declare const __GenericLayout: React.FC<{
-    config: TYPO3PageConfig;
+    config: TYPO3PageConfigInterface;
     pageTemplate: any;
     contentElementLayouts: any;
     contentElementTemplates: any;

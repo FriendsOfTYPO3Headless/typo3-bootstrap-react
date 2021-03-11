@@ -1,8 +1,8 @@
 import React from "react";
-import {TYPO3PageConfig} from "../../TYPO3Page";
+import {TYPO3PageConfigInterface} from "../../Interfaces";
 
 
-const __GenericLayout: React.FC<{config:TYPO3PageConfig, pageTemplate: any,contentElementLayouts: any, contentElementTemplates: any}> = props => {
+const __GenericLayout: React.FC<{config:TYPO3PageConfigInterface, pageTemplate: any,contentElementLayouts: any, contentElementTemplates: any}> = props => {
   //  console.log(props);
 
     return <>generischsssss</>

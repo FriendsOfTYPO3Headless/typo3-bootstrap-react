@@ -1,4 +1,4 @@
 import React from "react";
-import { TYPO3PageProps } from "../TYPO3Page";
-declare const Page: React.FC<TYPO3PageProps>;
+import { TYPO3PagePropsInterface } from "../Interfaces";
+declare const Page: React.FC<TYPO3PagePropsInterface>;
 export default Page;

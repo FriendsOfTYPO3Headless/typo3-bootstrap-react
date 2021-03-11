@@ -1,7 +1,8 @@
 import React from "react";
-import TYPO3Page, {pageLayouts, pageTemplates, contentElementLayouts, contentElementTemplates, TYPO3PageProps} from "../TYPO3Page";
+import {TYPO3PagePropsInterface} from "../Interfaces";
 
-const Page: React.FC<TYPO3PageProps> = props => {
+
+const Page: React.FC<TYPO3PagePropsInterface> = props => {
     let layout;
     if(props.pageLayouts.hasOwnProperty(props.config.page.appearance.layout)) {
         layout = props.pageLayouts[props.config.page.appearance.layout];
@@ -29,11 +30,6 @@ const Page: React.FC<TYPO3PageProps> = props => {
     );
     // return <>Page: {props.config.navigations.navigation1[0].title}</>
 }
-Page.defaultProps = {
-    pageLayouts: pageLayouts,
-    pageTemplates: pageTemplates,
-    contentElementLayouts: contentElementLayouts,
-    contentElementTemplates: contentElementTemplates,
-}
+
 
 export default Page;
