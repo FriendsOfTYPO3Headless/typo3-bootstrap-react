@@ -82,7 +82,6 @@ const pageTemplates = {
 
 const contentElementLayouts = {
     __generic :  (props) => {
-        console.log(props);
         return <div className={'contentWrapper'}>
             {props.children}
         </div>

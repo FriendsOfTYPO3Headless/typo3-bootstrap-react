@@ -136,7 +136,6 @@ var pageTemplates = {
 };
 var contentElementLayouts = {
     __generic: function (props) {
-        console.log(props);
         return React.createElement("div", { className: 'contentWrapper' }, props.children);
     },
 };
