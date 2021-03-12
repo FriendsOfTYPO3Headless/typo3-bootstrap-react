@@ -3,7 +3,6 @@ interface TYPO3PageHeadlessDataInterface {
     content: any;
     navigations: any;
 }
-
 interface TYPO3PagePropsInterface {
     headlessData: TYPO3PageHeadlessDataInterface;
     pageLayouts?: any | null;
@@ -11,5 +10,4 @@ interface TYPO3PagePropsInterface {
     contentElementLayouts?: any | null;
     contentElementTemplates?: any | null;
 }
-
-export {TYPO3PageHeadlessDataInterface, TYPO3PagePropsInterface};
+export { TYPO3PageHeadlessDataInterface, TYPO3PagePropsInterface };

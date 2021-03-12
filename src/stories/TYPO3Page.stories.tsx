@@ -2,18 +2,19 @@ import React from 'react';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 
 import { Story, Meta } from '@storybook/react/types-6-0';
-import TYPO3Page, {TYPO3PageProps} from "../Components/TYPO3Page";
+import TYPO3Page from "../Components/TYPO3Page";
+import {TYPO3PagePropsInterface} from '../Components/Interfaces';
 
 export default {
     title: 'Example/TYPO3Page',
     component: TYPO3Page,
 } as Meta;
 
-const Template: Story<TYPO3PageProps> = (args) => <TYPO3Page {...args} />;
+const Template: Story<TYPO3PagePropsInterface> = (args) => <TYPO3Page {...args} />;
 
 export const Test = Template.bind({});
 Test.args = {
-    config: {
+    headlessData: {
         "page": {
             "id": 44,
             "pid": 37,

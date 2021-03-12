@@ -1,8 +1,8 @@
 import React from "react";
-import {TYPO3PageConfig} from "../../TYPO3Page";
+import {TYPO3PageHeadlessDataInterface} from "../../Interfaces";
 
 
-const __GenericPage: React.FC<{config:TYPO3PageConfig}> = props => {
+const __GenericPage: React.FC<{headlessData:TYPO3PageHeadlessDataInterface}> = props => {
     console.log(props);
 
     return <>generische Seite</>
