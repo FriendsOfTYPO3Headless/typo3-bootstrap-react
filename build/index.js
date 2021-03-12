@@ -39,12 +39,12 @@ var Page = function (props) {
             "Pagelayout not found: ",
             props.headlessData.page.appearance.layout);
     }
-    var pageTemplate;
+    var template;
     if (props.pageTemplates.hasOwnProperty(props.headlessData.page.appearance.backendLayout)) {
-        pageTemplate = props.pageTemplates[props.headlessData.page.appearance.backendLayout];
+        template = props.pageTemplates[props.headlessData.page.appearance.backendLayout];
     }
     else if (props.pageTemplates.hasOwnProperty('__generic')) {
-        pageTemplate = props.pageTemplates.__generic;
+        template = props.pageTemplates.__generic;
     }
     else {
         return React__default['default'].createElement(React__default['default'].Fragment, null,
@@ -52,57 +52,44 @@ var Page = function (props) {
             props.headlessData.page.appereance.backendLayout,
             " ");
     }
-    return layout(props.headlessData, pageTemplate(props.headlessData, props.contentElementLayouts, props.contentElementTemplates));
+    return layout(props.headlessData, template(props.headlessData, props.contentElementLayouts, props.contentElementTemplates));
     // return <>Page: {props.config.navigations.navigation1[0].title}</>
 };
 
 var PREFIX_COLPOS = 'colPos';
 var Content = function (props) {
-    React__default['default'].createElement(React__default['default'].Fragment, null);
+    var content = React__default['default'].createElement(React__default['default'].Fragment, null);
     if (props.content.hasOwnProperty(PREFIX_COLPOS + props.colPos)) {
-        props.content[PREFIX_COLPOS + props.colPos].map(function (content) {
-            if (props.contentElementLayouts.hasOwnProperty(props.content.appearance.layout)) {
-                props.contentElementLayouts[props.content.appearance.layout];
+        content = props.content[PREFIX_COLPOS + props.colPos].map(function (content) {
+            var layout;
+            if (props.contentElementLayouts.hasOwnProperty(content.appearance.layout)) {
+                layout = props.contentElementLayouts[content.appearance.layout];
             }
             else if (props.contentElementLayouts.hasOwnProperty('__generic')) {
-                props.contentElementLayouts.__generic;
+                layout = props.contentElementLayouts.__generic;
             }
             else {
                 return React__default['default'].createElement(React__default['default'].Fragment, null,
-                    "Page Layout not found: ",
+                    "CE-layout not found: ",
                     props.content.appearance.layout);
             }
+            var template;
+            if (props.contentElementTemplates.hasOwnProperty(content.type)) {
+                template = props.contentElementTemplates[content.type];
+            }
+            else if (props.contentElementTemplates.hasOwnProperty('__generic')) {
+                template = props.contentElementTemplates.__generic;
+            }
+            else {
+                return React__default['default'].createElement(React__default['default'].Fragment, null,
+                    "CE-template not found: ",
+                    props.content.type,
+                    " ");
+            }
+            return React__default['default'].createElement(React__default['default'].Fragment, { key: content.id }, layout({ children: template(content) }));
         });
     }
-    //content prüfen, ob da für die angegebene colPos Daten vorhanden sind.
-    //Diese in einer Schleife durchgehen
-    //Dann wie in der Page das CE-Layout und das CE-Template ermitteln
-    //CE-Layout zurückgeben
-    return React__default['default'].createElement(React__default['default'].Fragment, null, props.colPos);
-    // let layout;
-    // if(props.contentElementLayouts.hasOwnProperty(props.contentElementLayouts.page.appearance.layout)) {
-    //     layout = props.pageLayouts[props.headlessData.page.appearance.layout];
-    // } else if(props.pageLayouts.hasOwnProperty('__generic')) {
-    //     layout = props.pageLayouts.__generic;
-    // } else {
-    //     return <>Page Layout not found: {props.headlessData.page.appearance.layout}</>
-    // }
-    //
-    // let pageTemplate;
-    // if(props.pageTemplates.hasOwnProperty(props.headlessData.page.appearance.backendLayout)) {
-    //     pageTemplate = props.pageTemplates[props.headlessData.page.appearance.backendLayout];
-    // } else if (props.pageTemplates.hasOwnProperty('__generic')) {
-    //     pageTemplate = props.pageTemplates.__generic;
-    // } else {
-    //     return <>Page Template not found: {props.headlessData.page.appereance.backendLayout} </>
-    // }
-    //
-    //
-    // return layout(
-    //     props.headlessData,
-    //     pageTemplate(props.headlessData, props.contentElementLayouts, props.contentElementTemplates),
-    // );
-    // return <>Page: {props.config.navigations.navigation1[0].title}</>
+    return content;
 };
 
 var pageLayouts = {
@@ -138,7 +125,11 @@ var pageTemplates = {
     },
     simple: function (headlessData, contentElementLayouts, contentElementTemplates) {
         return {
-            main: React__default['default'].createElement("div", null, "simple"),
+            main: React__default['default'].createElement(React__default['default'].Fragment, null,
+                React__default['default'].createElement(Content, { colPos: '8', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }),
+                React__default['default'].createElement("div", { className: "section section-default" },
+                    React__default['default'].createElement(Content, { colPos: '0', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
+                React__default['default'].createElement(Content, { colPos: '9', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
             border: React__default['default'].createElement(React__default['default'].Fragment, null,
                 React__default['default'].createElement(Content, { colPos: '3', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
         };
@@ -153,12 +144,13 @@ var pageTemplates = {
 };
 var contentElementLayouts = {
     __generic: function (props) {
+        console.log(props);
         return React__default['default'].createElement("div", { className: 'contentWrapper' }, props.children);
     },
 };
 var contentElementTemplates = {
     //Resources/Private/Templates/ContentElements/**
-    __generic: function (headlessContentData) { return React__default['default'].createElement(React__default['default'].Fragment, null); },
+    __generic: function (headlessContentData) { return React__default['default'].createElement("div", { dangerouslySetInnerHTML: { __html: headlessContentData.content.bodytext } }); },
     //text: (headlessContentData) => <Text {...headlessContentData} />,
 };
 var TYPO3Page = function (props) {

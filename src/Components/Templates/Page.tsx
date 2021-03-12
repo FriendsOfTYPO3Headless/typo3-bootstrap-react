@@ -12,11 +12,11 @@ const Page: React.FC<TYPO3PagePropsInterface> = props => {
         return <>Pagelayout not found: {props.headlessData.page.appearance.layout}</>
     }
 
-    let pageTemplate;
+    let template;
     if(props.pageTemplates.hasOwnProperty(props.headlessData.page.appearance.backendLayout)) {
-        pageTemplate = props.pageTemplates[props.headlessData.page.appearance.backendLayout];
+        template = props.pageTemplates[props.headlessData.page.appearance.backendLayout];
     } else if (props.pageTemplates.hasOwnProperty('__generic')) {
-        pageTemplate = props.pageTemplates.__generic;
+        template = props.pageTemplates.__generic;
     } else {
         return <>Pagetemplate not found: {props.headlessData.page.appereance.backendLayout} </>
     }
@@ -24,7 +24,7 @@ const Page: React.FC<TYPO3PagePropsInterface> = props => {
 
     return layout(
         props.headlessData,
-        pageTemplate(props.headlessData, props.contentElementLayouts, props.contentElementTemplates),
+        template(props.headlessData, props.contentElementLayouts, props.contentElementTemplates),
     );
     // return <>Page: {props.config.navigations.navigation1[0].title}</>
 }

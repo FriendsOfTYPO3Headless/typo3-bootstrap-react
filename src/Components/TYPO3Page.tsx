@@ -51,7 +51,19 @@ const pageTemplates = {
     },
     simple: (headlessData, contentElementLayouts, contentElementTemplates) => {
         return {
-            main: <div>simple</div>,
+            main: <>
+                <Content colPos={'8'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
+                         contentElementTemplates={contentElementTemplates}/>
+
+                <div className="section section-default">
+                    <Content colPos={'0'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
+                             contentElementTemplates={contentElementTemplates}/>
+                </div>
+
+                <Content colPos={'9'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
+                         contentElementTemplates={contentElementTemplates}/>
+
+            </>,
             border: <>
                 <Content colPos={'3'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
                          contentElementTemplates={contentElementTemplates}/>
@@ -69,7 +81,8 @@ const pageTemplates = {
 
 
 const contentElementLayouts = {
-    __generic: (props) => {
+    __generic :  (props) => {
+        console.log(props);
         return <div className={'contentWrapper'}>
             {props.children}
         </div>
@@ -80,7 +93,7 @@ const contentElementLayouts = {
 
 const contentElementTemplates = {
     //Resources/Private/Templates/ContentElements/**
-    __generic: (headlessContentData) => <></>,
+    __generic: (headlessContentData) => <div dangerouslySetInnerHTML={{__html: headlessContentData.content.bodytext}} />,
     //text: (headlessContentData) => <Text {...headlessContentData} />,
 
 
