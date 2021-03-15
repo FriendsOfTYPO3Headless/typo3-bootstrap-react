@@ -36,7 +36,7 @@ var Page = function (props) {
     }
     else {
         return React__default['default'].createElement(React__default['default'].Fragment, null,
-            "Pagelayout not found: ",
+            "Page-layout not found: ",
             props.headlessData.page.appearance.layout);
     }
     var template;
@@ -48,7 +48,7 @@ var Page = function (props) {
     }
     else {
         return React__default['default'].createElement(React__default['default'].Fragment, null,
-            "Pagetemplate not found: ",
+            "Page-template not found: ",
             props.headlessData.page.appereance.backendLayout,
             " ");
     }
@@ -86,44 +86,59 @@ var Content = function (props) {
                     props.content.type,
                     " ");
             }
-            return React__default['default'].createElement(React__default['default'].Fragment, { key: content.id }, layout({ children: template(content) }));
+            return React__default['default'].createElement(React__default['default'].Fragment, { key: content.id }, layout({ children: template(content, props.args), args: props.args }));
         });
     }
     return content;
 };
 
+var Text = function (props) {
+    return React__default['default'].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
+};
+
+var Textpic = function (props) {
+    return React__default['default'].createElement("div", { className: "textpic" },
+        React__default['default'].createElement("div", { className: "textpic-item textpic-gallery" }),
+        React__default['default'].createElement("div", { className: "textpic-item textpic-text" },
+            React__default['default'].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } })));
+};
+
 var pageLayouts = {
     //TODO: implement example
-    'layout-0': function (headlessData, pageTemplate) { return React__default['default'].createElement(React__default['default'].Fragment, null,
-        React__default['default'].createElement("header", null, "LOGO"),
-        React__default['default'].createElement("section", null,
-            React__default['default'].createElement("h1", null, "Hier ist ist eine Section"),
-            React__default['default'].createElement(section, { name: 'main', pageTemplate: pageTemplate })),
-        React__default['default'].createElement("footer", null,
-            React__default['default'].createElement("h3", null, "Hier ist eine andere Section"),
-            React__default['default'].createElement(section, { name: 'border', pageTemplate: pageTemplate }))); },
-    __generic: function (headlessData, pageTemplate) { return React__default['default'].createElement(React__default['default'].Fragment, null,
-        React__default['default'].createElement(__GenericLayout, { headlessData: headlessData, pageTemplate: pageTemplate })); }
+    'layout-0': function (headlessData, pageTemplate, args) {
+        return React__default['default'].createElement(React__default['default'].Fragment, null,
+            React__default['default'].createElement("header", null, "LOGO"),
+            React__default['default'].createElement("section", null,
+                React__default['default'].createElement("h1", null, "Hier ist ist eine Section"),
+                React__default['default'].createElement(section, { name: 'main', pageTemplate: pageTemplate })),
+            React__default['default'].createElement("footer", null,
+                React__default['default'].createElement("h3", null, "Hier ist eine andere Section"),
+                React__default['default'].createElement(section, { name: 'border', pageTemplate: pageTemplate })));
+    },
+    __generic: function (headlessData, pageTemplate, args) {
+        return React__default['default'].createElement(React__default['default'].Fragment, null,
+            React__default['default'].createElement(__GenericLayout, { headlessData: headlessData, pageTemplate: pageTemplate }));
+    }
 };
 var pageTemplates = {
-    __generic: function (headlessData, contentElementLayouts, contentElementTemplates) {
+    __generic: function (headlessData, contentElementLayouts, contentElementTemplates, args) {
         return {
             main: React__default['default'].createElement("div", null, "_generisch")
         };
     },
-    example: function (headlessData, contentElementLayout, contentElementTemplates) {
+    example: function (headlessData, contentElementLayout, contentElementTemplates, args) {
         return {
             main: React__default['default'].createElement(React__default['default'].Fragment, null, "...example")
         };
     },
-    default: function (headlessData, contentElementLayouts, contentElementTemplates) {
+    default: function (headlessData, contentElementLayouts, contentElementTemplates, args) {
         return {
             main: React__default['default'].createElement("div", null, " .... "),
             footer: React__default['default'].createElement("footer", null, "..."),
             header: React__default['default'].createElement("header", null, "...")
         };
     },
-    simple: function (headlessData, contentElementLayouts, contentElementTemplates) {
+    simple: function (headlessData, contentElementLayouts, contentElementTemplates, args) {
         return {
             main: React__default['default'].createElement(React__default['default'].Fragment, null,
                 React__default['default'].createElement(Content, { colPos: '8', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }),
@@ -134,7 +149,7 @@ var pageTemplates = {
                 React__default['default'].createElement(Content, { colPos: '3', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
         };
     },
-    '2Columns': function (headlessData, contentElementLayouts, contentElementTemplates) {
+    '2Columns': function (headlessData, contentElementLayouts, contentElementTemplates, args) {
         return {
             main: React__default['default'].createElement("div", null, "2Columns"),
             footer: React__default['default'].createElement("footer", null, "..."),
@@ -149,8 +164,12 @@ var contentElementLayouts = {
 };
 var contentElementTemplates = {
     //Resources/Private/Templates/ContentElements/**
-    __generic: function (headlessContentData) { return React__default['default'].createElement("div", { dangerouslySetInnerHTML: { __html: headlessContentData.content.bodytext } }); },
-    //text: (headlessContentData) => <Text {...headlessContentData} />,
+    __generic: function (headlessContentData, args) {
+        console.log(headlessContentData);
+        return React__default['default'].createElement(React__default['default'].Fragment, null, headlessContentData.type);
+    },
+    text: function (headlessContentData) { return React__default['default'].createElement(Text, { data: headlessContentData.content }); },
+    textpic: function (headlessContentData) { return React__default['default'].createElement(Textpic, { data: headlessContentData.content }); }
 };
 var TYPO3Page = function (props) {
     var _pageLayouts = Object.assign({}, pageLayouts, props.pageLayouts);

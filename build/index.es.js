@@ -28,7 +28,7 @@ var Page = function (props) {
     }
     else {
         return React.createElement(React.Fragment, null,
-            "Pagelayout not found: ",
+            "Page-layout not found: ",
             props.headlessData.page.appearance.layout);
     }
     var template;
@@ -40,7 +40,7 @@ var Page = function (props) {
     }
     else {
         return React.createElement(React.Fragment, null,
-            "Pagetemplate not found: ",
+            "Page-template not found: ",
             props.headlessData.page.appereance.backendLayout,
             " ");
     }
@@ -78,44 +78,59 @@ var Content = function (props) {
                     props.content.type,
                     " ");
             }
-            return React.createElement(React.Fragment, { key: content.id }, layout({ children: template(content) }));
+            return React.createElement(React.Fragment, { key: content.id }, layout({ children: template(content, props.args), args: props.args }));
         });
     }
     return content;
 };
 
+var Text = function (props) {
+    return React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
+};
+
+var Textpic = function (props) {
+    return React.createElement("div", { className: "textpic" },
+        React.createElement("div", { className: "textpic-item textpic-gallery" }),
+        React.createElement("div", { className: "textpic-item textpic-text" },
+            React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } })));
+};
+
 var pageLayouts = {
     //TODO: implement example
-    'layout-0': function (headlessData, pageTemplate) { return React.createElement(React.Fragment, null,
-        React.createElement("header", null, "LOGO"),
-        React.createElement("section", null,
-            React.createElement("h1", null, "Hier ist ist eine Section"),
-            React.createElement(section, { name: 'main', pageTemplate: pageTemplate })),
-        React.createElement("footer", null,
-            React.createElement("h3", null, "Hier ist eine andere Section"),
-            React.createElement(section, { name: 'border', pageTemplate: pageTemplate }))); },
-    __generic: function (headlessData, pageTemplate) { return React.createElement(React.Fragment, null,
-        React.createElement(__GenericLayout, { headlessData: headlessData, pageTemplate: pageTemplate })); }
+    'layout-0': function (headlessData, pageTemplate, args) {
+        return React.createElement(React.Fragment, null,
+            React.createElement("header", null, "LOGO"),
+            React.createElement("section", null,
+                React.createElement("h1", null, "Hier ist ist eine Section"),
+                React.createElement(section, { name: 'main', pageTemplate: pageTemplate })),
+            React.createElement("footer", null,
+                React.createElement("h3", null, "Hier ist eine andere Section"),
+                React.createElement(section, { name: 'border', pageTemplate: pageTemplate })));
+    },
+    __generic: function (headlessData, pageTemplate, args) {
+        return React.createElement(React.Fragment, null,
+            React.createElement(__GenericLayout, { headlessData: headlessData, pageTemplate: pageTemplate }));
+    }
 };
 var pageTemplates = {
-    __generic: function (headlessData, contentElementLayouts, contentElementTemplates) {
+    __generic: function (headlessData, contentElementLayouts, contentElementTemplates, args) {
         return {
             main: React.createElement("div", null, "_generisch")
         };
     },
-    example: function (headlessData, contentElementLayout, contentElementTemplates) {
+    example: function (headlessData, contentElementLayout, contentElementTemplates, args) {
         return {
             main: React.createElement(React.Fragment, null, "...example")
         };
     },
-    default: function (headlessData, contentElementLayouts, contentElementTemplates) {
+    default: function (headlessData, contentElementLayouts, contentElementTemplates, args) {
         return {
             main: React.createElement("div", null, " .... "),
             footer: React.createElement("footer", null, "..."),
             header: React.createElement("header", null, "...")
         };
     },
-    simple: function (headlessData, contentElementLayouts, contentElementTemplates) {
+    simple: function (headlessData, contentElementLayouts, contentElementTemplates, args) {
         return {
             main: React.createElement(React.Fragment, null,
                 React.createElement(Content, { colPos: '8', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }),
@@ -126,7 +141,7 @@ var pageTemplates = {
                 React.createElement(Content, { colPos: '3', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
         };
     },
-    '2Columns': function (headlessData, contentElementLayouts, contentElementTemplates) {
+    '2Columns': function (headlessData, contentElementLayouts, contentElementTemplates, args) {
         return {
             main: React.createElement("div", null, "2Columns"),
             footer: React.createElement("footer", null, "..."),
@@ -141,8 +156,12 @@ var contentElementLayouts = {
 };
 var contentElementTemplates = {
     //Resources/Private/Templates/ContentElements/**
-    __generic: function (headlessContentData) { return React.createElement("div", { dangerouslySetInnerHTML: { __html: headlessContentData.content.bodytext } }); },
-    //text: (headlessContentData) => <Text {...headlessContentData} />,
+    __generic: function (headlessContentData, args) {
+        console.log(headlessContentData);
+        return React.createElement(React.Fragment, null, headlessContentData.type);
+    },
+    text: function (headlessContentData) { return React.createElement(Text, { data: headlessContentData.content }); },
+    textpic: function (headlessContentData) { return React.createElement(Textpic, { data: headlessContentData.content }); }
 };
 var TYPO3Page = function (props) {
     var _pageLayouts = Object.assign({}, pageLayouts, props.pageLayouts);

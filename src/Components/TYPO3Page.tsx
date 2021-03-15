@@ -4,11 +4,12 @@ import Page from "./Templates/Page";
 import Content from "./Templates/Content";
 import {TYPO3PagePropsInterface} from "./Interfaces";
 import Section from './Partials/Page/Section';
+import * as CE from './Templates/ContentElements';
 
 
 const pageLayouts = {
     //TODO: implement example
-    'layout-0': (headlessData, pageTemplate) => <>
+    'layout-0': (headlessData, pageTemplate, args={}) => <>
         <header>
             LOGO
         </header>
@@ -22,34 +23,34 @@ const pageLayouts = {
         </footer>
     </>,
 
-    __generic: (headlessData, pageTemplate) => <>
+    __generic: (headlessData, pageTemplate, args={}) => <>
         <__GenericLayout
             headlessData={headlessData}
             pageTemplate={pageTemplate}
         />
     </>
-
 }
 
+
 const pageTemplates = {
-    __generic: (headlessData, contentElementLayouts, contentElementTemplates) => {
+    __generic: (headlessData, contentElementLayouts, contentElementTemplates, args={}) => {
         return {
             main: <div>_generisch</div>
         }
     },
-    example: (headlessData, contentElementLayout, contentElementTemplates) => {
+    example: (headlessData, contentElementLayout, contentElementTemplates, args={}) => {
         return {
             main: <>...example</>
         }
     },
-    default: (headlessData, contentElementLayouts, contentElementTemplates) => {
+    default: (headlessData, contentElementLayouts, contentElementTemplates, args={}) => {
         return {
             main: <div> .... </div>,
             footer: <footer>...</footer>,
             header: <header>...</header>
         }
     },
-    simple: (headlessData, contentElementLayouts, contentElementTemplates) => {
+    simple: (headlessData, contentElementLayouts, contentElementTemplates, args={}) => {
         return {
             main: <>
                 <Content colPos={'8'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
@@ -70,7 +71,7 @@ const pageTemplates = {
             </>,
         }
     },
-    '2Columns': (headlessData, contentElementLayouts, contentElementTemplates) => {
+    '2Columns': (headlessData, contentElementLayouts, contentElementTemplates, args={}) => {
         return {
             main: <div>2Columns</div>,
             footer: <footer>...</footer>,
@@ -86,17 +87,23 @@ const contentElementLayouts = {
             {props.children}
         </div>
     },
-
 }
+
 
 
 const contentElementTemplates = {
     //Resources/Private/Templates/ContentElements/**
-    __generic: (headlessContentData) => <div dangerouslySetInnerHTML={{__html: headlessContentData.content.bodytext}} />,
-    //text: (headlessContentData) => <Text {...headlessContentData} />,
+    __generic: (headlessContentData, args= {}) => {
+        console.log(headlessContentData);
+        return <>{headlessContentData.type}</>
+    },
+    text: (headlessContentData) => <CE.Text data={headlessContentData.content} />,
+    textpic: (headlessContentData) => <CE.Textpic data={headlessContentData.content} />
+
 
 
 }
+
 
 const TYPO3Page: React.FC<TYPO3PagePropsInterface> = props => {
     const _pageLayouts = Object.assign({}, pageLayouts, props.pageLayouts);
@@ -112,6 +119,7 @@ const TYPO3Page: React.FC<TYPO3PagePropsInterface> = props => {
         contentElementTemplates={_contentElementTemplates}
     />
 }
+
 TYPO3Page.defaultProps = {
     pageLayouts: null,
     pageTemplates: null,

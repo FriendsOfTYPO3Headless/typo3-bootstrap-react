@@ -9,7 +9,7 @@ const Page: React.FC<TYPO3PagePropsInterface> = props => {
     } else if(props.pageLayouts.hasOwnProperty('__generic')) {
         layout = props.pageLayouts.__generic;
     } else {
-        return <>Pagelayout not found: {props.headlessData.page.appearance.layout}</>
+        return <>Page-layout not found: {props.headlessData.page.appearance.layout}</>
     }
 
     let template;
@@ -18,7 +18,7 @@ const Page: React.FC<TYPO3PagePropsInterface> = props => {
     } else if (props.pageTemplates.hasOwnProperty('__generic')) {
         template = props.pageTemplates.__generic;
     } else {
-        return <>Pagetemplate not found: {props.headlessData.page.appereance.backendLayout} </>
+        return <>Page-template not found: {props.headlessData.page.appereance.backendLayout} </>
     }
 
 

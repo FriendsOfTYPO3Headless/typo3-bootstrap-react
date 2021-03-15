@@ -7,6 +7,7 @@ const Content: React.FC<{
     content: any;
     contentElementLayouts: any;
     contentElementTemplates: any;
+    args?: any;
 }> = props => {
     let content = <></>
 
@@ -30,7 +31,7 @@ const Content: React.FC<{
             }
 
             return <React.Fragment key={content.id}>
-                {layout({ children: template(content)})}
+                {layout({ children: template(content, props.args), args: props.args})}
             </React.Fragment>
         });
     }
