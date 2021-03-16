@@ -5,6 +5,7 @@ import Content from "./Templates/Content";
 import {TYPO3PagePropsInterface} from "./Interfaces";
 import Section from './Partials/Page/Section';
 import * as CE from './Templates/ContentElements';
+import * as CELayouts from './Layouts/ContentElementsLayouts';
 
 
 const pageLayouts = {
@@ -83,9 +84,9 @@ const pageTemplates = {
 
 const contentElementLayouts = {
     __generic :  (props) => {
-        return <div className={'contentWrapper'}>
+        return <CELayouts.Layout0 data={props.content}>
             {props.children}
-        </div>
+        </CELayouts.Layout0>
     },
 }
 
@@ -94,13 +95,10 @@ const contentElementLayouts = {
 const contentElementTemplates = {
     //Resources/Private/Templates/ContentElements/**
     __generic: (headlessContentData, args= {}) => {
-        console.log(headlessContentData);
         return <>{headlessContentData.type}</>
     },
     text: (headlessContentData) => <CE.Text data={headlessContentData.content} />,
     textpic: (headlessContentData) => <CE.Textpic data={headlessContentData.content} />
-
-
 
 }
 

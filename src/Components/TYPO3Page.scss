@@ -1,3 +1,7 @@
+//TODO: find solution for scss sharing in extension and node_module
+$pswp__assets-path: '../../../cms/public/typo3conf/ext/bootstrap_package/Resources/Public/Images/PhotoSwipe/';
+@import '../../../../cms/public/typo3conf/ext/bootstrap_package/Resources/Public/Scss/Theme/theme.scss';
+
 body {
-  background: #abcdef;
+
 }

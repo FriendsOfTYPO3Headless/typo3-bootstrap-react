@@ -86,7 +86,7 @@ var Content = function (props) {
                     props.content.type,
                     " ");
             }
-            return React__default['default'].createElement(React__default['default'].Fragment, { key: content.id }, layout({ children: template(content, props.args), args: props.args }));
+            return React__default['default'].createElement(React__default['default'].Fragment, { key: content.id }, layout({ children: template(content, props.args), content: content, args: props.args }));
         });
     }
     return content;
@@ -101,6 +101,62 @@ var Textpic = function (props) {
         React__default['default'].createElement("div", { className: "textpic-item textpic-gallery" }),
         React__default['default'].createElement("div", { className: "textpic-item textpic-text" },
             React__default['default'].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } })));
+};
+
+var BackgroundImage = function (props) {
+    if (props.data.appearance.backgroundImage.length < 1) {
+        return null;
+    }
+    var backgroundImageObject = props.data.appearance.backgroundImage[0];
+    var backgroundImageIdentifier = 'frame-backgroundimage-' + props.data.id;
+    var backgroundImageClasses = 'frame-backgroundimage';
+    if (props.data.appearance.backgroundImageOptions.parallax === '1') {
+        backgroundImageClasses += ' frame-backgroundimage-parallax';
+    }
+    if (props.data.appearance.backgroundImageOptions.fade === '1') {
+        backgroundImageClasses += ' frame-backgroundimage-fade';
+    }
+    if (props.data.appearance.backgroundImageOptions.filter !== '') {
+        backgroundImageClasses += ' frame-backgroundimage-' + props.data.appearance.backgroundImageOptions.filter;
+    }
+    //TODO: Implement crop sizes
+    return React__default['default'].createElement("div", { className: "frame-backgroundimage-container" },
+        React__default['default'].createElement("div", { id: backgroundImageIdentifier, className: backgroundImageClasses, style: { backgroundImage: 'url("' + backgroundImageObject.publicUrl + '")' } }));
+};
+
+var Layout0 = function (props) {
+    var frameClass = 'frame-' + props.data.appearance.frameClass;
+    var typeClass = 'frame-type-' + props.data.type;
+    var layoutClass = 'frame-layout-' + props.data.appearance.layout;
+    var backgroundClass = 'frame-background-' + (props.data.appearance.backgroundColor !== '' ? props.data.appearance.backgroundColor : 'none');
+    var spaceBeforeClass = 'frame-space-before-' + (props.data.appearance.spaceBefore !== '' ? props.data.appearance.spaceBefore : 'none');
+    var spaceAfterClass = 'frame-space-after-' + (props.data.appearance.spaceAfter !== '' ? props.data.appearance.spaceAfter : 'none');
+    var content;
+    if (props.data.appearance.frameClass !== 'none') {
+        var backgroundImageClass = (props.data.appearance.backgroundImage.length > 0 ? 'frame-has-backgroundimage' : 'frame-no-backgroundimage');
+        content = React__default['default'].createElement("div", { id: "c" + props.data.id, className: "frame " +
+                frameClass + " " +
+                typeClass + " " +
+                layoutClass + " " +
+                backgroundClass + " " +
+                backgroundImageClass + " " +
+                spaceBeforeClass + " " +
+                spaceAfterClass },
+            React__default['default'].createElement(BackgroundImage, { data: props.data }),
+            React__default['default'].createElement("div", { className: "frame-container" },
+                React__default['default'].createElement("div", { className: "frame-inner" },
+                    props.data._localizedUid ? React__default['default'].createElement("a", { id: "c" + props.data._localizedUid }) : null,
+                    props.children)));
+    }
+    else {
+        content = React__default['default'].createElement(React__default['default'].Fragment, null,
+            React__default['default'].createElement("a", { id: "c" + props.data.id }),
+            props.data._localizedUid ? React__default['default'].createElement("a", { id: "c" + props.data._localizedUid }) : null,
+            props.data.appearance.spaceBefore ? React__default['default'].createElement("div", { className: spaceBeforeClass }) : null,
+            props.children,
+            props.data.appearance.spaceAfter ? React__default['default'].createElement("div", { className: spaceAfterClass }) : null);
+    }
+    return content;
 };
 
 var pageLayouts = {
@@ -159,13 +215,12 @@ var pageTemplates = {
 };
 var contentElementLayouts = {
     __generic: function (props) {
-        return React__default['default'].createElement("div", { className: 'contentWrapper' }, props.children);
+        return React__default['default'].createElement(Layout0, { data: props.content }, props.children);
     },
 };
 var contentElementTemplates = {
     //Resources/Private/Templates/ContentElements/**
     __generic: function (headlessContentData, args) {
-        console.log(headlessContentData);
         return React__default['default'].createElement(React__default['default'].Fragment, null, headlessContentData.type);
     },
     text: function (headlessContentData) { return React__default['default'].createElement(Text, { data: headlessContentData.content }); },

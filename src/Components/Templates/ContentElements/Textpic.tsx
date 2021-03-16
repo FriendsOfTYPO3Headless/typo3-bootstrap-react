@@ -11,7 +11,6 @@ const Textpic: React.FC<{ data: any }> = props => {
             <div dangerouslySetInnerHTML={{__html: props.data.bodytext}}/>
         </div>
     </div>
-
 }
 
 export default Textpic;
