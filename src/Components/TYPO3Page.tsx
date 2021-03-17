@@ -97,8 +97,8 @@ const contentElementTemplates = {
     __generic: (headlessContentData, args= {}) => {
         return <>{headlessContentData.type}</>
     },
-    text: (headlessContentData) => <CE.Text data={headlessContentData.content} />,
-    textpic: (headlessContentData) => <CE.Textpic data={headlessContentData.content} />
+    text: (headlessContentData, args= {}) => <CE.Text data={headlessContentData.content} />,
+    textpic: (headlessContentData, args= {}) => <CE.Textpic data={headlessContentData.content} />
 
 }
 

@@ -116,6 +116,12 @@ var BackgroundImage = function (props) {
         React.createElement("div", { id: backgroundImageIdentifier, className: backgroundImageClasses, style: { backgroundImage: 'url("' + backgroundImageObject.publicUrl + '")' } }));
 };
 
+var AllHeader = function (props) {
+    console.log(props.data);
+    if (props.data.content.headerLayout !== 100)
+        return React.createElement(React.Fragment, null, "ALLHEADER");
+};
+
 var Layout0 = function (props) {
     var frameClass = 'frame-' + props.data.appearance.frameClass;
     var typeClass = 'frame-type-' + props.data.type;
@@ -138,6 +144,7 @@ var Layout0 = function (props) {
             React.createElement("div", { className: "frame-container" },
                 React.createElement("div", { className: "frame-inner" },
                     props.data._localizedUid ? React.createElement("a", { id: "c" + props.data._localizedUid }) : null,
+                    React.createElement(AllHeader, { data: props.data }),
                     props.children)));
     }
     else {
@@ -145,6 +152,7 @@ var Layout0 = function (props) {
             React.createElement("a", { id: "c" + props.data.id }),
             props.data._localizedUid ? React.createElement("a", { id: "c" + props.data._localizedUid }) : null,
             props.data.appearance.spaceBefore ? React.createElement("div", { className: spaceBeforeClass }) : null,
+            React.createElement(AllHeader, { data: props.data }),
             props.children,
             props.data.appearance.spaceAfter ? React.createElement("div", { className: spaceAfterClass }) : null);
     }
@@ -215,8 +223,12 @@ var contentElementTemplates = {
     __generic: function (headlessContentData, args) {
         return React.createElement(React.Fragment, null, headlessContentData.type);
     },
-    text: function (headlessContentData) { return React.createElement(Text, { data: headlessContentData.content }); },
-    textpic: function (headlessContentData) { return React.createElement(Textpic, { data: headlessContentData.content }); }
+    text: function (headlessContentData, args) {
+        return React.createElement(Text, { data: headlessContentData.content });
+    },
+    textpic: function (headlessContentData, args) {
+        return React.createElement(Textpic, { data: headlessContentData.content });
+    }
 };
 var TYPO3Page = function (props) {
     var _pageLayouts = Object.assign({}, pageLayouts, props.pageLayouts);
@@ -232,5 +244,5 @@ TYPO3Page.defaultProps = {
     contentElementTemplates: null,
 };
 
-export { Page, section as Section, TYPO3Page };
+export { Content, Page, section as Section, TYPO3Page };
 //# sourceMappingURL=index.es.js.map

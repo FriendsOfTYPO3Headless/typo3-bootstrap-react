@@ -124,6 +124,12 @@ var BackgroundImage = function (props) {
         React__default['default'].createElement("div", { id: backgroundImageIdentifier, className: backgroundImageClasses, style: { backgroundImage: 'url("' + backgroundImageObject.publicUrl + '")' } }));
 };
 
+var AllHeader = function (props) {
+    console.log(props.data);
+    if (props.data.content.headerLayout !== 100)
+        return React__default['default'].createElement(React__default['default'].Fragment, null, "ALLHEADER");
+};
+
 var Layout0 = function (props) {
     var frameClass = 'frame-' + props.data.appearance.frameClass;
     var typeClass = 'frame-type-' + props.data.type;
@@ -146,6 +152,7 @@ var Layout0 = function (props) {
             React__default['default'].createElement("div", { className: "frame-container" },
                 React__default['default'].createElement("div", { className: "frame-inner" },
                     props.data._localizedUid ? React__default['default'].createElement("a", { id: "c" + props.data._localizedUid }) : null,
+                    React__default['default'].createElement(AllHeader, { data: props.data }),
                     props.children)));
     }
     else {
@@ -153,6 +160,7 @@ var Layout0 = function (props) {
             React__default['default'].createElement("a", { id: "c" + props.data.id }),
             props.data._localizedUid ? React__default['default'].createElement("a", { id: "c" + props.data._localizedUid }) : null,
             props.data.appearance.spaceBefore ? React__default['default'].createElement("div", { className: spaceBeforeClass }) : null,
+            React__default['default'].createElement(AllHeader, { data: props.data }),
             props.children,
             props.data.appearance.spaceAfter ? React__default['default'].createElement("div", { className: spaceAfterClass }) : null);
     }
@@ -223,8 +231,12 @@ var contentElementTemplates = {
     __generic: function (headlessContentData, args) {
         return React__default['default'].createElement(React__default['default'].Fragment, null, headlessContentData.type);
     },
-    text: function (headlessContentData) { return React__default['default'].createElement(Text, { data: headlessContentData.content }); },
-    textpic: function (headlessContentData) { return React__default['default'].createElement(Textpic, { data: headlessContentData.content }); }
+    text: function (headlessContentData, args) {
+        return React__default['default'].createElement(Text, { data: headlessContentData.content });
+    },
+    textpic: function (headlessContentData, args) {
+        return React__default['default'].createElement(Textpic, { data: headlessContentData.content });
+    }
 };
 var TYPO3Page = function (props) {
     var _pageLayouts = Object.assign({}, pageLayouts, props.pageLayouts);
@@ -240,6 +252,7 @@ TYPO3Page.defaultProps = {
     contentElementTemplates: null,
 };
 
+exports.Content = Content;
 exports.Page = Page;
 exports.Section = section;
 exports.TYPO3Page = TYPO3Page;

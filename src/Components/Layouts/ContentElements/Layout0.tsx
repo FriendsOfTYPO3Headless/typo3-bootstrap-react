@@ -1,5 +1,6 @@
 import React from 'react';
 import BackgroundImage from "../../Partials/ContentElements/Frame/General/BackgroundImage";
+import AllHeader from "../../Partials/ContentElements/Header/All";
 
 const Layout0: React.FC<{ data: any }> = props => {
     const frameClass = 'frame-' + props.data.appearance.frameClass;
@@ -28,6 +29,7 @@ const Layout0: React.FC<{ data: any }> = props => {
             <div className="frame-container">
                 <div className="frame-inner">
                     {props.data._localizedUid ? <a id={"c" + props.data._localizedUid}/> : null}
+                    <AllHeader data={props.data} />
                     {props.children}
                 </div>
             </div>
@@ -37,9 +39,7 @@ const Layout0: React.FC<{ data: any }> = props => {
             <a id={"c" + props.data.id}/>
             {props.data._localizedUid ? <a id={"c" + props.data._localizedUid}/> : null}
             {props.data.appearance.spaceBefore ? <div className={spaceBeforeClass} /> : null}
-            {/*<f:render section="Header" optional="true">*/}
-            {/*    <f:render partial="Header/All" arguments="{_all}"/>*/}
-            {/*</f:render>*/}
+            <AllHeader data={props.data} />
             {props.children}
             {props.data.appearance.spaceAfter ? <div className={spaceAfterClass} /> : null}
         </>
