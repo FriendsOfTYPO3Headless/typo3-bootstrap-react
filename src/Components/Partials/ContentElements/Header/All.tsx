@@ -1,5 +1,7 @@
 import React from 'react';
 import Header from "./Header";
+import Subheader from "./Subheader";
+import HeaderDate from "./HeaderDate";
 
 const AllHeader: React.FC<{ data: any }> = props => {
 // console.log(props);
@@ -34,32 +36,29 @@ const AllHeader: React.FC<{ data: any }> = props => {
             content = <header className="frame-header">
                 {props.data.content.header !== '' ?
                     <Header layout={props.data.content.headerLayout}
-                            positionClass={props.data.headerPosition ? 'text-' + props.data.content.headerPosition : null}
+                            positionClass={props.data.content.headerPosition ? 'text-' + props.data.content.headerPosition : ''}
                             header={props.data.content.header}
                             headerLink={props.data.content.headerLink !== '' ? props.data.content.headerLink : null}
                     />
                     :
                     null}
-                {/*<f:render partial="Header/Header" arguments="{*/}
-                {/*             header: data.header,*/}
-                {/*             layout: data.header_layout,*/}
-                {/*             class: settings.header.class,*/}
-                {/*             positionClass: '{f:if(condition: data.header_position, then: \'text-{data.header_position}\')}',*/}
-                {/*             link: data.header_link,*/}
-                {/*             default: settings.header.defaultHeaderType}"/>*/}
 
-                {/*<f:render partial="Header/SubHeader" arguments="{*/}
-                {/*subheader: data.subheader,*/}
-                {/*layout: data.header_layout,*/}
-                {/*class: settings.subheader.class,*/}
-                {/*positionClass: '{f:if(condition: data.header_position, then: \'text-{data.header_position}\')}',*/}
-                {/*default: settings.header.defaultHeaderType}"/>*/}
+                {props.data.content.subheader !== '' ?
+                    <Subheader layout={props.data.content.headerLayout}
+                               positionClass={props.data.content.headerPosition ? 'text-' + props.data.content.headerPosition : ''}
+                               header={props.data.content.subheader}
+                               headerLink={props.data.content.headerLink !== '' ? props.data.content.headerLink : null}
+                    />
+                    :
+                    null}
 
-                {/*<f:render partial="Header/Date" arguments="{*/}
-                {/*date: data.date,*/}
-                {/*format: settings.header.date.format,*/}
-                {/*positionClass: '{f:if(condition: data.header_position, then: \'text-{data.header_position}\')}'}"/>*/}
-
+                {props.data.content.date !== '' ?
+                    <HeaderDate
+                        date={props.data.content.date}
+                        positionClass={props.data.content.headerPosition ? 'text-' + props.data.content.headerPosition : ''}
+                    />
+                    :
+                    null}
             </header>
         }
     }

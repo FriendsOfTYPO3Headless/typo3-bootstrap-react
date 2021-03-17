@@ -124,98 +124,77 @@ var BackgroundImage = function (props) {
         React__default['default'].createElement("div", { id: backgroundImageIdentifier, className: backgroundImageClasses, style: { backgroundImage: 'url("' + backgroundImageObject.publicUrl + '")' } }));
 };
 
-/*! *****************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
-
-var __assign = function() {
-    __assign = Object.assign || function __assign(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-
 var HeaderLink = function (props) {
-    // console.log(props);
-    if (props.headerLink === null) {
+    if (props.headerLink === null || typeof props.headerLink === 'string') {
         return React__default['default'].createElement(React__default['default'].Fragment, null, props.children);
     }
-    // console.log(props.headerLink);
-    return React__default['default'].createElement("a", __assign({ href: props.headerLink.url }, props.headerLink.target, props.headerLink.aTagParams), props.children);
+    return React__default['default'].createElement("a", { href: props.headerLink.url }, props.children);
 };
 
 var Header = function (props) {
-    // console.log(props.headerLink);
     switch (props.layout) {
         case 1:
             return React__default['default'].createElement("h1", { className: props.class + ' ' + props.positionClass },
                 React__default['default'].createElement(HeaderLink, { headerLink: props.headerLink },
                     React__default['default'].createElement("span", null, props.header)));
+        case 3:
+            return React__default['default'].createElement("h3", { className: props.class + ' ' + props.positionClass },
+                React__default['default'].createElement(HeaderLink, { headerLink: props.headerLink },
+                    React__default['default'].createElement("span", null, props.header)));
+        case 4:
+            return React__default['default'].createElement("h4", { className: props.class + ' ' + props.positionClass },
+                React__default['default'].createElement(HeaderLink, { headerLink: props.headerLink },
+                    React__default['default'].createElement("span", null, props.header)));
+        case 5:
+            return React__default['default'].createElement("h5", { className: props.class + ' ' + props.positionClass },
+                React__default['default'].createElement(HeaderLink, { headerLink: props.headerLink },
+                    React__default['default'].createElement("span", null, props.header)));
+        case 100:
+            return React__default['default'].createElement(React__default['default'].Fragment, null);
         default:
             return React__default['default'].createElement("h2", { className: props.class + ' ' + props.positionClass },
                 React__default['default'].createElement(HeaderLink, { headerLink: props.headerLink },
                     React__default['default'].createElement("span", null, props.header)));
-        //         <f:case value="1">
-        //
-        //         </f:case>
-        //         <f:case value="2">
-        //             <h2 className="{class} {positionClass}">
-        //                 <f:link.typolink parameter="{link}"><span>{header}</span></f:link.typolink>
-        //             </h2>
-        //         </f:case>
-        //         <f:case value="3">
-        //             <h3 className="{class} {positionClass}">
-        //                 <f:link.typolink parameter="{link}"><span>{header}</span></f:link.typolink>
-        //             </h3>
-        //         </f:case>
-        //         <f:case value="4">
-        //             <h4 className="{class} {positionClass}">
-        //                 <f:link.typolink parameter="{link}"><span>{header}</span></f:link.typolink>
-        //             </h4>
-        //         </f:case>
-        //         <f:case value="5">
-        //             <h5 className="{class} {positionClass}">
-        //                 <f:link.typolink parameter="{link}"><span>{header}</span></f:link.typolink>
-        //             </h5>
-        //         </f:case>
-        //         <f:case value="6">
-        //             <h6 className="{class} {positionClass}">
-        //                 <f:link.typolink parameter="{link}"><span>{header}</span></f:link.typolink>
-        //             </h6>
-        //         </f:case>
-        //         <f:case value="100">
-        //             <f:comment> -- do not show header --</f:comment>
-        //         </f:case>
-        //         <f:defaultCase>
-        //             <f:if condition="{default}">
-        //                 <f:render partial="Header/Header" arguments="{
-        //                 header: header,
-        //                 layout: default,
-        //                 class: class,
-        //                 positionClass: positionClass,
-        //                 link: link}"/>
-        //             </f:if>
-        //         </f:defaultCase>
     }
 };
 Header.defaultProps = {
     class: 'element-header',
     headerLink: null
+};
+
+var Subheader = function (props) {
+    switch (props.layout) {
+        case 1:
+            return React__default['default'].createElement("h2", { className: props.class + ' ' + props.positionClass },
+                React__default['default'].createElement(HeaderLink, { headerLink: props.headerLink },
+                    React__default['default'].createElement("span", null, props.header)));
+        case 3:
+            return React__default['default'].createElement("h4", { className: props.class + ' ' + props.positionClass },
+                React__default['default'].createElement(HeaderLink, { headerLink: props.headerLink },
+                    React__default['default'].createElement("span", null, props.header)));
+        case 4:
+            return React__default['default'].createElement("h5", { className: props.class + ' ' + props.positionClass },
+                React__default['default'].createElement(HeaderLink, { headerLink: props.headerLink },
+                    React__default['default'].createElement("span", null, props.header)));
+        case 5:
+            return React__default['default'].createElement("h6", { className: props.class + ' ' + props.positionClass },
+                React__default['default'].createElement(HeaderLink, { headerLink: props.headerLink },
+                    React__default['default'].createElement("span", null, props.header)));
+        case 100:
+            return React__default['default'].createElement(React__default['default'].Fragment, null);
+        default:
+            return React__default['default'].createElement("h3", { className: props.class + ' ' + props.positionClass },
+                React__default['default'].createElement(HeaderLink, { headerLink: props.headerLink },
+                    React__default['default'].createElement("span", null, props.header)));
+    }
+};
+Subheader.defaultProps = {
+    class: 'element-subheader',
+    headerLink: null
+};
+
+var HeaderDate = function (props) {
+    return React__default['default'].createElement("p", { className: props.positionClass }, props.date);
 };
 
 var AllHeader = function (props) {
@@ -247,10 +226,19 @@ var AllHeader = function (props) {
     var content = React__default['default'].createElement(React__default['default'].Fragment, null);
     if (props.data.content.headerLayout !== 100) {
         if (props.data.content.header !== '' || props.data.content.header !== '' || props.data.content.date !== '') {
-            content = React__default['default'].createElement("header", { className: "frame-header" }, props.data.content.header !== '' ?
-                React__default['default'].createElement(Header, { layout: props.data.content.headerLayout, positionClass: props.data.headerPosition ? 'text-' + props.data.content.headerPosition : null, header: props.data.content.header, headerLink: props.data.content.headerLink !== '' ? props.data.content.headerLink : null })
-                :
-                    null);
+            content = React__default['default'].createElement("header", { className: "frame-header" },
+                props.data.content.header !== '' ?
+                    React__default['default'].createElement(Header, { layout: props.data.content.headerLayout, positionClass: props.data.content.headerPosition ? 'text-' + props.data.content.headerPosition : '', header: props.data.content.header, headerLink: props.data.content.headerLink !== '' ? props.data.content.headerLink : null })
+                    :
+                        null,
+                props.data.content.subheader !== '' ?
+                    React__default['default'].createElement(Subheader, { layout: props.data.content.headerLayout, positionClass: props.data.content.headerPosition ? 'text-' + props.data.content.headerPosition : '', header: props.data.content.subheader, headerLink: props.data.content.headerLink !== '' ? props.data.content.headerLink : null })
+                    :
+                        null,
+                props.data.content.date !== '' ?
+                    React__default['default'].createElement(HeaderDate, { date: props.data.content.date, positionClass: props.data.content.headerPosition ? 'text-' + props.data.content.headerPosition : '' })
+                    :
+                        null);
         }
     }
     return content;

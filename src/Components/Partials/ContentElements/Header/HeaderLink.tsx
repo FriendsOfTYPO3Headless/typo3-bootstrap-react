@@ -1,27 +1,22 @@
 import React from 'react';
 
-interface HeaderLinkInterface {
-    type: string;
-    url: string;
-    target: string;
-    aTagParams: string;
-    link: string;
+type HeaderLinkType = {
+    type: string,
+    url: string,
+    target: string,
+    aTagParams: string,
+    link: string,
 }
 
-const HeaderLink: React.FC<{
-    headerLink: HeaderLinkInterface | null
-}> = props => {
-// console.log(props);
-    if (props.headerLink === null) {
-        return <>
-            {props.children}
-        </>
+const HeaderLink: React.FC<{ headerLink: HeaderLinkType | string | null}> = props => {
+    if (props.headerLink === null || typeof props.headerLink === 'string') {
+        return <>{props.children}</>
     }
-// console.log(props.headerLink);
-    return <a href={props.headerLink.url} {...props.headerLink.target} {...props.headerLink.aTagParams} >
+
+    return <a href={props.headerLink.url}>
         {props.children}
     </a>
 }
-export default HeaderLink;
 
-export {HeaderLinkInterface};
+export default HeaderLink;
+export {HeaderLinkType};

@@ -1,7 +1,7 @@
 import React from 'react';
 import HeaderLink, {HeaderLinkType} from "./HeaderLink";
 
-const Header: React.FC<{
+const Subheader: React.FC<{
     header: string;
     layout: number;
     class?: string,
@@ -11,42 +11,42 @@ const Header: React.FC<{
 
     switch (props.layout) {
         case 1:
-            return <h1 className={props.class + ' ' + props.positionClass}>
+            return <h2 className={props.class + ' ' + props.positionClass}>
                 <HeaderLink headerLink={props.headerLink}><span>{props.header}</span></HeaderLink>
-            </h1>
+            </h2>
 
         case 3:
-            return <h3 className={props.class + ' ' + props.positionClass}>
-                <HeaderLink headerLink={props.headerLink}><span>{props.header}</span></HeaderLink>
-            </h3>
-
-        case 4:
             return <h4 className={props.class + ' ' + props.positionClass}>
                 <HeaderLink headerLink={props.headerLink}><span>{props.header}</span></HeaderLink>
             </h4>
 
-        case 5:
+        case 4:
             return <h5 className={props.class + ' ' + props.positionClass}>
                 <HeaderLink headerLink={props.headerLink}><span>{props.header}</span></HeaderLink>
             </h5>
+
+        case 5:
+            return <h6 className={props.class + ' ' + props.positionClass}>
+                <HeaderLink headerLink={props.headerLink}><span>{props.header}</span></HeaderLink>
+            </h6>
 
         case 100:
             return <></>
 
         default:
-            return <h2 className={props.class + ' ' + props.positionClass}>
+            return <h3 className={props.class + ' ' + props.positionClass}>
                 <HeaderLink headerLink={props.headerLink}>
                     <span>{props.header}</span>
                 </HeaderLink>
-            </h2>
+            </h3>
     }
 
 
 }
-export default Header;
+export default Subheader;
 
-Header.defaultProps = {
-    class: 'element-header',
+Subheader.defaultProps = {
+    class: 'element-subheader',
     headerLink: null
 }
 

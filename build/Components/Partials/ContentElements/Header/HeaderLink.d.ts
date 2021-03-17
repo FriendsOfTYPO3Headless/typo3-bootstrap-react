@@ -1,13 +1,13 @@
 import React from 'react';
-interface HeaderLinkInterface {
+declare type HeaderLinkType = {
     type: string;
     url: string;
     target: string;
     aTagParams: string;
     link: string;
-}
+};
 declare const HeaderLink: React.FC<{
-    headerLink: HeaderLinkInterface | null;
+    headerLink: HeaderLinkType | string | null;
 }>;
 export default HeaderLink;
-export { HeaderLinkInterface };
+export { HeaderLinkType };
