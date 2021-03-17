@@ -116,10 +116,136 @@ var BackgroundImage = function (props) {
         React.createElement("div", { id: backgroundImageIdentifier, className: backgroundImageClasses, style: { backgroundImage: 'url("' + backgroundImageObject.publicUrl + '")' } }));
 };
 
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
+var HeaderLink = function (props) {
+    // console.log(props);
+    if (props.headerLink === null) {
+        return React.createElement(React.Fragment, null, props.children);
+    }
+    // console.log(props.headerLink);
+    return React.createElement("a", __assign({ href: props.headerLink.url }, props.headerLink.target, props.headerLink.aTagParams), props.children);
+};
+
+var Header = function (props) {
+    // console.log(props.headerLink);
+    switch (props.layout) {
+        case 1:
+            return React.createElement("h1", { className: props.class + ' ' + props.positionClass },
+                React.createElement(HeaderLink, { headerLink: props.headerLink },
+                    React.createElement("span", null, props.header)));
+        default:
+            return React.createElement("h2", { className: props.class + ' ' + props.positionClass },
+                React.createElement(HeaderLink, { headerLink: props.headerLink },
+                    React.createElement("span", null, props.header)));
+        //         <f:case value="1">
+        //
+        //         </f:case>
+        //         <f:case value="2">
+        //             <h2 className="{class} {positionClass}">
+        //                 <f:link.typolink parameter="{link}"><span>{header}</span></f:link.typolink>
+        //             </h2>
+        //         </f:case>
+        //         <f:case value="3">
+        //             <h3 className="{class} {positionClass}">
+        //                 <f:link.typolink parameter="{link}"><span>{header}</span></f:link.typolink>
+        //             </h3>
+        //         </f:case>
+        //         <f:case value="4">
+        //             <h4 className="{class} {positionClass}">
+        //                 <f:link.typolink parameter="{link}"><span>{header}</span></f:link.typolink>
+        //             </h4>
+        //         </f:case>
+        //         <f:case value="5">
+        //             <h5 className="{class} {positionClass}">
+        //                 <f:link.typolink parameter="{link}"><span>{header}</span></f:link.typolink>
+        //             </h5>
+        //         </f:case>
+        //         <f:case value="6">
+        //             <h6 className="{class} {positionClass}">
+        //                 <f:link.typolink parameter="{link}"><span>{header}</span></f:link.typolink>
+        //             </h6>
+        //         </f:case>
+        //         <f:case value="100">
+        //             <f:comment> -- do not show header --</f:comment>
+        //         </f:case>
+        //         <f:defaultCase>
+        //             <f:if condition="{default}">
+        //                 <f:render partial="Header/Header" arguments="{
+        //                 header: header,
+        //                 layout: default,
+        //                 class: class,
+        //                 positionClass: positionClass,
+        //                 link: link}"/>
+        //             </f:if>
+        //         </f:defaultCase>
+    }
+};
+Header.defaultProps = {
+    class: 'element-header',
+    headerLink: null
+};
+
 var AllHeader = function (props) {
-    console.log(props.data);
-    if (props.data.content.headerLayout !== 100)
-        return React.createElement(React.Fragment, null, "ALLHEADER");
+    // console.log(props);
+    // console.log(props.data);
+    // <f:if condition="{data.header_layout} != 100">
+    //     <f:if condition="{data.header} || {data.subheader} || {data.date}">
+    //         <header className="frame-header">
+    //             <f:render partial="Header/Header" arguments="{
+    //             header: data.header,
+    //             layout: data.header_layout,
+    //             class: settings.header.class,
+    //             positionClass: '{f:if(condition: data.header_position, then: \'text-{data.header_position}\')}',
+    //             link: data.header_link,
+    //             default: settings.header.defaultHeaderType}"/>
+    //             <f:render partial="Header/SubHeader" arguments="{
+    //             subheader: data.subheader,
+    //             layout: data.header_layout,
+    //             class: settings.subheader.class,
+    //             positionClass: '{f:if(condition: data.header_position, then: \'text-{data.header_position}\')}',
+    //             default: settings.header.defaultHeaderType}"/>
+    //             <f:render partial="Header/Date" arguments="{
+    //             date: data.date,
+    //             format: settings.header.date.format,
+    //             positionClass: '{f:if(condition: data.header_position, then: \'text-{data.header_position}\')}'}"/>
+    //         </header>
+    //     </f:if>
+    // </f:if>
+    var content = React.createElement(React.Fragment, null);
+    if (props.data.content.headerLayout !== 100) {
+        if (props.data.content.header !== '' || props.data.content.header !== '' || props.data.content.date !== '') {
+            content = React.createElement("header", { className: "frame-header" }, props.data.content.header !== '' ?
+                React.createElement(Header, { layout: props.data.content.headerLayout, positionClass: props.data.headerPosition ? 'text-' + props.data.content.headerPosition : null, header: props.data.content.header, headerLink: props.data.content.headerLink !== '' ? props.data.content.headerLink : null })
+                :
+                    null);
+        }
+    }
+    return content;
 };
 
 var Layout0 = function (props) {

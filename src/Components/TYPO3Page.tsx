@@ -6,6 +6,7 @@ import {TYPO3PagePropsInterface} from "./Interfaces";
 import Section from './Partials/Page/Section';
 import * as CE from './Templates/ContentElements';
 import * as CELayouts from './Layouts/ContentElementsLayouts';
+import {Col, Row} from "react-bootstrap";
 
 
 const pageLayouts = {
