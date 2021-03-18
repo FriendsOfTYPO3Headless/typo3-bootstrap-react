@@ -3,6 +3,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var React = require('react');
+var reactBootstrap = require('react-bootstrap');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -198,31 +199,6 @@ var HeaderDate = function (props) {
 };
 
 var AllHeader = function (props) {
-    // console.log(props);
-    // console.log(props.data);
-    // <f:if condition="{data.header_layout} != 100">
-    //     <f:if condition="{data.header} || {data.subheader} || {data.date}">
-    //         <header className="frame-header">
-    //             <f:render partial="Header/Header" arguments="{
-    //             header: data.header,
-    //             layout: data.header_layout,
-    //             class: settings.header.class,
-    //             positionClass: '{f:if(condition: data.header_position, then: \'text-{data.header_position}\')}',
-    //             link: data.header_link,
-    //             default: settings.header.defaultHeaderType}"/>
-    //             <f:render partial="Header/SubHeader" arguments="{
-    //             subheader: data.subheader,
-    //             layout: data.header_layout,
-    //             class: settings.subheader.class,
-    //             positionClass: '{f:if(condition: data.header_position, then: \'text-{data.header_position}\')}',
-    //             default: settings.header.defaultHeaderType}"/>
-    //             <f:render partial="Header/Date" arguments="{
-    //             date: data.date,
-    //             format: settings.header.date.format,
-    //             positionClass: '{f:if(condition: data.header_position, then: \'text-{data.header_position}\')}'}"/>
-    //         </header>
-    //     </f:if>
-    // </f:if>
     var content = React__default['default'].createElement(React__default['default'].Fragment, null);
     if (props.data.content.headerLayout !== 100) {
         if (props.data.content.header !== '' || props.data.content.header !== '' || props.data.content.date !== '') {
@@ -318,10 +294,13 @@ var pageTemplates = {
     },
     simple: function (headlessData, contentElementLayouts, contentElementTemplates, args) {
         return {
+            //    main: <Main headlessData={headlessData} contentElementLayouts={contentElementLayouts} contentElementTemplates={contentElementTemplates} args={args}/>,
             main: React__default['default'].createElement(React__default['default'].Fragment, null,
                 React__default['default'].createElement(Content, { colPos: '8', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }),
                 React__default['default'].createElement("div", { className: "section section-default" },
-                    React__default['default'].createElement(Content, { colPos: '0', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
+                    React__default['default'].createElement(reactBootstrap.Row, null,
+                        React__default['default'].createElement(reactBootstrap.Col, null,
+                            React__default['default'].createElement(Content, { colPos: '0', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })))),
                 React__default['default'].createElement(Content, { colPos: '9', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
             border: React__default['default'].createElement(React__default['default'].Fragment, null,
                 React__default['default'].createElement(Content, { colPos: '3', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),

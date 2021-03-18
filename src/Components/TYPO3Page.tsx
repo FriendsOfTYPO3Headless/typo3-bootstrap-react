@@ -11,7 +11,7 @@ import {Col, Row} from "react-bootstrap";
 
 const pageLayouts = {
     //TODO: implement example
-    'layout-0': (headlessData, pageTemplate, args={}) => <>
+    'layout-0': (headlessData, pageTemplate, args = {}) => <>
         <header>
             LOGO
         </header>
@@ -25,7 +25,7 @@ const pageLayouts = {
         </footer>
     </>,
 
-    __generic: (headlessData, pageTemplate, args={}) => <>
+    __generic: (headlessData, pageTemplate, args = {}) => <>
         <__GenericLayout
             headlessData={headlessData}
             pageTemplate={pageTemplate}
@@ -34,33 +34,63 @@ const pageLayouts = {
 }
 
 
+const Main: React.FC<{ headlessData: any, contentElementLayouts: any, contentElementTemplates: any, args: any }> = props => {
+
+    return <>
+        <Content colPos={'8'} content={props.headlessData.content} contentElementLayouts={props.contentElementLayouts}
+                 contentElementTemplates={props.contentElementTemplates}/>
+
+        <div className="section section-default">
+            <Row>
+                <Col>
+
+                    <Content colPos={'0'} content={props.headlessData.content}
+                             contentElementLayouts={props.contentElementLayouts}
+                             contentElementTemplates={props.contentElementTemplates}/>
+                </Col>
+            </Row>
+        </div>
+
+        <Content colPos={'9'} content={props.headlessData.content} contentElementLayouts={props.contentElementLayouts}
+                 contentElementTemplates={props.contentElementTemplates}/>
+
+    </>
+}
+
 const pageTemplates = {
-    __generic: (headlessData, contentElementLayouts, contentElementTemplates, args={}) => {
+    __generic: (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
         return {
             main: <div>_generisch</div>
         }
     },
-    example: (headlessData, contentElementLayout, contentElementTemplates, args={}) => {
+    example: (headlessData, contentElementLayout, contentElementTemplates, args = {}) => {
         return {
             main: <>...example</>
         }
     },
-    default: (headlessData, contentElementLayouts, contentElementTemplates, args={}) => {
+    default: (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
         return {
             main: <div> .... </div>,
             footer: <footer>...</footer>,
             header: <header>...</header>
         }
     },
-    simple: (headlessData, contentElementLayouts, contentElementTemplates, args={}) => {
+    simple: (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
         return {
+            //    main: <Main headlessData={headlessData} contentElementLayouts={contentElementLayouts} contentElementTemplates={contentElementTemplates} args={args}/>,
             main: <>
                 <Content colPos={'8'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
                          contentElementTemplates={contentElementTemplates}/>
 
                 <div className="section section-default">
-                    <Content colPos={'0'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                             contentElementTemplates={contentElementTemplates}/>
+                    <Row>
+                        <Col>
+
+                            <Content colPos={'0'} content={headlessData.content}
+                                     contentElementLayouts={contentElementLayouts}
+                                     contentElementTemplates={contentElementTemplates}/>
+                        </Col>
+                    </Row>
                 </div>
 
                 <Content colPos={'9'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
@@ -73,7 +103,7 @@ const pageTemplates = {
             </>,
         }
     },
-    '2Columns': (headlessData, contentElementLayouts, contentElementTemplates, args={}) => {
+    '2Columns': (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
         return {
             main: <div>2Columns</div>,
             footer: <footer>...</footer>,
@@ -84,7 +114,7 @@ const pageTemplates = {
 
 
 const contentElementLayouts = {
-    __generic :  (props) => {
+    __generic: (props) => {
         return <CELayouts.Layout0 data={props.content}>
             {props.children}
         </CELayouts.Layout0>
@@ -92,14 +122,13 @@ const contentElementLayouts = {
 }
 
 
-
 const contentElementTemplates = {
     //Resources/Private/Templates/ContentElements/**
-    __generic: (headlessContentData, args= {}) => {
+    __generic: (headlessContentData, args = {}) => {
         return <>{headlessContentData.type}</>
     },
-    text: (headlessContentData, args= {}) => <CE.Text data={headlessContentData.content} />,
-    textpic: (headlessContentData, args= {}) => <CE.Textpic data={headlessContentData.content} />
+    text: (headlessContentData, args = {}) => <CE.Text data={headlessContentData.content}/>,
+    textpic: (headlessContentData, args = {}) => <CE.Textpic data={headlessContentData.content}/>
 
 }
 

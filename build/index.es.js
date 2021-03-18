@@ -1,4 +1,5 @@
 import React from 'react';
+import { Row, Col } from 'react-bootstrap';
 
 var section = function (props) {
     if (props.pageTemplate.hasOwnProperty(props.name)) {
@@ -190,31 +191,6 @@ var HeaderDate = function (props) {
 };
 
 var AllHeader = function (props) {
-    // console.log(props);
-    // console.log(props.data);
-    // <f:if condition="{data.header_layout} != 100">
-    //     <f:if condition="{data.header} || {data.subheader} || {data.date}">
-    //         <header className="frame-header">
-    //             <f:render partial="Header/Header" arguments="{
-    //             header: data.header,
-    //             layout: data.header_layout,
-    //             class: settings.header.class,
-    //             positionClass: '{f:if(condition: data.header_position, then: \'text-{data.header_position}\')}',
-    //             link: data.header_link,
-    //             default: settings.header.defaultHeaderType}"/>
-    //             <f:render partial="Header/SubHeader" arguments="{
-    //             subheader: data.subheader,
-    //             layout: data.header_layout,
-    //             class: settings.subheader.class,
-    //             positionClass: '{f:if(condition: data.header_position, then: \'text-{data.header_position}\')}',
-    //             default: settings.header.defaultHeaderType}"/>
-    //             <f:render partial="Header/Date" arguments="{
-    //             date: data.date,
-    //             format: settings.header.date.format,
-    //             positionClass: '{f:if(condition: data.header_position, then: \'text-{data.header_position}\')}'}"/>
-    //         </header>
-    //     </f:if>
-    // </f:if>
     var content = React.createElement(React.Fragment, null);
     if (props.data.content.headerLayout !== 100) {
         if (props.data.content.header !== '' || props.data.content.header !== '' || props.data.content.date !== '') {
@@ -310,10 +286,13 @@ var pageTemplates = {
     },
     simple: function (headlessData, contentElementLayouts, contentElementTemplates, args) {
         return {
+            //    main: <Main headlessData={headlessData} contentElementLayouts={contentElementLayouts} contentElementTemplates={contentElementTemplates} args={args}/>,
             main: React.createElement(React.Fragment, null,
                 React.createElement(Content, { colPos: '8', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }),
                 React.createElement("div", { className: "section section-default" },
-                    React.createElement(Content, { colPos: '0', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
+                    React.createElement(Row, null,
+                        React.createElement(Col, null,
+                            React.createElement(Content, { colPos: '0', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })))),
                 React.createElement(Content, { colPos: '9', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
             border: React.createElement(React.Fragment, null,
                 React.createElement(Content, { colPos: '3', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
