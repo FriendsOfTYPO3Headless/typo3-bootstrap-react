@@ -33,30 +33,6 @@ const pageLayouts = {
     </>
 }
 
-
-const Main: React.FC<{ headlessData: any, contentElementLayouts: any, contentElementTemplates: any, args: any }> = props => {
-
-    return <>
-        <Content colPos={'8'} content={props.headlessData.content} contentElementLayouts={props.contentElementLayouts}
-                 contentElementTemplates={props.contentElementTemplates}/>
-
-        <div className="section section-default">
-            <Row>
-                <Col>
-
-                    <Content colPos={'0'} content={props.headlessData.content}
-                             contentElementLayouts={props.contentElementLayouts}
-                             contentElementTemplates={props.contentElementTemplates}/>
-                </Col>
-            </Row>
-        </div>
-
-        <Content colPos={'9'} content={props.headlessData.content} contentElementLayouts={props.contentElementLayouts}
-                 contentElementTemplates={props.contentElementTemplates}/>
-
-    </>
-}
-
 const pageTemplates = {
     __generic: (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
         return {
@@ -81,21 +57,17 @@ const pageTemplates = {
             main: <>
                 <Content colPos={'8'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
                          contentElementTemplates={contentElementTemplates}/>
-
                 <div className="section section-default">
                     <Row>
                         <Col>
-
                             <Content colPos={'0'} content={headlessData.content}
                                      contentElementLayouts={contentElementLayouts}
                                      contentElementTemplates={contentElementTemplates}/>
                         </Col>
                     </Row>
                 </div>
-
                 <Content colPos={'9'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
                          contentElementTemplates={contentElementTemplates}/>
-
             </>,
             border: <>
                 <Content colPos={'3'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
@@ -103,6 +75,7 @@ const pageTemplates = {
             </>,
         }
     },
+
     '2Columns': (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
         return {
             main: <div>2Columns</div>,
@@ -121,7 +94,6 @@ const contentElementLayouts = {
     },
 }
 
-
 const contentElementTemplates = {
     //Resources/Private/Templates/ContentElements/**
     __generic: (headlessContentData, args = {}) => {
@@ -129,7 +101,6 @@ const contentElementTemplates = {
     },
     text: (headlessContentData, args = {}) => <CE.Text data={headlessContentData.content}/>,
     textpic: (headlessContentData, args = {}) => <CE.Textpic data={headlessContentData.content}/>
-
 }
 
 
