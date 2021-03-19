@@ -7,6 +7,7 @@ import Section from './Partials/Page/Section';
 import * as CE from './Templates/ContentElements';
 import * as CELayouts from './Layouts/ContentElementsLayouts';
 import {Col, Row} from "react-bootstrap";
+import FooterContent from "./Partials/Page/Structure/FooterContent";
 
 
 const pageLayouts = {
@@ -21,7 +22,7 @@ const pageLayouts = {
         </section>
         <footer>
             <h3>Hier ist eine andere Section</h3>
-            <Section name={'border'} pageTemplate={pageTemplate}/>
+            <Section name={'footer'} pageTemplate={pageTemplate}/>
         </footer>
     </>,
 
@@ -32,6 +33,7 @@ const pageLayouts = {
         />
     </>
 }
+
 
 const pageTemplates = {
     __generic: (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
@@ -69,18 +71,44 @@ const pageTemplates = {
                 <Content colPos={'9'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
                          contentElementTemplates={contentElementTemplates}/>
             </>,
-            border: <>
-                <Content colPos={'3'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                         contentElementTemplates={contentElementTemplates}/>
-            </>,
+            border: <Content colPos={'3'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
+                             contentElementTemplates={contentElementTemplates}/>
+            ,
         }
     },
-
-    '2Columns': (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
+    '2_columns': (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
         return {
-            main: <div>2Columns</div>,
-            footer: <footer>...</footer>,
-            header: <header>...</header>
+            main: <>
+                <div>2Columns</div>
+
+                <Content colPos={'8'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
+                         contentElementTemplates={contentElementTemplates}/>
+
+                <div className="section section-default">
+                    <Row>
+                        <Col>
+                            <main className=" maincontent-wrap" role="main">
+                                <Content colPos={'0'} content={headlessData.content}
+                                         contentElementLayouts={contentElementLayouts}
+                                         contentElementTemplates={contentElementTemplates}/>
+                            </main>
+                        </Col>
+                        <Col>
+                            <Content colPos={'2'} content={headlessData.content}
+                                     contentElementLayouts={contentElementLayouts}
+                                     contentElementTemplates={contentElementTemplates}/>
+                        </Col>
+                    </Row>
+                </div>
+
+
+                <Content colPos={'9'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
+                         contentElementTemplates={contentElementTemplates}/>
+            </>,
+            footer: <FooterContent content={headlessData.content}
+                                   contentElementLayouts={contentElementLayouts}
+                                   contentElementTemplates={contentElementTemplates}/>,
+
         }
     }
 }

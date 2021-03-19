@@ -7,6 +7,7 @@ const Content: React.FC<{
     content: any;
     contentElementLayouts: any;
     contentElementTemplates: any;
+    slide?: number;
     args?: any;
 }> = props => {
     let content = <></>
