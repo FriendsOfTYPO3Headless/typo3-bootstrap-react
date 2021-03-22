@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 
 var section = function (props) {
     if (props.pageTemplate.hasOwnProperty(props.name)) {
@@ -249,9 +249,45 @@ var Layout0 = function (props) {
     return content;
 };
 
+var FooterContent = function (props) {
+    return React.createElement("footer", { className: "section footer-section footer-section-content" },
+        React.createElement(Container, null,
+            React.createElement(Row, null,
+                React.createElement(Col, { className: "footer-section-content-column footer-section-content-column-left" },
+                    React.createElement(Content, { colPos: '10', slide: -1, content: props.content, contentElementLayouts: props.contentElementLayouts, contentElementTemplates: props.contentElementTemplates })),
+                React.createElement(Col, { className: " footer-section-content-column footer-section-content-column-middle" },
+                    React.createElement(Content, { colPos: '11', slide: -1, content: props.content, contentElementLayouts: props.contentElementLayouts, contentElementTemplates: props.contentElementTemplates })),
+                React.createElement(Col, { className: " footer-section-content-column footer-section-content-column-right" },
+                    React.createElement(Content, { colPos: '12', slide: -1, content: props.content, contentElementLayouts: props.contentElementLayouts, contentElementTemplates: props.contentElementTemplates })))));
+};
+
+var getGridElement = function (element, content, contentElementLayouts, contentElementTemplates, index) {
+    switch (element.type) {
+        case 'row':
+            var children = element.children.map(function (child, index) {
+                return getGridElement(child, content, contentElementLayouts, contentElementTemplates, index);
+            });
+            return React.createElement(Row, { as: element.tag, key: index }, children);
+        case 'col':
+            return React.createElement(Col, { as: element.tag, lg: element.size, md: element.size, sm: element.size, xl: element.size, key: index },
+                React.createElement(Content, { colPos: element.colPos, content: content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }));
+        default:
+            return React.createElement(React.Fragment, null);
+    }
+};
+var GenericPage = function (props) {
+    var content = React.createElement(React.Fragment, null);
+    if (props.headlessData.page.appearance.pageContentRows) {
+        content = props.headlessData.page.appearance.pageContentRows.map(function (gridElement, index) {
+            return getGridElement(gridElement, props.headlessData.content, props.contentElementLayouts, props.contentElementTemplates, index);
+        });
+    }
+    return content;
+};
+
 var pageLayouts = {
     //TODO: implement example
-    'layout-0': function (headlessData, pageTemplate, args) {
+    'layout0': function (headlessData, pageTemplate, args) {
         return React.createElement(React.Fragment, null,
             React.createElement("header", null, "LOGO"),
             React.createElement("section", null,
@@ -259,7 +295,8 @@ var pageLayouts = {
                 React.createElement(section, { name: 'main', pageTemplate: pageTemplate })),
             React.createElement("footer", null,
                 React.createElement("h3", null, "Hier ist eine andere Section"),
-                React.createElement(section, { name: 'border', pageTemplate: pageTemplate })));
+                React.createElement(section, { name: 'footer', pageTemplate: pageTemplate })),
+            "ei");
     },
     __generic: function (headlessData, pageTemplate, args) {
         return React.createElement(React.Fragment, null,
@@ -269,7 +306,7 @@ var pageLayouts = {
 var pageTemplates = {
     __generic: function (headlessData, contentElementLayouts, contentElementTemplates, args) {
         return {
-            main: React.createElement("div", null, "_generisch")
+            main: React.createElement(GenericPage, { headlessData: headlessData, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })
         };
     },
     example: function (headlessData, contentElementLayout, contentElementTemplates, args) {
@@ -294,15 +331,23 @@ var pageTemplates = {
                         React.createElement(Col, null,
                             React.createElement(Content, { colPos: '0', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })))),
                 React.createElement(Content, { colPos: '9', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
-            border: React.createElement(React.Fragment, null,
-                React.createElement(Content, { colPos: '3', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
+            border: React.createElement(Content, { colPos: '3', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }),
         };
     },
-    '2Columns': function (headlessData, contentElementLayouts, contentElementTemplates, args) {
+    '2_columns': function (headlessData, contentElementLayouts, contentElementTemplates, args) {
         return {
-            main: React.createElement("div", null, "2Columns"),
-            footer: React.createElement("footer", null, "..."),
-            header: React.createElement("header", null, "...")
+            main: React.createElement(React.Fragment, null,
+                React.createElement("div", null, "2Columns"),
+                React.createElement(Content, { colPos: '8', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }),
+                React.createElement("div", { className: "section section-default" },
+                    React.createElement(Row, null,
+                        React.createElement(Col, null,
+                            React.createElement("main", { className: " maincontent-wrap", role: "main" },
+                                React.createElement(Content, { colPos: '0', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))),
+                        React.createElement(Col, null,
+                            React.createElement(Content, { colPos: '2', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })))),
+                React.createElement(Content, { colPos: '9', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
+            footer: React.createElement(FooterContent, { content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }),
         };
     }
 };

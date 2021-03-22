@@ -1,7 +1,7 @@
 import React from "react";
 import { TYPO3PagePropsInterface } from "./Interfaces";
 declare const pageLayouts: {
-    'layout-0': (headlessData: any, pageTemplate: any, args?: {}) => JSX.Element;
+    layout0: (headlessData: any, pageTemplate: any, args?: {}) => JSX.Element;
     __generic: (headlessData: any, pageTemplate: any, args?: {}) => JSX.Element;
 };
 declare const pageTemplates: {
@@ -20,10 +20,9 @@ declare const pageTemplates: {
         main: JSX.Element;
         border: JSX.Element;
     };
-    '2Columns': (headlessData: any, contentElementLayouts: any, contentElementTemplates: any, args?: {}) => {
+    '2_columns': (headlessData: any, contentElementLayouts: any, contentElementTemplates: any, args?: {}) => {
         main: JSX.Element;
         footer: JSX.Element;
-        header: JSX.Element;
     };
 };
 declare const contentElementLayouts: {

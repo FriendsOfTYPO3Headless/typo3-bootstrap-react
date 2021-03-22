@@ -257,189 +257,45 @@ var Layout0 = function (props) {
     return content;
 };
 
-function _extends() {
-  _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
-  var target = {};
-  var sourceKeys = Object.keys(source);
-  var key, i;
-
-  for (i = 0; i < sourceKeys.length; i++) {
-    key = sourceKeys[i];
-    if (excluded.indexOf(key) >= 0) continue;
-    target[key] = source[key];
-  }
-
-  return target;
-}
-
-function createCommonjsModule(fn) {
-  var module = { exports: {} };
-	return fn(module, module.exports), module.exports;
-}
-
-/*!
-  Copyright (c) 2017 Jed Watson.
-  Licensed under the MIT License (MIT), see
-  http://jedwatson.github.io/classnames
-*/
-
-var classnames = createCommonjsModule(function (module) {
-/* global define */
-
-(function () {
-
-	var hasOwn = {}.hasOwnProperty;
-
-	function classNames () {
-		var classes = [];
-
-		for (var i = 0; i < arguments.length; i++) {
-			var arg = arguments[i];
-			if (!arg) continue;
-
-			var argType = typeof arg;
-
-			if (argType === 'string' || argType === 'number') {
-				classes.push(arg);
-			} else if (Array.isArray(arg) && arg.length) {
-				var inner = classNames.apply(null, arg);
-				if (inner) {
-					classes.push(inner);
-				}
-			} else if (argType === 'object') {
-				for (var key in arg) {
-					if (hasOwn.call(arg, key) && arg[key]) {
-						classes.push(key);
-					}
-				}
-			}
-		}
-
-		return classes.join(' ');
-	}
-
-	if (module.exports) {
-		classNames.default = classNames;
-		module.exports = classNames;
-	} else {
-		window.classNames = classNames;
-	}
-}());
-});
-
-var ThemeContext = /*#__PURE__*/React__default['default'].createContext({});
-ThemeContext.Consumer;
-    ThemeContext.Provider;
-
-function useBootstrapPrefix(prefix, defaultPrefix) {
-  var prefixes = React.useContext(ThemeContext);
-  return prefix || prefixes[defaultPrefix] || defaultPrefix;
-}
-
-var DEVICE_SIZES$1 = ['xl', 'lg', 'md', 'sm', 'xs'];
-var Col = /*#__PURE__*/React__default['default'].forwardRef( // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-function (_ref, ref) {
-  var bsPrefix = _ref.bsPrefix,
-      className = _ref.className,
-      _ref$as = _ref.as,
-      Component = _ref$as === void 0 ? 'div' : _ref$as,
-      props = _objectWithoutPropertiesLoose(_ref, ["bsPrefix", "className", "as"]);
-
-  var prefix = useBootstrapPrefix(bsPrefix, 'col');
-  var spans = [];
-  var classes = [];
-  DEVICE_SIZES$1.forEach(function (brkPoint) {
-    var propValue = props[brkPoint];
-    delete props[brkPoint];
-    var span;
-    var offset;
-    var order;
-
-    if (typeof propValue === 'object' && propValue != null) {
-      var _propValue$span = propValue.span;
-      span = _propValue$span === void 0 ? true : _propValue$span;
-      offset = propValue.offset;
-      order = propValue.order;
-    } else {
-      span = propValue;
-    }
-
-    var infix = brkPoint !== 'xs' ? "-" + brkPoint : '';
-    if (span) spans.push(span === true ? "" + prefix + infix : "" + prefix + infix + "-" + span);
-    if (order != null) classes.push("order" + infix + "-" + order);
-    if (offset != null) classes.push("offset" + infix + "-" + offset);
-  });
-
-  if (!spans.length) {
-    spans.push(prefix); // plain 'col'
-  }
-
-  return /*#__PURE__*/React__default['default'].createElement(Component, _extends({}, props, {
-    ref: ref,
-    className: classnames.apply(void 0, [className].concat(spans, classes))
-  }));
-});
-Col.displayName = 'Col';
-
-var DEVICE_SIZES = ['xl', 'lg', 'md', 'sm', 'xs'];
-var defaultProps = {
-  noGutters: false
+var FooterContent = function (props) {
+    return React__default['default'].createElement("footer", { className: "section footer-section footer-section-content" },
+        React__default['default'].createElement(reactBootstrap.Container, null,
+            React__default['default'].createElement(reactBootstrap.Row, null,
+                React__default['default'].createElement(reactBootstrap.Col, { className: "footer-section-content-column footer-section-content-column-left" },
+                    React__default['default'].createElement(Content, { colPos: '10', slide: -1, content: props.content, contentElementLayouts: props.contentElementLayouts, contentElementTemplates: props.contentElementTemplates })),
+                React__default['default'].createElement(reactBootstrap.Col, { className: " footer-section-content-column footer-section-content-column-middle" },
+                    React__default['default'].createElement(Content, { colPos: '11', slide: -1, content: props.content, contentElementLayouts: props.contentElementLayouts, contentElementTemplates: props.contentElementTemplates })),
+                React__default['default'].createElement(reactBootstrap.Col, { className: " footer-section-content-column footer-section-content-column-right" },
+                    React__default['default'].createElement(Content, { colPos: '12', slide: -1, content: props.content, contentElementLayouts: props.contentElementLayouts, contentElementTemplates: props.contentElementTemplates })))));
 };
-var Row = /*#__PURE__*/React__default['default'].forwardRef(function (_ref, ref) {
-  var bsPrefix = _ref.bsPrefix,
-      className = _ref.className,
-      noGutters = _ref.noGutters,
-      _ref$as = _ref.as,
-      Component = _ref$as === void 0 ? 'div' : _ref$as,
-      props = _objectWithoutPropertiesLoose(_ref, ["bsPrefix", "className", "noGutters", "as"]);
 
-  var decoratedBsPrefix = useBootstrapPrefix(bsPrefix, 'row');
-  var sizePrefix = decoratedBsPrefix + "-cols";
-  var classes = [];
-  DEVICE_SIZES.forEach(function (brkPoint) {
-    var propValue = props[brkPoint];
-    delete props[brkPoint];
-    var cols;
-
-    if (propValue != null && typeof propValue === 'object') {
-      cols = propValue.cols;
-    } else {
-      cols = propValue;
+var getGridElement = function (element, content, contentElementLayouts, contentElementTemplates, index) {
+    switch (element.type) {
+        case 'row':
+            var children = element.children.map(function (child, index) {
+                return getGridElement(child, content, contentElementLayouts, contentElementTemplates, index);
+            });
+            return React__default['default'].createElement(reactBootstrap.Row, { as: element.tag, key: index }, children);
+        case 'col':
+            return React__default['default'].createElement(reactBootstrap.Col, { as: element.tag, lg: element.size, md: element.size, sm: element.size, xl: element.size, key: index },
+                React__default['default'].createElement(Content, { colPos: element.colPos, content: content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }));
+        default:
+            return React__default['default'].createElement(React__default['default'].Fragment, null);
     }
-
-    var infix = brkPoint !== 'xs' ? "-" + brkPoint : '';
-    if (cols != null) classes.push("" + sizePrefix + infix + "-" + cols);
-  });
-  return /*#__PURE__*/React__default['default'].createElement(Component, _extends({
-    ref: ref
-  }, props, {
-    className: classnames.apply(void 0, [className, decoratedBsPrefix, noGutters && 'no-gutters'].concat(classes))
-  }));
-});
-Row.displayName = 'Row';
-Row.defaultProps = defaultProps;
+};
+var GenericPage = function (props) {
+    var content = React__default['default'].createElement(React__default['default'].Fragment, null);
+    if (props.headlessData.page.appearance.pageContentRows) {
+        content = props.headlessData.page.appearance.pageContentRows.map(function (gridElement, index) {
+            return getGridElement(gridElement, props.headlessData.content, props.contentElementLayouts, props.contentElementTemplates, index);
+        });
+    }
+    return content;
+};
 
 var pageLayouts = {
     //TODO: implement example
-    'layout-0': function (headlessData, pageTemplate, args) {
+    'layout0': function (headlessData, pageTemplate, args) {
         return React__default['default'].createElement(React__default['default'].Fragment, null,
             React__default['default'].createElement("header", null, "LOGO"),
             React__default['default'].createElement("section", null,
@@ -447,7 +303,8 @@ var pageLayouts = {
                 React__default['default'].createElement(section, { name: 'main', pageTemplate: pageTemplate })),
             React__default['default'].createElement("footer", null,
                 React__default['default'].createElement("h3", null, "Hier ist eine andere Section"),
-                React__default['default'].createElement(section, { name: 'border', pageTemplate: pageTemplate })));
+                React__default['default'].createElement(section, { name: 'footer', pageTemplate: pageTemplate })),
+            "ei");
     },
     __generic: function (headlessData, pageTemplate, args) {
         return React__default['default'].createElement(React__default['default'].Fragment, null,
@@ -457,7 +314,7 @@ var pageLayouts = {
 var pageTemplates = {
     __generic: function (headlessData, contentElementLayouts, contentElementTemplates, args) {
         return {
-            main: React__default['default'].createElement("div", null, "_generisch")
+            main: React__default['default'].createElement(GenericPage, { headlessData: headlessData, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })
         };
     },
     example: function (headlessData, contentElementLayout, contentElementTemplates, args) {
@@ -465,7 +322,7 @@ var pageTemplates = {
             main: React__default['default'].createElement(React__default['default'].Fragment, null, "...example")
         };
     },
-    'default': function (headlessData, contentElementLayouts, contentElementTemplates, args) {
+    default: function (headlessData, contentElementLayouts, contentElementTemplates, args) {
         return {
             main: React__default['default'].createElement("div", null, " .... "),
             footer: React__default['default'].createElement("footer", null, "..."),
@@ -491,15 +348,14 @@ var pageTemplates = {
                 React__default['default'].createElement("div", null, "2Columns"),
                 React__default['default'].createElement(Content, { colPos: '8', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }),
                 React__default['default'].createElement("div", { className: "section section-default" },
-                    React__default['default'].createElement(Row, null,
-                        React__default['default'].createElement(Col, null,
+                    React__default['default'].createElement(reactBootstrap.Row, null,
+                        React__default['default'].createElement(reactBootstrap.Col, null,
                             React__default['default'].createElement("main", { className: " maincontent-wrap", role: "main" },
                                 React__default['default'].createElement(Content, { colPos: '0', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))),
-                        React__default['default'].createElement(Col, null,
+                        React__default['default'].createElement(reactBootstrap.Col, null,
                             React__default['default'].createElement(Content, { colPos: '2', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })))),
                 React__default['default'].createElement(Content, { colPos: '9', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
-            footer: React__default['default'].createElement("footer", null, "..."),
-            header: React__default['default'].createElement("header", null, "...")
+            footer: React__default['default'].createElement(FooterContent, { content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }),
         };
     }
 };

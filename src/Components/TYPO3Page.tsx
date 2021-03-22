@@ -8,11 +8,12 @@ import * as CE from './Templates/ContentElements';
 import * as CELayouts from './Layouts/ContentElementsLayouts';
 import {Col, Row} from "react-bootstrap";
 import FooterContent from "./Partials/Page/Structure/FooterContent";
+import GenericPage from "./Templates/Page/GenericPage";
 
 
 const pageLayouts = {
     //TODO: implement example
-    'layout-0': (headlessData, pageTemplate, args = {}) => <>
+    'layout0': (headlessData, pageTemplate, args = {}) => <>
         <header>
             LOGO
         </header>
@@ -23,7 +24,7 @@ const pageLayouts = {
         <footer>
             <h3>Hier ist eine andere Section</h3>
             <Section name={'footer'} pageTemplate={pageTemplate}/>
-        </footer>
+        </footer>ei
     </>,
 
     __generic: (headlessData, pageTemplate, args = {}) => <>
@@ -38,7 +39,7 @@ const pageLayouts = {
 const pageTemplates = {
     __generic: (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
         return {
-            main: <div>_generisch</div>
+            main: <GenericPage headlessData={headlessData} contentElementLayouts={contentElementLayouts} contentElementTemplates={contentElementTemplates} />
         }
     },
     example: (headlessData, contentElementLayout, contentElementTemplates, args = {}) => {
