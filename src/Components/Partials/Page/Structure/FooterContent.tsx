@@ -24,7 +24,7 @@ const FooterContent: React.FC<{ content : any , contentElementLayouts : any , co
                              contentElementTemplates={props.contentElementTemplates}/>
                 </Col>
             </Row>
-        </div>
+        </Container>
     </footer>
 }
 export default FooterContent;
