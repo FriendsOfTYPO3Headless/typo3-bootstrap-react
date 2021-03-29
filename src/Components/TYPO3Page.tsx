@@ -24,7 +24,7 @@ const pageLayouts = {
         <footer>
             <h3>Hier ist eine andere Section</h3>
             <Section name={'footer'} pageTemplate={pageTemplate}/>
-        </footer>ei
+        </footer>
     </>,
 
     __generic: (headlessData, pageTemplate, args = {}) => <>
