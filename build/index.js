@@ -308,6 +308,10 @@ var pageLayouts = {
     __generic: function (headlessData, pageTemplate, args) {
         return React__default['default'].createElement(React__default['default'].Fragment, null,
             React__default['default'].createElement(__GenericLayout, { headlessData: headlessData, pageTemplate: pageTemplate }));
+    },
+    Default: function (headlessData, pageTemplate, args) {
+        return React__default['default'].createElement(React__default['default'].Fragment, null,
+            React__default['default'].createElement(__GenericLayout, { headlessData: headlessData, pageTemplate: pageTemplate }));
     }
 };
 var pageTemplates = {

@@ -3,6 +3,7 @@ import { TYPO3PagePropsInterface } from "./Interfaces";
 declare const pageLayouts: {
     layout0: (headlessData: any, pageTemplate: any, args?: {}) => JSX.Element;
     __generic: (headlessData: any, pageTemplate: any, args?: {}) => JSX.Element;
+    Default: (headlessData: any, pageTemplate: any, args?: {}) => JSX.Element;
 };
 declare const pageTemplates: {
     __generic: (headlessData: any, contentElementLayouts: any, contentElementTemplates: any, args?: {}) => {

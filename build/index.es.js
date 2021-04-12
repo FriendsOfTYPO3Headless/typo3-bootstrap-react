@@ -300,6 +300,10 @@ var pageLayouts = {
     __generic: function (headlessData, pageTemplate, args) {
         return React.createElement(React.Fragment, null,
             React.createElement(__GenericLayout, { headlessData: headlessData, pageTemplate: pageTemplate }));
+    },
+    Default: function (headlessData, pageTemplate, args) {
+        return React.createElement(React.Fragment, null,
+            React.createElement(__GenericLayout, { headlessData: headlessData, pageTemplate: pageTemplate }));
     }
 };
 var pageTemplates = {

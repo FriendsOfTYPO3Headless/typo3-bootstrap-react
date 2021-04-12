@@ -32,6 +32,13 @@ const pageLayouts = {
             headlessData={headlessData}
             pageTemplate={pageTemplate}
         />
+    </>,
+
+    Default: (headlessData, pageTemplate, args = {}) => <>
+        <__GenericLayout
+            headlessData={headlessData}
+            pageTemplate={pageTemplate}
+        />
     </>
 }
 
