@@ -23,6 +23,7 @@ declare const pageTemplates: {
     '2_columns': (headlessData: any, contentElementLayouts: any, contentElementTemplates: any, args?: {}) => {
         border: JSX.Element;
         main: JSX.Element;
+        border: JSX.Element;
         footer: JSX.Element;
     };
     '2_columns_25_75': (headlessData: any, contentElementLayouts: any, contentElementTemplates: any, args?: {}) => {
@@ -47,6 +48,25 @@ declare const pageTemplates: {
     };
     special_start: (headlessData: any, contentElementLayouts: any, contentElementTemplates: any, args?: {}) => {
         border: JSX.Element;
+        main: JSX.Element;
+        footer: JSX.Element;
+        border: JSX.Element;
+    };
+    '2_columns_25_75': (headlessData: any, contentElementLayouts: any, contentElementTemplates: any, args?: {}) => {
+        main: JSX.Element;
+        footer: JSX.Element;
+        border: JSX.Element;
+    };
+    '2_columns_50_50': (headlessData: any, contentElementLayouts: any, contentElementTemplates: any, args?: {}) => {
+        main: JSX.Element;
+        footer: JSX.Element;
+    };
+    '3_columns': (headlessData: any, contentElementLayouts: any, contentElementTemplates: any, args?: {}) => {
+        main: JSX.Element;
+        footer: JSX.Element;
+    };
+    special_feature: (headlessData: any, contentElementLayouts: any, contentElementTemplates: any, args?: {}) => {};
+    special_start: (headlessData: any, contentElementLayouts: any, contentElementTemplates: any, args?: {}) => {
         main: JSX.Element;
         footer: JSX.Element;
     };
