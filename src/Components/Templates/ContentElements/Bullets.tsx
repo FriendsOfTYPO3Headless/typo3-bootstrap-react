@@ -6,10 +6,10 @@ console.log(props.data)
 
         {Object.keys(props.data).map((key)=> {
 
-            if (props.data) {
+
                 switch (props.data.bulletsType) {
                     case  "1" :
-                        <ul><li>{props.data}</li></ul>;
+                        <ol><li>{props.data}</li></ol>;
                         break;
 
                     case "2":
@@ -19,7 +19,7 @@ console.log(props.data)
                         <ul><li>{props.data}</li></ul>;
                         break;
                 }
-            }
+
 
         })}
             {/* <f:if condition="{bullets}">

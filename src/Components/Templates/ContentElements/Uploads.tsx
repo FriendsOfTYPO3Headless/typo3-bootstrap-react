@@ -10,16 +10,17 @@ const Uploads: React.FC<{ data: any }> = props => {
         <ul className="media-list">
 
             {Object.keys(props.data.media).map((key) => {
-                //console.log(props.data)
-                let description = <></>
-               // if(props.data.media[key].description === true){
+               // console.log(props.data)
+                let description = props.data.media[key].properties.description;
+                if(description === true){
+                   description = props.data.media[key].properties.description
+                }
 
-             //   }
+
                 let content ;
 
                 switch (props.data.displayInformation) {
-                    case  2:
-                        console.log(props.data.media[key].properties.filename)
+                    case  "2":
                         content = <>  <img src={props.data.media[key].publicUrl}/>
                             <a href={props.data.media[key].publicUrl}> {props.data.media[key].properties.filename}  </a>
                          </>
@@ -31,7 +32,7 @@ const Uploads: React.FC<{ data: any }> = props => {
             return <li key={key} >
                 {content}
                 {description}
-            </li>
+                </li>
 
             })}
 

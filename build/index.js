@@ -107,27 +107,50 @@ var Textpic = function (props) {
 var Bullets = function (props) {
     console.log(props.data);
     return React__default['default'].createElement("div", { className: "bullets" }, Object.keys(props.data).map(function (key) {
-        if (props.data) {
-            switch (props.data.bulletsType) {
-                case "1":
-                    React__default['default'].createElement("ul", null,
-                        React__default['default'].createElement("li", null, props.data));
-                    break;
-                case "2":
-                    break;
-                default:
-                    React__default['default'].createElement("ul", null,
-                        React__default['default'].createElement("li", null, props.data));
-                    break;
-            }
+        switch (props.data.bulletsType) {
+            case "1":
+                React__default['default'].createElement("ol", null,
+                    React__default['default'].createElement("li", null, props.data));
+                break;
+            case "2":
+                break;
+            default:
+                React__default['default'].createElement("ul", null,
+                    React__default['default'].createElement("li", null, props.data));
+                break;
         }
     }));
 };
 
+var Image = function (props) {
+    return React__default['default'].createElement("div", { className: "image" });
+};
+
+var Div = function (props) {
+    return React__default['default'].createElement("div", { className: "div" },
+        React__default['default'].createElement("hr", null, " "));
+};
+
+var Table = function (props) {
+    console.log(props.data);
+    return React__default['default'].createElement("div", { className: "table" }, Object.keys(props.data).map(function (key) {
+        if (props.data.tableCaption === true) {
+            {
+                props.data.tableCaption;
+            }
+        }
+        if (props.data.headerPosition === 1) ;
+        if (props.data.tabelTfoot) ;
+    }));
+};
+
+var Shortcut = function (props) {
+    return React__default['default'].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.shortcuts } });
+};
+
 var Textmedia = function (props) {
+    console.log(props.data);
     return React__default['default'].createElement("div", { className: "textmedia" },
-        React__default['default'].createElement("div", { className: "imageConfig" }, " "),
-        React__default['default'].createElement("div", null, " "),
         React__default['default'].createElement("div", { className: "textmedia textmedia-gallery" }),
         React__default['default'].createElement("div", { className: "textmedia-item textmedia-text" },
             React__default['default'].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } })));
@@ -137,14 +160,14 @@ var Uploads = function (props) {
     //console.log(props.data.media)
     return React__default['default'].createElement("div", { className: "uploads" },
         React__default['default'].createElement("ul", { className: "media-list" }, Object.keys(props.data.media).map(function (key) {
-            //console.log(props.data)
-            var description = React__default['default'].createElement(React__default['default'].Fragment, null);
-            // if(props.data.media[key].description === true){
-            //   }
+            // console.log(props.data)
+            var description = props.data.media[key].properties.description;
+            if (description === true) {
+                description = props.data.media[key].properties.description;
+            }
             var content;
             switch (props.data.displayInformation) {
-                case 2:
-                    console.log(props.data.media[key].properties.filename);
+                case "2":
                     content = React__default['default'].createElement(React__default['default'].Fragment, null,
                         "  ",
                         React__default['default'].createElement("img", { src: props.data.media[key].publicUrl }),
@@ -163,6 +186,13 @@ var Uploads = function (props) {
                 content,
                 description);
         })));
+};
+
+var MenuSitemap = function (props) {
+    console.log(props.data);
+    return React__default['default'].createElement("div", { className: "menuSitemap" }, Object.keys(props.data).map(function (key) {
+        //  <li> <a href={props.data}> {props.data}  </a></li>
+    }));
 };
 
 var BackgroundImage = function (props) {
@@ -570,6 +600,21 @@ var contentElementTemplates = {
     },
     bullets: function (headlessContentData, args) {
         return React__default['default'].createElement(Bullets, { data: headlessContentData.content });
+    },
+    image: function (headlessContentData, args) {
+        return React__default['default'].createElement(Image, { data: headlessContentData.content });
+    },
+    shortcut: function (headlessContentData, args) {
+        return React__default['default'].createElement(Shortcut, { data: headlessContentData.content });
+    },
+    table: function (headlessContentData, args) {
+        return React__default['default'].createElement(Table, { data: headlessContentData.content });
+    },
+    div: function (headlessContentData, args) {
+        return React__default['default'].createElement(Div, { data: headlessContentData.content });
+    },
+    menu_sitemap: function (headlessContentData, args) {
+        return React__default['default'].createElement(MenuSitemap, { data: headlessContentData.content });
     }
 };
 var TYPO3Page = function (props) {

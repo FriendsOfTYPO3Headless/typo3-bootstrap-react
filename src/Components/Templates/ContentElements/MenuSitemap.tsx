@@ -1,26 +1,27 @@
 import React from 'react';
 
 const MenuSitemap: React.FC<{ data: any }> = props => {
-
+    console.log(props.data)
     return <div className="menuSitemap">
-        <div condition="{menu}">
-            {/*<f:render partial="Menu/SkipNavigation" arguments="{_all}" /> */}
-        </div>
-            <div>
-        {/*<f:render section="Menu" arguments="{menu: menu}" />*/} </div>
 
-    <div className="Menu">
+        {Object.keys(props.data).map((key)=> {
 
-        <div condition="{menu}">
-            <ul>
-                <div each="{menu}" as="page">
-                    <li>
-                        {/*<a href="{page.link}"{f:if(condition: page.target, then: ' target="{page.target}"')} title="{page.title}">{page.title}</a>
-                        <f:render section="Menu" arguments="{menu: page.children}" /> */}
-                    </li>
-                </div>
-            </ul>
-        </div>
+
+            //  <li> <a href={props.data}> {props.data}  </a></li>
+
+
+        })}
+
+        {/*   <f:if condition="{menu}">
+        <ul>
+            <f:for each="{menu}" as="page">
+                <li>
+                    <a href="{page.link}"{f:if(condition: page.target, then: ' target="{page.target}"')} title="{page.title}">{page.title}</a>
+                    <f:render section="Menu" arguments="{menu: page.children}" />
+                </li>
+            </f:for>
+        </ul>
+    </f:if> */ }
     </div>
 }
 
