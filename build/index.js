@@ -104,6 +104,39 @@ var Textpic = function (props) {
             React__default['default'].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } })));
 };
 
+var Textmedia = function (props) {
+    return React__default['default'].createElement("div", { className: "textmedia" },
+        React__default['default'].createElement("div", { className: "imageConfig" }, " "),
+        React__default['default'].createElement("div", null, " "),
+        React__default['default'].createElement("div", { className: "textmedia textmedia-gallery" }),
+        React__default['default'].createElement("div", { className: "textmedia-item textmedia-text" },
+            React__default['default'].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } })));
+};
+
+var Uploads = function (props) {
+    //console.log(props.data.media)
+    return React__default['default'].createElement("div", { className: "uploads" },
+        React__default['default'].createElement("ul", { className: "media-list" }, Object.keys(props.data.media).map(function (key) {
+            console.log(props.data);
+            if (props.data.displayInformation == 2) {
+                return React__default['default'].createElement("li", null,
+                    React__default['default'].createElement("img", { src: props.data.media[key].publicUrl }),
+                    React__default['default'].createElement("a", { href: props.data.media[key].publicUrl, key: key },
+                        " ",
+                        props.data.media[key].properties.filename,
+                        "  "));
+            }
+            if (props.data.displayInformation == 1) ;
+            if (props.data.displayInformation == 0) {
+                return React__default['default'].createElement("li", null,
+                    React__default['default'].createElement("a", { href: props.data.media[key].publicUrl, key: key },
+                        " ",
+                        props.data.media[key].properties.filename,
+                        "  "));
+            }
+        })));
+};
+
 var BackgroundImage = function (props) {
     if (props.data.appearance.backgroundImage.length < 1) {
         return null;
@@ -500,6 +533,12 @@ var contentElementTemplates = {
     },
     textpic: function (headlessContentData, args) {
         return React__default['default'].createElement(Textpic, { data: headlessContentData.content });
+    },
+    uploads: function (headlessContentData, args) {
+        return React__default['default'].createElement(Uploads, { data: headlessContentData.content });
+    },
+    textmedia: function (headlessContentData, args) {
+        return React__default['default'].createElement(Textmedia, { data: headlessContentData.content });
     }
 };
 var TYPO3Page = function (props) {

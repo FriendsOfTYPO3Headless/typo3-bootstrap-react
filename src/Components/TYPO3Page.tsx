@@ -420,7 +420,9 @@ const contentElementTemplates = {
         return <>{headlessContentData.type}</>
     },
     text: (headlessContentData, args = {}) => <CE.Text data={headlessContentData.content}/>,
-    textpic: (headlessContentData, args = {}) => <CE.Textpic data={headlessContentData.content}/>
+    textpic: (headlessContentData, args = {}) => <CE.Textpic data={headlessContentData.content}/>,
+    uploads: (headlessContentData, args = {}) => <CE.Uploads data={headlessContentData.content}/>,
+    textmedia: (headlessContentData, args = {}) => <CE.Textmedia data={headlessContentData.content}/>
 }
 
 

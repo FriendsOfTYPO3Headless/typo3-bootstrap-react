@@ -58,6 +58,8 @@ declare const contentElementTemplates: {
     __generic: (headlessContentData: any, args?: {}) => JSX.Element;
     text: (headlessContentData: any, args?: {}) => JSX.Element;
     textpic: (headlessContentData: any, args?: {}) => JSX.Element;
+    uploads: (headlessContentData: any, args?: {}) => JSX.Element;
+    textmedia: (headlessContentData: any, args?: {}) => JSX.Element;
 };
 declare const TYPO3Page: React.FC<TYPO3PagePropsInterface>;
 export default TYPO3Page;

@@ -96,6 +96,39 @@ var Textpic = function (props) {
             React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } })));
 };
 
+var Textmedia = function (props) {
+    return React.createElement("div", { className: "textmedia" },
+        React.createElement("div", { className: "imageConfig" }, " "),
+        React.createElement("div", null, " "),
+        React.createElement("div", { className: "textmedia textmedia-gallery" }),
+        React.createElement("div", { className: "textmedia-item textmedia-text" },
+            React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } })));
+};
+
+var Uploads = function (props) {
+    //console.log(props.data.media)
+    return React.createElement("div", { className: "uploads" },
+        React.createElement("ul", { className: "media-list" }, Object.keys(props.data.media).map(function (key) {
+            console.log(props.data);
+            if (props.data.displayInformation == 2) {
+                return React.createElement("li", null,
+                    React.createElement("img", { src: props.data.media[key].publicUrl }),
+                    React.createElement("a", { href: props.data.media[key].publicUrl, key: key },
+                        " ",
+                        props.data.media[key].properties.filename,
+                        "  "));
+            }
+            if (props.data.displayInformation == 1) ;
+            if (props.data.displayInformation == 0) {
+                return React.createElement("li", null,
+                    React.createElement("a", { href: props.data.media[key].publicUrl, key: key },
+                        " ",
+                        props.data.media[key].properties.filename,
+                        "  "));
+            }
+        })));
+};
+
 var BackgroundImage = function (props) {
     if (props.data.appearance.backgroundImage.length < 1) {
         return null;
@@ -492,6 +525,12 @@ var contentElementTemplates = {
     },
     textpic: function (headlessContentData, args) {
         return React.createElement(Textpic, { data: headlessContentData.content });
+    },
+    uploads: function (headlessContentData, args) {
+        return React.createElement(Uploads, { data: headlessContentData.content });
+    },
+    textmedia: function (headlessContentData, args) {
+        return React.createElement(Textmedia, { data: headlessContentData.content });
     }
 };
 var TYPO3Page = function (props) {

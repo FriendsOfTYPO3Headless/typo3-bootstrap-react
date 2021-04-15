@@ -1,23 +1,51 @@
 import React from 'react';
+import getOwnPropertyDescriptor = Reflect.getOwnPropertyDescriptor;
 
 const Uploads: React.FC<{ data: any }> = props => {
 
+
+   //console.log(props.data.media)
+
     return <div className="uploads">
-        if (files) {
-        <ul className="media-list">
-            {/* uploads.forEach="{files}" as="file" iteration="fileIterator">
-                <li class="media">
-                    if (data.uploads_type == 2) {
-                        if (file -> bk2k:file.isImage()} || file -> bk2k:file.isMedia()) {
-                            <f:if condition="{f:uri.image(src: 'file:{f:if(condition: file.originalFile, then: \'file:{file.originalFile.uid}\', else: \'file:{file.uid}\')}')} != '/'">
-                                <div className="media-left">
-                                    <a href="{file.publicUrl}"{f:if(condition: file.properties.title, then: ' title="{file.properties.title}"')}{f:if(condition: data.target, then: ' target="{data.target}"')}>
-                                        <f:media file="{file}" width="{settings.uploads.preview.width}" height="{settings.uploads.preview.height}" alt="{file.properties.alternative}" />
-                                    </a>
-                                </div>
-                            </f:if>
-                        }
-                    }
+    <ul className="media-list">
+
+        {Object.keys(props.data.media).map((key)=> {
+            console.log(props.data)
+
+            if( props.data.displayInformation ==2) {
+                 return <li><img src={props.data.media[key].publicUrl}/>
+                     <a href={props.data.media[key].publicUrl} key={key}> {props.data.media[key].properties.filename}  </a>
+                 </li>
+        }
+
+            if( props.data.displayInformation ==1) {
+
+
+            }
+            if( props.data.displayInformation ==0) {
+                 return <li>
+                    <a href={props.data.media[key].publicUrl} key={key}> {props.data.media[key].properties.filename}  </a>
+                 </li>
+            }
+
+        })}
+
+
+        {/*
+
+</ul>
+        {Object.keys(props.data.media.properties.publicUrl).map((key) =>
+            <option key={'Links-' + key} value={key}>{data.media[key]}</option>
+        )}
+
+
+
+
+        <a href="props.data."
+               title="filename" target="_blank"><span className="uploads-filename">{props.data.media.properties.filename}</span></a> */}
+
+        {/*
+
                     <div className="media-body">
                         <h4 className="media-heading">
                             <a href="{file.publicUrl}"{f:if(condition: file.properties.title, then: ' title="{file.properties.title}"')}{f:if(condition: data.target, then: ' target="{data.target}"')}>
@@ -57,9 +85,11 @@ const Uploads: React.FC<{ data: any }> = props => {
                         }
                     </div>
                 </li>
-            </f:for> */ }
+            </f:for>
         </ul>
        }
+    </div> */}
+    </ul>
     </div>
 }
 
