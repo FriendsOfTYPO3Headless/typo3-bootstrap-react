@@ -1,7 +1,7 @@
 import Text from './ContentElements/Text'
 import Textpic from './ContentElements/Textpic'
-/*import Bullets from './ContentElements/Bullets'
-import Div from './ContentElements/Div'
+import Bullets from './ContentElements/Bullets'
+/* import Div from './ContentElements/Div'
 import FormFormFramework from './ContentElements/FormFormFramework'
 import Html from './ContentElements/Html'
 import Image from './ContentElements/Image'
@@ -27,8 +27,8 @@ import Uploads from './ContentElements/Uploads'
 export {
     Text,
     Textpic,
-    /*  Bullets,
-      Div,
+     Bullets,
+    /*  Div,
       FormFormFramework,
       Html,
       Image,

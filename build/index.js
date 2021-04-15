@@ -104,6 +104,26 @@ var Textpic = function (props) {
             React__default['default'].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } })));
 };
 
+var Bullets = function (props) {
+    console.log(props.data);
+    return React__default['default'].createElement("div", { className: "bullets" }, Object.keys(props.data).map(function (key) {
+        if (props.data) {
+            switch (props.data.bulletsType) {
+                case "1":
+                    React__default['default'].createElement("ul", null,
+                        React__default['default'].createElement("li", null, props.data));
+                    break;
+                case "2":
+                    break;
+                default:
+                    React__default['default'].createElement("ul", null,
+                        React__default['default'].createElement("li", null, props.data));
+                    break;
+            }
+        }
+    }));
+};
+
 var Textmedia = function (props) {
     return React__default['default'].createElement("div", { className: "textmedia" },
         React__default['default'].createElement("div", { className: "imageConfig" }, " "),
@@ -117,23 +137,31 @@ var Uploads = function (props) {
     //console.log(props.data.media)
     return React__default['default'].createElement("div", { className: "uploads" },
         React__default['default'].createElement("ul", { className: "media-list" }, Object.keys(props.data.media).map(function (key) {
-            console.log(props.data);
-            if (props.data.displayInformation == 2) {
-                return React__default['default'].createElement("li", null,
-                    React__default['default'].createElement("img", { src: props.data.media[key].publicUrl }),
-                    React__default['default'].createElement("a", { href: props.data.media[key].publicUrl, key: key },
+            //console.log(props.data)
+            var description = React__default['default'].createElement(React__default['default'].Fragment, null);
+            // if(props.data.media[key].description === true){
+            //   }
+            var content;
+            switch (props.data.displayInformation) {
+                case 2:
+                    console.log(props.data.media[key].properties.filename);
+                    content = React__default['default'].createElement(React__default['default'].Fragment, null,
+                        "  ",
+                        React__default['default'].createElement("img", { src: props.data.media[key].publicUrl }),
+                        React__default['default'].createElement("a", { href: props.data.media[key].publicUrl },
+                            " ",
+                            props.data.media[key].properties.filename,
+                            "  "));
+                    break;
+                default:
+                    content = React__default['default'].createElement("a", { href: props.data.media[key].publicUrl },
                         " ",
                         props.data.media[key].properties.filename,
-                        "  "));
+                        "  ");
             }
-            if (props.data.displayInformation == 1) ;
-            if (props.data.displayInformation == 0) {
-                return React__default['default'].createElement("li", null,
-                    React__default['default'].createElement("a", { href: props.data.media[key].publicUrl, key: key },
-                        " ",
-                        props.data.media[key].properties.filename,
-                        "  "));
-            }
+            return React__default['default'].createElement("li", { key: key },
+                content,
+                description);
         })));
 };
 
@@ -539,6 +567,9 @@ var contentElementTemplates = {
     },
     textmedia: function (headlessContentData, args) {
         return React__default['default'].createElement(Textmedia, { data: headlessContentData.content });
+    },
+    bullets: function (headlessContentData, args) {
+        return React__default['default'].createElement(Bullets, { data: headlessContentData.content });
     }
 };
 var TYPO3Page = function (props) {

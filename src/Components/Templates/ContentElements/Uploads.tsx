@@ -4,34 +4,39 @@ import getOwnPropertyDescriptor = Reflect.getOwnPropertyDescriptor;
 const Uploads: React.FC<{ data: any }> = props => {
 
 
-   //console.log(props.data.media)
+    //console.log(props.data.media)
 
     return <div className="uploads">
-    <ul className="media-list">
+        <ul className="media-list">
 
-        {Object.keys(props.data.media).map((key)=> {
-            console.log(props.data)
+            {Object.keys(props.data.media).map((key) => {
+                //console.log(props.data)
+                let description = <></>
+               // if(props.data.media[key].description === true){
 
-            if( props.data.displayInformation ==2) {
-                 return <li><img src={props.data.media[key].publicUrl}/>
-                     <a href={props.data.media[key].publicUrl} key={key}> {props.data.media[key].properties.filename}  </a>
-                 </li>
-        }
+             //   }
+                let content ;
 
-            if( props.data.displayInformation ==1) {
+                switch (props.data.displayInformation) {
+                    case  2:
+                        console.log(props.data.media[key].properties.filename)
+                        content = <>  <img src={props.data.media[key].publicUrl}/>
+                            <a href={props.data.media[key].publicUrl}> {props.data.media[key].properties.filename}  </a>
+                         </>
+                        break;
+                    default :
+                      content = <a href={props.data.media[key].publicUrl}> {props.data.media[key].properties.filename}  </a>
+
+                }
+            return <li key={key} >
+                {content}
+                {description}
+            </li>
+
+            })}
 
 
-            }
-            if( props.data.displayInformation ==0) {
-                 return <li>
-                    <a href={props.data.media[key].publicUrl} key={key}> {props.data.media[key].properties.filename}  </a>
-                 </li>
-            }
-
-        })}
-
-
-        {/*
+            {/*
 
 </ul>
         {Object.keys(props.data.media.properties.publicUrl).map((key) =>
@@ -44,7 +49,7 @@ const Uploads: React.FC<{ data: any }> = props => {
         <a href="props.data."
                title="filename" target="_blank"><span className="uploads-filename">{props.data.media.properties.filename}</span></a> */}
 
-        {/*
+            {/*
 
                     <div className="media-body">
                         <h4 className="media-heading">
@@ -89,7 +94,7 @@ const Uploads: React.FC<{ data: any }> = props => {
         </ul>
        }
     </div> */}
-    </ul>
+        </ul>
     </div>
 }
 

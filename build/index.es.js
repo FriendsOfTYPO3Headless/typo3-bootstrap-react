@@ -96,6 +96,26 @@ var Textpic = function (props) {
             React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } })));
 };
 
+var Bullets = function (props) {
+    console.log(props.data);
+    return React.createElement("div", { className: "bullets" }, Object.keys(props.data).map(function (key) {
+        if (props.data) {
+            switch (props.data.bulletsType) {
+                case "1":
+                    React.createElement("ul", null,
+                        React.createElement("li", null, props.data));
+                    break;
+                case "2":
+                    break;
+                default:
+                    React.createElement("ul", null,
+                        React.createElement("li", null, props.data));
+                    break;
+            }
+        }
+    }));
+};
+
 var Textmedia = function (props) {
     return React.createElement("div", { className: "textmedia" },
         React.createElement("div", { className: "imageConfig" }, " "),
@@ -109,23 +129,31 @@ var Uploads = function (props) {
     //console.log(props.data.media)
     return React.createElement("div", { className: "uploads" },
         React.createElement("ul", { className: "media-list" }, Object.keys(props.data.media).map(function (key) {
-            console.log(props.data);
-            if (props.data.displayInformation == 2) {
-                return React.createElement("li", null,
-                    React.createElement("img", { src: props.data.media[key].publicUrl }),
-                    React.createElement("a", { href: props.data.media[key].publicUrl, key: key },
+            //console.log(props.data)
+            var description = React.createElement(React.Fragment, null);
+            // if(props.data.media[key].description === true){
+            //   }
+            var content;
+            switch (props.data.displayInformation) {
+                case 2:
+                    console.log(props.data.media[key].properties.filename);
+                    content = React.createElement(React.Fragment, null,
+                        "  ",
+                        React.createElement("img", { src: props.data.media[key].publicUrl }),
+                        React.createElement("a", { href: props.data.media[key].publicUrl },
+                            " ",
+                            props.data.media[key].properties.filename,
+                            "  "));
+                    break;
+                default:
+                    content = React.createElement("a", { href: props.data.media[key].publicUrl },
                         " ",
                         props.data.media[key].properties.filename,
-                        "  "));
+                        "  ");
             }
-            if (props.data.displayInformation == 1) ;
-            if (props.data.displayInformation == 0) {
-                return React.createElement("li", null,
-                    React.createElement("a", { href: props.data.media[key].publicUrl, key: key },
-                        " ",
-                        props.data.media[key].properties.filename,
-                        "  "));
-            }
+            return React.createElement("li", { key: key },
+                content,
+                description);
         })));
 };
 
@@ -531,6 +559,9 @@ var contentElementTemplates = {
     },
     textmedia: function (headlessContentData, args) {
         return React.createElement(Textmedia, { data: headlessContentData.content });
+    },
+    bullets: function (headlessContentData, args) {
+        return React.createElement(Bullets, { data: headlessContentData.content });
     }
 };
 var TYPO3Page = function (props) {
