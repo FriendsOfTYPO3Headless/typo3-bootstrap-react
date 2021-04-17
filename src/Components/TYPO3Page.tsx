@@ -46,7 +46,8 @@ const pageLayouts = {
 const pageTemplates = {
     __generic: (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
         return {
-            main: <GenericPage headlessData={headlessData} contentElementLayouts={contentElementLayouts} contentElementTemplates={contentElementTemplates} />
+            main: <GenericPage headlessData={headlessData} contentElementLayouts={contentElementLayouts}
+                               contentElementTemplates={contentElementTemplates}/>
         }
     },
     example: (headlessData, contentElementLayout, contentElementTemplates, args = {}) => {
@@ -56,11 +57,22 @@ const pageTemplates = {
     },
     default: (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
         return {
-            border: <Content colPos={'3'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                             contentElementTemplates={contentElementTemplates}/>,
+            border:
+                <Row>
+                    <Col>
+                        <Content colPos={'3'} content={headlessData.content}
+                                 contentElementLayouts={contentElementLayouts}
+                                 contentElementTemplates={contentElementTemplates}/>
+                    </Col>
+                </Row>,
             main: <>
-                <Content colPos={'8'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                         contentElementTemplates={contentElementTemplates}/>
+                <Row>
+                    <Col>
+                        <Content colPos={'8'} content={headlessData.content}
+                                 contentElementLayouts={contentElementLayouts}
+                                 contentElementTemplates={contentElementTemplates}/>
+                    </Col>
+                </Row>
                 <div className="section section-default">
                     <Row>
                         <Col>
@@ -70,63 +82,6 @@ const pageTemplates = {
                         </Col>
                     </Row>
                 </div>
-                <Content colPos={'9'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                         contentElementTemplates={contentElementTemplates}/>
-            </>,
-
-        }
-    },
-    simple: (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
-        return {
-            border: <Content colPos={'3'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                             contentElementTemplates={contentElementTemplates}/>,
-            //    main: <Main headlessData={headlessData} contentElementLayouts={contentElementLayouts} contentElementTemplates={contentElementTemplates} args={args}/>,
-            main: <>
-                <Content colPos={'8'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                         contentElementTemplates={contentElementTemplates}/>
-                <div className="section section-default">
-                    <Row>
-                        <Col>
-                            <Content colPos={'0'} content={headlessData.content}
-                                     contentElementLayouts={contentElementLayouts}
-                                     contentElementTemplates={contentElementTemplates}/>
-                        </Col>
-                    </Row>
-                </div>
-                <Content colPos={'9'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                         contentElementTemplates={contentElementTemplates}/>
-            </>,
-
-        }
-    },
-    '2_columns': (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
-        return {
-            border: <Content colPos={'3'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                             contentElementTemplates={contentElementTemplates}/>,
-            main: <>
-                <div>2Columns</div>
-
-                <Content colPos={'8'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                         contentElementTemplates={contentElementTemplates}/>
-
-                <div className="section section-default">
-                    <Row>
-                        <Col className="col-sm-8">
-                            <main className=" maincontent-wrap" role="main">
-                                <Content colPos={'0'} content={headlessData.content}
-                                         contentElementLayouts={contentElementLayouts}
-                                         contentElementTemplates={contentElementTemplates}/>
-                            </main>
-                        </Col>
-                        <Col className=" subcontent-wrap col-sm-4">
-                            <Content colPos={'2'} content={headlessData.content}
-                                     contentElementLayouts={contentElementLayouts}
-                                     contentElementTemplates={contentElementTemplates}/>
-                        </Col>
-                    </Row>
-                </div>
-
-
                 <Content colPos={'9'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
                          contentElementTemplates={contentElementTemplates}/>
             </>,
@@ -137,26 +92,122 @@ const pageTemplates = {
 
         }
     },
-    '2_columns_25_75': (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
+    simple: (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
         return {
-            border: <Content colPos={'3'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                             contentElementTemplates={contentElementTemplates}/>,
-            main: <>
-                <div>2Columns2575</div>
+            border:
+                <Row>
+                    <Col>
+                        <Content colPos={'3'} content={headlessData.content}
+                                 contentElementLayouts={contentElementLayouts}
+                                 contentElementTemplates={contentElementTemplates}/>
+                    </Col>
+                </Row>,
 
-                <Content colPos={'8'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                         contentElementTemplates={contentElementTemplates}/>
+            main: <>
+                <Row>
+                    <Col>
+                        <Content colPos={'8'} content={headlessData.content}
+                                 contentElementLayouts={contentElementLayouts}
+                                 contentElementTemplates={contentElementTemplates}/>
+                    </Col>
+                </Row>
+                <div className="section section-default">
+                    <Row>
+                        <Col>
+                            <Content colPos={'0'} content={headlessData.content}
+                                     contentElementLayouts={contentElementLayouts}
+                                     contentElementTemplates={contentElementTemplates}/>
+                        </Col>
+                    </Row>
+                </div>
+                <Row>
+                    <Col>
+                        <Content colPos={'9'} content={headlessData.content}
+                                 contentElementLayouts={contentElementLayouts}
+                                 contentElementTemplates={contentElementTemplates}/>
+                    </Col>
+                </Row>
+            </>,
+
+
+        }
+    },
+    '2_columns': (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
+        return {
+            border: <Row>
+                <Col>
+                    <Content colPos={'3'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
+                             contentElementTemplates={contentElementTemplates}/>
+                </Col>
+            </Row>,
+            main: <>
+                <Row>
+                    <Col>
+                        <Content colPos={'8'} content={headlessData.content}
+                                 contentElementLayouts={contentElementLayouts}
+                                 contentElementTemplates={contentElementTemplates}/>
+                    </Col>
+                </Row>
 
                 <div className="section section-default">
                     <Row>
-                        <Col className="col-sm-4">
-                            <main className=" maincontent-wrap" role="main">
+                        <Col md="8" as="main" className=" maincontent-wrap" role="main">
+                            <Content colPos={'0'} content={headlessData.content}
+                                     contentElementLayouts={contentElementLayouts}
+                                     contentElementTemplates={contentElementTemplates}/>
+                        </Col>
+                        <Col className=" subcontent-wrap " md="4">
+                            <Content colPos={'2'} content={headlessData.content}
+                                     contentElementLayouts={contentElementLayouts}
+                                     contentElementTemplates={contentElementTemplates}/>
+                        </Col>
+                    </Row>
+                </div>
+
+                <Row>
+                    <Col>
+                        <Content colPos={'9'} content={headlessData.content}
+                                 contentElementLayouts={contentElementLayouts}
+                                 contentElementTemplates={contentElementTemplates}/>
+                    </Col>
+                </Row>
+
+            </>,
+            footer: <FooterContent content={headlessData.content}
+                                   contentElementLayouts={contentElementLayouts}
+                                   contentElementTemplates={contentElementTemplates}/>,
+
+
+        }
+    },
+    '2_columns_25_75': (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
+        return {
+            border:
+                <Row>
+                    <Col>
+                        <Content colPos={'3'} content={headlessData.content}
+                                 contentElementLayouts={contentElementLayouts}
+                                 contentElementTemplates={contentElementTemplates}/>
+                    </Col>
+                </Row>,
+            main: <>
+                <Row>
+                    <Col>
+                        <Content colPos={'8'} content={headlessData.content}
+                                 contentElementLayouts={contentElementLayouts}
+                                 contentElementTemplates={contentElementTemplates}/>
+                    </Col>
+                </Row>
+                <div className="section section-default">
+                    <Row>
+                        <Col md="4"   as="main" className=" maincontent-wrap" role="main">
+
                                 <Content colPos={'0'} content={headlessData.content}
                                          contentElementLayouts={contentElementLayouts}
                                          contentElementTemplates={contentElementTemplates}/>
-                            </main>
+
                         </Col>
-                        <Col className=" subcontent-wrap col-sm-8" >
+                        <Col className=" subcontent-wrap" md="8">
                             <Content colPos={'1'} content={headlessData.content}
                                      contentElementLayouts={contentElementLayouts}
                                      contentElementTemplates={contentElementTemplates}/>
@@ -164,9 +215,13 @@ const pageTemplates = {
                     </Row>
                 </div>
 
-
-                <Content colPos={'9'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                         contentElementTemplates={contentElementTemplates}/>
+                <Row>
+                    <Col>
+                        <Content colPos={'9'} content={headlessData.content}
+                                 contentElementLayouts={contentElementLayouts}
+                                 contentElementTemplates={contentElementTemplates}/>
+                    </Col>
+                </Row>
             </>,
 
             footer: <FooterContent content={headlessData.content}
@@ -178,23 +233,31 @@ const pageTemplates = {
     },
     '2_columns_50_50': (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
         return {
-            border: <Content colPos={'3'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                             contentElementTemplates={contentElementTemplates}/>,
+            border:
+                <Row>
+                    <Col>
+                        <Content colPos={'3'} content={headlessData.content}
+                                 contentElementLayouts={contentElementLayouts}
+                                 contentElementTemplates={contentElementTemplates}/>
+                    </Col>
+                </Row>,
             main: <>
-                <div>2Columns5050</div>
 
-                <Content colPos={'8'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                         contentElementTemplates={contentElementTemplates}/>
+                <Row>
+                    <Col>
+                        <Content colPos={'8'} content={headlessData.content}
+                                 contentElementLayouts={contentElementLayouts}
+                                 contentElementTemplates={contentElementTemplates}/>
+                    </Col>
+                </Row>
                 <div className="section section-default">
                     <Row>
-                        <Col className="col-sm-6">
-                            <main className=" maincontent-wrap" role="main">
+                        <Col md="6" as="main" className=" maincontent-wrap" role="main">
                                 <Content colPos={'0'} content={headlessData.content}
                                          contentElementLayouts={contentElementLayouts}
                                          contentElementTemplates={contentElementTemplates}/>
-                            </main>
                         </Col>
-                        <Col className=" subcontent-wrap col-sm-6">
+                        <Col className=" subcontent-wrap " md="6">
                             <Content colPos={'2'} content={headlessData.content}
                                      contentElementLayouts={contentElementLayouts}
                                      contentElementTemplates={contentElementTemplates}/>
@@ -202,9 +265,13 @@ const pageTemplates = {
                     </Row>
                 </div>
 
-
-                <Content colPos={'9'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                         contentElementTemplates={contentElementTemplates}/>
+                <Row>
+                    <Col>
+                        <Content colPos={'9'} content={headlessData.content}
+                                 contentElementLayouts={contentElementLayouts}
+                                 contentElementTemplates={contentElementTemplates}/>
+                    </Col>
+                </Row>
             </>,
             footer: <FooterContent content={headlessData.content}
                                    contentElementLayouts={contentElementLayouts}
@@ -214,28 +281,31 @@ const pageTemplates = {
 
     '3_columns': (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
         return {
-            border: <Content colPos={'3'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                             contentElementTemplates={contentElementTemplates}/>,
+            border: <Row>
+                <Col> <Content colPos={'3'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
+                               contentElementTemplates={contentElementTemplates}/> </Col>
+            </Row>,
             main: <>
-                <div>2Columns5050</div>
-
-                <Content colPos={'8'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                         contentElementTemplates={contentElementTemplates}/>
+                <Row>
+                    <Col>
+                        <Content colPos={'8'} content={headlessData.content}
+                                 contentElementLayouts={contentElementLayouts}
+                                 contentElementTemplates={contentElementTemplates}/>
+                    </Col>
+                </Row>
                 <div className="section section-default">
                     <Row>
-                        <Col className="col-sm-3">
-                            <main className=" maincontent-wrap " role="main">
+                        <Col md="3" as="main" className=" maincontent-wrap " role="main">
                                 <Content colPos={'0'} content={headlessData.content}
                                          contentElementLayouts={contentElementLayouts}
                                          contentElementTemplates={contentElementTemplates}/>
-                            </main>
                         </Col>
-                        <Col className=" subcontent-wrap col-sm-5">
+                        <Col className=" subcontent-wrap " md="5">
                             <Content colPos={'1'} content={headlessData.content}
                                      contentElementLayouts={contentElementLayouts}
                                      contentElementTemplates={contentElementTemplates}/>
                         </Col>
-                        <Col className=" subcontent-wrap col-sm-3">
+                        <Col className=" subcontent-wrap " md="3">
                             <Content colPos={'2'} content={headlessData.content}
                                      contentElementLayouts={contentElementLayouts}
                                      contentElementTemplates={contentElementTemplates}/>
@@ -244,9 +314,14 @@ const pageTemplates = {
                     </Row>
                 </div>
 
+                <Row>
+                    <Col>
+                        <Content colPos={'9'} content={headlessData.content}
+                                 contentElementLayouts={contentElementLayouts}
+                                 contentElementTemplates={contentElementTemplates}/>
+                    </Col>
 
-                <Content colPos={'9'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                         contentElementTemplates={contentElementTemplates}/>
+                </Row>
             </>,
             footer: <FooterContent content={headlessData.content}
                                    contentElementLayouts={contentElementLayouts}
@@ -255,13 +330,23 @@ const pageTemplates = {
     },
     'special_feature': (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
         return {
-            border: <Content colPos={'3'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                             contentElementTemplates={contentElementTemplates}/>,
+            border:
+                <Row>
+                    <Col>
+                        <Content colPos={'3'} content={headlessData.content}
+                                 contentElementLayouts={contentElementLayouts}
+                                 contentElementTemplates={contentElementTemplates}/>
+                    </Col>
+                </Row>,
             main: <>
-                <div>special start</div>
+                <Row>
+                    <Col>
 
-                <Content colPos={'8'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                         contentElementTemplates={contentElementTemplates}/>
+                        <Content colPos={'8'} content={headlessData.content}
+                                 contentElementLayouts={contentElementLayouts}
+                                 contentElementTemplates={contentElementTemplates}/>
+                    </Col>
+                </Row>
 
                 <div className="section section-default">
                     <Row>
@@ -275,13 +360,13 @@ const pageTemplates = {
 
                 <div className="section section-primary">
                     <Row>
-                        <Col className="section-column-half col-sm-6">
+                        <Col className="section-column-half " md="6">
 
                             <Content colPos={'30'} content={headlessData.content}
                                      contentElementLayouts={contentElementLayouts}
                                      contentElementTemplates={contentElementTemplates}/>
                         </Col>
-                        <Col className="section-column-half col-sm-6">
+                        <Col className="section-column-half " md="6">
 
                             <Content colPos={'31'} content={headlessData.content}
                                      contentElementLayouts={contentElementLayouts}
@@ -291,13 +376,13 @@ const pageTemplates = {
                 </div>
                 <div className="section section-primary">
                     <Row>
-                        <Col className="section-column-half col-sm-6">
+                        <Col className="section-column-half " md="6">
 
                             <Content colPos={'32'} content={headlessData.content}
                                      contentElementLayouts={contentElementLayouts}
                                      contentElementTemplates={contentElementTemplates}/>
                         </Col>
-                        <Col className="section-column-half col-sm-6">
+                        <Col className="section-column-half " md="6">
 
                             <Content colPos={'33'} content={headlessData.content}
                                      contentElementLayouts={contentElementLayouts}
@@ -316,13 +401,13 @@ const pageTemplates = {
                 </div>
                 <div className="section section-light">
                     <Row>
-                        <Col className="section-column-half col-sm-6">
+                        <Col className="section-column-half " md="6">
 
                             <Content colPos={'34'} content={headlessData.content}
                                      contentElementLayouts={contentElementLayouts}
                                      contentElementTemplates={contentElementTemplates}/>
                         </Col>
-                        <Col className="section-column-half col-sm-6">
+                        <Col className="section-column-half " md="6">
 
                             <Content colPos={'35'} content={headlessData.content}
                                      contentElementLayouts={contentElementLayouts}
@@ -332,13 +417,13 @@ const pageTemplates = {
                 </div>
                 <div className="section section-light">
                     <Row>
-                        <Col className="section-column-half col-sm-6">
+                        <Col className="section-column-half " md="6">
 
                             <Content colPos={'36'} content={headlessData.content}
                                      contentElementLayouts={contentElementLayouts}
                                      contentElementTemplates={contentElementTemplates}/>
                         </Col>
-                        <Col className="section-column-half col-sm-6">
+                        <Col className="section-column-half " md="6">
 
                             <Content colPos={'37'} content={headlessData.content}
                                      contentElementLayouts={contentElementLayouts}
@@ -346,8 +431,13 @@ const pageTemplates = {
                         </Col>
                     </Row>
                 </div>
-                <Content colPos={'9'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                         contentElementTemplates={contentElementTemplates} />
+                <Row>
+                    <Col>
+                        <Content colPos={'9'} content={headlessData.content}
+                                 contentElementLayouts={contentElementLayouts}
+                                 contentElementTemplates={contentElementTemplates}/>
+                    </Col>
+                </Row>
             </>,
 
             footer: <FooterContent content={headlessData.content}
@@ -358,27 +448,34 @@ const pageTemplates = {
     },
     'special_start': (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
         return {
-            border: <Content colPos={'3'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                             contentElementTemplates={contentElementTemplates}/>,
+            border: <Row>
+                <Col>
+                    <Content colPos={'3'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
+                             contentElementTemplates={contentElementTemplates}/>
+                </Col>
+            </Row>,
             main: <>
-                <div>special start</div>
+                <Row>
+                    <Col>
 
-                <Content colPos={'8'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                         contentElementTemplates={contentElementTemplates}/>
+                        <Content colPos={'8'} content={headlessData.content}
+                                 contentElementLayouts={contentElementLayouts}
+                                 contentElementTemplates={contentElementTemplates}/>
+                    </Col>
+                </Row>
                 <div className="section section-default">
                     <Row>
-                        <Col className="section-column-third col-sm-4">
-
+                        <Col className="section-column-third " md="4">
                             <Content colPos={'20'} content={headlessData.content}
                                      contentElementLayouts={contentElementLayouts}
                                      contentElementTemplates={contentElementTemplates}/>
                         </Col>
-                        <Col className="section-column-third col-sm-4">
+                        <Col className="section-column-third " md="4">
                             <Content colPos={'21'} content={headlessData.content}
                                      contentElementLayouts={contentElementLayouts}
                                      contentElementTemplates={contentElementTemplates}/>
                         </Col>
-                        <Col className="section-column-third col-sm-4">
+                        <Col className="section-column-third " md="4">
                             <Content colPos={'22'} content={headlessData.content}
                                      contentElementLayouts={contentElementLayouts}
                                      contentElementTemplates={contentElementTemplates}/>
@@ -394,8 +491,13 @@ const pageTemplates = {
                         </Col>
                     </Row>
                 </div>
-                <Content colPos={'9'} content={headlessData.content} contentElementLayouts={contentElementLayouts}
-                         contentElementTemplates={contentElementTemplates}/>
+                <Row>
+                    <Col>
+                        <Content colPos={'9'} content={headlessData.content}
+                                 contentElementLayouts={contentElementLayouts}
+                                 contentElementTemplates={contentElementTemplates}/>
+                    </Col>
+                </Row>
             </>,
 
             footer: <FooterContent content={headlessData.content}

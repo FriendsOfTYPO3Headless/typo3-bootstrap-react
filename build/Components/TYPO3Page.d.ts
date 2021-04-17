@@ -15,6 +15,7 @@ declare const pageTemplates: {
     default: (headlessData: any, contentElementLayouts: any, contentElementTemplates: any, args?: {}) => {
         border: JSX.Element;
         main: JSX.Element;
+        footer: JSX.Element;
     };
     simple: (headlessData: any, contentElementLayouts: any, contentElementTemplates: any, args?: {}) => {
         border: JSX.Element;
