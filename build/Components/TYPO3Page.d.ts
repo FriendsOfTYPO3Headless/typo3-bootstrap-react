@@ -9,9 +9,6 @@ declare const pageTemplates: {
     __generic: (headlessData: any, contentElementLayouts: any, contentElementTemplates: any, args?: {}) => {
         main: JSX.Element;
     };
-    example: (headlessData: any, contentElementLayout: any, contentElementTemplates: any, args?: {}) => {
-        main: JSX.Element;
-    };
     default: (headlessData: any, contentElementLayouts: any, contentElementTemplates: any, args?: {}) => {
         border: JSX.Element;
         main: JSX.Element;
@@ -58,15 +55,7 @@ declare const contentElementLayouts: {
 declare const contentElementTemplates: {
     __generic: (headlessContentData: any, args?: {}) => JSX.Element;
     text: (headlessContentData: any, args?: {}) => JSX.Element;
-    textpic: (headlessContentData: any, args?: {}) => JSX.Element;
-    uploads: (headlessContentData: any, args?: {}) => JSX.Element;
-    textmedia: (headlessContentData: any, args?: {}) => JSX.Element;
-    bullets: (headlessContentData: any, args?: {}) => JSX.Element;
-    image: (headlessContentData: any, args?: {}) => JSX.Element;
-    shortcut: (headlessContentData: any, args?: {}) => JSX.Element;
-    table: (headlessContentData: any, args?: {}) => JSX.Element;
     div: (headlessContentData: any, args?: {}) => JSX.Element;
-    menu_sitemap: (headlessContentData: any, args?: {}) => JSX.Element;
 };
 declare const TYPO3Page: React.FC<TYPO3PagePropsInterface>;
 export default TYPO3Page;

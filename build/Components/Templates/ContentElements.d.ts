@@ -1,11 +1,3 @@
 import Text from './ContentElements/Text';
-import Textpic from './ContentElements/Textpic';
-import Bullets from './ContentElements/Bullets';
-import Image from './ContentElements/Image';
 import Div from './ContentElements/Div';
-import Table from './ContentElements/Table';
-import Shortcut from './ContentElements/Shortcut';
-import Textmedia from './ContentElements/Textmedia';
-import Uploads from './ContentElements/Uploads';
-import MenuSitemap from './ContentElements/MenuSitemap';
-export { Text, Textpic, Bullets, Div, MenuSitemap, Table, Shortcut, Image, Textmedia, Uploads };
+export { Text, Div, };
