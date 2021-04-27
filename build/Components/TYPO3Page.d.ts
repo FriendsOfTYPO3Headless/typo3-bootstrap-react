@@ -1,7 +1,7 @@
 import React from "react";
 import { TYPO3PagePropsInterface } from "./Interfaces";
 declare const pageLayouts: {
-    layout0: (headlessData: any, pageTemplate: any, args?: {}) => JSX.Element;
+    'layout-0': (headlessData: any, pageTemplate: any, args?: {}) => JSX.Element;
     __generic: (headlessData: any, pageTemplate: any, args?: {}) => JSX.Element;
     Default: (headlessData: any, pageTemplate: any, args?: {}) => JSX.Element;
 };

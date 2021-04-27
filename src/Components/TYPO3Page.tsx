@@ -13,17 +13,15 @@ import GenericPage from "./Templates/Page/GenericPage";
 
 const pageLayouts = {
     //TODO: implement example
-    'layout0': (headlessData, pageTemplate, args = {}) => <div
+    'layout-0': (headlessData, pageTemplate, args = {}) => <div
         className={'backendlayout-' + headlessData.page.appearance.backendLayout}>
         <header>
             LOGO
         </header>
         <section>
-            <h1>Hier ist ist eine Section</h1>
             <Section name={'main'} pageTemplate={pageTemplate}/>
         </section>
         <footer>
-            <h3>Hier ist eine andere Section</h3>
             <Section name={'footer'} pageTemplate={pageTemplate}/>
         </footer>
     </div>,
@@ -51,7 +49,6 @@ const pageTemplates = {
                                contentElementTemplates={contentElementTemplates}/>
         }
     },
-
     default: (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
         return {
             border:

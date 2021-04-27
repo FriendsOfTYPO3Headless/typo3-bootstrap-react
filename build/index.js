@@ -293,14 +293,12 @@ var GenericPage = function (props) {
 
 var pageLayouts = {
     //TODO: implement example
-    'layout0': function (headlessData, pageTemplate, args) {
+    'layout-0': function (headlessData, pageTemplate, args) {
         return React__default['default'].createElement("div", { className: 'backendlayout-' + headlessData.page.appearance.backendLayout },
             React__default['default'].createElement("header", null, "LOGO"),
             React__default['default'].createElement("section", null,
-                React__default['default'].createElement("h1", null, "Hier ist ist eine Section"),
                 React__default['default'].createElement(section, { name: 'main', pageTemplate: pageTemplate })),
             React__default['default'].createElement("footer", null,
-                React__default['default'].createElement("h3", null, "Hier ist eine andere Section"),
                 React__default['default'].createElement(section, { name: 'footer', pageTemplate: pageTemplate })));
     },
     __generic: function (headlessData, pageTemplate, args) {
