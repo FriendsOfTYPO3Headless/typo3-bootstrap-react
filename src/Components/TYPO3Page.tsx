@@ -14,7 +14,7 @@ import GenericPage from "./Templates/Page/GenericPage";
 const pageLayouts = {
     //TODO: implement example
     'layout-0': (headlessData, pageTemplate, args = {}) => <div
-        className={'backendlayout-' + headlessData.page.appearanc e.backendLayout}>
+        className={'backendlayout-' + headlessData.page.appearance.backendLayout}>
         <header>
             LOGO
         </header>
