@@ -5,8 +5,8 @@ import HeaderDate from "./HeaderDate";
 
 const AllHeader: React.FC<{ data: any }> = props => {
     let content = <></>
-    if (props.data.content.headerLayout !== 100) {
-        if (props.data.content.header !== '' || props.data.content.header !== '' || props.data.content.date !== '') {
+    if (props.data.content.hasOwnProperty('headerLayout') && props.data.content.headerLayout !== 100) {
+        if (props.data.content.header !== '' || props.data.content.subheader !== '' || props.data.content.date !== '') {
             content = <header className="frame-header">
                 {props.data.content.header !== '' ?
                     <Header layout={props.data.content.headerLayout}

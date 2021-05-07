@@ -39,5 +39,4 @@ const Content: React.FC<{
     return content
 }
 
-
 export default Content;

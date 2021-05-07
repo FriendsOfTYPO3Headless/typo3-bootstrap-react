@@ -1,15 +1,12 @@
 import React from "react";
 import { TYPO3PagePropsInterface } from "./Interfaces";
 declare const pageLayouts: {
-    layout0: (headlessData: any, pageTemplate: any, args?: {}) => JSX.Element;
+    'layout-0': (headlessData: any, pageTemplate: any, args?: {}) => JSX.Element;
     __generic: (headlessData: any, pageTemplate: any, args?: {}) => JSX.Element;
     Default: (headlessData: any, pageTemplate: any, args?: {}) => JSX.Element;
 };
 declare const pageTemplates: {
     __generic: (headlessData: any, contentElementLayouts: any, contentElementTemplates: any, args?: {}) => {
-        main: JSX.Element;
-    };
-    example: (headlessData: any, contentElementLayout: any, contentElementTemplates: any, args?: {}) => {
         main: JSX.Element;
     };
     default: (headlessData: any, contentElementLayouts: any, contentElementTemplates: any, args?: {}) => {
@@ -58,15 +55,7 @@ declare const contentElementLayouts: {
 declare const contentElementTemplates: {
     __generic: (headlessContentData: any, args?: {}) => JSX.Element;
     text: (headlessContentData: any, args?: {}) => JSX.Element;
-    textpic: (headlessContentData: any, args?: {}) => JSX.Element;
-    uploads: (headlessContentData: any, args?: {}) => JSX.Element;
-    textmedia: (headlessContentData: any, args?: {}) => JSX.Element;
-    bullets: (headlessContentData: any, args?: {}) => JSX.Element;
-    image: (headlessContentData: any, args?: {}) => JSX.Element;
-    shortcut: (headlessContentData: any, args?: {}) => JSX.Element;
-    table: (headlessContentData: any, args?: {}) => JSX.Element;
     div: (headlessContentData: any, args?: {}) => JSX.Element;
-    menu_sitemap: (headlessContentData: any, args?: {}) => JSX.Element;
 };
 declare const TYPO3Page: React.FC<TYPO3PagePropsInterface>;
 export default TYPO3Page;
