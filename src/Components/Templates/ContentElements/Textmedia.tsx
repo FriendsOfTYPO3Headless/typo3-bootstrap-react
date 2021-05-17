@@ -2,8 +2,7 @@ import React from 'react';
 
 const Textmedia: React.FC<{ data: any }> = props => {
 console.log(props.data)
-    return
-        <div className="textmedia">
+    return <div className="textmedia">
             <div className="textmedia textmedia-gallery">
             { /* <div className="textmedia-item textmedia-gallery"> */ }
              </div>

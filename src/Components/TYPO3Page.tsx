@@ -534,8 +534,8 @@ const contentElementTemplates = {
         return <>{headlessContentData.type} has no Template</>
     },
     text: (headlessContentData, args = {}) => <CE.Text data={headlessContentData.content}/>,
-    // textpic: (headlessContentData, args = {}) => <CE.Textpic data={headlessContentData.content}/>,
-    // uploads: (headlessContentData, args = {}) => <CE.Uploads data={headlessContentData.content}/>,
+    textpic: (headlessContentData, args = {}) => <CE.Textpic data={headlessContentData.content}/>,
+    image: (headlessContentData, args = {}) => <CE.Image data={headlessContentData.content}/>,
     // textmedia: (headlessContentData, args = {}) => <CE.Textmedia data={headlessContentData.content}/>,
 
     // bullets: (headlessContentData, args = {}) => <CE.Bullets data={headlessContentData.content}/>,

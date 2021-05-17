@@ -89,6 +89,49 @@ var Text = function (props) {
     return React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
 };
 
+var Textpic = function (props) {
+    var content = props.data.gallery;
+    console.log(props.data.gallery);
+    return React.createElement("div", { className: "textpic" }, Object.keys(content).map(function (key) {
+        if (content.position && content.position.horizontal === 'left') ;
+        if (content.position && content.position.horizontal === 'right') ;
+        if (content.position && content.position.horizontal === 'center') {
+            if (content.position && content.position.vertical === 'below') {
+                {
+                    Object.keys(props.data.gallery.rows).map(function (rowKey) {
+                        return React.createElement(React.Fragment, null,
+                            " ",
+                            Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
+                                return React.createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl });
+                            }),
+                            " ");
+                    });
+                }
+                // let table =
+                //      image = <>  <img src={props.data.media[key].publicUrl}/>
+                //        <a href={props.data.media[key].publicUrl}> {props.data.media[key].properties.filename}  </a>
+                //  </>
+                // text = <div dangerouslySetInnerHTML={{__html: props.data.bodytext}} /> ;
+            }
+        }
+    }));
+};
+
+var Image = function (props) {
+    console.log(typeof props.data.gallery.rows);
+    return React.createElement("div", { className: "image" }, Object.keys(props.data.gallery.rows).map(function (rowKey) {
+        return React.createElement(React.Fragment, null,
+            " ",
+            Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
+                return React.createElement("div", { style: { padding: 20 } },
+                    " ",
+                    React.createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl }),
+                    " ");
+            }),
+            " ");
+    }));
+};
+
 var Div = function (props) {
     return React.createElement("div", { className: "div" },
         React.createElement("hr", null));
@@ -532,8 +575,12 @@ var contentElementTemplates = {
     text: function (headlessContentData, args) {
         return React.createElement(Text, { data: headlessContentData.content });
     },
-    // textpic: (headlessContentData, args = {}) => <CE.Textpic data={headlessContentData.content}/>,
-    // uploads: (headlessContentData, args = {}) => <CE.Uploads data={headlessContentData.content}/>,
+    textpic: function (headlessContentData, args) {
+        return React.createElement(Textpic, { data: headlessContentData.content });
+    },
+    image: function (headlessContentData, args) {
+        return React.createElement(Image, { data: headlessContentData.content });
+    },
     // textmedia: (headlessContentData, args = {}) => <CE.Textmedia data={headlessContentData.content}/>,
     // bullets: (headlessContentData, args = {}) => <CE.Bullets data={headlessContentData.content}/>,
     // image: (headlessContentData, args = {}) => <CE.Image data={headlessContentData.content}/>,

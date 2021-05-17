@@ -55,6 +55,8 @@ declare const contentElementLayouts: {
 declare const contentElementTemplates: {
     __generic: (headlessContentData: any, args?: {}) => JSX.Element;
     text: (headlessContentData: any, args?: {}) => JSX.Element;
+    textpic: (headlessContentData: any, args?: {}) => JSX.Element;
+    image: (headlessContentData: any, args?: {}) => JSX.Element;
     div: (headlessContentData: any, args?: {}) => JSX.Element;
 };
 declare const TYPO3Page: React.FC<TYPO3PagePropsInterface>;

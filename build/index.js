@@ -97,6 +97,49 @@ var Text = function (props) {
     return React__default['default'].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
 };
 
+var Textpic = function (props) {
+    var content = props.data.gallery;
+    console.log(props.data.gallery);
+    return React__default['default'].createElement("div", { className: "textpic" }, Object.keys(content).map(function (key) {
+        if (content.position && content.position.horizontal === 'left') ;
+        if (content.position && content.position.horizontal === 'right') ;
+        if (content.position && content.position.horizontal === 'center') {
+            if (content.position && content.position.vertical === 'below') {
+                {
+                    Object.keys(props.data.gallery.rows).map(function (rowKey) {
+                        return React__default['default'].createElement(React__default['default'].Fragment, null,
+                            " ",
+                            Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
+                                return React__default['default'].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl });
+                            }),
+                            " ");
+                    });
+                }
+                // let table =
+                //      image = <>  <img src={props.data.media[key].publicUrl}/>
+                //        <a href={props.data.media[key].publicUrl}> {props.data.media[key].properties.filename}  </a>
+                //  </>
+                // text = <div dangerouslySetInnerHTML={{__html: props.data.bodytext}} /> ;
+            }
+        }
+    }));
+};
+
+var Image = function (props) {
+    console.log(typeof props.data.gallery.rows);
+    return React__default['default'].createElement("div", { className: "image" }, Object.keys(props.data.gallery.rows).map(function (rowKey) {
+        return React__default['default'].createElement(React__default['default'].Fragment, null,
+            " ",
+            Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
+                return React__default['default'].createElement("div", { style: { padding: 20 } },
+                    " ",
+                    React__default['default'].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl }),
+                    " ");
+            }),
+            " ");
+    }));
+};
+
 var Div = function (props) {
     return React__default['default'].createElement("div", { className: "div" },
         React__default['default'].createElement("hr", null));
@@ -540,8 +583,12 @@ var contentElementTemplates = {
     text: function (headlessContentData, args) {
         return React__default['default'].createElement(Text, { data: headlessContentData.content });
     },
-    // textpic: (headlessContentData, args = {}) => <CE.Textpic data={headlessContentData.content}/>,
-    // uploads: (headlessContentData, args = {}) => <CE.Uploads data={headlessContentData.content}/>,
+    textpic: function (headlessContentData, args) {
+        return React__default['default'].createElement(Textpic, { data: headlessContentData.content });
+    },
+    image: function (headlessContentData, args) {
+        return React__default['default'].createElement(Image, { data: headlessContentData.content });
+    },
     // textmedia: (headlessContentData, args = {}) => <CE.Textmedia data={headlessContentData.content}/>,
     // bullets: (headlessContentData, args = {}) => <CE.Bullets data={headlessContentData.content}/>,
     // image: (headlessContentData, args = {}) => <CE.Image data={headlessContentData.content}/>,

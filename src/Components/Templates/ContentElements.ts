@@ -1,8 +1,9 @@
 import Text from './ContentElements/Text'
-// import Textpic from './ContentElements/Textpic'
-// import Bullets from './ContentElements/Bullets'
+import Textpic from './ContentElements/Textpic'
+import Image from './ContentElements/Image'
 // import Image from './ContentElements/Image'
 import Div from './ContentElements/Div'
+import Textmedia from './ContentElements/Textmedia'
 // import Shortcut from './ContentElements/Shortcut'
 // import Textmedia from './ContentElements/Textmedia'
 // import MenuSitemap from './ContentElements/MenuSitemap'
@@ -24,21 +25,20 @@ import MenuSectionPages from './ContentElements/MenuSectionPages'
 import MenuSubpages from './ContentElements/MenuSubpages'
 import MenuSection from './ContentElements/MenuSection'*/
 
-
-
 import Table from './ContentElements/Table'
 
+import Shortcut from './ContentElements/Shortcut'
 import Uploads from './ContentElements/Uploads'
-
+import MenuSitemap from './ContentElements/MenuSitemap'
 
 export {
     Text,
-    // Textpic,
-    //  Bullets,
-   Div,
+    Textpic,
+    Image,
+    //Bullets,
+    Div,
     /*  FormFormFramework,
    Html,
-
    List,
    Login,
  //  MenuAbstract,
@@ -52,10 +52,10 @@ export {
  //
  //  MenuSitemapPages,
    MenuSubpages,*/
-    // MenuSitemap,
+    //MenuSitemap,
     //   Table,
     // Shortcut,
-    // Image,
+    //Image,
     //   Textmedia,
     // Uploads
 }
