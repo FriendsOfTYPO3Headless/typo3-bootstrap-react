@@ -98,46 +98,85 @@ var Text = function (props) {
 };
 
 var Textpic = function (props) {
-    var content = props.data.gallery;
-    console.log(props.data.gallery);
-    return React__default['default'].createElement("div", { className: "textpic" }, Object.keys(content).map(function (key) {
-        if (content.position && content.position.horizontal === 'left') ;
-        if (content.position && content.position.horizontal === 'right') ;
-        if (content.position && content.position.horizontal === 'center') {
-            if (content.position && content.position.vertical === 'below') {
-                {
-                    Object.keys(props.data.gallery.rows).map(function (rowKey) {
+    console.log(props.data.gallery.rows[1].columns[1].properties.description);
+    console.log(props.data.bodytext);
+    console.log('moin');
+    return React__default['default'].createElement("div", { className: "textpic" }, Object.keys(props.data.gallery.rows).map(function (rowKey) {
+        if (props.data.gallery.position && props.data.gallery.position.horizontal === 'left') {
+            return React__default['default'].createElement(React__default['default'].Fragment, null,
+                " ",
+                Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
+                    return React__default['default'].createElement(React__default['default'].Fragment, null,
+                        React__default['default'].createElement(reactBootstrap.Row, null,
+                            React__default['default'].createElement(reactBootstrap.Col, { md: '6' },
+                                React__default['default'].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                            React__default['default'].createElement(reactBootstrap.Col, { md: '6' }, props.data.bodytext)),
+                        React__default['default'].createElement(reactBootstrap.Row, null,
+                            React__default['default'].createElement(reactBootstrap.Col, null, props.data.gallery.rows[rowKey].columns[columnKey].properties.description)));
+                }),
+                " ");
+        }
+        if (props.data.gallery.position && props.data.gallery.position.horizontal === 'right') {
+            return React__default['default'].createElement(React__default['default'].Fragment, null,
+                " ",
+                Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
+                    return React__default['default'].createElement(React__default['default'].Fragment, null,
+                        React__default['default'].createElement(reactBootstrap.Row, null,
+                            React__default['default'].createElement(reactBootstrap.Col, { md: '6' }, props.data.bodytext),
+                            React__default['default'].createElement(reactBootstrap.Col, { md: '6' },
+                                React__default['default'].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl }))),
+                        React__default['default'].createElement(reactBootstrap.Row, null,
+                            React__default['default'].createElement(reactBootstrap.Col, null),
+                            React__default['default'].createElement(reactBootstrap.Col, null, props.data.gallery.rows[rowKey].columns[columnKey].properties.description)));
+                }),
+                " ");
+        }
+        if (props.data.gallery.position.horizontal === 'center') {
+            if (props.data.gallery.position.vertical === 'below') {
+                return React__default['default'].createElement(React__default['default'].Fragment, null,
+                    " ",
+                    Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
                         return React__default['default'].createElement(React__default['default'].Fragment, null,
-                            " ",
-                            Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
-                                return React__default['default'].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl });
-                            }),
-                            " ");
-                    });
+                            React__default['default'].createElement(reactBootstrap.Col, null,
+                                React__default['default'].createElement(reactBootstrap.Row, null, props.data.bodytext),
+                                React__default['default'].createElement(reactBootstrap.Row, null,
+                                    React__default['default'].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                React__default['default'].createElement(reactBootstrap.Row, null, props.data.gallery.rows[rowKey].columns[columnKey].properties.description)));
+                    }),
+                    " ");
+            }
+            if (props.data.gallery.position.horizontal === 'center') {
+                if (props.data.gallery.position.vertical === 'above') {
+                    return React__default['default'].createElement(React__default['default'].Fragment, null,
+                        " ",
+                        Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
+                            return React__default['default'].createElement(React__default['default'].Fragment, null,
+                                React__default['default'].createElement(reactBootstrap.Col, null,
+                                    React__default['default'].createElement(reactBootstrap.Row, null,
+                                        React__default['default'].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                    React__default['default'].createElement(reactBootstrap.Row, null, props.data.gallery.rows[rowKey].columns[columnKey].properties.description),
+                                    React__default['default'].createElement(reactBootstrap.Row, null, props.data.bodytext)));
+                        }),
+                        " ");
                 }
-                // let table =
-                //      image = <>  <img src={props.data.media[key].publicUrl}/>
-                //        <a href={props.data.media[key].publicUrl}> {props.data.media[key].properties.filename}  </a>
-                //  </>
-                // text = <div dangerouslySetInnerHTML={{__html: props.data.bodytext}} /> ;
             }
         }
     }));
 };
 
 var Image = function (props) {
-    console.log(typeof props.data.gallery.rows);
-    return React__default['default'].createElement("div", { className: "image" }, Object.keys(props.data.gallery.rows).map(function (rowKey) {
-        return React__default['default'].createElement(React__default['default'].Fragment, null,
-            " ",
-            Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
-                return React__default['default'].createElement("div", { style: { padding: 20 } },
-                    " ",
-                    React__default['default'].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl }),
-                    " ");
-            }),
-            " ");
-    }));
+    console.log(props.data.gallery.count.rows);
+    console.log('hallo');
+    return React__default['default'].createElement("div", { className: "image" },
+        React__default['default'].createElement(reactBootstrap.Row, null, Object.keys(props.data.gallery.rows).map(function (rowKey) {
+            return React__default['default'].createElement(reactBootstrap.Col, null,
+                " ",
+                Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
+                    return React__default['default'].createElement("div", { className: 'gallery-item  gallery-item-size-' + props.data.gallery.count.rows },
+                        React__default['default'].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl }));
+                }),
+                "   ");
+        })));
 };
 
 var Div = function (props) {

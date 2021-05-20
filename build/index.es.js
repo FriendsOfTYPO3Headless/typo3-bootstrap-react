@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Row, Col, Container } from 'react-bootstrap';
 
 var section = function (props) {
     if (props.pageTemplate.hasOwnProperty(props.name)) {
@@ -90,46 +90,85 @@ var Text = function (props) {
 };
 
 var Textpic = function (props) {
-    var content = props.data.gallery;
-    console.log(props.data.gallery);
-    return React.createElement("div", { className: "textpic" }, Object.keys(content).map(function (key) {
-        if (content.position && content.position.horizontal === 'left') ;
-        if (content.position && content.position.horizontal === 'right') ;
-        if (content.position && content.position.horizontal === 'center') {
-            if (content.position && content.position.vertical === 'below') {
-                {
-                    Object.keys(props.data.gallery.rows).map(function (rowKey) {
+    console.log(props.data.gallery.rows[1].columns[1].properties.description);
+    console.log(props.data.bodytext);
+    console.log('moin');
+    return React.createElement("div", { className: "textpic" }, Object.keys(props.data.gallery.rows).map(function (rowKey) {
+        if (props.data.gallery.position && props.data.gallery.position.horizontal === 'left') {
+            return React.createElement(React.Fragment, null,
+                " ",
+                Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
+                    return React.createElement(React.Fragment, null,
+                        React.createElement(Row, null,
+                            React.createElement(Col, { md: '6' },
+                                React.createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                            React.createElement(Col, { md: '6' }, props.data.bodytext)),
+                        React.createElement(Row, null,
+                            React.createElement(Col, null, props.data.gallery.rows[rowKey].columns[columnKey].properties.description)));
+                }),
+                " ");
+        }
+        if (props.data.gallery.position && props.data.gallery.position.horizontal === 'right') {
+            return React.createElement(React.Fragment, null,
+                " ",
+                Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
+                    return React.createElement(React.Fragment, null,
+                        React.createElement(Row, null,
+                            React.createElement(Col, { md: '6' }, props.data.bodytext),
+                            React.createElement(Col, { md: '6' },
+                                React.createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl }))),
+                        React.createElement(Row, null,
+                            React.createElement(Col, null),
+                            React.createElement(Col, null, props.data.gallery.rows[rowKey].columns[columnKey].properties.description)));
+                }),
+                " ");
+        }
+        if (props.data.gallery.position.horizontal === 'center') {
+            if (props.data.gallery.position.vertical === 'below') {
+                return React.createElement(React.Fragment, null,
+                    " ",
+                    Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
                         return React.createElement(React.Fragment, null,
-                            " ",
-                            Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
-                                return React.createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl });
-                            }),
-                            " ");
-                    });
+                            React.createElement(Col, null,
+                                React.createElement(Row, null, props.data.bodytext),
+                                React.createElement(Row, null,
+                                    React.createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                React.createElement(Row, null, props.data.gallery.rows[rowKey].columns[columnKey].properties.description)));
+                    }),
+                    " ");
+            }
+            if (props.data.gallery.position.horizontal === 'center') {
+                if (props.data.gallery.position.vertical === 'above') {
+                    return React.createElement(React.Fragment, null,
+                        " ",
+                        Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
+                            return React.createElement(React.Fragment, null,
+                                React.createElement(Col, null,
+                                    React.createElement(Row, null,
+                                        React.createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                    React.createElement(Row, null, props.data.gallery.rows[rowKey].columns[columnKey].properties.description),
+                                    React.createElement(Row, null, props.data.bodytext)));
+                        }),
+                        " ");
                 }
-                // let table =
-                //      image = <>  <img src={props.data.media[key].publicUrl}/>
-                //        <a href={props.data.media[key].publicUrl}> {props.data.media[key].properties.filename}  </a>
-                //  </>
-                // text = <div dangerouslySetInnerHTML={{__html: props.data.bodytext}} /> ;
             }
         }
     }));
 };
 
 var Image = function (props) {
-    console.log(typeof props.data.gallery.rows);
-    return React.createElement("div", { className: "image" }, Object.keys(props.data.gallery.rows).map(function (rowKey) {
-        return React.createElement(React.Fragment, null,
-            " ",
-            Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
-                return React.createElement("div", { style: { padding: 20 } },
-                    " ",
-                    React.createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl }),
-                    " ");
-            }),
-            " ");
-    }));
+    console.log(props.data.gallery.count.rows);
+    console.log('hallo');
+    return React.createElement("div", { className: "image" },
+        React.createElement(Row, null, Object.keys(props.data.gallery.rows).map(function (rowKey) {
+            return React.createElement(Col, null,
+                " ",
+                Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
+                    return React.createElement("div", { className: 'gallery-item  gallery-item-size-' + props.data.gallery.count.rows },
+                        React.createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl }));
+                }),
+                "   ");
+        })));
 };
 
 var Div = function (props) {
