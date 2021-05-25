@@ -12,7 +12,7 @@ const Image: React.FC<{ data: any }> = props => {
 
             return <Col> {Object.keys(props.data.gallery.rows[rowKey].columns).map((columnKey) => {
 
-                return  <div className={'gallery-item  gallery-item-size-' + props.data.gallery.count.rows}>
+                return  <div className={'gallery-item  gallery-item-size-' + props.data.gallery.count.rows.columns}>
 
                     <img src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}/>
 

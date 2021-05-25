@@ -3,13 +3,55 @@ import {Col, Row} from "react-bootstrap";
 
 
 const Textpic: React.FC<{ data: any }> = props => {
-    console.log(props.data.gallery.rows[1].columns[1].properties.description)
+
     console.log(props.data.bodytext)
     console.log('moin')
     return <div className="textpic">
-        {Object.keys(props.data.gallery.rows).map((rowKey) => {
+        <div className="gallery-row">
+            <div className="textpic textpic-left">
+                <div className="textpic-item textpic-gallery">
 
-            if (props.data.gallery.position && props.data.gallery.position.horizontal === 'left') {
+                    <Row>
+                        {Object.keys(props.data.gallery.rows).map((rowKey) => {
+
+                            return  Object.keys(props.data.gallery.rows[rowKey].columns).map((columnKey) => {
+
+                                return <Col className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
+
+                                    <img src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}/>
+                                    {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
+
+                                </Col>
+                            })
+
+
+
+                        })}
+                    </Row>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+}
+export default Textpic;
+
+
+{/*          <div className="textpic-item textpic-text">
+                    <div dangerouslySetInnerHTML={{__html: props.data.bodytext}}/>
+                </div>
+
+
+
+
+         {Object.keys(props.data.gallery.rows).map((rowKey) => {
+
+            <div className="textpic textpic-left">
+                <div className="textpic-item textpic-gallery">
                 return <> {Object.keys(props.data.gallery.rows[rowKey].columns).map((columnKey) => {
                     return <>
                         <Row>
@@ -29,7 +71,8 @@ const Textpic: React.FC<{ data: any }> = props => {
                     </>
                 })
                 } </>
-            }
+                </div>
+            </div>
 
             if (props.data.gallery.position && props.data.gallery.position.horizontal === 'right') {
 
@@ -121,62 +164,5 @@ const Textpic: React.FC<{ data: any }> = props => {
 
         })}
 
-    </div>
-
-}
-export default Textpic;
-{/*  {Object.keys(content).map((key) => {
-
-            if (content.position && content.position.horizontal === 'left') {
-                {Object.keys(props.data.gallery.rows).map((rowKey) => {
-
-                    return <> {Object.keys(props.data.gallery.rows[rowKey].columns).map((columnKey) => {
-
-                        return <img src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}/>
-
-                    })
-
-
-                    } </>
-                })}
-
-            }
-            if (content.position && content.position.horizontal === 'right') {
-                {Object.keys(props.data.gallery.rows).map((rowKey) => {
-
-                    return <> {Object.keys(props.data.gallery.rows[rowKey].columns).map((columnKey) => {
-
-                        return <img src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}/>
-
-                    })
-
-
-                    } </>
-                })}
-
-            }
-            if (content.position && content.position.horizontal === 'center') {
-                if (content.position && content.position.vertical === 'below') {
-
-                    {Object.keys(props.data.gallery.rows).map((rowKey) => {
-
-                        return <> {Object.keys(props.data.gallery.rows[rowKey].columns).map((columnKey) => {
-
-                            return <img src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}/>
-
-                        })
-
-
-                        } </>
-                    })}
-
-                    // let table =
-              //      image = <>  <img src={props.data.media[key].publicUrl}/>
-                //        <a href={props.data.media[key].publicUrl}> {props.data.media[key].properties.filename}  </a>
-                  //  </>
-                   // text = <div dangerouslySetInnerHTML={{__html: props.data.bodytext}} /> ;
-                }
-            }
-        })
-        } */
+        */
 }
