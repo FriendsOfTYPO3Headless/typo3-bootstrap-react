@@ -12,8 +12,10 @@
     }
 }
 .gallery-item {
+
     padding-left: .5rem;
     padding-right: .5rem;
+    float: left;
     img,
     picture {
         width: 100%;

@@ -98,11 +98,16 @@ var Text = function (props) {
 };
 
 var Textpic = function (props) {
-    console.log(props.data.bodytext);
-    console.log('moin');
+    var textpicClassName;
+    if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
+        textpicClassName = props.data.gallery.position.horizontal;
+    }
+    if (props.data.gallery.position.horizontal === 'center') {
+        textpicClassName = props.data.gallery.position.vertical;
+    }
     return React__default['default'].createElement("div", { className: "textpic" },
         React__default['default'].createElement("div", { className: "gallery-row" },
-            React__default['default'].createElement("div", { className: "textpic textpic-left" },
+            React__default['default'].createElement("div", { className: "textpic textpic-" + textpicClassName },
                 React__default['default'].createElement("div", { className: "textpic-item textpic-gallery" },
                     React__default['default'].createElement(reactBootstrap.Row, null, Object.keys(props.data.gallery.rows).map(function (rowKey) {
                         return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
@@ -110,7 +115,9 @@ var Textpic = function (props) {
                                 React__default['default'].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl }),
                                 props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
                         });
-                    }))))));
+                    }))),
+                React__default['default'].createElement(reactBootstrap.Col, { className: "textpic-item textpic-text" },
+                    React__default['default'].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } })))));
 };
 
 var Image = function (props) {
@@ -131,6 +138,29 @@ var Image = function (props) {
 var Div = function (props) {
     return React__default['default'].createElement("div", { className: "div" },
         React__default['default'].createElement("hr", null));
+};
+
+var Textmedia = function (props) {
+    var textmediaClassName;
+    if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
+        textmediaClassName = props.data.gallery.position.horizontal;
+    }
+    if (props.data.gallery.position.horizontal === 'center') {
+        textmediaClassName = props.data.gallery.position.vertical;
+    }
+    return React__default['default'].createElement("div", { className: "textmedia" },
+        React__default['default'].createElement("div", { className: "gallery-row" },
+            React__default['default'].createElement("div", { className: "textmedia textmedia-" + textmediaClassName },
+                React__default['default'].createElement("div", { className: "textmedia-item textmedia-gallery" },
+                    React__default['default'].createElement(reactBootstrap.Row, null, Object.keys(props.data.gallery.rows).map(function (rowKey) {
+                        return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
+                            return React__default['default'].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                React__default['default'].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl }),
+                                props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                        });
+                    }))),
+                React__default['default'].createElement(reactBootstrap.Col, { className: "textmedia-item textmedia-text" },
+                    React__default['default'].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } })))));
 };
 
 var BackgroundImage = function (props) {
@@ -577,7 +607,9 @@ var contentElementTemplates = {
     image: function (headlessContentData, args) {
         return React__default['default'].createElement(Image, { data: headlessContentData.content });
     },
-    // textmedia: (headlessContentData, args = {}) => <CE.Textmedia data={headlessContentData.content}/>,
+    textmedia: function (headlessContentData, args) {
+        return React__default['default'].createElement(Textmedia, { data: headlessContentData.content });
+    },
     // bullets: (headlessContentData, args = {}) => <CE.Bullets data={headlessContentData.content}/>,
     // image: (headlessContentData, args = {}) => <CE.Image data={headlessContentData.content}/>,
     // shortcut: (headlessContentData, args = {}) => <CE.Shortcut data={headlessContentData.content}/>,

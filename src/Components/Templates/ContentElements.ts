@@ -56,6 +56,6 @@ export {
     //   Table,
     // Shortcut,
     //Image,
-    //   Textmedia,
+    Textmedia,
     // Uploads
 }

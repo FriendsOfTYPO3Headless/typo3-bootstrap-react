@@ -90,11 +90,16 @@ var Text = function (props) {
 };
 
 var Textpic = function (props) {
-    console.log(props.data.bodytext);
-    console.log('moin');
+    var textpicClassName;
+    if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
+        textpicClassName = props.data.gallery.position.horizontal;
+    }
+    if (props.data.gallery.position.horizontal === 'center') {
+        textpicClassName = props.data.gallery.position.vertical;
+    }
     return React.createElement("div", { className: "textpic" },
         React.createElement("div", { className: "gallery-row" },
-            React.createElement("div", { className: "textpic textpic-left" },
+            React.createElement("div", { className: "textpic textpic-" + textpicClassName },
                 React.createElement("div", { className: "textpic-item textpic-gallery" },
                     React.createElement(Row, null, Object.keys(props.data.gallery.rows).map(function (rowKey) {
                         return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
@@ -102,7 +107,9 @@ var Textpic = function (props) {
                                 React.createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl }),
                                 props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
                         });
-                    }))))));
+                    }))),
+                React.createElement(Col, { className: "textpic-item textpic-text" },
+                    React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } })))));
 };
 
 var Image = function (props) {
@@ -123,6 +130,29 @@ var Image = function (props) {
 var Div = function (props) {
     return React.createElement("div", { className: "div" },
         React.createElement("hr", null));
+};
+
+var Textmedia = function (props) {
+    var textmediaClassName;
+    if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
+        textmediaClassName = props.data.gallery.position.horizontal;
+    }
+    if (props.data.gallery.position.horizontal === 'center') {
+        textmediaClassName = props.data.gallery.position.vertical;
+    }
+    return React.createElement("div", { className: "textmedia" },
+        React.createElement("div", { className: "gallery-row" },
+            React.createElement("div", { className: "textmedia textmedia-" + textmediaClassName },
+                React.createElement("div", { className: "textmedia-item textmedia-gallery" },
+                    React.createElement(Row, null, Object.keys(props.data.gallery.rows).map(function (rowKey) {
+                        return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
+                            return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                React.createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl }),
+                                props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                        });
+                    }))),
+                React.createElement(Col, { className: "textmedia-item textmedia-text" },
+                    React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } })))));
 };
 
 var BackgroundImage = function (props) {
@@ -569,7 +599,9 @@ var contentElementTemplates = {
     image: function (headlessContentData, args) {
         return React.createElement(Image, { data: headlessContentData.content });
     },
-    // textmedia: (headlessContentData, args = {}) => <CE.Textmedia data={headlessContentData.content}/>,
+    textmedia: function (headlessContentData, args) {
+        return React.createElement(Textmedia, { data: headlessContentData.content });
+    },
     // bullets: (headlessContentData, args = {}) => <CE.Bullets data={headlessContentData.content}/>,
     // image: (headlessContentData, args = {}) => <CE.Image data={headlessContentData.content}/>,
     // shortcut: (headlessContentData, args = {}) => <CE.Shortcut data={headlessContentData.content}/>,

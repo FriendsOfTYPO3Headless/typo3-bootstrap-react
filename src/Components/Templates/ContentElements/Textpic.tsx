@@ -3,18 +3,24 @@ import {Col, Row} from "react-bootstrap";
 
 
 const Textpic: React.FC<{ data: any }> = props => {
+    let textpicClassName;
+    if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right'){
+        textpicClassName = props.data.gallery.position.horizontal ;
+    }
+    if ( props.data.gallery.position.horizontal === 'center') {
 
-    console.log(props.data.bodytext)
-    console.log('moin')
-    return <div className="textpic">
+            textpicClassName = props.data.gallery.position.vertical;
+
+        }
+
+        return <div className="textpic">
         <div className="gallery-row">
-            <div className="textpic textpic-left">
+            <div className={"textpic textpic-"+ textpicClassName}>
                 <div className="textpic-item textpic-gallery">
-
                     <Row>
                         {Object.keys(props.data.gallery.rows).map((rowKey) => {
 
-                            return  Object.keys(props.data.gallery.rows[rowKey].columns).map((columnKey) => {
+                            return Object.keys(props.data.gallery.rows[rowKey].columns).map((columnKey) => {
 
                                 return <Col className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
 
@@ -23,17 +29,23 @@ const Textpic: React.FC<{ data: any }> = props => {
 
                                 </Col>
                             })
-
-
-
                         })}
                     </Row>
+
                 </div>
 
 
+                <Col className="textpic-item textpic-text">
+                    <div dangerouslySetInnerHTML={{__html: props.data.bodytext}}/>
+                </Col>
 
             </div>
+
+
+
         </div>
+
+
     </div>
 
 

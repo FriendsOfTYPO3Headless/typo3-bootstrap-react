@@ -3,7 +3,7 @@
 //
 .textmedia,
 .textpic {
-    display: flex;
+  display: flex;
     flex-wrap: wrap;
     margin-left: -($grid-gutter-width / 2);
     margin-right: -($grid-gutter-width / 2);
@@ -14,7 +14,8 @@
 .textmedia-item,
 .textpic-item {
     order: 1;
-    width: 100%;
+  float: left;
+   // width: 100%;
     padding-left: ($grid-gutter-width / 2);
     padding-right: ($grid-gutter-width / 2);
 }
@@ -36,12 +37,22 @@
 .textpic-centered {
     align-items: center;
 }
+
+.textmedia-above,
+.textpic-above {
+  .textmedia-text,
+  .textpic-text {
+    text-align: center;
+  }
+  }
+
 .textmedia-below,
 .textpic-below {
     .textmedia-text,
     .textpic-text {
         order: 0;
         margin-bottom: $spacer;
+      text-align: center;
     }
     .textmedia-gallery,
     .textpic-gallery {
