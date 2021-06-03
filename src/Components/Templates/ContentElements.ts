@@ -1,10 +1,13 @@
 import Text from './ContentElements/Text'
 import Textpic from './ContentElements/Textpic'
 import Image from './ContentElements/Image'
-// import Image from './ContentElements/Image'
+import ImageLightbox from './ContentElements/Image'
 import Div from './ContentElements/Div'
 import Textmedia from './ContentElements/Textmedia'
-// import Shortcut from './ContentElements/Shortcut'
+import Shortcut from './ContentElements/Shortcut'
+//import ImageModal from './ContentElements/ImageModal'
+
+
 // import Textmedia from './ContentElements/Textmedia'
 // import MenuSitemap from './ContentElements/MenuSitemap'
 
@@ -27,14 +30,15 @@ import MenuSection from './ContentElements/MenuSection'*/
 
 import Table from './ContentElements/Table'
 
-import Shortcut from './ContentElements/Shortcut'
 import Uploads from './ContentElements/Uploads'
 import MenuSitemap from './ContentElements/MenuSitemap'
 
 export {
+  //  ImageModal,
     Text,
     Textpic,
     Image,
+    ImageLightbox,
     //Bullets,
     Div,
     /*  FormFormFramework,
@@ -54,7 +58,7 @@ export {
    MenuSubpages,*/
     //MenuSitemap,
     //   Table,
-    // Shortcut,
+    Shortcut,
     //Image,
     Textmedia,
     // Uploads

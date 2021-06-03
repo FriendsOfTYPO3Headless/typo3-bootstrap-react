@@ -58,6 +58,7 @@ declare const contentElementTemplates: {
     textpic: (headlessContentData: any, args?: {}) => JSX.Element;
     image: (headlessContentData: any, args?: {}) => JSX.Element;
     textmedia: (headlessContentData: any, args?: {}) => JSX.Element;
+    shortcut: (headlessContentData: any, args?: {}) => JSX.Element;
     div: (headlessContentData: any, args?: {}) => JSX.Element;
 };
 declare const TYPO3Page: React.FC<TYPO3PagePropsInterface>;
