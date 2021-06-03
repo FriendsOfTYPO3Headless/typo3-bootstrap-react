@@ -4957,7 +4957,7 @@ var Textmedia = function (props) {
                     React.createElement(Row, null, Object.keys(props.data.gallery.rows).map(function (rowKey) {
                         return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
                             return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                React.createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl }),
+                                React.createElement("video", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl }),
                                 props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
                         });
                     }))),

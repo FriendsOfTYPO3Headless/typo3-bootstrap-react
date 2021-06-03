@@ -23,7 +23,7 @@ const Textmedia: React.FC<{ data: any }> = props => {
 
                                 return <Col className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
 
-                                    <img src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}/>
+                                    <video src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}/>
                                     {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
 
                                 </Col>

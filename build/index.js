@@ -4966,7 +4966,7 @@ var Textmedia = function (props) {
                     React__default['default'].createElement(reactBootstrap.Row, null, Object.keys(props.data.gallery.rows).map(function (rowKey) {
                         return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
                             return React__default['default'].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                React__default['default'].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl }),
+                                React__default['default'].createElement("video", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl }),
                                 props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
                         });
                     }))),
