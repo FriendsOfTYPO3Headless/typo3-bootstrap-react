@@ -4952,6 +4952,7 @@ var Div = function (props) {
 };
 
 var Textmedia = function (props) {
+    console.log('blabla');
     var textmediaClassName;
     if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
         textmediaClassName = props.data.gallery.position.horizontal;
@@ -4961,12 +4962,12 @@ var Textmedia = function (props) {
     }
     return React__default['default'].createElement("div", { className: "textmedia" },
         React__default['default'].createElement("div", { className: "gallery-row" },
-            React__default['default'].createElement("div", { className: "textmedia textmedia-" + textmediaClassName },
-                React__default['default'].createElement("div", { className: "textmedia-item textmedia-gallery" },
+            React__default['default'].createElement(reactBootstrap.Row, { className: "textmedia textmedia-" + textmediaClassName },
+                React__default['default'].createElement(reactBootstrap.Col, { className: "textmedia-item textmedia-gallery", md: textmediaClassName === props.data.gallery.position.vertical ? "auto" : "6" },
                     React__default['default'].createElement(reactBootstrap.Row, null, Object.keys(props.data.gallery.rows).map(function (rowKey) {
                         return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
                             return React__default['default'].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                React__default['default'].createElement("video", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl }),
+                                React__default['default'].createElement("iframe", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
                                 props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
                         });
                     }))),

@@ -4943,6 +4943,7 @@ var Div = function (props) {
 };
 
 var Textmedia = function (props) {
+    console.log('blabla');
     var textmediaClassName;
     if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
         textmediaClassName = props.data.gallery.position.horizontal;
@@ -4952,12 +4953,12 @@ var Textmedia = function (props) {
     }
     return React.createElement("div", { className: "textmedia" },
         React.createElement("div", { className: "gallery-row" },
-            React.createElement("div", { className: "textmedia textmedia-" + textmediaClassName },
-                React.createElement("div", { className: "textmedia-item textmedia-gallery" },
+            React.createElement(Row, { className: "textmedia textmedia-" + textmediaClassName },
+                React.createElement(Col, { className: "textmedia-item textmedia-gallery", md: textmediaClassName === props.data.gallery.position.vertical ? "auto" : "6" },
                     React.createElement(Row, null, Object.keys(props.data.gallery.rows).map(function (rowKey) {
                         return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
                             return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                React.createElement("video", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl }),
+                                React.createElement("iframe", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
                                 props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
                         });
                     }))),
