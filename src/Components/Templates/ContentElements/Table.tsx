@@ -1,30 +1,32 @@
 import React from 'react';
 
 const Table: React.FC<{ data: any }> = props => {
-console.log(props.data)
+    console.log('moinsen')
+    console.log(props.data)
+    console.log(props.data.bodytext[0][0])
+    // type string
     return <div className="table">
-        {Object.keys(props.data).map((key)=> {
+        {Object.keys(props.data.bodytext).map((ARRAY1) => {
+                Object.keys(props.data.bodytext[ARRAY1]).map((ARRAY2) => {
+                    {props.data.bodytext[ARRAY1][ARRAY2]}
+
+                    if (props.data.bodytext === true) {
+
+                    }
+
+                    if (props.data.headerPosition === 1) {
+
+                    } else {
+
+                    }
+                    if (props.data.tabelTfoot) {
 
 
-                if (props.data.tableCaption === true){
-                    {props.data.tableCaption}
-                }
+                    }
 
-            if (props.data.headerPosition === 1){
-
-            } else {
-
-            }
-            if (props.data.tabelTfoot ){
-
-
-            }
+                })
 
         })}
-
-
-
-
 
 
         {/*

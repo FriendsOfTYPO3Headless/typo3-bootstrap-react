@@ -2,7 +2,8 @@ import React from 'react';
 import {Col, Row} from "react-bootstrap";
 
 const Textmedia: React.FC<{ data: any }> = props => {
-console.log('blabla')
+console.log(props.data)
+    console.log('############');
     let textmediaClassName;
     if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
         textmediaClassName = props.data.gallery.position.horizontal;
@@ -10,7 +11,6 @@ console.log('blabla')
     if (props.data.gallery.position.horizontal === 'center') {
         textmediaClassName = props.data.gallery.position.vertical;
     }
-
     return <div className="textmedia">
         <div className="gallery-row">
             <Row className={"textmedia textmedia-" + textmediaClassName}>
@@ -19,8 +19,12 @@ console.log('blabla')
                     <Row>
                         {Object.keys(props.data.gallery.rows).map((rowKey) => {
                             return Object.keys(props.data.gallery.rows[rowKey].columns).map((columnKey) => {
+
+                              console.log(props.data.gallery.rows[rowKey].columns[columnKey])
+
                                 return <Col
                                     className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
+
                                     <iframe src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
                                         className="embed-responsive-item" />
                                     {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}

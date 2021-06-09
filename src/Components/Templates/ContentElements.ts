@@ -57,7 +57,7 @@ export {
  //  MenuSitemapPages,
    MenuSubpages,*/
     //MenuSitemap,
-    //   Table,
+     Table,
     Shortcut,
     //Image,
     Textmedia,

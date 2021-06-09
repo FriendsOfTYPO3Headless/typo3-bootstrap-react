@@ -540,12 +540,43 @@ const contentElementTemplates = {
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
     // bullets: (headlessContentData, args = {}) => <CE.Bullets data={headlessContentData.content}/>,
     // image: (headlessContentData, args = {}) => <CE.Image data={headlessContentData.content}/>,
-    shortcut: (headlessContentData, args = {}) => <CE.Shortcut data={headlessContentData.content}/>,
-    // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
+    shortcut: (headlessContentData, args = {}) => <CE.Shortcut data={headlessContentData.content} args={args}/>,
+    table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     div: (headlessContentData, args = {}) => <CE.Div data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
 }
 
+const renderContent = (contentElementLayouts, contentElementTemplates, content, args) => {
+    let layout;
+    if (contentElementLayouts.hasOwnProperty(content.appearance.layout)) {
+        layout = contentElementLayouts[content.appearance.layout];
+    } else if (contentElementLayouts.hasOwnProperty('__generic')) {
+        layout = contentElementLayouts.__generic;
+    } else {
+        return <>CE-layout not found: {content.appearance.layout}</>
+    }
+    let template;
+    if (contentElementTemplates.hasOwnProperty(content.type)) {
+        template = contentElementTemplates[content.type];
+    } else if (contentElementTemplates.hasOwnProperty('__generic')) {
+        template = contentElementTemplates.__generic;
+    } else {
+        return <>CE-template not found: {content.type} </>
+    }
+    let _args ={
+        ...args
+    }
+    if(content.type === 'shortcut'){
+        _args= {
+            ..._args,
+            contentElementTemplates: contentElementTemplates,
+            contentElementLayouts: contentElementLayouts,
+        }
+    }
+    return <React.Fragment key={content.id}>
+        {layout({ children: template(content, _args), content:content, args: _args})}
+    </React.Fragment>
+}
 
 const TYPO3Page: React.FC<TYPO3PagePropsInterface> = props => {
     const _pageLayouts = Object.assign({}, pageLayouts, props.pageLayouts);
@@ -570,7 +601,7 @@ TYPO3Page.defaultProps = {
 }
 
 export default TYPO3Page;
-export {pageLayouts, pageTemplates, contentElementLayouts, contentElementTemplates};
+export {pageLayouts, pageTemplates, contentElementLayouts, contentElementTemplates, renderContent};
 
 
 
