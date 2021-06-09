@@ -3,17 +3,13 @@
 //
 .textmedia,
 .textpic {
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: -($grid-gutter-width / 2);
-    margin-right: -($grid-gutter-width / 2);
+  img {
+    max-width: 100%;
+  }
 }
 .textmedia-item,
 .textpic-item {
     order: 1;
-    width: 100%;
-    padding-left: ($grid-gutter-width / 2);
-    padding-right: ($grid-gutter-width / 2);
 }
 .textmedia-text,
 .textpic-text {
@@ -24,6 +20,10 @@
 .textmedia-gallery,
 .textpic-gallery {
     margin-bottom: $spacer;
+  & >.row {
+    margin-left: -$grid-gutter-width / 4;
+    margin-right: -$grid-gutter-width / 4;
+  }
 }
 
 //
@@ -33,6 +33,7 @@
 .textpic-centered {
     align-items: center;
 }
+
 .textmedia-below,
 .textpic-below {
     .textmedia-text,
@@ -53,7 +54,7 @@
         .textmedia-item,
         .textpic-item {
             margin-bottom: 0;
-            width: 50%;
+
         }
     }
     .textmedia-right,

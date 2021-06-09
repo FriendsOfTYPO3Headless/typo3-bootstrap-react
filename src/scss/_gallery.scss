@@ -1,18 +1,12 @@
 //
 // Gallery
 //
-.gallery-row {
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: -.5rem;
-    margin-right: -.5rem;
-    &:last-child {
-        margin-bottom: -1rem;
-    }
-}
+
 .gallery-item {
-    padding-left: .5rem;
-    padding-right: .5rem;
+
+    padding-left: $grid-gutter-width / 4;
+    padding-right: $grid-gutter-width / 4;
+
     img,
     picture {
         width: 100%;
@@ -30,6 +24,7 @@
     width: calc(100% / 2);
 }
 .gallery-item-size-3 {
+
     width: calc(100% / 3);
 }
 .gallery-item-size-4 {

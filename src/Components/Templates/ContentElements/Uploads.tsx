@@ -4,7 +4,7 @@ import getOwnPropertyDescriptor = Reflect.getOwnPropertyDescriptor;
 const Uploads: React.FC<{ data: any }> = props => {
 
 
-    //console.log(props.data.media)
+    console.log(props.data.media)
 
     return <div className="uploads">
         <ul className="media-list">
