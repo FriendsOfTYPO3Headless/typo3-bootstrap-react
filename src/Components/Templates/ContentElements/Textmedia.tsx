@@ -19,12 +19,37 @@ const Textmedia: React.FC<{ data: any }> = props => {
                     <Row>
                         {Object.keys(props.data.gallery.rows).map((rowKey) => {
                             return Object.keys(props.data.gallery.rows[rowKey].columns).map((columnKey) => {
-                                return <Col
-                                    className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
-                                    <iframe src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
-                                            className="embed-responsive-item" />
-                                    {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
-                                </Col>
+                                if(props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'video/youtube') {
+
+                                    return <Col
+                                        className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
+
+                                        <iframe src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
+                                               className="embed-responsive-item"/>
+                                        {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
+                                    </Col>
+                                }
+                                 if(props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'image/svg+xml') {
+
+                                     return <Col
+                                         className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
+
+                                         <img src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
+                                                 className="embed-responsive-item"/>
+                                         {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
+                                     </Col>
+                                 }
+
+                                if(props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'audio') {
+
+                                    return <Col
+                                        className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
+
+                                        <audio src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
+                                             className="embed-responsive-item"/>
+                                        {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
+                                    </Col>
+                                }
                             })
                         })}
                     </Row>
