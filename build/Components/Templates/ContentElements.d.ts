@@ -6,4 +6,5 @@ import Div from './ContentElements/Div';
 import Textmedia from './ContentElements/Textmedia';
 import Shortcut from './ContentElements/Shortcut';
 import Html from './ContentElements/Html';
-export { Text, Textpic, Image, ImageLightbox, Div, Html, Shortcut, Textmedia, };
+import Uploads from './ContentElements/Uploads';
+export { Text, Textpic, Image, ImageLightbox, Div, Html, Shortcut, Textmedia, Uploads };

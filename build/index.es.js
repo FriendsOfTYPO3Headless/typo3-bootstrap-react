@@ -5083,6 +5083,38 @@ var Html = function (props) {
     return React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
 };
 
+var Uploads = function (props) {
+    console.log(props.data.media);
+    return React.createElement("div", { className: "uploads" },
+        React.createElement("ul", { className: "media-list" }, Object.keys(props.data.media).map(function (key) {
+            // console.log(props.data)
+            var description = props.data.media[key].properties.description;
+            if (description === true) {
+                description = props.data.media[key].properties.description;
+            }
+            var content;
+            switch (props.data.displayInformation) {
+                case "2":
+                    content = React.createElement(React.Fragment, null,
+                        "  ",
+                        React.createElement("img", { src: props.data.media[key].publicUrl }),
+                        React.createElement("a", { href: props.data.media[key].publicUrl },
+                            " ",
+                            props.data.media[key].properties.filename,
+                            "  "));
+                    break;
+                default:
+                    content = React.createElement("a", { href: props.data.media[key].publicUrl },
+                        " ",
+                        props.data.media[key].properties.filename,
+                        "  ");
+            }
+            return React.createElement("li", { key: key },
+                content,
+                description);
+        })));
+};
+
 var BackgroundImage = function (props) {
     if (props.data.appearance.backgroundImage.length < 1) {
         return null;
@@ -5529,6 +5561,9 @@ var contentElementTemplates = {
     },
     textmedia: function (headlessContentData, args) {
         return React.createElement(Textmedia, { data: headlessContentData.content });
+    },
+    uploads: function (headlessContentData, args) {
+        return React.createElement(Uploads, { data: headlessContentData.content });
     },
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
     // bullets: (headlessContentData, args = {}) => <CE.Bullets data={headlessContentData.content}/>,

@@ -6,10 +6,9 @@ import Div from './ContentElements/Div'
 import Textmedia from './ContentElements/Textmedia'
 import Shortcut from './ContentElements/Shortcut'
 import Html from './ContentElements/Html'
-//import ImageModal from './ContentElements/ImageModal'
+import Uploads from './ContentElements/Uploads'
 
 
-// import Textmedia from './ContentElements/Textmedia'
 // import MenuSitemap from './ContentElements/MenuSitemap'
 
 /* import FormFormFramework from './ContentElements/FormFormFramework'
@@ -31,7 +30,7 @@ import MenuSection from './ContentElements/MenuSection'*/
 
 import Table from './ContentElements/Table'
 
-import Uploads from './ContentElements/Uploads'
+
 import MenuSitemap from './ContentElements/MenuSitemap'
 
 export {
@@ -63,5 +62,5 @@ export {
     Shortcut,
     //Image,
     Textmedia,
-    // Uploads
+    Uploads
 }
