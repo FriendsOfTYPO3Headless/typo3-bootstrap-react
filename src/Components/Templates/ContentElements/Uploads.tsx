@@ -31,17 +31,19 @@ const Uploads: React.FC<{ data: any }> = props => {
 
                         break;
 
+
                     case  "2":
-                        content = <>html bodytext
+                        content = <>
                             <a href={props.data.media[key].publicUrl}>
                                 <iframe
                                     src={props.data.media[key].publicUrl}/>
                                 {props.data.media[key].properties.filename}
                             </a>
                             {props.data.displayDescription === '1' ? description : ' '}
-
                         </>
                         break;
+
+
                     default :
                         content =
                             <a href={props.data.media[key].publicUrl}> {props.data.media[key].properties.filename}  </a>

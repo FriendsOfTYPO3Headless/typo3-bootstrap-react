@@ -5102,7 +5102,6 @@ var Uploads = function (props) {
                     break;
                 case "2":
                     content = React.createElement(React.Fragment, null,
-                        "html bodytext",
                         React.createElement("a", { href: props.data.media[key].publicUrl },
                             React.createElement("iframe", { src: props.data.media[key].publicUrl }),
                             props.data.media[key].properties.filename),
