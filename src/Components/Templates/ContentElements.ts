@@ -5,6 +5,7 @@ import ImageLightbox from './ContentElements/Image'
 import Div from './ContentElements/Div'
 import Textmedia from './ContentElements/Textmedia'
 import Shortcut from './ContentElements/Shortcut'
+import Html from './ContentElements/Html'
 //import ImageModal from './ContentElements/ImageModal'
 
 
@@ -12,7 +13,7 @@ import Shortcut from './ContentElements/Shortcut'
 // import MenuSitemap from './ContentElements/MenuSitemap'
 
 /* import FormFormFramework from './ContentElements/FormFormFramework'
-import Html from './ContentElements/Html'
+
 
 import List from './ContentElements/List'
 import Login from './ContentElements/Login'
@@ -41,8 +42,9 @@ export {
     ImageLightbox,
     //Bullets,
     Div,
+    Html,
     /*  FormFormFramework,
-   Html,
+
    List,
    Login,
  //  MenuAbstract,

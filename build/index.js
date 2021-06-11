@@ -1260,11 +1260,17 @@ function hidesContents(element) {
   // If the node is empty, this is good enough
   if (zeroSize && !element.innerHTML) return true;
 
-  // Otherwise we need to check some styles
-  var style = window.getComputedStyle(element);
-  return zeroSize ? style.getPropertyValue("overflow") !== "visible" ||
-  // if 'overflow: visible' set, check if there is actually any overflow
-  element.scrollWidth <= 0 && element.scrollHeight <= 0 : style.getPropertyValue("display") == "none";
+  try {
+    // Otherwise we need to check some styles
+    var style = window.getComputedStyle(element);
+    return zeroSize ? style.getPropertyValue("overflow") !== "visible" ||
+    // if 'overflow: visible' set, check if there is actually any overflow
+    element.scrollWidth <= 0 && element.scrollHeight <= 0 : style.getPropertyValue("display") == "none";
+  } catch (exception) {
+    // eslint-disable-next-line no-console
+    console.warn("Failed to inspect element style");
+    return false;
+  }
 }
 
 function visible(element) {
@@ -1296,6 +1302,8 @@ function findTabbableDescendants(element) {
 module.exports = exports["default"];
 });
 
+var resetState_1$2 = resetState$2;
+var log_1$2 = log$2;
 var handleBlur_1 = handleBlur;
 var handleFocus_1 = handleFocus;
 var markForFocusLater_1 = markForFocusLater;
@@ -1313,6 +1321,24 @@ function _interopRequireDefault$2(obj) { return obj && obj.__esModule ? obj : { 
 var focusLaterElements = [];
 var modalElement = null;
 var needToFocus = false;
+
+/* eslint-disable no-console */
+/* istanbul ignore next */
+function resetState$2() {
+  focusLaterElements = [];
+}
+
+/* istanbul ignore next */
+function log$2() {
+  if (process.env.NODE_ENV === "production") return;
+  console.log("focusManager ----------");
+  focusLaterElements.forEach(function (f) {
+    var check = f || {};
+    console.log(check.nodeName, check.className, check.id);
+  });
+  console.log("end focusManager ----------");
+}
+/* eslint-enable no-console */
 
 function handleBlur() {
   needToFocus = true;
@@ -1389,6 +1415,8 @@ function teardownScopedFocus() {
 }
 
 var focusManager = /*#__PURE__*/Object.defineProperty({
+	resetState: resetState_1$2,
+	log: log_1$2,
 	handleBlur: handleBlur_1,
 	handleFocus: handleFocus_1,
 	markForFocusLater: markForFocusLater_1,
@@ -1615,13 +1643,14 @@ exports.canUseDOM = EE.canUseDOM;
 exports.default = SafeHTMLElement;
 });
 
+var resetState_1$1 = resetState$1;
+var log_1$1 = log$1;
 var assertNodeList_1 = assertNodeList;
 var setElement_1 = setElement;
 var validateElement_1 = validateElement;
 var hide_1 = hide;
 var show_1 = show;
 var documentNotReadyOrSSRTesting_1 = documentNotReadyOrSSRTesting;
-var resetForTesting_1 = resetForTesting;
 
 
 
@@ -1632,6 +1661,35 @@ var _warning2 = _interopRequireDefault$1(warning_1);
 function _interopRequireDefault$1(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var globalElement = null;
+
+/* eslint-disable no-console */
+/* istanbul ignore next */
+function resetState$1() {
+  if (globalElement) {
+    if (globalElement.removeAttribute) {
+      globalElement.removeAttribute("aria-hidden");
+    } else if (globalElement.length != null) {
+      globalElement.forEach(function (element) {
+        return element.removeAttribute("aria-hidden");
+      });
+    } else {
+      document.querySelectorAll(globalElement).forEach(function (element) {
+        return element.removeAttribute("aria-hidden");
+      });
+    }
+  }
+  globalElement = null;
+}
+
+/* istanbul ignore next */
+function log$1() {
+  if (process.env.NODE_ENV === "production") return;
+  var check = globalElement || {};
+  console.log("ariaAppHider ----------");
+  console.log(check.nodeName, check.className, check.id);
+  console.log("end ariaAppHider ----------");
+}
+/* eslint-enable no-console */
 
 function assertNodeList(nodeList, selector) {
   if (!nodeList || !nodeList.length) {
@@ -1719,18 +1777,15 @@ function documentNotReadyOrSSRTesting() {
   globalElement = null;
 }
 
-function resetForTesting() {
-  globalElement = null;
-}
-
 var ariaAppHider = /*#__PURE__*/Object.defineProperty({
+	resetState: resetState_1$1,
+	log: log_1$1,
 	assertNodeList: assertNodeList_1,
 	setElement: setElement_1,
 	validateElement: validateElement_1,
 	hide: hide_1,
 	show: show_1,
-	documentNotReadyOrSSRTesting: documentNotReadyOrSSRTesting_1,
-	resetForTesting: resetForTesting_1
+	documentNotReadyOrSSRTesting: documentNotReadyOrSSRTesting_1
 }, '__esModule', {value: true});
 
 var classList = createCommonjsModule(function (module, exports) {
@@ -1738,34 +1793,57 @@ var classList = createCommonjsModule(function (module, exports) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.dumpClassLists = dumpClassLists;
+exports.resetState = resetState;
+exports.log = log;
 var htmlClassList = {};
 var docBodyClassList = {};
 
-function dumpClassLists() {
-  if (process.env.NODE_ENV !== "production") {
-    var classes = document.getElementsByTagName("html")[0].className;
-    var buffer = "Show tracked classes:\n\n";
-
-    buffer += "<html /> (" + classes + "):\n";
-    for (var x in htmlClassList) {
-      buffer += "  " + x + " " + htmlClassList[x] + "\n";
-    }
-
-    classes = document.body.className;
-
-    // eslint-disable-next-line max-len
-    buffer += "\n\ndoc.body (" + classes + "):\n";
-    for (var _x in docBodyClassList) {
-      buffer += "  " + _x + " " + docBodyClassList[_x] + "\n";
-    }
-
-    buffer += "\n";
-
-    // eslint-disable-next-line no-console
-    console.log(buffer);
-  }
+/* eslint-disable no-console */
+/* istanbul ignore next */
+function removeClass(at, cls) {
+  at.classList.remove(cls);
 }
+
+/* istanbul ignore next */
+function resetState() {
+  var htmlElement = document.getElementsByTagName("html")[0];
+  for (var cls in htmlClassList) {
+    removeClass(htmlElement, htmlClassList[cls]);
+  }
+
+  var body = document.body;
+  for (var _cls in docBodyClassList) {
+    removeClass(body, docBodyClassList[_cls]);
+  }
+
+  htmlClassList = {};
+  docBodyClassList = {};
+}
+
+/* istanbul ignore next */
+function log() {
+  if (process.env.NODE_ENV === "production") return;
+
+  var classes = document.getElementsByTagName("html")[0].className;
+  var buffer = "Show tracked classes:\n\n";
+
+  buffer += "<html /> (" + classes + "):\n";
+  for (var x in htmlClassList) {
+    buffer += "  " + x + " " + htmlClassList[x] + "\n";
+  }
+
+  classes = document.body.className;
+
+  buffer += "\n\ndoc.body (" + classes + "):\n";
+  for (var _x in docBodyClassList) {
+    buffer += "  " + _x + " " + docBodyClassList[_x] + "\n";
+  }
+
+  buffer += "\n";
+
+  console.log(buffer);
+}
+/* eslint-enable no-console */
 
 /**
  * Track the number of reference of a class.
@@ -1842,20 +1920,17 @@ exports.remove = function remove(element, classString) {
 };
 });
 
-var portalOpenInstances_1 = createCommonjsModule(function (module, exports) {
+var log_1 = log;
+var resetState_1 = resetState;
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck$1(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 // Tracks portals that are open and emits events to subscribers
 
 var PortalOpenInstances = function PortalOpenInstances() {
   var _this = this;
 
-  _classCallCheck(this, PortalOpenInstances);
+  _classCallCheck$1(this, PortalOpenInstances);
 
   this.register = function (openInstance) {
     if (_this.openInstances.indexOf(openInstance) !== -1) {
@@ -1900,9 +1975,30 @@ var PortalOpenInstances = function PortalOpenInstances() {
 
 var portalOpenInstances = new PortalOpenInstances();
 
-exports.default = portalOpenInstances;
-module.exports = exports["default"];
-});
+/* eslint-disable no-console */
+/* istanbul ignore next */
+function log() {
+  console.log("portalOpenInstances ----------");
+  console.log(portalOpenInstances.openInstances.length);
+  portalOpenInstances.openInstances.forEach(function (p) {
+    return console.log(p);
+  });
+  console.log("end portalOpenInstances ----------");
+}
+
+/* istanbul ignore next */
+function resetState() {
+  portalOpenInstances = new PortalOpenInstances();
+}
+/* eslint-enable no-console */
+
+var _default = portalOpenInstances;
+
+var portalOpenInstances_1 = /*#__PURE__*/Object.defineProperty({
+	log: log_1,
+	resetState: resetState_1,
+	default: _default
+}, '__esModule', {value: true});
 
 var _portalOpenInstances2 = _interopRequireDefault(portalOpenInstances_1);
 
@@ -1913,6 +2009,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var before = void 0,
     after = void 0,
     instances = [];
+/* eslint-enable no-console */
 
 function focusContent() {
   if (instances.length === 0) {
@@ -1926,7 +2023,7 @@ function focusContent() {
 }
 
 function bodyTrap(eventType, openInstances) {
-  if (!before || !after) {
+  if (!before && !after) {
     before = document.createElement("div");
     before.setAttribute("data-react-modal-body-trap", "");
     before.style.position = "absolute";
@@ -2093,14 +2190,16 @@ var ModalPortal = function (_Component) {
         }
 
         _this.setState({ isOpen: true }, function () {
-          _this.setState({ afterOpen: true });
+          requestAnimationFrame(function () {
+            _this.setState({ afterOpen: true });
 
-          if (_this.props.isOpen && _this.props.onAfterOpen) {
-            _this.props.onAfterOpen({
-              overlayEl: _this.overlay,
-              contentEl: _this.content
-            });
-          }
+            if (_this.props.isOpen && _this.props.onAfterOpen) {
+              _this.props.onAfterOpen({
+                overlayEl: _this.overlay,
+                contentEl: _this.content
+              });
+            }
+          });
         });
       }
     };
@@ -2604,6 +2703,10 @@ var bodyOpenClassName = exports.bodyOpenClassName = "ReactModal__Body--open";
 
 var isReact16 = safeHTMLElement.canUseDOM && _reactDom2.default.createPortal !== undefined;
 
+var createHTMLElement = function createHTMLElement(name) {
+  return document.createElement(name);
+};
+
 var getCreatePortal = function getCreatePortal() {
   return isReact16 ? _reactDom2.default.createPortal : _reactDom2.default.unstable_renderSubtreeIntoContainer;
 };
@@ -2650,7 +2753,7 @@ var Modal = function (_Component) {
       if (!safeHTMLElement.canUseDOM) return;
 
       if (!isReact16) {
-        this.node = document.createElement("div");
+        this.node = createHTMLElement("div");
       }
       this.node.className = this.props.portalClassName;
 
@@ -2719,7 +2822,7 @@ var Modal = function (_Component) {
       }
 
       if (!this.node && isReact16) {
-        this.node = document.createElement("div");
+        this.node = createHTMLElement("div");
       }
 
       var createPortal = getCreatePortal();
@@ -2840,6 +2943,12 @@ Modal.defaultStyles = {
 
 
 (0, _reactLifecyclesCompat.polyfill)(Modal);
+
+if (process.env.NODE_ENV !== "production") {
+  Modal.setCreateHTMLElement = function (fn) {
+    return createHTMLElement = fn;
+  };
+}
 
 exports.default = Modal;
 });
@@ -4979,6 +5088,10 @@ var Shortcut = function (props) {
     return React__default['default'].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.shortcuts } });
 };
 
+var Html = function (props) {
+    return React__default['default'].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
+};
+
 var BackgroundImage = function (props) {
     if (props.data.appearance.backgroundImage.length < 1) {
         return null;
@@ -5435,6 +5548,9 @@ var contentElementTemplates = {
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     div: function (headlessContentData, args) {
         return React__default['default'].createElement(Div, { data: headlessContentData.content });
+    },
+    html: function (headlessContentData, args) {
+        return React__default['default'].createElement(Html, { data: headlessContentData.content });
     },
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
 };

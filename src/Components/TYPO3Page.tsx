@@ -543,6 +543,7 @@ const contentElementTemplates = {
     shortcut: (headlessContentData, args = {}) => <CE.Shortcut data={headlessContentData.content}/>,
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     div: (headlessContentData, args = {}) => <CE.Div data={headlessContentData.content}/>,
+    html: (headlessContentData, args = {}) => <CE.Html data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
 }
 
