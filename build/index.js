@@ -5098,11 +5098,7 @@ var Uploads = function (props) {
         React__default['default'].createElement("ul", { className: "media-list" }, Object.keys(props.data.media).map(function (key) {
             // console.log(props.data)
             var description = props.data.media[key].properties.description;
-            if (description === true) {
-                description = props.data.media[key].properties.description;
-            }
             var content;
-            var descr = props.data.media[key].properties.description;
             switch (props.data.displayInformation) {
                 case "1":
                     content = React__default['default'].createElement(React__default['default'].Fragment, null,
@@ -5111,16 +5107,15 @@ var Uploads = function (props) {
                                 React__default['default'].createElement("i", { className: "bi bi-camera-video-fill" }) :
                                 React__default['default'].createElement("i", { className: "bi bi-file-image" }),
                             props.data.media[key].properties.filename),
-                        props.data.displayInformation ? descr : ' ');
+                        props.data.displayDescription === '1' ? description : ' ');
                     break;
                 case "2":
                     content = React__default['default'].createElement(React__default['default'].Fragment, null,
+                        "html bodytext",
                         React__default['default'].createElement("a", { href: props.data.media[key].publicUrl },
-                            " ",
                             React__default['default'].createElement("iframe", { src: props.data.media[key].publicUrl }),
-                            " ",
                             props.data.media[key].properties.filename),
-                        props.data.displayInformation ? descr : ' ');
+                        props.data.displayDescription === '1' ? description : ' ');
                     break;
                 default:
                     content =
@@ -5129,12 +5124,10 @@ var Uploads = function (props) {
                             props.data.media[key].properties.filename,
                             "  ");
                     {
-                        props.data.displayInformation ? descr : ' ';
+                        props.data.displayDescription === '1' ? description : ' ';
                     }
             }
-            return React__default['default'].createElement("li", { key: key },
-                content,
-                description);
+            return React__default['default'].createElement("li", { key: key }, content);
         })));
 };
 

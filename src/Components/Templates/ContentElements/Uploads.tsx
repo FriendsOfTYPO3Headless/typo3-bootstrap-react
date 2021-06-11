@@ -12,13 +12,10 @@ const Uploads: React.FC<{ data: any }> = props => {
             {Object.keys(props.data.media).map((key) => {
                 // console.log(props.data)
                 let description = props.data.media[key].properties.description;
-                if (description === true) {
-                    description = props.data.media[key].properties.description
-                }
 
 
                 let content;
-let descr = props.data.media[key].properties.description;
+
                 switch (props.data.displayInformation) {
                     case "1" :
                         content = <>
@@ -28,27 +25,34 @@ let descr = props.data.media[key].properties.description;
                                     <i className="bi bi-file-image"/>}
                                 {props.data.media[key].properties.filename}
                             </a>
-                            {props.data.displayInformation ? descr : ' '}
+                            {props.data.displayDescription === '1' ? description : ' '}
+
                         </>
 
                         break;
 
                     case  "2":
-                        content = <>
-                            <a href={props.data.media[key].publicUrl}> <iframe
-                                src={props.data.media[key].publicUrl}/> {props.data.media[key].properties.filename}
+                        content = <>html bodytext
+                            <a href={props.data.media[key].publicUrl}>
+                                <iframe
+                                    src={props.data.media[key].publicUrl}/>
+                                {props.data.media[key].properties.filename}
                             </a>
-                            {props.data.displayInformation ? descr : ' '}
+                            {props.data.displayDescription === '1' ? description : ' '}
+
                         </>
                         break;
                     default :
                         content =
                             <a href={props.data.media[key].publicUrl}> {props.data.media[key].properties.filename}  </a>
-                             {props.data.displayInformation ? descr : ' '}
+                           {props.data.displayDescription === '1' ? description : ' '}
+
+                    {
+
+                    }
                 }
                 return <li key={key}>
                     {content}
-                    {description}
                 </li>
 
             })}
