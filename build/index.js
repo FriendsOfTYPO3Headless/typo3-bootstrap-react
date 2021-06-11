@@ -5093,10 +5093,8 @@ var Html = function (props) {
 };
 
 var Uploads = function (props) {
-    console.log(props.data.media);
     return React__default['default'].createElement("div", { className: "uploads" },
         React__default['default'].createElement("ul", { className: "media-list" }, Object.keys(props.data.media).map(function (key) {
-            // console.log(props.data)
             var description = props.data.media[key].properties.description;
             var content;
             switch (props.data.displayInformation) {
