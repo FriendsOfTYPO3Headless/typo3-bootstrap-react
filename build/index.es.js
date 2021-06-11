@@ -5093,21 +5093,35 @@ var Uploads = function (props) {
                 description = props.data.media[key].properties.description;
             }
             var content;
+            var descr = props.data.media[key].properties.description;
             switch (props.data.displayInformation) {
+                case "1":
+                    content = React.createElement(React.Fragment, null,
+                        React.createElement("a", { href: props.data.media[key].publicUrl },
+                            props.data.media[key].properties.type === 'video' ?
+                                React.createElement("i", { className: "bi bi-camera-video-fill" }) :
+                                React.createElement("i", { className: "bi bi-file-image" }),
+                            props.data.media[key].properties.filename),
+                        props.data.displayInformation ? descr : ' ');
+                    break;
                 case "2":
                     content = React.createElement(React.Fragment, null,
-                        "  ",
-                        React.createElement("img", { src: props.data.media[key].publicUrl }),
+                        React.createElement("a", { href: props.data.media[key].publicUrl },
+                            " ",
+                            React.createElement("iframe", { src: props.data.media[key].publicUrl }),
+                            " ",
+                            props.data.media[key].properties.filename),
+                        props.data.displayInformation ? descr : ' ');
+                    break;
+                default:
+                    content =
                         React.createElement("a", { href: props.data.media[key].publicUrl },
                             " ",
                             props.data.media[key].properties.filename,
-                            "  "));
-                    break;
-                default:
-                    content = React.createElement("a", { href: props.data.media[key].publicUrl },
-                        " ",
-                        props.data.media[key].properties.filename,
-                        "  ");
+                            "  ");
+                    {
+                        props.data.displayInformation ? descr : ' ';
+                    }
             }
             return React.createElement("li", { key: key },
                 content,

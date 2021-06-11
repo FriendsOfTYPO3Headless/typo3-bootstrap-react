@@ -5102,21 +5102,35 @@ var Uploads = function (props) {
                 description = props.data.media[key].properties.description;
             }
             var content;
+            var descr = props.data.media[key].properties.description;
             switch (props.data.displayInformation) {
+                case "1":
+                    content = React__default['default'].createElement(React__default['default'].Fragment, null,
+                        React__default['default'].createElement("a", { href: props.data.media[key].publicUrl },
+                            props.data.media[key].properties.type === 'video' ?
+                                React__default['default'].createElement("i", { className: "bi bi-camera-video-fill" }) :
+                                React__default['default'].createElement("i", { className: "bi bi-file-image" }),
+                            props.data.media[key].properties.filename),
+                        props.data.displayInformation ? descr : ' ');
+                    break;
                 case "2":
                     content = React__default['default'].createElement(React__default['default'].Fragment, null,
-                        "  ",
-                        React__default['default'].createElement("img", { src: props.data.media[key].publicUrl }),
+                        React__default['default'].createElement("a", { href: props.data.media[key].publicUrl },
+                            " ",
+                            React__default['default'].createElement("iframe", { src: props.data.media[key].publicUrl }),
+                            " ",
+                            props.data.media[key].properties.filename),
+                        props.data.displayInformation ? descr : ' ');
+                    break;
+                default:
+                    content =
                         React__default['default'].createElement("a", { href: props.data.media[key].publicUrl },
                             " ",
                             props.data.media[key].properties.filename,
-                            "  "));
-                    break;
-                default:
-                    content = React__default['default'].createElement("a", { href: props.data.media[key].publicUrl },
-                        " ",
-                        props.data.media[key].properties.filename,
-                        "  ");
+                            "  ");
+                    {
+                        props.data.displayInformation ? descr : ' ';
+                    }
             }
             return React__default['default'].createElement("li", { key: key },
                 content,
