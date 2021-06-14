@@ -41,7 +41,6 @@ const pageLayouts = {
     </>
 }
 
-
 const pageTemplates = {
     __generic: (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
         return {
@@ -518,7 +517,6 @@ const pageTemplates = {
         }
     },
 }
-
 
 const contentElementLayouts = {
     __generic: (props) => {
