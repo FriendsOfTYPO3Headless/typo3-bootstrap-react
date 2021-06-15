@@ -64,6 +64,7 @@ declare const contentElementTemplates: {
     div: (headlessContentData: any, args?: {}) => JSX.Element;
     html: (headlessContentData: any, args?: {}) => JSX.Element;
 };
+declare const renderContent: (contentElementLayouts: any, contentElementTemplates: any, content: any, args: any) => JSX.Element;
 declare const TYPO3Page: React.FC<TYPO3PagePropsInterface>;
 export default TYPO3Page;
-export { pageLayouts, pageTemplates, contentElementLayouts, contentElementTemplates };
+export { pageLayouts, pageTemplates, contentElementLayouts, contentElementTemplates, renderContent };

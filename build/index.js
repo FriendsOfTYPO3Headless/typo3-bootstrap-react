@@ -11,6 +11,32 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 var _reactDom__default = /*#__PURE__*/_interopDefaultLegacy(_reactDom);
 
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
 var section = function (props) {
     if (props.pageTemplate.hasOwnProperty(props.name)) {
         return props.pageTemplate[props.name];
@@ -64,32 +90,7 @@ var Content = function (props) {
     var content = React__default['default'].createElement(React__default['default'].Fragment, null);
     if (props.content.hasOwnProperty(PREFIX_COLPOS + props.colPos)) {
         content = props.content[PREFIX_COLPOS + props.colPos].map(function (content) {
-            var layout;
-            if (props.contentElementLayouts.hasOwnProperty(content.appearance.layout)) {
-                layout = props.contentElementLayouts[content.appearance.layout];
-            }
-            else if (props.contentElementLayouts.hasOwnProperty('__generic')) {
-                layout = props.contentElementLayouts.__generic;
-            }
-            else {
-                return React__default['default'].createElement(React__default['default'].Fragment, null,
-                    "CE-layout not found: ",
-                    props.content.appearance.layout);
-            }
-            var template;
-            if (props.contentElementTemplates.hasOwnProperty(content.type)) {
-                template = props.contentElementTemplates[content.type];
-            }
-            else if (props.contentElementTemplates.hasOwnProperty('__generic')) {
-                template = props.contentElementTemplates.__generic;
-            }
-            else {
-                return React__default['default'].createElement(React__default['default'].Fragment, null,
-                    "CE-template not found: ",
-                    props.content.type,
-                    " ");
-            }
-            return React__default['default'].createElement(React__default['default'].Fragment, { key: content.id }, layout({ children: template(content, props.args), content: content, args: props.args }));
+            return renderContent(props.contentElementLayouts, props.contentElementTemplates, content, props.args);
         });
     }
     return content;
@@ -5057,11 +5058,12 @@ var Image = function (props) {
 
 var Div = function (props) {
     return React__default['default'].createElement("div", { className: "div" },
-        React__default['default'].createElement("hr", null));
+        React__default['default'].createElement("hr", null, "  "));
 };
 
 var Textmedia = function (props) {
-    console.log('blabla');
+    console.log(props.data);
+    console.log('############');
     var textmediaClassName;
     if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
         textmediaClassName = props.data.gallery.position.horizontal;
@@ -5075,6 +5077,7 @@ var Textmedia = function (props) {
                 React__default['default'].createElement(reactBootstrap.Col, { className: "textmedia-item textmedia-gallery", md: textmediaClassName === props.data.gallery.position.vertical ? "auto" : "6" },
                     React__default['default'].createElement(reactBootstrap.Row, null, Object.keys(props.data.gallery.rows).map(function (rowKey) {
                         return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
+                            console.log(props.data.gallery.rows[rowKey].columns[columnKey]);
                             return React__default['default'].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
                                 React__default['default'].createElement("iframe", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
                                 props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
@@ -5085,7 +5088,28 @@ var Textmedia = function (props) {
 };
 
 var Shortcut = function (props) {
-    return React__default['default'].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.shortcuts } });
+    console.log('shortcutkey2');
+    console.log(props.data);
+    return React__default['default'].createElement("div", { className: "shortcut" }, props.data.shortcut.map(function (cObject) {
+        return renderContent(props.args.contentElementLayouts, props.args.contentElementTemplates, cObject, props.args);
+    }));
+};
+
+var Table = function (props) {
+    console.log('moinsen');
+    console.log(props.data);
+    console.log(props.data.bodytext[0][0]);
+    // type string
+    return React__default['default'].createElement("div", { className: "table" }, Object.keys(props.data.bodytext).map(function (ARRAY1) {
+        Object.keys(props.data.bodytext[ARRAY1]).map(function (ARRAY2) {
+            {
+                props.data.bodytext[ARRAY1][ARRAY2];
+            }
+            if (props.data.bodytext === true) ;
+            if (props.data.headerPosition === 1) ;
+            if (props.data.tabelTfoot) ;
+        });
+    }));
 };
 
 var BackgroundImage = function (props) {
@@ -5539,13 +5563,48 @@ var contentElementTemplates = {
     // bullets: (headlessContentData, args = {}) => <CE.Bullets data={headlessContentData.content}/>,
     // image: (headlessContentData, args = {}) => <CE.Image data={headlessContentData.content}/>,
     shortcut: function (headlessContentData, args) {
-        return React__default['default'].createElement(Shortcut, { data: headlessContentData.content });
+        if (args === void 0) { args = {}; }
+        return React__default['default'].createElement(Shortcut, { data: headlessContentData.content, args: args });
     },
-    // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
+    table: function (headlessContentData, args) {
+        return React__default['default'].createElement(Table, { data: headlessContentData.content });
+    },
     div: function (headlessContentData, args) {
         return React__default['default'].createElement(Div, { data: headlessContentData.content });
     },
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
+};
+var renderContent = function (contentElementLayouts, contentElementTemplates, content, args) {
+    var layout;
+    if (contentElementLayouts.hasOwnProperty(content.appearance.layout)) {
+        layout = contentElementLayouts[content.appearance.layout];
+    }
+    else if (contentElementLayouts.hasOwnProperty('__generic')) {
+        layout = contentElementLayouts.__generic;
+    }
+    else {
+        return React__default['default'].createElement(React__default['default'].Fragment, null,
+            "CE-layout not found: ",
+            content.appearance.layout);
+    }
+    var template;
+    if (contentElementTemplates.hasOwnProperty(content.type)) {
+        template = contentElementTemplates[content.type];
+    }
+    else if (contentElementTemplates.hasOwnProperty('__generic')) {
+        template = contentElementTemplates.__generic;
+    }
+    else {
+        return React__default['default'].createElement(React__default['default'].Fragment, null,
+            "CE-template not found: ",
+            content.type,
+            " ");
+    }
+    var _args = __assign({}, args);
+    if (content.type === 'shortcut') {
+        _args = __assign(__assign({}, _args), { contentElementTemplates: contentElementTemplates, contentElementLayouts: contentElementLayouts });
+    }
+    return React__default['default'].createElement(React__default['default'].Fragment, { key: content.id }, layout({ children: template(content, _args), content: content, args: _args }));
 };
 var TYPO3Page = function (props) {
     var _pageLayouts = Object.assign({}, pageLayouts, props.pageLayouts);

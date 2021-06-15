@@ -5,7 +5,5 @@ import ImageLightbox from './ContentElements/Image';
 import Div from './ContentElements/Div';
 import Textmedia from './ContentElements/Textmedia';
 import Shortcut from './ContentElements/Shortcut';
-import Html from './ContentElements/Html';
-import Uploads from './ContentElements/Uploads';
 import Table from './ContentElements/Table';
-export { Text, Textpic, Image, ImageLightbox, Div, Html, Table, Shortcut, Textmedia, Uploads };
+export { Text, Textpic, Image, ImageLightbox, Div, Table, Shortcut, Textmedia, };
