@@ -3,6 +3,7 @@ import {Col, Row} from "react-bootstrap";
 
 const Textmedia: React.FC<{ data: any }> = props => {
     console.log('blabla')
+
     let textmediaClassName;
     if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
         textmediaClassName = props.data.gallery.position.horizontal;
@@ -19,16 +20,38 @@ const Textmedia: React.FC<{ data: any }> = props => {
                     <Row>
                         {Object.keys(props.data.gallery.rows).map((rowKey) => {
                             return Object.keys(props.data.gallery.rows[rowKey].columns).map((columnKey) => {
+                                console.log(props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType)
 
-
+                                if (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'video/youtube') {
                                     return <Col
                                         className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
-
                                         <iframe src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
-                                               className="embed-responsive-item"/>
+                                                className="embed-responsive-item"/>
                                         {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
-
                                     </Col>
+                                }
+                                if (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'image/jpeg' && props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'image/svg+xml') {
+                                    return <Col
+                                        className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
+                                        <img src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
+                                                className="embed-responsive-item"/>
+                                        {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
+                                    </Col>
+                                } if (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'video/mp4') {
+                                    return <Col
+                                        className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
+                                        <video src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
+                                                className="embed-responsive-item"/>
+                                        {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
+                                    </Col>
+                                } else {
+                                    return <Col
+                                        className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
+                                        <iframe src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
+                                                className="embed-responsive-item"/>
+                                        {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
+                                    </Col>
+                                }
 
                             })
                         })}
@@ -50,4 +73,5 @@ export default Textmedia;
 
 {/* <img
     src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
-    className="embed-responsive-item" ></img> */}
+    className="embed-responsive-item" ></img> */
+}
