@@ -46,12 +46,12 @@ const Uploads: React.FC<{ data: any }> = props => {
 
 
                 }
+
                 return <li key={key}>
                     {content}
                 </li>
 
             })}
-
         </ul>
     </div>
 }

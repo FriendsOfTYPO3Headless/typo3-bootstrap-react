@@ -1,11 +1,14 @@
 import React from 'react';
 
 const Table: React.FC<{ data: any }> = props => {
-console.log(props.data)
+    console.log('moin')
+
+
     return <div className="table">
-        {Object.keys(props.data).map((key)=> {
+        {Object.keys(props.data.bodytext).map((arrayKey)=> {
 
-
+            {props.data.bodytext[arrayKey]}
+            console.log(props.data.bodytext[arrayKey])
                 if (props.data.tableCaption === true){
                     {props.data.tableCaption}
                 }
@@ -21,6 +24,7 @@ console.log(props.data)
             }
 
         })}
+
 
 
 

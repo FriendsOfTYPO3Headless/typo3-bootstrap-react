@@ -5075,9 +5075,27 @@ var Textmedia = function (props) {
                 React__default['default'].createElement(reactBootstrap.Col, { className: "textmedia-item textmedia-gallery", md: textmediaClassName === props.data.gallery.position.vertical ? "auto" : "6" },
                     React__default['default'].createElement(reactBootstrap.Row, null, Object.keys(props.data.gallery.rows).map(function (rowKey) {
                         return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
-                            return React__default['default'].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                React__default['default'].createElement("iframe", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
-                                props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                            console.log(props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType);
+                            if (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'video/youtube') {
+                                return React__default['default'].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                    React__default['default'].createElement("iframe", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
+                                    props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                            }
+                            if (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'image/jpeg' && props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'image/svg+xml') {
+                                return React__default['default'].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                    React__default['default'].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
+                                    props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                            }
+                            if (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'video/mp4') {
+                                return React__default['default'].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                    React__default['default'].createElement("video", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
+                                    props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                            }
+                            else {
+                                return React__default['default'].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                    React__default['default'].createElement("iframe", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
+                                    props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                            }
                         });
                     }))),
                 React__default['default'].createElement(reactBootstrap.Col, { className: "textmedia-item textmedia-text" },
@@ -5126,6 +5144,23 @@ var Uploads = function (props) {
             }
             return React__default['default'].createElement("li", { key: key }, content);
         })));
+};
+
+var Table = function (props) {
+    console.log('moin');
+    return React__default['default'].createElement("div", { className: "table" }, Object.keys(props.data.bodytext).map(function (arrayKey) {
+        {
+            props.data.bodytext[arrayKey];
+        }
+        console.log(props.data.bodytext[arrayKey]);
+        if (props.data.tableCaption === true) {
+            {
+                props.data.tableCaption;
+            }
+        }
+        if (props.data.headerPosition === 1) ;
+        if (props.data.tabelTfoot) ;
+    }));
 };
 
 var BackgroundImage = function (props) {
@@ -5584,7 +5619,9 @@ var contentElementTemplates = {
     shortcut: function (headlessContentData, args) {
         return React__default['default'].createElement(Shortcut, { data: headlessContentData.content });
     },
-    // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
+    table: function (headlessContentData, args) {
+        return React__default['default'].createElement(Table, { data: headlessContentData.content });
+    },
     div: function (headlessContentData, args) {
         return React__default['default'].createElement(Div, { data: headlessContentData.content });
     },
