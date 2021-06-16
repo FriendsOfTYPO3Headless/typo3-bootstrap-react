@@ -2,8 +2,7 @@ import React from 'react';
 import {Col, Row} from "react-bootstrap";
 
 const Textmedia: React.FC<{ data: any }> = props => {
-console.log(props.data)
-    console.log('############');
+    console.log('!!!!!!!!!1');
     let textmediaClassName;
     if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
         textmediaClassName = props.data.gallery.position.horizontal;
@@ -15,20 +14,45 @@ console.log(props.data)
         <div className="gallery-row">
             <Row className={"textmedia textmedia-" + textmediaClassName}>
                 <Col className="textmedia-item textmedia-gallery"
-                    md={textmediaClassName === props.data.gallery.position.vertical ? "auto" : "6"}>
+                     md={textmediaClassName === props.data.gallery.position.vertical ? "auto" : "6"}>
                     <Row>
                         {Object.keys(props.data.gallery.rows).map((rowKey) => {
                             return Object.keys(props.data.gallery.rows[rowKey].columns).map((columnKey) => {
 
-                              console.log(props.data.gallery.rows[rowKey].columns[columnKey])
+                                console.log(props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType)
+                                if (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'video/youtube') {
+                                    return <Col
+                                        className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
+                                        <iframe src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
+                                                className="embed-responsive-item"/>
+                                        {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
+                                    </Col>
+                                }
+                                if (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'image/jpeg' || props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'image/svg+xml') {
+                                    return <Col
+                                        className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
+                                        <img src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
+                                                className="embed-responsive-item"/>
+                                        {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
+                                    </Col>
+                                }
 
-                                return <Col
-                                    className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
+                                if (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'video/mp4' || props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'video/vimeo' ) {
+                                    return <Col
+                                        className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
+                                        <video controls>
+                                            <source type="video/mp4" src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl} />
+                                        </video>
+                                        {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
+                                    </Col>
+                                }
+                                    return <Col
+                                        className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
+                                        <iframe src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
+                                                className="embed-responsive-item"/>
+                                        {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
+                                    </Col>
 
-                                    <iframe src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
-                                        className="embed-responsive-item" />
-                                    {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
-                                </Col>
                             })
                         })}
                     </Row>
@@ -49,4 +73,5 @@ export default Textmedia;
 
 {/* <img
     src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
-    className="embed-responsive-item" ></img> */}
+    className="embed-responsive-item" ></img> */
+}

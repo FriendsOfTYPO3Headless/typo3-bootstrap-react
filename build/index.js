@@ -5058,12 +5058,11 @@ var Image = function (props) {
 
 var Div = function (props) {
     return React__default['default'].createElement("div", { className: "div" },
-        React__default['default'].createElement("hr", null, "  "));
+        React__default['default'].createElement("hr", null));
 };
 
 var Textmedia = function (props) {
-    console.log(props.data);
-    console.log('############');
+    console.log('!!!!!!!!!1');
     var textmediaClassName;
     if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
         textmediaClassName = props.data.gallery.position.horizontal;
@@ -5077,7 +5076,23 @@ var Textmedia = function (props) {
                 React__default['default'].createElement(reactBootstrap.Col, { className: "textmedia-item textmedia-gallery", md: textmediaClassName === props.data.gallery.position.vertical ? "auto" : "6" },
                     React__default['default'].createElement(reactBootstrap.Row, null, Object.keys(props.data.gallery.rows).map(function (rowKey) {
                         return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
-                            console.log(props.data.gallery.rows[rowKey].columns[columnKey]);
+                            console.log(props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType);
+                            if (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'video/youtube') {
+                                return React__default['default'].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                    React__default['default'].createElement("iframe", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
+                                    props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                            }
+                            if (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'image/jpeg' || props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'image/svg+xml') {
+                                return React__default['default'].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                    React__default['default'].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
+                                    props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                            }
+                            if (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'video/mp4' || props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'video/vimeo') {
+                                return React__default['default'].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                    React__default['default'].createElement("video", { controls: true },
+                                        React__default['default'].createElement("source", { type: "video/mp4", src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                    props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                            }
                             return React__default['default'].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
                                 React__default['default'].createElement("iframe", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
                                 props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
@@ -5096,19 +5111,19 @@ var Shortcut = function (props) {
 };
 
 var Table = function (props) {
-    console.log('moinsen');
-    console.log(props.data);
-    console.log(props.data.bodytext[0][0]);
-    // type string
-    return React__default['default'].createElement("div", { className: "table" }, Object.keys(props.data.bodytext).map(function (ARRAY1) {
-        Object.keys(props.data.bodytext[ARRAY1]).map(function (ARRAY2) {
+    console.log('moin');
+    return React__default['default'].createElement("div", { className: "table" }, Object.keys(props.data.bodytext).map(function (arrayKey) {
+        {
+            props.data.bodytext[arrayKey];
+        }
+        console.log(props.data.bodytext[arrayKey]);
+        if (props.data.tableCaption === true) {
             {
-                props.data.bodytext[ARRAY1][ARRAY2];
+                props.data.tableCaption;
             }
-            if (props.data.bodytext === true) ;
-            if (props.data.headerPosition === 1) ;
-            if (props.data.tabelTfoot) ;
-        });
+        }
+        if (props.data.headerPosition === 1) ;
+        if (props.data.tabelTfoot) ;
     }));
 };
 
