@@ -61,5 +61,5 @@ export {
     Shortcut,
     //Image,
     Textmedia,
-    // Uploads
+    Uploads
 }

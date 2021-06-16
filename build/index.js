@@ -5136,6 +5136,49 @@ var Table = function (props) {
     }));
 };
 
+var Uploads = function (props) {
+    console.log(props.data);
+    return React__default['default'].createElement("div", { className: "uploads" },
+        React__default['default'].createElement("ul", { className: "media-list" }, Object.keys(props.data.media).map(function (key) {
+            var description = props.data.media[key].properties.description;
+            var filesize = props.data.media[key].properties.size;
+            var content;
+            switch (props.data.displayInformation) {
+                case "1":
+                    content = React__default['default'].createElement(React__default['default'].Fragment, null,
+                        React__default['default'].createElement("a", { href: props.data.media[key].publicUrl },
+                            props.data.media[key].properties.type === 'video' ?
+                                React__default['default'].createElement("i", { className: "bi bi-camera-video-fill" }) :
+                                React__default['default'].createElement("i", { className: "bi bi-file-image" }),
+                            props.data.media[key].properties.filename),
+                        props.data.displayDescription === '1' ? description : ' ',
+                        props.data.displayFileSizeInformation === '1' ? filesize : '');
+                    break;
+                case "2":
+                    content = React__default['default'].createElement(React__default['default'].Fragment, null,
+                        React__default['default'].createElement("a", { href: props.data.media[key].publicUrl },
+                            React__default['default'].createElement("iframe", { src: props.data.media[key].publicUrl }),
+                            props.data.media[key].properties.filename),
+                        props.data.displayDescription === '1' ? description : ' ',
+                        props.data.displayFileSizeInformation === '1' ? filesize : '');
+                    break;
+                default:
+                    content =
+                        React__default['default'].createElement("a", { href: props.data.media[key].publicUrl },
+                            " ",
+                            props.data.media[key].properties.filename,
+                            "  ");
+                    {
+                        props.data.displayDescription === '1' ? description : ' ';
+                    }
+                    {
+                        props.data.displayFileSizeInformation === '1' ? filesize : '';
+                    }
+            }
+            return React__default['default'].createElement("li", { key: key }, content);
+        })));
+};
+
 var BackgroundImage = function (props) {
     if (props.data.appearance.backgroundImage.length < 1) {
         return null;
@@ -5582,6 +5625,9 @@ var contentElementTemplates = {
     },
     textmedia: function (headlessContentData, args) {
         return React__default['default'].createElement(Textmedia, { data: headlessContentData.content });
+    },
+    uploads: function (headlessContentData, args) {
+        return React__default['default'].createElement(Uploads, { data: headlessContentData.content });
     },
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
     // bullets: (headlessContentData, args = {}) => <CE.Bullets data={headlessContentData.content}/>,
