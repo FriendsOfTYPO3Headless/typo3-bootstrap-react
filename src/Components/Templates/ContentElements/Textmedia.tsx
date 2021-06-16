@@ -20,38 +20,58 @@ const Textmedia: React.FC<{ data: any }> = props => {
                             return Object.keys(props.data.gallery.rows[rowKey].columns).map((columnKey) => {
 
                                 console.log(props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType)
-                                if (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'video/youtube') {
-                                    return <Col
-                                        className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
-                                        <iframe src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
-                                                className="embed-responsive-item"/>
-                                        {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
-                                    </Col>
-                                }
-                                if (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'image/jpeg' || props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'image/svg+xml') {
-                                    return <Col
-                                        className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
-                                        <img src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
-                                                className="embed-responsive-item"/>
-                                        {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
-                                    </Col>
+
+                                switch (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType){
+                                    case   'video/youtube' :
+                                        return <Col
+                                            className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
+                                            <iframe src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
+                                                    className="embed-responsive-item"/>
+                                            {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
+                                        </Col>
+                                    case   'image/jpeg'     :
+                                        return <Col
+                                            className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
+                                            <img src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
+                                                 className="embed-responsive-item"/>
+                                            {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
+                                        </Col>
+                                    case   'image/svg+xml' :
+                                        return <Col
+                                            className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
+                                            <img src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
+                                                 className="embed-responsive-item"/>
+                                            {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
+                                        </Col>
+                                    case   'video/mp4' :
+                                        return <Col
+                                            className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
+                                            <video controls>
+                                                <source type="video/mp4" src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl} />
+                                            </video>
+                                            {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
+                                        </Col>
+                                    case   'video/vimeo' :
+                                        return <Col
+                                            className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
+                                            <video controls>
+                                                <source type="video/mp4" src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl} />
+                                            </video>
+                                            {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
+                                        </Col>
+                                    default :
+                                        return <Col
+                                            className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
+                                            <iframe src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
+                                                    className="embed-responsive-item"/>
+                                            {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
+                                        </Col>
                                 }
 
-                                if (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'video/mp4' || props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType === 'video/vimeo' ) {
-                                    return <Col
-                                        className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
-                                        <video controls>
-                                            <source type="video/mp4" src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl} />
-                                        </video>
-                                        {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
-                                    </Col>
-                                }
-                                    return <Col
-                                        className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
-                                        <iframe src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
-                                                className="embed-responsive-item"/>
-                                        {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
-                                    </Col>
+
+
+
+
 
                             })
                         })}
