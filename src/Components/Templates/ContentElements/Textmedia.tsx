@@ -91,7 +91,3 @@ const Textmedia: React.FC<{ data: any }> = props => {
 export default Textmedia;
 
 
-{/* <img
-    src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
-    className="embed-responsive-item" ></img> */
-}
