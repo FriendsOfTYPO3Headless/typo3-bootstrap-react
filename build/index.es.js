@@ -5053,7 +5053,7 @@ var Div = function (props) {
 };
 
 var Textmedia = function (props) {
-    console.log('!!!!!!!!!1');
+    console.log('moin');
     var textmediaClassName;
     if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
         textmediaClassName = props.data.gallery.position.horizontal;
