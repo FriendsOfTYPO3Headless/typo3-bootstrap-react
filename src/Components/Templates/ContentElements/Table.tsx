@@ -2,33 +2,35 @@ import React from 'react';
 
 const Table: React.FC<{ data: any }> = props => {
     console.log('moin')
+    console.log(props.data)
 
-
+let tableCaption =    props.data.tableCaption;
     return <div className="table">
-        {Object.keys(props.data.bodytext).map((arrayKey)=> {
 
-            {props.data.bodytext[arrayKey]}
-            console.log(props.data.bodytext[arrayKey])
-                if (props.data.tableCaption === true){
-                    {props.data.tableCaption}
+        {props.data.bodytext.map((rowObject) => {
+            {props.data.tableCaption}
+            return rowObject;
+
+            console.log(rowObject)
+
+            if (tableCaption) {
+                {
+                    return tableCaption;
+
                 }
+            }
 
-            if (props.data.headerPosition === 1){
+            if (props.data.headerPosition === 1) {
 
             } else {
 
             }
-            if (props.data.tabelTfoot ){
+            if (props.data.tabelTfoot) {
 
 
             }
 
         })}
-
-
-
-
-
 
 
         {/*

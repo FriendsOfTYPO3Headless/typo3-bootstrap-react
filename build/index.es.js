@@ -5112,18 +5112,13 @@ var Shortcut = function (props) {
 
 var Table = function (props) {
     console.log('moin');
-    return React.createElement("div", { className: "table" }, Object.keys(props.data.bodytext).map(function (arrayKey) {
+    console.log(props.data);
+    props.data.tableCaption;
+    return React.createElement("div", { className: "table" }, props.data.bodytext.map(function (rowObject) {
         {
-            props.data.bodytext[arrayKey];
+            props.data.tableCaption;
         }
-        console.log(props.data.bodytext[arrayKey]);
-        if (props.data.tableCaption === true) {
-            {
-                props.data.tableCaption;
-            }
-        }
-        if (props.data.headerPosition === 1) ;
-        if (props.data.tabelTfoot) ;
+        return rowObject;
     }));
 };
 
