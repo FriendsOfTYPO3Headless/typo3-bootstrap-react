@@ -61,6 +61,6 @@ declare const contentElementTemplates: {
     shortcut: (headlessContentData: any, args?: {}) => JSX.Element;
     div: (headlessContentData: any, args?: {}) => JSX.Element;
 };
-declare const TYPO3Page: React.FC<TYPO3PagePropsInterface>;
-export default TYPO3Page;
+declare const _default: React.NamedExoticComponent<TYPO3PagePropsInterface>;
+export default _default;
 export { pageLayouts, pageTemplates, contentElementLayouts, contentElementTemplates };

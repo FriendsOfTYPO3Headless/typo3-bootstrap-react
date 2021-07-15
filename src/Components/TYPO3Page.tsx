@@ -567,7 +567,7 @@ TYPO3Page.defaultProps = {
     contentElementTemplates: null,
 }
 
-export default TYPO3Page;
+export default React.memo(TYPO3Page);
 export {pageLayouts, pageTemplates, contentElementLayouts, contentElementTemplates};
 
 
