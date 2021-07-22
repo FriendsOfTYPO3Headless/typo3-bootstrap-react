@@ -359,7 +359,7 @@
                 top: auto;
                 left: $navbar-nav-link-padding-x;
                 right: $navbar-nav-link-padding-x;
-                bottom: ($nav-link-padding-y / 2);
+                bottom: math.div($nav-link-padding-y, 2);
                 height: 2px;
                 width: auto;
             }
