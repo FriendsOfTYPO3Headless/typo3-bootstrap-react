@@ -150,7 +150,7 @@ $cookieconsent-button-highlight-bg: transparent !default;
     flex-wrap: nowrap;
     margin: 0 auto;
     @include make-container();
-    @include make-container-max-widths();
+    //@include make-container-max-widths();
 }
 .cc-window.cc-floating {
     .cc-container {

@@ -4,7 +4,7 @@
 .frame-container {
     position: relative;
     @include make-container();
-    @include make-container-max-widths();
+   //@include make-container-max-widths();
 }
 .container {
     .frame-container {
@@ -139,7 +139,7 @@
         background-color: $background;
         a:not(.btn) {
             color: $link-color;
-            @include hover {
+            &:hover {
                 color: $link-hover-color;
             }
         }

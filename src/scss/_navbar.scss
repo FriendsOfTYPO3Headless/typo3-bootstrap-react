@@ -177,7 +177,7 @@
         &.navbar-default {
             a:not(.active) {
                 color: $navbar-light-color;
-                @include hover-focus {
+                &:hover, &:focus {
                     color: $navbar-light-hover-color;
                 }
             }
@@ -185,7 +185,7 @@
         &.navbar-inverse {
             a:not(.active) {
                 color: $navbar-dark-color;
-                @include hover-focus {
+                &:hover, &:focus {
                     color: $navbar-dark-hover-color;
                 }
             }
@@ -435,7 +435,7 @@
 }
 .navbar-inverse {
     @extend .navbar-dark;
-    @extend .bg-dark;
+    @extend .bg-dark !optional;
 }
 
 //
