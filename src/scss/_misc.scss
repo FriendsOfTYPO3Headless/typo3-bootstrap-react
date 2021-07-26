@@ -1,3 +1,4 @@
+@use "sass:math";
 //
 // Scrolltop
 //
@@ -7,8 +8,8 @@
     z-index: $zindex-sticky;
     background-color: $gray-700;
     color: #ffffff;
-    bottom: ($grid-gutter-width / 2);
-    right: ($grid-gutter-width / 2);
+    bottom: math.div($grid-gutter-width, 2);
+    right: math.div($grid-gutter-width, 2);
     position: fixed;
     opacity: 0;
     width: 3em;
