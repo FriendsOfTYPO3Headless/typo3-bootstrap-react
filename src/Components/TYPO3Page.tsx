@@ -41,7 +41,6 @@ const pageLayouts = {
     </>
 }
 
-
 const pageTemplates = {
     __generic: (headlessData, contentElementLayouts, contentElementTemplates, args = {}) => {
         return {
@@ -519,7 +518,6 @@ const pageTemplates = {
     },
 }
 
-
 const contentElementLayouts = {
     __generic: (props) => {
         return <CELayouts.Layout0 data={props.content}>
@@ -569,7 +567,7 @@ TYPO3Page.defaultProps = {
     contentElementTemplates: null,
 }
 
-export default TYPO3Page;
+export default React.memo(TYPO3Page);
 export {pageLayouts, pageTemplates, contentElementLayouts, contentElementTemplates};
 
 

@@ -48,7 +48,7 @@
         color: $subnav-active-color !important;
         background-color: $subnav-active-bg;
     }
-    @include hover-focus {
+    &:hover, &:focus {
         z-index: 1;
         position: relative;
         text-decoration: none;

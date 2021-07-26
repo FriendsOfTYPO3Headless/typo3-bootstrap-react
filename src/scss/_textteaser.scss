@@ -1,17 +1,18 @@
+@use "sass:math";
 //
 // Textteaser
 //
 .textteaser {
     display: flex;
     flex-wrap: wrap;
-    margin-left: -($grid-gutter-width / 2);
-    margin-right: -($grid-gutter-width / 2);
+    margin-left: -(math.div($grid-gutter-width, 2));
+    margin-right: -(math.div($grid-gutter-width, 2));
 }
 .textteaser-item {
     order: 1;
     width: 100%;
-    padding-left: ($grid-gutter-width / 2);
-    padding-right: ($grid-gutter-width / 2);
+    padding-left: math.div($grid-gutter-width, 2);
+    padding-right: math.div($grid-gutter-width, 2);
 }
 .textteaser-text {
     > *:last-child {
