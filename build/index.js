@@ -96,6 +96,7 @@ var Content = function (props) {
 };
 
 var Text = function (props) {
+    console.log(props.data);
     return React__default['default'].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
 };
 
@@ -5078,6 +5079,7 @@ var ImageLightbox = function (props) {
 var Textpic = function (props) {
     console.log(props.data.gallery.count.rows);
     console.log('777');
+    console.log(props.data.bodytext);
     var _a = React.useState(false), showLightbox = _a[0], setShowlightbox = _a[1];
     var _b = React.useState(0), photoIndex = _b[0], setPhotoIndex = _b[1];
     var images = [];

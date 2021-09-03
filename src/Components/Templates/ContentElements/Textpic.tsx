@@ -8,6 +8,8 @@ const Textpic: React.FC<{ data: any }> = props => {
     console.log(props.data.gallery.count.rows)
     console.log('777')
 
+    console.log(props.data.bodytext)
+
     const [showLightbox, setShowlightbox] = useState(false)
     const [photoIndex, setPhotoIndex] = useState(0)
 
@@ -57,6 +59,7 @@ const Textpic: React.FC<{ data: any }> = props => {
 
                 <Col className="textpic-item textpic-text" md="6"
                      dangerouslySetInnerHTML={{__html: props.data.bodytext}}>
+
                 </Col>
 
             </Row>
