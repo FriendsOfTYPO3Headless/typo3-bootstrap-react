@@ -1,11 +1,12 @@
+@use "sass:math";
 //
 // Gallery
 //
 
 .gallery-item {
 
-    padding-left: $grid-gutter-width / 4;
-    padding-right: $grid-gutter-width / 4;
+    padding-left: math.div($grid-gutter-width, 4);
+    padding-right: math.div($grid-gutter-width, 4);
 
     img,
     picture {

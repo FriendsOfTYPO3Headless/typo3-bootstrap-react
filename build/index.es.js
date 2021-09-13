@@ -2,32 +2,6 @@ import React, { Component, useState } from 'react';
 import { Col, Row, Container } from 'react-bootstrap';
 import _reactDom from 'react-dom';
 
-/*! *****************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
-
-var __assign = function() {
-    __assign = Object.assign || function __assign(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-
 var section = function (props) {
     if (props.pageTemplate.hasOwnProperty(props.name)) {
         return props.pageTemplate[props.name];
@@ -81,13 +55,39 @@ var Content = function (props) {
     var content = React.createElement(React.Fragment, null);
     if (props.content.hasOwnProperty(PREFIX_COLPOS + props.colPos)) {
         content = props.content[PREFIX_COLPOS + props.colPos].map(function (content) {
-            return renderContent(props.contentElementLayouts, props.contentElementTemplates, content, props.args);
+            var layout;
+            if (props.contentElementLayouts.hasOwnProperty(content.appearance.layout)) {
+                layout = props.contentElementLayouts[content.appearance.layout];
+            }
+            else if (props.contentElementLayouts.hasOwnProperty('__generic')) {
+                layout = props.contentElementLayouts.__generic;
+            }
+            else {
+                return React.createElement(React.Fragment, null,
+                    "CE-layout not found: ",
+                    props.content.appearance.layout);
+            }
+            var template;
+            if (props.contentElementTemplates.hasOwnProperty(content.type)) {
+                template = props.contentElementTemplates[content.type];
+            }
+            else if (props.contentElementTemplates.hasOwnProperty('__generic')) {
+                template = props.contentElementTemplates.__generic;
+            }
+            else {
+                return React.createElement(React.Fragment, null,
+                    "CE-template not found: ",
+                    props.content.type,
+                    " ");
+            }
+            return React.createElement(React.Fragment, { key: content.id }, layout({ children: template(content, props.args), content: content, args: props.args }));
         });
     }
     return content;
 };
 
 var Text = function (props) {
+    console.log(props.data);
     return React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
 };
 
@@ -2182,7 +2182,7 @@ var ModalPortal = function (_Component) {
         }
 
         _this.setState({ isOpen: true }, function () {
-          requestAnimationFrame(function () {
+          _this.openAnimationFrame = requestAnimationFrame(function () {
             _this.setState({ afterOpen: true });
 
             if (_this.props.isOpen && _this.props.onAfterOpen) {
@@ -2356,6 +2356,7 @@ var ModalPortal = function (_Component) {
         this.afterClose();
       }
       clearTimeout(this.closeTimer);
+      cancelAnimationFrame(this.openAnimationFrame);
     }
   }, {
     key: "beforeOpen",
@@ -2963,6 +2964,44 @@ module.exports = exports["default"];
 
 var Modal = /*@__PURE__*/getDefaultExportFromCjs(lib);
 
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+
+    if (enumerableOnly) {
+      symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+    }
+
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -3018,25 +3057,6 @@ function _extends() {
   return _extends.apply(this, arguments);
 }
 
-function _objectSpread(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-    var ownKeys = Object.keys(source);
-
-    if (typeof Object.getOwnPropertySymbols === 'function') {
-      ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(source, sym).enumerable;
-      }));
-    }
-
-    ownKeys.forEach(function (key) {
-      _defineProperty(target, key, source[key]);
-    });
-  }
-
-  return target;
-}
-
 function _inherits(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
     throw new TypeError("Super expression must either be null or a function");
@@ -3068,6 +3088,19 @@ function _setPrototypeOf(o, p) {
   return _setPrototypeOf(o, p);
 }
 
+function _isNativeReflectConstruct() {
+  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+  if (Reflect.construct.sham) return false;
+  if (typeof Proxy === "function") return true;
+
+  try {
+    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 function _assertThisInitialized(self) {
   if (self === void 0) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -3084,20 +3117,35 @@ function _possibleConstructorReturn(self, call) {
   return _assertThisInitialized(self);
 }
 
+function _createSuper(Derived) {
+  var hasNativeReflectConstruct = _isNativeReflectConstruct();
+
+  return function _createSuperInternal() {
+    var Super = _getPrototypeOf(Derived),
+        result;
+
+    if (hasNativeReflectConstruct) {
+      var NewTarget = _getPrototypeOf(this).constructor;
+
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+
+    return _possibleConstructorReturn(this, result);
+  };
+}
+
 function _slicedToArray(arr, i) {
-  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
 
 function _toConsumableArray(arr) {
-  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
 
 function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
-
-    return arr2;
-  }
+  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
 }
 
 function _arrayWithHoles(arr) {
@@ -3105,17 +3153,21 @@ function _arrayWithHoles(arr) {
 }
 
 function _iterableToArray(iter) {
-  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+  if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
 }
 
 function _iterableToArrayLimit(arr, i) {
+  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
+
+  if (_i == null) return;
   var _arr = [];
   var _n = true;
   var _d = false;
-  var _e = undefined;
+
+  var _s, _e;
 
   try {
-    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
       _arr.push(_s.value);
 
       if (i && _arr.length === i) break;
@@ -3134,12 +3186,29 @@ function _iterableToArrayLimit(arr, i) {
   return _arr;
 }
 
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+  return arr2;
+}
+
 function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance");
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
 function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
 /**
@@ -3167,24 +3236,29 @@ function getWindowWidth() {
 }
 function getWindowHeight() {
   return typeof global.window !== 'undefined' ? global.window.innerHeight : 0;
-} // Get the highest window context that isn't cross-origin
+}
+
+var isCrossOriginFrame = function isCrossOriginFrame() {
+  try {
+    return global.window.location.hostname !== global.window.parent.location.hostname;
+  } catch (e) {
+    return true;
+  }
+}; // Get the highest window context that isn't cross-origin
 // (When in an iframe)
+
 
 function getHighestSafeWindowContext() {
   var self = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : global.window.self;
-  var referrer = self.document.referrer; // If we reached the top level, return self
 
-  if (self === global.window.top || !referrer) {
+  // If we reached the top level, return self
+  if (self === global.window.top) {
     return self;
-  }
-
-  var getOrigin = function getOrigin(href) {
-    return href.match(/(.*\/\/.*?)(\/|$)/)[1];
-  }; // If parent is the same origin, we can move up one context
+  } // If parent is the same origin, we can move up one context
   // Reference: https://stackoverflow.com/a/21965342/1601953
 
 
-  if (getOrigin(self.location.href) === getOrigin(referrer)) {
+  if (!isCrossOriginFrame()) {
     return getHighestSafeWindowContext(self.parent);
   } // If a different origin, we consider the current level
   // as the top reachable one
@@ -3223,78 +3297,17 @@ var SOURCE_POINTER = 3; // Minimal swipe distance
 
 var MIN_SWIPE_DISTANCE = 200;
 
-var ReactImageLightbox =
-/*#__PURE__*/
-function (_Component) {
+var ReactImageLightbox = /*#__PURE__*/function (_Component) {
   _inherits(ReactImageLightbox, _Component);
 
-  _createClass(ReactImageLightbox, null, [{
-    key: "isTargetMatchImage",
-    value: function isTargetMatchImage(target) {
-      return target && /ril-image-current/.test(target.className);
-    }
-  }, {
-    key: "parseMouseEvent",
-    value: function parseMouseEvent(mouseEvent) {
-      return {
-        id: 'mouse',
-        source: SOURCE_MOUSE,
-        x: parseInt(mouseEvent.clientX, 10),
-        y: parseInt(mouseEvent.clientY, 10)
-      };
-    }
-  }, {
-    key: "parseTouchPointer",
-    value: function parseTouchPointer(touchPointer) {
-      return {
-        id: touchPointer.identifier,
-        source: SOURCE_TOUCH,
-        x: parseInt(touchPointer.clientX, 10),
-        y: parseInt(touchPointer.clientY, 10)
-      };
-    }
-  }, {
-    key: "parsePointerEvent",
-    value: function parsePointerEvent(pointerEvent) {
-      return {
-        id: pointerEvent.pointerId,
-        source: SOURCE_POINTER,
-        x: parseInt(pointerEvent.clientX, 10),
-        y: parseInt(pointerEvent.clientY, 10)
-      };
-    } // Request to transition to the previous image
-
-  }, {
-    key: "getTransform",
-    value: function getTransform(_ref) {
-      var _ref$x = _ref.x,
-          x = _ref$x === void 0 ? 0 : _ref$x,
-          _ref$y = _ref.y,
-          y = _ref$y === void 0 ? 0 : _ref$y,
-          _ref$zoom = _ref.zoom,
-          zoom = _ref$zoom === void 0 ? 1 : _ref$zoom,
-          width = _ref.width,
-          targetWidth = _ref.targetWidth;
-      var nextX = x;
-      var windowWidth = getWindowWidth();
-
-      if (width > windowWidth) {
-        nextX += (windowWidth - width) / 2;
-      }
-
-      var scaleFactor = zoom * (targetWidth / width);
-      return {
-        transform: "translate3d(".concat(nextX, "px,").concat(y, "px,0) scale3d(").concat(scaleFactor, ",").concat(scaleFactor, ",1)")
-      };
-    }
-  }]);
+  var _super = _createSuper(ReactImageLightbox);
 
   function ReactImageLightbox(props) {
     var _this;
 
     _classCallCheck(this, ReactImageLightbox);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(ReactImageLightbox).call(this, props));
+    _this = _super.call(this, props);
     _this.state = {
       //-----------------------------
       // Animation
@@ -3320,90 +3333,86 @@ function (_Component) {
       loadErrorStatus: {}
     }; // Refs
 
-    _this.outerEl = React.createRef();
-    _this.zoomInBtn = React.createRef();
-    _this.zoomOutBtn = React.createRef();
-    _this.caption = React.createRef();
-    _this.closeIfClickInner = _this.closeIfClickInner.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.handleImageDoubleClick = _this.handleImageDoubleClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.handleImageMouseWheel = _this.handleImageMouseWheel.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.handleKeyInput = _this.handleKeyInput.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.handleMouseUp = _this.handleMouseUp.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.handleMouseDown = _this.handleMouseDown.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.handleMouseMove = _this.handleMouseMove.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.handleOuterMousewheel = _this.handleOuterMousewheel.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.handleTouchStart = _this.handleTouchStart.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.handleTouchMove = _this.handleTouchMove.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.handleTouchEnd = _this.handleTouchEnd.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.handlePointerEvent = _this.handlePointerEvent.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.handleCaptionMousewheel = _this.handleCaptionMousewheel.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.handleWindowResize = _this.handleWindowResize.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.handleZoomInButtonClick = _this.handleZoomInButtonClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.handleZoomOutButtonClick = _this.handleZoomOutButtonClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.requestClose = _this.requestClose.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.requestMoveNext = _this.requestMoveNext.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.requestMovePrev = _this.requestMovePrev.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.outerEl = /*#__PURE__*/React.createRef();
+    _this.zoomInBtn = /*#__PURE__*/React.createRef();
+    _this.zoomOutBtn = /*#__PURE__*/React.createRef();
+    _this.caption = /*#__PURE__*/React.createRef();
+    _this.closeIfClickInner = _this.closeIfClickInner.bind(_assertThisInitialized(_this));
+    _this.handleImageDoubleClick = _this.handleImageDoubleClick.bind(_assertThisInitialized(_this));
+    _this.handleImageMouseWheel = _this.handleImageMouseWheel.bind(_assertThisInitialized(_this));
+    _this.handleKeyInput = _this.handleKeyInput.bind(_assertThisInitialized(_this));
+    _this.handleMouseUp = _this.handleMouseUp.bind(_assertThisInitialized(_this));
+    _this.handleMouseDown = _this.handleMouseDown.bind(_assertThisInitialized(_this));
+    _this.handleMouseMove = _this.handleMouseMove.bind(_assertThisInitialized(_this));
+    _this.handleOuterMousewheel = _this.handleOuterMousewheel.bind(_assertThisInitialized(_this));
+    _this.handleTouchStart = _this.handleTouchStart.bind(_assertThisInitialized(_this));
+    _this.handleTouchMove = _this.handleTouchMove.bind(_assertThisInitialized(_this));
+    _this.handleTouchEnd = _this.handleTouchEnd.bind(_assertThisInitialized(_this));
+    _this.handlePointerEvent = _this.handlePointerEvent.bind(_assertThisInitialized(_this));
+    _this.handleCaptionMousewheel = _this.handleCaptionMousewheel.bind(_assertThisInitialized(_this));
+    _this.handleWindowResize = _this.handleWindowResize.bind(_assertThisInitialized(_this));
+    _this.handleZoomInButtonClick = _this.handleZoomInButtonClick.bind(_assertThisInitialized(_this));
+    _this.handleZoomOutButtonClick = _this.handleZoomOutButtonClick.bind(_assertThisInitialized(_this));
+    _this.requestClose = _this.requestClose.bind(_assertThisInitialized(_this));
+    _this.requestMoveNext = _this.requestMoveNext.bind(_assertThisInitialized(_this));
+    _this.requestMovePrev = _this.requestMovePrev.bind(_assertThisInitialized(_this)); // Timeouts - always clear it before umount
+
+    _this.timeouts = []; // Current action
+
+    _this.currentAction = ACTION_NONE; // Events source
+
+    _this.eventsSource = SOURCE_ANY; // Empty pointers list
+
+    _this.pointerList = []; // Prevent inner close
+
+    _this.preventInnerClose = false;
+    _this.preventInnerCloseTimeout = null; // Used to disable animation when changing props.mainSrc|nextSrc|prevSrc
+
+    _this.keyPressed = false; // Used to store load state / dimensions of images
+
+    _this.imageCache = {}; // Time the last keydown event was called (used in keyboard action rate limiting)
+
+    _this.lastKeyDownTime = 0; // Used for debouncing window resize event
+
+    _this.resizeTimeout = null; // Used to determine when actions are triggered by the scroll wheel
+
+    _this.wheelActionTimeout = null;
+    _this.resetScrollTimeout = null;
+    _this.scrollX = 0;
+    _this.scrollY = 0; // Used in panning zoomed images
+
+    _this.moveStartX = 0;
+    _this.moveStartY = 0;
+    _this.moveStartOffsetX = 0;
+    _this.moveStartOffsetY = 0; // Used to swipe
+
+    _this.swipeStartX = 0;
+    _this.swipeStartY = 0;
+    _this.swipeEndX = 0;
+    _this.swipeEndY = 0; // Used to pinch
+
+    _this.pinchTouchList = null;
+    _this.pinchDistance = 0; // Used to differentiate between images with identical src
+
+    _this.keyCounter = 0; // Used to detect a move when all src's remain unchanged (four or more of the same image in a row)
+
+    _this.moveRequested = false;
     return _this;
   }
 
   _createClass(ReactImageLightbox, [{
-    key: "componentWillMount",
-    value: function componentWillMount() {
-      // Timeouts - always clear it before umount
-      this.timeouts = []; // Current action
-
-      this.currentAction = ACTION_NONE; // Events source
-
-      this.eventsSource = SOURCE_ANY; // Empty pointers list
-
-      this.pointerList = []; // Prevent inner close
-
-      this.preventInnerClose = false;
-      this.preventInnerCloseTimeout = null; // Used to disable animation when changing props.mainSrc|nextSrc|prevSrc
-
-      this.keyPressed = false; // Used to store load state / dimensions of images
-
-      this.imageCache = {}; // Time the last keydown event was called (used in keyboard action rate limiting)
-
-      this.lastKeyDownTime = 0; // Used for debouncing window resize event
-
-      this.resizeTimeout = null; // Used to determine when actions are triggered by the scroll wheel
-
-      this.wheelActionTimeout = null;
-      this.resetScrollTimeout = null;
-      this.scrollX = 0;
-      this.scrollY = 0; // Used in panning zoomed images
-
-      this.moveStartX = 0;
-      this.moveStartY = 0;
-      this.moveStartOffsetX = 0;
-      this.moveStartOffsetY = 0; // Used to swipe
-
-      this.swipeStartX = 0;
-      this.swipeStartY = 0;
-      this.swipeEndX = 0;
-      this.swipeEndY = 0; // Used to pinch
-
-      this.pinchTouchList = null;
-      this.pinchDistance = 0; // Used to differentiate between images with identical src
-
-      this.keyCounter = 0; // Used to detect a move when all src's remain unchanged (four or more of the same image in a row)
-
-      this.moveRequested = false;
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
 
       if (!this.props.animationDisabled) {
         // Make opening animation play
         this.setState({
           isClosing: false
         });
-      }
-    }
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
+      } // Prevents cross-origin errors when using a cross-origin iframe
 
-      // Prevents cross-origin errors when using a cross-origin iframe
+
       this.windowContext = getHighestSafeWindowContext();
       this.listeners = {
         resize: this.handleWindowResize,
@@ -3421,49 +3430,54 @@ function (_Component) {
       this.loadAllImages();
     }
   }, {
-    key: "componentWillReceiveProps",
-    value: function componentWillReceiveProps(nextProps) {
+    key: "shouldComponentUpdate",
+    value: function shouldComponentUpdate(nextProps) {
       var _this3 = this;
 
-      // Iterate through the source types for prevProps and nextProps to
-      //  determine if any of the sources changed
+      this.getSrcTypes().forEach(function (srcType) {
+        if (_this3.props[srcType.name] !== nextProps[srcType.name]) {
+          _this3.moveRequested = false;
+        }
+      }); // Wait for move...
+
+      return !this.moveRequested;
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      var _this4 = this;
+
       var sourcesChanged = false;
       var prevSrcDict = {};
       var nextSrcDict = {};
       this.getSrcTypes().forEach(function (srcType) {
-        if (_this3.props[srcType.name] !== nextProps[srcType.name]) {
+        if (prevProps[srcType.name] !== _this4.props[srcType.name]) {
           sourcesChanged = true;
-          prevSrcDict[_this3.props[srcType.name]] = true;
-          nextSrcDict[nextProps[srcType.name]] = true;
+          prevSrcDict[prevProps[srcType.name]] = true;
+          nextSrcDict[_this4.props[srcType.name]] = true;
         }
       });
 
       if (sourcesChanged || this.moveRequested) {
         // Reset the loaded state for images not rendered next
         Object.keys(prevSrcDict).forEach(function (prevSrc) {
-          if (!(prevSrc in nextSrcDict) && prevSrc in _this3.imageCache) {
-            _this3.imageCache[prevSrc].loaded = false;
+          if (!(prevSrc in nextSrcDict) && prevSrc in _this4.imageCache) {
+            _this4.imageCache[prevSrc].loaded = false;
           }
         });
         this.moveRequested = false; // Load any new images
 
-        this.loadAllImages(nextProps);
+        this.loadAllImages(this.props);
       }
-    }
-  }, {
-    key: "shouldComponentUpdate",
-    value: function shouldComponentUpdate() {
-      // Wait for move...
-      return !this.moveRequested;
     }
   }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.didUnmount = true;
       Object.keys(this.listeners).forEach(function (type) {
-        _this4.windowContext.removeEventListener(type, _this4.listeners[type]);
+        _this5.windowContext.removeEventListener(type, _this5.listeners[type]);
       });
       this.timeouts.forEach(function (tid) {
         return clearTimeout(tid);
@@ -3482,10 +3496,10 @@ function (_Component) {
 
       return setTimeout;
     }(function (func, time) {
-      var _this5 = this;
+      var _this6 = this;
 
       var id = setTimeout(function () {
-        _this5.timeouts = _this5.timeouts.filter(function (tid) {
+        _this6.timeouts = _this6.timeouts.filter(function (tid) {
           return tid !== id;
         });
         func();
@@ -3496,7 +3510,7 @@ function (_Component) {
   }, {
     key: "setPreventInnerClose",
     value: function setPreventInnerClose() {
-      var _this6 = this;
+      var _this7 = this;
 
       if (this.preventInnerCloseTimeout) {
         this.clearTimeout(this.preventInnerCloseTimeout);
@@ -3504,8 +3518,8 @@ function (_Component) {
 
       this.preventInnerClose = true;
       this.preventInnerCloseTimeout = this.setTimeout(function () {
-        _this6.preventInnerClose = false;
-        _this6.preventInnerCloseTimeout = null;
+        _this7.preventInnerClose = false;
+        _this7.preventInnerCloseTimeout = null;
       }, 100);
     } // Get info for the best suited image to display with the given srcType
 
@@ -3676,8 +3690,8 @@ function (_Component) {
         return tid !== id;
       });
       clearTimeout(id);
-    }) // Change zoom level
-
+    } // Change zoom level
+    )
   }, {
     key: "changeZoom",
     value: function changeZoom(zoomLevel, clientX, clientY) {
@@ -3817,7 +3831,7 @@ function (_Component) {
   }, {
     key: "handleOuterMousewheel",
     value: function handleOuterMousewheel(event) {
-      var _this7 = this;
+      var _this8 = this;
 
       // Prevent scrolling of the background
       event.stopPropagation();
@@ -3826,8 +3840,8 @@ function (_Component) {
       var imageMoveDelay = 500;
       this.clearTimeout(this.resetScrollTimeout);
       this.resetScrollTimeout = this.setTimeout(function () {
-        _this7.scrollX = 0;
-        _this7.scrollY = 0;
+        _this8.scrollX = 0;
+        _this8.scrollY = 0;
       }, 300); // Prevent rapid-fire zoom behavior
 
       if (this.wheelActionTimeout !== null || this.isAnimating()) {
@@ -3856,7 +3870,7 @@ function (_Component) {
 
       if (actionDelay !== 0) {
         this.wheelActionTimeout = this.setTimeout(function () {
-          _this7.wheelActionTimeout = null;
+          _this8.wheelActionTimeout = null;
         }, actionDelay);
       }
     }
@@ -3934,19 +3948,19 @@ function (_Component) {
   }, {
     key: "removePointer",
     value: function removePointer(pointer) {
-      this.pointerList = this.pointerList.filter(function (_ref2) {
-        var id = _ref2.id;
+      this.pointerList = this.pointerList.filter(function (_ref) {
+        var id = _ref.id;
         return id !== pointer.id;
       });
     }
   }, {
     key: "filterPointersBySource",
     value: function filterPointersBySource() {
-      var _this8 = this;
+      var _this9 = this;
 
-      this.pointerList = this.pointerList.filter(function (_ref3) {
-        var source = _ref3.source;
-        return source === _this8.eventsSource;
+      this.pointerList = this.pointerList.filter(function (_ref2) {
+        var source = _ref2.source;
+        return source === _this9.eventsSource;
       });
     }
   }, {
@@ -4000,11 +4014,11 @@ function (_Component) {
   }, {
     key: "handleTouchStart",
     value: function handleTouchStart(event) {
-      var _this9 = this;
+      var _this10 = this;
 
       if (this.shouldHandleEvent(SOURCE_TOUCH) && ReactImageLightbox.isTargetMatchImage(event.target)) {
         [].forEach.call(event.changedTouches, function (eventTouch) {
-          return _this9.addPointer(ReactImageLightbox.parseTouchPointer(eventTouch));
+          return _this10.addPointer(ReactImageLightbox.parseTouchPointer(eventTouch));
         });
         this.multiPointerStart(event);
       }
@@ -4021,11 +4035,11 @@ function (_Component) {
   }, {
     key: "handleTouchEnd",
     value: function handleTouchEnd(event) {
-      var _this10 = this;
+      var _this11 = this;
 
       if (this.shouldHandleEvent(SOURCE_TOUCH)) {
         [].map.call(event.changedTouches, function (touch) {
-          return _this10.removePointer(ReactImageLightbox.parseTouchPointer(touch));
+          return _this11.removePointer(ReactImageLightbox.parseTouchPointer(touch));
         });
         this.multiPointerEnd(event);
       }
@@ -4139,9 +4153,9 @@ function (_Component) {
 
   }, {
     key: "handleMoveStart",
-    value: function handleMoveStart(_ref4) {
-      var clientX = _ref4.x,
-          clientY = _ref4.y;
+    value: function handleMoveStart(_ref3) {
+      var clientX = _ref3.x,
+          clientY = _ref3.y;
 
       if (!this.props.enableZoom) {
         return;
@@ -4159,9 +4173,9 @@ function (_Component) {
 
   }, {
     key: "handleMove",
-    value: function handleMove(_ref5) {
-      var clientX = _ref5.x,
-          clientY = _ref5.y;
+    value: function handleMove(_ref4) {
+      var clientX = _ref4.x,
+          clientY = _ref4.y;
       var newOffsetX = this.moveStartX - clientX + this.moveStartOffsetX;
       var newOffsetY = this.moveStartY - clientY + this.moveStartOffsetY;
 
@@ -4175,7 +4189,7 @@ function (_Component) {
   }, {
     key: "handleMoveEnd",
     value: function handleMoveEnd() {
-      var _this11 = this;
+      var _this12 = this;
 
       this.currentAction = ACTION_NONE;
       this.moveStartX = 0;
@@ -4194,7 +4208,7 @@ function (_Component) {
           shouldAnimate: true
         });
         this.setTimeout(function () {
-          _this11.setState({
+          _this12.setState({
             shouldAnimate: false
           });
         }, this.props.animationDuration);
@@ -4202,9 +4216,9 @@ function (_Component) {
     }
   }, {
     key: "handleSwipeStart",
-    value: function handleSwipeStart(_ref6) {
-      var clientX = _ref6.x,
-          clientY = _ref6.y;
+    value: function handleSwipeStart(_ref5) {
+      var clientX = _ref5.x,
+          clientY = _ref5.y;
       this.currentAction = ACTION_SWIPE;
       this.swipeStartX = clientX;
       this.swipeStartY = clientY;
@@ -4213,9 +4227,9 @@ function (_Component) {
     }
   }, {
     key: "handleSwipe",
-    value: function handleSwipe(_ref7) {
-      var clientX = _ref7.x,
-          clientY = _ref7.y;
+    value: function handleSwipe(_ref6) {
+      var clientX = _ref6.x,
+          clientY = _ref6.y;
       this.swipeEndX = clientX;
       this.swipeEndY = clientY;
     }
@@ -4254,20 +4268,20 @@ function (_Component) {
   }, {
     key: "calculatePinchDistance",
     value: function calculatePinchDistance() {
-      var _ref8 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.pinchTouchList,
-          _ref9 = _slicedToArray(_ref8, 2),
-          a = _ref9[0],
-          b = _ref9[1];
+      var _ref7 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.pinchTouchList,
+          _ref8 = _slicedToArray(_ref7, 2),
+          a = _ref8[0],
+          b = _ref8[1];
 
       return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
     }
   }, {
     key: "calculatePinchCenter",
     value: function calculatePinchCenter() {
-      var _ref10 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.pinchTouchList,
-          _ref11 = _slicedToArray(_ref10, 2),
-          a = _ref11[0],
-          b = _ref11[1];
+      var _ref9 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.pinchTouchList,
+          _ref10 = _slicedToArray(_ref9, 2),
+          a = _ref10[0],
+          b = _ref10[1];
 
       return {
         x: a.x - (a.x - b.x) / 2,
@@ -4282,10 +4296,10 @@ function (_Component) {
       }
 
       this.currentAction = ACTION_PINCH;
-      this.pinchTouchList = pointerList.map(function (_ref12) {
-        var id = _ref12.id,
-            x = _ref12.x,
-            y = _ref12.y;
+      this.pinchTouchList = pointerList.map(function (_ref11) {
+        var id = _ref11.id,
+            x = _ref11.x,
+            y = _ref11.y;
         return {
           id: id,
           x: x,
@@ -4386,7 +4400,7 @@ function (_Component) {
   }, {
     key: "loadImage",
     value: function loadImage(srcType, imageSrc, done) {
-      var _this12 = this;
+      var _this13 = this;
 
       // Return the image info if it is already cached
       if (this.isImageLoaded(imageSrc)) {
@@ -4403,12 +4417,12 @@ function (_Component) {
       }
 
       inMemoryImage.onerror = function (errorEvent) {
-        _this12.props.onImageLoadError(imageSrc, srcType, errorEvent); // failed to load so set the state loadErrorStatus
+        _this13.props.onImageLoadError(imageSrc, srcType, errorEvent); // failed to load so set the state loadErrorStatus
 
 
-        _this12.setState(function (prevState) {
+        _this13.setState(function (prevState) {
           return {
-            loadErrorStatus: _objectSpread({}, prevState.loadErrorStatus, _defineProperty({}, srcType, true))
+            loadErrorStatus: _objectSpread2(_objectSpread2({}, prevState.loadErrorStatus), {}, _defineProperty({}, srcType, true))
           };
         });
 
@@ -4416,9 +4430,9 @@ function (_Component) {
       };
 
       inMemoryImage.onload = function () {
-        _this12.props.onImageLoad(imageSrc, srcType, inMemoryImage);
+        _this13.props.onImageLoad(imageSrc, srcType, inMemoryImage);
 
-        _this12.imageCache[imageSrc] = {
+        _this13.imageCache[imageSrc] = {
           loaded: true,
           width: inMemoryImage.width,
           height: inMemoryImage.height
@@ -4432,7 +4446,7 @@ function (_Component) {
   }, {
     key: "loadAllImages",
     value: function loadAllImages() {
-      var _this13 = this;
+      var _this14 = this;
 
       var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
 
@@ -4445,12 +4459,12 @@ function (_Component) {
           // or if the component has unmounted
 
 
-          if (_this13.props[srcType] !== imageSrc || _this13.didUnmount) {
+          if (_this14.props[srcType] !== imageSrc || _this14.didUnmount) {
             return;
           } // Force rerender with the new image
 
 
-          _this13.forceUpdate();
+          _this14.forceUpdate();
         };
       }; // Load the images
 
@@ -4458,17 +4472,17 @@ function (_Component) {
       this.getSrcTypes().forEach(function (srcType) {
         var type = srcType.name; // there is no error when we try to load it initially
 
-        if (props[type] && _this13.state.loadErrorStatus[type]) {
-          _this13.setState(function (prevState) {
+        if (props[type] && _this14.state.loadErrorStatus[type]) {
+          _this14.setState(function (prevState) {
             return {
-              loadErrorStatus: _objectSpread({}, prevState.loadErrorStatus, _defineProperty({}, type, false))
+              loadErrorStatus: _objectSpread2(_objectSpread2({}, prevState.loadErrorStatus), {}, _defineProperty({}, type, false))
             };
           });
         } // Load unloaded images
 
 
-        if (props[type] && !_this13.isImageLoaded(props[type])) {
-          _this13.loadImage(type, props[type], generateLoadDoneCallback(type, props[type]));
+        if (props[type] && !_this14.isImageLoaded(props[type])) {
+          _this14.loadImage(type, props[type], generateLoadDoneCallback(type, props[type]));
         }
       });
     } // Request that the lightbox be closed
@@ -4476,11 +4490,11 @@ function (_Component) {
   }, {
     key: "requestClose",
     value: function requestClose(event) {
-      var _this14 = this;
+      var _this15 = this;
 
       // Call the parent close request
       var closeLightbox = function closeLightbox() {
-        return _this14.props.onCloseRequest(event);
+        return _this15.props.onCloseRequest(event);
       };
 
       if (this.props.animationDisabled || event.type === 'keydown' && !this.props.animationOnKeyInput) {
@@ -4500,7 +4514,7 @@ function (_Component) {
   }, {
     key: "requestMove",
     value: function requestMove(direction, event) {
-      var _this15 = this;
+      var _this16 = this;
 
       // Reset the zoom level on image move
       var nextState = {
@@ -4512,7 +4526,7 @@ function (_Component) {
       if (!this.props.animationDisabled && (!this.keyPressed || this.props.animationOnKeyInput)) {
         nextState.shouldAnimate = true;
         this.setTimeout(function () {
-          return _this15.setState({
+          return _this16.setState({
             shouldAnimate: false
           });
         }, this.props.animationDuration);
@@ -4546,7 +4560,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this16 = this;
+      var _this17 = this;
 
       var _this$props = this.props,
           animationDisabled = _this$props.animationDisabled,
@@ -4561,7 +4575,8 @@ function (_Component) {
           reactModalStyle = _this$props.reactModalStyle,
           _onAfterOpen = _this$props.onAfterOpen,
           imageCrossOrigin = _this$props.imageCrossOrigin,
-          reactModalProps = _this$props.reactModalProps;
+          reactModalProps = _this$props.reactModalProps,
+          loader = _this$props.loader;
       var _this$state = this.state,
           zoomLevel = _this$state.zoomLevel,
           offsetX = _this$state.offsetX,
@@ -4572,16 +4587,16 @@ function (_Component) {
       var transitionStyle = {}; // Transition settings for sliding animations
 
       if (!animationDisabled && this.isAnimating()) {
-        transitionStyle = _objectSpread({}, transitionStyle, {
+        transitionStyle = _objectSpread2(_objectSpread2({}, transitionStyle), {}, {
           transition: "transform ".concat(animationDuration, "ms")
         });
       } // Key endings to differentiate between images with the same src
 
 
       var keyEndings = {};
-      this.getSrcTypes().forEach(function (_ref13) {
-        var name = _ref13.name,
-            keyEnding = _ref13.keyEnding;
+      this.getSrcTypes().forEach(function (_ref12) {
+        var name = _ref12.name,
+            keyEnding = _ref12.keyEnding;
         keyEndings[name] = keyEnding;
       }); // Images to be displayed
 
@@ -4589,13 +4604,13 @@ function (_Component) {
 
       var addImage = function addImage(srcType, imageClass, transforms) {
         // Ignore types that have no source defined for their full size image
-        if (!_this16.props[srcType]) {
+        if (!_this17.props[srcType]) {
           return;
         }
 
-        var bestImageInfo = _this16.getBestImageForType(srcType);
+        var bestImageInfo = _this17.getBestImageForType(srcType);
 
-        var imageStyle = _objectSpread({}, transitionStyle, ReactImageLightbox.getTransform(_objectSpread({}, transforms, bestImageInfo)));
+        var imageStyle = _objectSpread2(_objectSpread2({}, transitionStyle), ReactImageLightbox.getTransform(_objectSpread2(_objectSpread2({}, transforms), bestImageInfo)));
 
         if (zoomLevel > MIN_ZOOM_LEVEL) {
           imageStyle.cursor = 'move';
@@ -4610,32 +4625,32 @@ function (_Component) {
 
 
         if (bestImageInfo === null && hasTrueValue(loadErrorStatus)) {
-          images.push(React.createElement("div", {
+          images.push( /*#__PURE__*/React.createElement("div", {
             className: "".concat(imageClass, " ril__image ril-errored"),
             style: imageStyle,
-            key: _this16.props[srcType] + keyEndings[srcType]
-          }, React.createElement("div", {
+            key: _this17.props[srcType] + keyEndings[srcType]
+          }, /*#__PURE__*/React.createElement("div", {
             className: "ril__errorContainer"
-          }, _this16.props.imageLoadErrorMessage)));
+          }, _this17.props.imageLoadErrorMessage)));
           return;
         }
 
         if (bestImageInfo === null) {
-          var loadingIcon = React.createElement("div", {
+          var loadingIcon = loader !== undefined ? loader : /*#__PURE__*/React.createElement("div", {
             className: "ril-loading-circle ril__loadingCircle ril__loadingContainer__icon"
           }, _toConsumableArray(new Array(12)).map(function (_, index) {
-            return React.createElement("div", {
+            return /*#__PURE__*/React.createElement("div", {
               // eslint-disable-next-line react/no-array-index-key
               key: index,
               className: "ril-loading-circle-point ril__loadingCirclePoint"
             });
           })); // Fall back to loading icon if the thumbnail has not been loaded
 
-          images.push(React.createElement("div", {
+          images.push( /*#__PURE__*/React.createElement("div", {
             className: "".concat(imageClass, " ril__image ril-not-loaded"),
             style: imageStyle,
-            key: _this16.props[srcType] + keyEndings[srcType]
-          }, React.createElement("div", {
+            key: _this17.props[srcType] + keyEndings[srcType]
+          }, /*#__PURE__*/React.createElement("div", {
             className: "ril__loadingContainer"
           }, loadingIcon)));
           return;
@@ -4645,22 +4660,22 @@ function (_Component) {
 
         if (discourageDownloads) {
           imageStyle.backgroundImage = "url('".concat(imageSrc, "')");
-          images.push(React.createElement("div", {
+          images.push( /*#__PURE__*/React.createElement("div", {
             className: "".concat(imageClass, " ril__image ril__imageDiscourager"),
-            onDoubleClick: _this16.handleImageDoubleClick,
-            onWheel: _this16.handleImageMouseWheel,
+            onDoubleClick: _this17.handleImageDoubleClick,
+            onWheel: _this17.handleImageMouseWheel,
             style: imageStyle,
             key: imageSrc + keyEndings[srcType]
-          }, React.createElement("div", {
+          }, /*#__PURE__*/React.createElement("div", {
             className: "ril-download-blocker ril__downloadBlocker"
           })));
         } else {
-          images.push(React.createElement("img", _extends({}, imageCrossOrigin ? {
+          images.push( /*#__PURE__*/React.createElement("img", _extends({}, imageCrossOrigin ? {
             crossOrigin: imageCrossOrigin
           } : {}, {
             className: "".concat(imageClass, " ril__image"),
-            onDoubleClick: _this16.handleImageDoubleClick,
-            onWheel: _this16.handleImageMouseWheel,
+            onDoubleClick: _this17.handleImageDoubleClick,
+            onWheel: _this17.handleImageMouseWheel,
             onDragStart: function onDragStart(e) {
               return e.preventDefault();
             },
@@ -4689,11 +4704,11 @@ function (_Component) {
         x: -1 * boxSize.width
       });
       var modalStyle = {
-        overlay: _objectSpread({
+        overlay: _objectSpread2({
           zIndex: 1000,
           backgroundColor: 'transparent'
         }, reactModalStyle.overlay),
-        content: _objectSpread({
+        content: _objectSpread2({
           backgroundColor: 'transparent',
           overflow: 'hidden',
           // Needed, otherwise keyboard shortcuts scroll the page
@@ -4706,13 +4721,13 @@ function (_Component) {
           bottom: 0
         }, reactModalStyle.content)
       };
-      return React.createElement(Modal, _extends({
+      return /*#__PURE__*/React.createElement(Modal, _extends({
         isOpen: true,
         onRequestClose: clickOutsideToClose ? this.requestClose : undefined,
         onAfterOpen: function onAfterOpen() {
           // Focus on the div with key handlers
-          if (_this16.outerEl.current) {
-            _this16.outerEl.current.focus();
+          if (_this17.outerEl.current) {
+            _this17.outerEl.current.focus();
           }
 
           _onAfterOpen();
@@ -4720,7 +4735,7 @@ function (_Component) {
         style: modalStyle,
         contentLabel: translate('Lightbox'),
         appElement: typeof global.window !== 'undefined' ? global.window.document.body : undefined
-      }, reactModalProps), React.createElement("div", {
+      }, reactModalProps), /*#__PURE__*/React.createElement("div", {
         // eslint-disable-line jsx-a11y/no-static-element-interactions
         // Floating modal with closing animations
         className: "ril-outer ril__outer ril__outerAnimating ".concat(this.props.wrapperClassName, " ").concat(isClosing ? 'ril-closing ril__outerClosing' : ''),
@@ -4739,76 +4754,83 @@ function (_Component) {
         ,
         onKeyDown: this.handleKeyInput,
         onKeyUp: this.handleKeyInput
-      }, React.createElement("div", {
+      }, /*#__PURE__*/React.createElement("div", {
         // eslint-disable-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
         // Image holder
         className: "ril-inner ril__inner",
         onClick: clickOutsideToClose ? this.closeIfClickInner : undefined
-      }, images), prevSrc && React.createElement("button", {
+      }, images), prevSrc && /*#__PURE__*/React.createElement("button", {
         // Move to previous image button
         type: "button",
         className: "ril-prev-button ril__navButtons ril__navButtonPrev",
         key: "prev",
         "aria-label": this.props.prevLabel,
+        title: this.props.prevLabel,
         onClick: !this.isAnimating() ? this.requestMovePrev : undefined // Ignore clicks during animation
 
-      }), nextSrc && React.createElement("button", {
+      }), nextSrc && /*#__PURE__*/React.createElement("button", {
         // Move to next image button
         type: "button",
         className: "ril-next-button ril__navButtons ril__navButtonNext",
         key: "next",
         "aria-label": this.props.nextLabel,
+        title: this.props.nextLabel,
         onClick: !this.isAnimating() ? this.requestMoveNext : undefined // Ignore clicks during animation
 
-      }), React.createElement("div", {
+      }), /*#__PURE__*/React.createElement("div", {
         // Lightbox toolbar
         className: "ril-toolbar ril__toolbar"
-      }, React.createElement("ul", {
+      }, /*#__PURE__*/React.createElement("ul", {
         className: "ril-toolbar-left ril__toolbarSide ril__toolbarLeftSide"
-      }, React.createElement("li", {
+      }, /*#__PURE__*/React.createElement("li", {
         className: "ril-toolbar__item ril__toolbarItem"
-      }, React.createElement("span", {
+      }, /*#__PURE__*/React.createElement("span", {
         className: "ril-toolbar__item__child ril__toolbarItemChild"
-      }, imageTitle))), React.createElement("ul", {
+      }, imageTitle))), /*#__PURE__*/React.createElement("ul", {
         className: "ril-toolbar-right ril__toolbarSide ril__toolbarRightSide"
       }, toolbarButtons && toolbarButtons.map(function (button, i) {
-        return React.createElement("li", {
+        return /*#__PURE__*/React.createElement("li", {
           key: "button_".concat(i + 1),
           className: "ril-toolbar__item ril__toolbarItem"
         }, button);
-      }), enableZoom && React.createElement("li", {
+      }), enableZoom && /*#__PURE__*/React.createElement("li", {
         className: "ril-toolbar__item ril__toolbarItem"
-      }, React.createElement("button", {
+      }, /*#__PURE__*/React.createElement("button", {
         // Lightbox zoom in button
         type: "button",
         key: "zoom-in",
         "aria-label": this.props.zoomInLabel,
+        title: this.props.zoomInLabel,
         className: ['ril-zoom-in', 'ril__toolbarItemChild', 'ril__builtinButton', 'ril__zoomInButton'].concat(_toConsumableArray(zoomLevel === MAX_ZOOM_LEVEL ? ['ril__builtinButtonDisabled'] : [])).join(' '),
         ref: this.zoomInBtn,
         disabled: this.isAnimating() || zoomLevel === MAX_ZOOM_LEVEL,
         onClick: !this.isAnimating() && zoomLevel !== MAX_ZOOM_LEVEL ? this.handleZoomInButtonClick : undefined
-      })), enableZoom && React.createElement("li", {
+      })), enableZoom && /*#__PURE__*/React.createElement("li", {
         className: "ril-toolbar__item ril__toolbarItem"
-      }, React.createElement("button", {
+      }, /*#__PURE__*/React.createElement("button", {
         // Lightbox zoom out button
         type: "button",
         key: "zoom-out",
         "aria-label": this.props.zoomOutLabel,
+        title: this.props.zoomOutLabel,
         className: ['ril-zoom-out', 'ril__toolbarItemChild', 'ril__builtinButton', 'ril__zoomOutButton'].concat(_toConsumableArray(zoomLevel === MIN_ZOOM_LEVEL ? ['ril__builtinButtonDisabled'] : [])).join(' '),
         ref: this.zoomOutBtn,
         disabled: this.isAnimating() || zoomLevel === MIN_ZOOM_LEVEL,
         onClick: !this.isAnimating() && zoomLevel !== MIN_ZOOM_LEVEL ? this.handleZoomOutButtonClick : undefined
-      })), React.createElement("li", {
+      })), /*#__PURE__*/React.createElement("li", {
         className: "ril-toolbar__item ril__toolbarItem"
-      }, React.createElement("button", {
+      }, /*#__PURE__*/React.createElement("button", {
         // Lightbox close button
         type: "button",
         key: "close",
         "aria-label": this.props.closeLabel,
+        title: this.props.closeLabel,
         className: "ril-close ril-toolbar__item__child ril__toolbarItemChild ril__builtinButton ril__closeButton",
         onClick: !this.isAnimating() ? this.requestClose : undefined // Ignore clicks during animation
 
-      })))), this.props.imageCaption && // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+      })))), this.props.imageCaption &&
+      /*#__PURE__*/
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       React.createElement("div", {
         // Image caption
         onWheel: this.handleCaptionMousewheel,
@@ -4817,9 +4839,68 @@ function (_Component) {
         },
         className: "ril-caption ril__caption",
         ref: this.caption
-      }, React.createElement("div", {
+      }, /*#__PURE__*/React.createElement("div", {
         className: "ril-caption-content ril__captionContent"
       }, this.props.imageCaption))));
+    }
+  }], [{
+    key: "isTargetMatchImage",
+    value: function isTargetMatchImage(target) {
+      return target && /ril-image-current/.test(target.className);
+    }
+  }, {
+    key: "parseMouseEvent",
+    value: function parseMouseEvent(mouseEvent) {
+      return {
+        id: 'mouse',
+        source: SOURCE_MOUSE,
+        x: parseInt(mouseEvent.clientX, 10),
+        y: parseInt(mouseEvent.clientY, 10)
+      };
+    }
+  }, {
+    key: "parseTouchPointer",
+    value: function parseTouchPointer(touchPointer) {
+      return {
+        id: touchPointer.identifier,
+        source: SOURCE_TOUCH,
+        x: parseInt(touchPointer.clientX, 10),
+        y: parseInt(touchPointer.clientY, 10)
+      };
+    }
+  }, {
+    key: "parsePointerEvent",
+    value: function parsePointerEvent(pointerEvent) {
+      return {
+        id: pointerEvent.pointerId,
+        source: SOURCE_POINTER,
+        x: parseInt(pointerEvent.clientX, 10),
+        y: parseInt(pointerEvent.clientY, 10)
+      };
+    } // Request to transition to the previous image
+
+  }, {
+    key: "getTransform",
+    value: function getTransform(_ref13) {
+      var _ref13$x = _ref13.x,
+          x = _ref13$x === void 0 ? 0 : _ref13$x,
+          _ref13$y = _ref13.y,
+          y = _ref13$y === void 0 ? 0 : _ref13$y,
+          _ref13$zoom = _ref13.zoom,
+          zoom = _ref13$zoom === void 0 ? 1 : _ref13$zoom,
+          width = _ref13.width,
+          targetWidth = _ref13.targetWidth;
+      var nextX = x;
+      var windowWidth = getWindowWidth();
+
+      if (width > windowWidth) {
+        nextX += (windowWidth - width) / 2;
+      }
+
+      var scaleFactor = zoom * (targetWidth / width);
+      return {
+        transform: "translate3d(".concat(nextX, "px,").concat(y, "px,0) scale3d(").concat(scaleFactor, ",").concat(scaleFactor, ",1)")
+      };
     }
   }]);
 
@@ -4929,7 +5010,9 @@ ReactImageLightbox.propTypes = {
   zoomInLabel: propTypes.string,
   zoomOutLabel: propTypes.string,
   closeLabel: propTypes.string,
-  imageLoadErrorMessage: propTypes.node
+  imageLoadErrorMessage: propTypes.node,
+  // custom loader
+  loader: propTypes.node
 };
 ReactImageLightbox.defaultProps = {
   imageTitle: null,
@@ -4963,7 +5046,8 @@ ReactImageLightbox.defaultProps = {
   wrapperClassName: '',
   zoomInLabel: 'Zoom in',
   zoomOutLabel: 'Zoom out',
-  imageLoadErrorMessage: 'This image failed to load'
+  imageLoadErrorMessage: 'This image failed to load',
+  loader: undefined
 };
 
 //import "react-image-lightbox/style.css";
@@ -4986,6 +5070,7 @@ var ImageLightbox = function (props) {
 var Textpic = function (props) {
     console.log(props.data.gallery.count.rows);
     console.log('777');
+    console.log(props.data.bodytext);
     var _a = useState(false), showLightbox = _a[0], setShowlightbox = _a[1];
     var _b = useState(0), photoIndex = _b[0], setPhotoIndex = _b[1];
     var images = [];
@@ -5053,7 +5138,7 @@ var Div = function (props) {
 };
 
 var Textmedia = function (props) {
-    console.log('moin');
+    console.log('blabla');
     var textmediaClassName;
     if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
         textmediaClassName = props.data.gallery.position.horizontal;
@@ -5067,35 +5152,9 @@ var Textmedia = function (props) {
                 React.createElement(Col, { className: "textmedia-item textmedia-gallery", md: textmediaClassName === props.data.gallery.position.vertical ? "auto" : "6" },
                     React.createElement(Row, null, Object.keys(props.data.gallery.rows).map(function (rowKey) {
                         return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
-                            console.log(props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType);
-                            switch (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType) {
-                                case 'video/youtube':
-                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React.createElement("iframe", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                case 'image/jpeg':
-                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React.createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                case 'image/svg+xml':
-                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React.createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                case 'video/mp4':
-                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React.createElement("video", { controls: true },
-                                            React.createElement("source", { type: "video/mp4", src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                case 'video/vimeo':
-                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React.createElement("video", { controls: true },
-                                            React.createElement("source", { type: "video/mp4", src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                default:
-                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React.createElement("iframe", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                            }
+                            return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                React.createElement("iframe", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
+                                props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
                         });
                     }))),
                 React.createElement(Col, { className: "textmedia-item textmedia-text" },
@@ -5103,28 +5162,7 @@ var Textmedia = function (props) {
 };
 
 var Shortcut = function (props) {
-    console.log('shortcutkey2');
-    console.log(props.data);
-    return React.createElement("div", { className: "shortcut" }, props.data.shortcut.map(function (cObject) {
-        return renderContent(props.args.contentElementLayouts, props.args.contentElementTemplates, cObject, props.args);
-    }));
-};
-
-var Table = function (props) {
-    console.log('moin');
-    return React.createElement("div", { className: "table" }, Object.keys(props.data.bodytext).map(function (arrayKey) {
-        {
-            props.data.bodytext[arrayKey];
-        }
-        console.log(props.data.bodytext[arrayKey]);
-        if (props.data.tableCaption === true) {
-            {
-                props.data.tableCaption;
-            }
-        }
-        if (props.data.headerPosition === 1) ;
-        if (props.data.tabelTfoot) ;
-    }));
+    return React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.shortcuts } });
 };
 
 var BackgroundImage = function (props) {
@@ -5578,48 +5616,13 @@ var contentElementTemplates = {
     // bullets: (headlessContentData, args = {}) => <CE.Bullets data={headlessContentData.content}/>,
     // image: (headlessContentData, args = {}) => <CE.Image data={headlessContentData.content}/>,
     shortcut: function (headlessContentData, args) {
-        if (args === void 0) { args = {}; }
-        return React.createElement(Shortcut, { data: headlessContentData.content, args: args });
+        return React.createElement(Shortcut, { data: headlessContentData.content });
     },
-    table: function (headlessContentData, args) {
-        return React.createElement(Table, { data: headlessContentData.content });
-    },
+    // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     div: function (headlessContentData, args) {
         return React.createElement(Div, { data: headlessContentData.content });
     },
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
-};
-var renderContent = function (contentElementLayouts, contentElementTemplates, content, args) {
-    var layout;
-    if (contentElementLayouts.hasOwnProperty(content.appearance.layout)) {
-        layout = contentElementLayouts[content.appearance.layout];
-    }
-    else if (contentElementLayouts.hasOwnProperty('__generic')) {
-        layout = contentElementLayouts.__generic;
-    }
-    else {
-        return React.createElement(React.Fragment, null,
-            "CE-layout not found: ",
-            content.appearance.layout);
-    }
-    var template;
-    if (contentElementTemplates.hasOwnProperty(content.type)) {
-        template = contentElementTemplates[content.type];
-    }
-    else if (contentElementTemplates.hasOwnProperty('__generic')) {
-        template = contentElementTemplates.__generic;
-    }
-    else {
-        return React.createElement(React.Fragment, null,
-            "CE-template not found: ",
-            content.type,
-            " ");
-    }
-    var _args = __assign({}, args);
-    if (content.type === 'shortcut') {
-        _args = __assign(__assign({}, _args), { contentElementTemplates: contentElementTemplates, contentElementLayouts: contentElementLayouts });
-    }
-    return React.createElement(React.Fragment, { key: content.id }, layout({ children: template(content, _args), content: content, args: _args }));
 };
 var TYPO3Page = function (props) {
     var _pageLayouts = Object.assign({}, pageLayouts, props.pageLayouts);
@@ -5634,6 +5637,7 @@ TYPO3Page.defaultProps = {
     contentElementLayouts: null,
     contentElementTemplates: null,
 };
+var TYPO3Page$1 = React.memo(TYPO3Page);
 
-export { Content, Page, section as Section, TYPO3Page };
+export { Content, Page, section as Section, TYPO3Page$1 as TYPO3Page };
 //# sourceMappingURL=index.es.js.map
