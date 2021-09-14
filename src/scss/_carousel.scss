@@ -1,3 +1,4 @@
+@use "sass:math";
 //
 // Carousel
 //
@@ -28,8 +29,8 @@
 //
 .carousel {
     .carousel-item {
-        padding-left: ($grid-gutter-width / 2);
-        padding-right: ($grid-gutter-width / 2);
+        padding-left: math.div($grid-gutter-width, 2);
+        padding-right: math.div($grid-gutter-width, 2);
         @include media-breakpoint-up(sm) {
             padding-left: 0;
             padding-right: 0;
@@ -204,7 +205,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        padding: 0 ($grid-gutter-width / 2);
+        padding: 0 math.div($grid-gutter-width, 2);
         margin: 0;
         width: 100%;
         z-index: 15;
