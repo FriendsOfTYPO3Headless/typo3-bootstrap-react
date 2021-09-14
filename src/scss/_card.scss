@@ -13,7 +13,7 @@ $card-link-hover-color: $link-hover-color !default;
     color: color-yiq($card-bg);
     a:not(.btn) {
         color: $card-link-color;
-        @include hover {
+        &:hover {
             color: $card-link-hover-color;
         }
     }
@@ -39,8 +39,8 @@ $card-link-hover-color: $link-hover-color !default;
 // Card Deck Menu
 //
 .card-menu {
-    margin: -$card-deck-margin;
-    margin-bottom: -$card-deck-margin !important;
+    margin: -$card-group-margin ;
+    margin-bottom: -$card-group-margin  !important;
     display: flex;
     flex-wrap: wrap;
     .card {
@@ -67,7 +67,7 @@ $card-link-hover-color: $link-hover-color !default;
 }
 .card-menu-item {
     width: 100%;
-    padding: $card-deck-margin;
+    padding: $card-group-margin ;
 }
 .card-menu-align-left {
     justify-content: flex-start;
@@ -107,14 +107,14 @@ $card-link-hover-color: $link-hover-color !default;
 // Card Group Element
 //
 .card-group-element {
-    margin: -$card-deck-margin;
-    margin-bottom: -$card-deck-margin !important;
+    margin: -$card-group-margin ;
+    margin-bottom: -$card-group-margin  !important;
     display: flex;
     flex-wrap: wrap;
 }
 .card-group-element-item {
     width: 100%;
-    padding: $card-deck-margin;
+    padding: $card-group-margin ;
     .card {
         height: 100%;
     }

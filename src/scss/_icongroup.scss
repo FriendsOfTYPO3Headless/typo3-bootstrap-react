@@ -1,3 +1,4 @@
+@use "sass:math";
 //
 // Icon Group
 //
@@ -5,7 +6,7 @@
 //
 // Variables
 //
-$icongroup-margin: ($grid-gutter-width / 2) !default;
+$icongroup-margin: math.div($grid-gutter-width, 2) !default;
 $icongroup-icon-size: 40px !default;
 $icongroup-item-width: 50% !default;
 

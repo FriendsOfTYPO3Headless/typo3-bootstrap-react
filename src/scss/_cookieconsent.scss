@@ -1,3 +1,4 @@
+@use "sass:math";
 //
 // Cookie Consent
 //
@@ -75,7 +76,7 @@ $cookieconsent-button-highlight-bg: transparent !default;
         flex-direction: column;
     }
     &.cc-banner {
-        padding: ($grid-gutter-width / 2) 0;
+        padding: math.div($grid-gutter-width, 2) 0;
         width: 100%;
         flex-direction: row;
     }
@@ -150,7 +151,7 @@ $cookieconsent-button-highlight-bg: transparent !default;
     flex-wrap: nowrap;
     margin: 0 auto;
     @include make-container();
-    @include make-container-max-widths();
+    //@include make-container-max-widths();
 }
 .cc-window.cc-floating {
     .cc-container {
@@ -190,16 +191,16 @@ $cookieconsent-button-highlight-bg: transparent !default;
     }
 }
 .cc-top {
-    top: ($grid-gutter-width / 2);
+    top: math.div($grid-gutter-width, 2);
 }
 .cc-left {
-    left: ($grid-gutter-width / 2);
+    left: math.div($grid-gutter-width, 2);
 }
 .cc-right {
-    right: ($grid-gutter-width / 2);
+    right: math.div($grid-gutter-width, 2);
 }
 .cc-bottom {
-    bottom: ($grid-gutter-width / 2);
+    bottom: math.div($grid-gutter-width, 2);
 }
 .cc-message {
     line-height: 1.25rem;
@@ -284,7 +285,7 @@ $cookieconsent-button-highlight-bg: transparent !default;
             }
         }
         &.cc-floating {
-            padding: ($grid-gutter-width / 2);
+            padding: math.div($grid-gutter-width, 2);
             max-width: none;
             .cc-container {
                 padding: 0;
