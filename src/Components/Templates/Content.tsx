@@ -1,5 +1,5 @@
 import React from "react";
-import {renderContent} from "../TYPO3Page";
+import {RenderContent} from "../RenderContent";
 
 const PREFIX_COLPOS = 'colPos';
 
@@ -16,7 +16,7 @@ const Content: React.FC<{
     if (props.content.hasOwnProperty(PREFIX_COLPOS + props.colPos)) {
         content = props.content[PREFIX_COLPOS + props.colPos].map(content => {
 
-          return   renderContent(props.contentElementLayouts, props.contentElementTemplates, content, props.args)
+          return   RenderContent(props.contentElementLayouts, props.contentElementTemplates, content, props.args)
 
         });
     }

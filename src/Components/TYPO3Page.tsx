@@ -532,14 +532,15 @@ const contentElementTemplates = {
         return <>{headlessContentData.type} has no Template</>
     },
     text: (headlessContentData, args = {}) => <CE.Text data={headlessContentData.content}/>,
+    html: (headlessContentData, args = {}) => <CE.Html data={headlessContentData.content}/>,
     textpic: (headlessContentData, args = {}) => <CE.Textpic data={headlessContentData.content}/>,
     image: (headlessContentData, args = {}) => <CE.Image data={headlessContentData.content}/>,
     textmedia: (headlessContentData, args = {}) => <CE.Textmedia data={headlessContentData.content}/>,
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
     // bullets: (headlessContentData, args = {}) => <CE.Bullets data={headlessContentData.content}/>,
     // image: (headlessContentData, args = {}) => <CE.Image data={headlessContentData.content}/>,
-    shortcut: (headlessContentData, args = {}) => <CE.Shortcut data={headlessContentData.content}/>,
-    // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
+    shortcut: (headlessContentData, args = {}) => <CE.Shortcut data={headlessContentData.content} args={ args}/>,
+    table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     div: (headlessContentData, args = {}) => <CE.Div data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
 }
@@ -569,9 +570,5 @@ TYPO3Page.defaultProps = {
 
 export default React.memo(TYPO3Page);
 export {pageLayouts, pageTemplates, contentElementLayouts, contentElementTemplates};
-
-
-
-
 
 

@@ -50,44 +50,77 @@ var Page = function (props) {
     // return <>Page: {props.config.navigations.navigation1[0].title}</>
 };
 
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
+var RenderContent = function (contentElementLayouts, contentElementTemplates, content, args) {
+    var layout;
+    if (contentElementLayouts.hasOwnProperty(content.appearance.layout)) {
+        layout = contentElementLayouts[content.appearance.layout];
+    }
+    else if (contentElementLayouts.hasOwnProperty('__generic')) {
+        layout = contentElementLayouts.__generic;
+    }
+    else {
+        return React.createElement(React.Fragment, null,
+            "CE-layout not found: ",
+            content.appearance.layout);
+    }
+    var template;
+    if (contentElementTemplates.hasOwnProperty(content.type)) {
+        template = contentElementTemplates[content.type];
+    }
+    else if (contentElementTemplates.hasOwnProperty('__generic')) {
+        template = contentElementTemplates.__generic;
+    }
+    else {
+        return React.createElement(React.Fragment, null,
+            "CE-template not found: ",
+            content.type,
+            " ");
+    }
+    var _args = __assign({}, args);
+    if (content.type === 'shortcut') {
+        _args = __assign(__assign({}, _args), { contentElementTemplates: contentElementTemplates, contentElementLayouts: contentElementLayouts });
+    }
+    return React.createElement(React.Fragment, { key: content.id }, layout({ children: template(content, _args), content: content, args: _args }));
+};
+
 var PREFIX_COLPOS = 'colPos';
 var Content = function (props) {
     var content = React.createElement(React.Fragment, null);
     if (props.content.hasOwnProperty(PREFIX_COLPOS + props.colPos)) {
         content = props.content[PREFIX_COLPOS + props.colPos].map(function (content) {
-            var layout;
-            if (props.contentElementLayouts.hasOwnProperty(content.appearance.layout)) {
-                layout = props.contentElementLayouts[content.appearance.layout];
-            }
-            else if (props.contentElementLayouts.hasOwnProperty('__generic')) {
-                layout = props.contentElementLayouts.__generic;
-            }
-            else {
-                return React.createElement(React.Fragment, null,
-                    "CE-layout not found: ",
-                    props.content.appearance.layout);
-            }
-            var template;
-            if (props.contentElementTemplates.hasOwnProperty(content.type)) {
-                template = props.contentElementTemplates[content.type];
-            }
-            else if (props.contentElementTemplates.hasOwnProperty('__generic')) {
-                template = props.contentElementTemplates.__generic;
-            }
-            else {
-                return React.createElement(React.Fragment, null,
-                    "CE-template not found: ",
-                    props.content.type,
-                    " ");
-            }
-            return React.createElement(React.Fragment, { key: content.id }, layout({ children: template(content, props.args), content: content, args: props.args }));
+            return RenderContent(props.contentElementLayouts, props.contentElementTemplates, content, props.args);
         });
     }
     return content;
 };
 
 var Text = function (props) {
-    console.log(props.data);
     return React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
 };
 
@@ -5068,9 +5101,6 @@ var ImageLightbox = function (props) {
 };
 
 var Textpic = function (props) {
-    console.log(props.data.gallery.count.rows);
-    console.log('777');
-    console.log(props.data.bodytext);
     var _a = useState(false), showLightbox = _a[0], setShowlightbox = _a[1];
     var _b = useState(0), photoIndex = _b[0], setPhotoIndex = _b[1];
     var images = [];
@@ -5147,13 +5177,39 @@ var Textmedia = function (props) {
     }
     return React.createElement("div", { className: "textmedia" },
         React.createElement("div", { className: "gallery-row" },
-            React.createElement("div", { className: "textmedia textmedia-" + textmediaClassName },
-                React.createElement("div", { className: "textmedia-item textmedia-gallery" },
+            React.createElement(Row, { className: "textmedia textmedia-" + textmediaClassName },
+                React.createElement(Col, { className: "textmedia-item textmedia-gallery", md: textmediaClassName === props.data.gallery.position.vertical ? "auto" : "6" },
                     React.createElement(Row, null, Object.keys(props.data.gallery.rows).map(function (rowKey) {
                         return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
-                            return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                React.createElement("video", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl }),
-                                props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                            console.log(props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType);
+                            switch (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType) {
+                                case 'video/youtube':
+                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                        React.createElement("iframe", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
+                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                case 'image/jpeg':
+                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                        React.createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
+                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                case 'image/svg+xml':
+                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                        React.createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
+                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                case 'video/mp4':
+                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                        React.createElement("video", { controls: true },
+                                            React.createElement("source", { type: "video/mp4", src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                case 'video/vimeo':
+                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                        React.createElement("video", { controls: true },
+                                            React.createElement("source", { type: "video/mp4", src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                default:
+                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                        React.createElement("iframe", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
+                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                            }
                         });
                     }))),
                 React.createElement(Col, { className: "textmedia-item textmedia-text" },
@@ -5161,7 +5217,25 @@ var Textmedia = function (props) {
 };
 
 var Shortcut = function (props) {
-    return React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.shortcuts } });
+    return React.createElement("div", { className: "shortcut" }, props.data.shortcut.map(function (cObject) {
+        return RenderContent(props.args.contentElementLayouts, props.args.contentElementTemplates, cObject, props.args);
+    }));
+};
+
+var Html = function (props) {
+    return React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
+};
+
+var Table = function (props) {
+    console.log('moin');
+    console.log(props.data);
+    props.data.tableCaption;
+    return React.createElement("div", { className: "table" }, props.data.bodytext.map(function (rowObject) {
+        {
+            props.data.tableCaption;
+        }
+        return rowObject;
+    }));
 };
 
 var BackgroundImage = function (props) {
@@ -5602,6 +5676,9 @@ var contentElementTemplates = {
     text: function (headlessContentData, args) {
         return React.createElement(Text, { data: headlessContentData.content });
     },
+    html: function (headlessContentData, args) {
+        return React.createElement(Html, { data: headlessContentData.content });
+    },
     textpic: function (headlessContentData, args) {
         return React.createElement(Textpic, { data: headlessContentData.content });
     },
@@ -5615,9 +5692,12 @@ var contentElementTemplates = {
     // bullets: (headlessContentData, args = {}) => <CE.Bullets data={headlessContentData.content}/>,
     // image: (headlessContentData, args = {}) => <CE.Image data={headlessContentData.content}/>,
     shortcut: function (headlessContentData, args) {
-        return React.createElement(Shortcut, { data: headlessContentData.content });
+        if (args === void 0) { args = {}; }
+        return React.createElement(Shortcut, { data: headlessContentData.content, args: args });
     },
-    // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
+    table: function (headlessContentData, args) {
+        return React.createElement(Table, { data: headlessContentData.content });
+    },
     div: function (headlessContentData, args) {
         return React.createElement(Div, { data: headlessContentData.content });
     },

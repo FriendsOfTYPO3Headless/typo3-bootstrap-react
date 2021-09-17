@@ -5,11 +5,6 @@ import ImageLightbox from "./ImageLightbox";
 
 const Textpic: React.FC<{ data: any }> = props => {
 
-    console.log(props.data.gallery.count.rows)
-    console.log('777')
-
-    console.log(props.data.bodytext)
-
     const [showLightbox, setShowlightbox] = useState(false)
     const [photoIndex, setPhotoIndex] = useState(0)
 

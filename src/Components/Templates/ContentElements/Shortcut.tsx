@@ -1,16 +1,12 @@
 import React from 'react';
-import {renderContent} from "../../TYPO3Page";
+import {RenderContent} from "../../RenderContent";
 
-const Shortcut: React.FC<{ data: any, args: any }> = props => {
-console.log('shortcutkey2')
-    console.log(props.data)
-
-
+const Shortcut: React.FC<{ data: any , args: any}> = props => {
 
 
     return <div className="shortcut">
         {props.data.shortcut.map((cObject) => {
-            return   renderContent(props.args.contentElementLayouts, props.args.contentElementTemplates, cObject, props.args)
+            return  RenderContent(props.args.contentElementLayouts, props.args.contentElementTemplates, cObject, props.args)
 
                 console.log(cObject)
 

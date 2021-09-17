@@ -11,22 +11,18 @@ let tableCaption =    props.data.tableCaption;
             {props.data.tableCaption}
             return rowObject;
 
-            console.log(rowObject)
 
             if (tableCaption) {
                 {
                     return tableCaption;
-
                 }
             }
-
             if (props.data.headerPosition === 1) {
 
             } else {
 
             }
             if (props.data.tabelTfoot) {
-
 
             }
 

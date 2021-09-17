@@ -2,7 +2,7 @@ import React from 'react';
 import {Col, Row} from "react-bootstrap";
 
 const Textmedia: React.FC<{ data: any }> = props => {
-    console.log('moin');
+
     let textmediaClassName;
     if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
         textmediaClassName = props.data.gallery.position.horizontal;
