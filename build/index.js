@@ -5685,9 +5685,6 @@ var contentElementTemplates = {
     text: function (headlessContentData, args) {
         return React__default['default'].createElement(Text, { data: headlessContentData.content });
     },
-    html: function (headlessContentData, args) {
-        return React__default['default'].createElement(Html, { data: headlessContentData.content });
-    },
     textpic: function (headlessContentData, args) {
         return React__default['default'].createElement(Textpic, { data: headlessContentData.content });
     },
@@ -5696,6 +5693,9 @@ var contentElementTemplates = {
     },
     textmedia: function (headlessContentData, args) {
         return React__default['default'].createElement(Textmedia, { data: headlessContentData.content });
+    },
+    Html: function (headlessContentData, args) {
+        return React__default['default'].createElement(Html, { data: headlessContentData.content });
     },
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
     // bullets: (headlessContentData, args = {}) => <CE.Bullets data={headlessContentData.content}/>,
