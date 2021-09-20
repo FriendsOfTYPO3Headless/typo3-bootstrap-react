@@ -5682,6 +5682,7 @@ var contentElementTemplates = {
     image: function (headlessContentData, args) {
         return React.createElement(Image, { data: headlessContentData.content });
     },
+    // media: (headlessContentData, args = {}) => <CE.Media data={headlessContentData.content}/>,
     textmedia: function (headlessContentData, args) {
         return React.createElement(Textmedia, { data: headlessContentData.content });
     },

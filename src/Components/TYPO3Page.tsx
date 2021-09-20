@@ -534,6 +534,7 @@ const contentElementTemplates = {
     text: (headlessContentData, args = {}) => <CE.Text data={headlessContentData.content}/>,
     textpic: (headlessContentData, args = {}) => <CE.Textpic data={headlessContentData.content}/>,
     image: (headlessContentData, args = {}) => <CE.Image data={headlessContentData.content}/>,
+   // media: (headlessContentData, args = {}) => <CE.Media data={headlessContentData.content}/>,
     textmedia: (headlessContentData, args = {}) => <CE.Textmedia data={headlessContentData.content}/>,
     Html: (headlessContentData, args = {}) => <CE.Html data={headlessContentData.content}/>,
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,

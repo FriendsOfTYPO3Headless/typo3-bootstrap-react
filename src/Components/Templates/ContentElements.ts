@@ -1,6 +1,7 @@
 import Text from './ContentElements/Text'
 import Textpic from './ContentElements/Textpic'
 import Image from './ContentElements/Image'
+// import Media from './ContentElements/Media'
 import ImageLightbox from './ContentElements/Image'
 import Div from './ContentElements/Div'
 import Textmedia from './ContentElements/Textmedia'
@@ -41,6 +42,7 @@ export {
     Textpic,
     Image,
     ImageLightbox,
+  //  Media,
 
     //Bullets,
     Div,
