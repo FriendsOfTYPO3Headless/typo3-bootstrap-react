@@ -1,12 +1,12 @@
 import React from 'react';
 
 const Bullets: React.FC<{ data: any }> = props => {
-console.log(props.data)
+
     return <div className="bullets">
 
         {Object.keys(props.data).map((key)=> {
 
-
+            console.log(props.data[key])
                 switch (props.data.bulletsType) {
                     case  "1" :
                         <ol><li>{props.data}</li></ol>;

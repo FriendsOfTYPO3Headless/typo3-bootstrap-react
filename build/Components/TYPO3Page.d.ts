@@ -59,6 +59,7 @@ declare const contentElementTemplates: {
     image: (headlessContentData: any, args?: {}) => JSX.Element;
     textmedia: (headlessContentData: any, args?: {}) => JSX.Element;
     Html: (headlessContentData: any, args?: {}) => JSX.Element;
+    bullets: (headlessContentData: any, args?: {}) => JSX.Element;
     shortcut: (headlessContentData: any, args?: {}) => JSX.Element;
     table: (headlessContentData: any, args?: {}) => JSX.Element;
     div: (headlessContentData: any, args?: {}) => JSX.Element;

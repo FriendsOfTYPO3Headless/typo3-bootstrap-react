@@ -5226,6 +5226,24 @@ var Html = function (props) {
     return React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
 };
 
+var Bullets = function (props) {
+    return React.createElement("div", { className: "bullets" }, Object.keys(props.data).map(function (key) {
+        console.log(props.data[key]);
+        switch (props.data.bulletsType) {
+            case "1":
+                React.createElement("ol", null,
+                    React.createElement("li", null, props.data));
+                break;
+            case "2":
+                break;
+            default:
+                React.createElement("ul", null,
+                    React.createElement("li", null, props.data));
+                break;
+        }
+    }));
+};
+
 var Table = function (props) {
     console.log('moin');
     console.log(props.data);
@@ -5689,8 +5707,9 @@ var contentElementTemplates = {
         return React.createElement(Html, { data: headlessContentData.content });
     },
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
-    // bullets: (headlessContentData, args = {}) => <CE.Bullets data={headlessContentData.content}/>,
-    // image: (headlessContentData, args = {}) => <CE.Image data={headlessContentData.content}/>,
+    bullets: function (headlessContentData, args) {
+        return React.createElement(Bullets, { data: headlessContentData.content });
+    },
     shortcut: function (headlessContentData, args) {
         if (args === void 0) { args = {}; }
         return React.createElement(Shortcut, { data: headlessContentData.content, args: args });

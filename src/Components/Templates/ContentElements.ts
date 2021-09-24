@@ -6,7 +6,9 @@ import Div from './ContentElements/Div'
 import Textmedia from './ContentElements/Textmedia'
 import Shortcut from './ContentElements/Shortcut'
 import Html from './ContentElements/Html'
+import Bullets from './ContentElements/Bullets'
 //import ImageModal from './ContentElements/ImageModal'
+
 
 
 // import Textmedia from './ContentElements/Textmedia'
@@ -42,7 +44,7 @@ export {
     Image,
     ImageLightbox,
 
-    //Bullets,
+    Bullets,
     Div,
     /*  FormFormFramework,
    Html,

@@ -5235,6 +5235,24 @@ var Html = function (props) {
     return React__default['default'].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
 };
 
+var Bullets = function (props) {
+    return React__default['default'].createElement("div", { className: "bullets" }, Object.keys(props.data).map(function (key) {
+        console.log(props.data[key]);
+        switch (props.data.bulletsType) {
+            case "1":
+                React__default['default'].createElement("ol", null,
+                    React__default['default'].createElement("li", null, props.data));
+                break;
+            case "2":
+                break;
+            default:
+                React__default['default'].createElement("ul", null,
+                    React__default['default'].createElement("li", null, props.data));
+                break;
+        }
+    }));
+};
+
 var Table = function (props) {
     console.log('moin');
     console.log(props.data);
@@ -5698,8 +5716,9 @@ var contentElementTemplates = {
         return React__default['default'].createElement(Html, { data: headlessContentData.content });
     },
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
-    // bullets: (headlessContentData, args = {}) => <CE.Bullets data={headlessContentData.content}/>,
-    // image: (headlessContentData, args = {}) => <CE.Image data={headlessContentData.content}/>,
+    bullets: function (headlessContentData, args) {
+        return React__default['default'].createElement(Bullets, { data: headlessContentData.content });
+    },
     shortcut: function (headlessContentData, args) {
         if (args === void 0) { args = {}; }
         return React__default['default'].createElement(Shortcut, { data: headlessContentData.content, args: args });
