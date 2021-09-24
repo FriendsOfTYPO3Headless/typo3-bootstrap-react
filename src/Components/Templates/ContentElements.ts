@@ -42,7 +42,7 @@ export {
     Textpic,
     Image,
     ImageLightbox,
-  //  Media,
+   // Media,
 
     //Bullets,
     Div,
