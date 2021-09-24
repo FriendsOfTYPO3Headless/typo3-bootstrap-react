@@ -2,7 +2,7 @@ import React from 'react';
 import getOwnPropertyDescriptor = Reflect.getOwnPropertyDescriptor;
 
 const Uploads: React.FC<{ data: any }> = props => {
-console.log(props.data)
+
     return <div className="uploads">
         <ul className="media-list">
 
@@ -13,7 +13,6 @@ console.log(props.data)
                 let content;
 
                 switch (props.data.displayInformation) {
-
 
                     case "1" :
                         content = <>
@@ -47,8 +46,6 @@ console.log(props.data)
                             <a href={props.data.media[key].publicUrl}> {props.data.media[key].properties.filename}  </a>
                     {props.data.displayDescription === '1' ? description : ' '}
                     {props.data.displayFileSizeInformation === '1' ? filesize : ''}
-
-
                 }
 
                 return <li key={key}>

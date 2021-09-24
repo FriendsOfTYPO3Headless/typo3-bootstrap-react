@@ -5181,7 +5181,6 @@ var Textmedia = function (props) {
                 React.createElement(Col, { className: "textmedia-item textmedia-gallery", md: textmediaClassName === props.data.gallery.position.vertical ? "auto" : "6" },
                     React.createElement(Row, null, Object.keys(props.data.gallery.rows).map(function (rowKey) {
                         return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
-                            console.log(props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType);
                             switch (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType) {
                                 case 'video/youtube':
                                     return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
@@ -5227,8 +5226,6 @@ var Html = function (props) {
 };
 
 var Table = function (props) {
-    console.log('moin');
-    console.log(props.data);
     props.data.tableCaption;
     return React.createElement("div", { className: "table" }, props.data.bodytext.map(function (rowObject) {
         {

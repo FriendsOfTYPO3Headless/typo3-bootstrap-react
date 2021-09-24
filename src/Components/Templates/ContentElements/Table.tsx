@@ -1,8 +1,6 @@
 import React from 'react';
 
 const Table: React.FC<{ data: any }> = props => {
-    console.log('moin')
-    console.log(props.data)
 
 let tableCaption =    props.data.tableCaption;
     return <div className="table">
