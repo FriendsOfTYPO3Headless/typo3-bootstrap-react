@@ -26,14 +26,17 @@ const Textpic: React.FC<{ data: any }> = props => {
 
     }
 
+    //TODO: Klick-Vergrößerung nur, wenn Option aktiviert
     const imageCols = Object.keys(props.data.gallery.rows).map((rowKey) => {
         return Object.keys(props.data.gallery.rows[rowKey].columns).map((columnKey) => {
-            return <Col className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
-                <a onClick={() => {
+            return <Col className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns} key={columnKey}>
+                <a onClick={(e) => {
+                    e.preventDefault();
                     setPhotoIndex(images.indexOf(props.data.gallery.rows[rowKey].columns[columnKey].publicUrl));
                     setShowlightbox(true);
-                }}>
-                    <img src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}/>
+                    return true;
+                }} href={'#'}>
+                    <img src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl} alt={props.data.gallery.rows[rowKey].columns[columnKey]?.properties?.title}/>
                 </a>
                 {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
             </Col>
@@ -51,7 +54,6 @@ const Textpic: React.FC<{ data: any }> = props => {
                         {imageCols}
                     </Row>
                 </Col>
-
                 <Col className="textpic-item textpic-text" md="6"
                      dangerouslySetInnerHTML={{__html: props.data.bodytext}}>
 
