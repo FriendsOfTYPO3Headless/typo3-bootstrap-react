@@ -8,7 +8,6 @@ const Image: React.FC<{ data: any }> = props => {
             <Row>
                 <ImageCols data={props.data}/>
             </Row>
-
         </div>
     </div>
 }

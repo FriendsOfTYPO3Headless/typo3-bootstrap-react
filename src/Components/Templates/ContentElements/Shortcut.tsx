@@ -16,4 +16,3 @@ const Shortcut: React.FC<{ data: any , args: any}> = props => {
     }
 
 export default Shortcut;
-

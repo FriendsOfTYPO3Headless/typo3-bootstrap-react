@@ -29,7 +29,7 @@ import MenuSectionPages from './ContentElements/MenuSectionPages'
 import MenuSubpages from './ContentElements/MenuSubpages'
 import MenuSection from './ContentElements/MenuSection'*/
 
-import Table from './ContentElements/Table'
+// import Table from './ContentElements/Table'
 
 import Uploads from './ContentElements/Uploads'
 import MenuSitemap from './ContentElements/MenuSitemap'
@@ -59,7 +59,7 @@ export {
  //  MenuSitemapPages,
    MenuSubpages,*/
     //MenuSitemap,
-     Table,
+    //  Table,
     Shortcut,
     //Image,
     Textmedia,
