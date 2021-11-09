@@ -259,14 +259,54 @@ var Html = function (props) {
     return React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
 };
 
-var Table = function (props) {
-    props.data.tableCaption;
-    return React.createElement("div", { className: "table" }, props.data.bodytext.map(function (rowObject) {
-        {
-            props.data.tableCaption;
-        }
-        return rowObject;
-    }));
+var Uploads = function (props) {
+    return React.createElement("div", { className: "uploads" },
+        React.createElement("ul", { className: "media-list filelink-list" }, Object.keys(props.data.media).map(function (key) {
+            var description = props.data.displayDescription === '1' ?
+                React.createElement("p", { className: 'filelink-filedescription' }, props.data.media[key].properties.description) : null;
+            var filesize = props.data.displayFileSizeInformation === '1' ?
+                React.createElement("span", { className: 'filelink-filesize ms-2 small' }, props.data.media[key].properties.size) : null;
+            var title = props.data.media[key].properties.title !== '' ? props.data.media[key].properties.title : props.data.media[key].properties.filename;
+            var heading = function (contentBefore) {
+                if (contentBefore === void 0) { contentBefore = null; }
+                return React.createElement("span", { className: 'title' },
+                    React.createElement("h5", { className: 'filelink-heading ' },
+                        React.createElement("a", { href: props.data.media[key].publicUrl },
+                            contentBefore,
+                            title),
+                        filesize));
+            };
+            var content;
+            console.log(props.data.displayInformation);
+            switch (props.data.displayInformation) {
+                case "1":
+                    content = React.createElement(React.Fragment, null,
+                        heading(props.data.media[key].properties.type === 'video' ?
+                            React.createElement("i", { className: "bi bi-camera-video-fill me-2" }) : React.createElement("i", { className: "bi bi-file-image me-2" })),
+                        description);
+                    break;
+                case "2":
+                    var media = null;
+                    switch (props.data.media[key].properties.type) {
+                        case 'video':
+                            media = React.createElement("iframe", { src: props.data.media[key].publicUrl, className: 'mw-100' });
+                            break;
+                        default:
+                            media = React.createElement("img", { src: props.data.media[key].publicUrl, alt: title, className: 'img-fluid' });
+                    }
+                    content = React.createElement(Row, null,
+                        React.createElement(Col, { className: 'filelink-media', xs: 3, sm: 3, md: 3, lg: 2, xl: 2, xxl: 2 }, media),
+                        React.createElement(Col, { className: 'filelink-body' },
+                            heading(),
+                            description));
+                    break;
+                default:
+                    content = React.createElement(React.Fragment, null,
+                        heading(),
+                        description);
+            }
+            return React.createElement("li", { className: 'filelink-item mb-2', key: key }, content);
+        })));
 };
 
 var BackgroundImage = function (props) {
@@ -726,11 +766,12 @@ var contentElementTemplates = {
         if (args === void 0) { args = {}; }
         return React.createElement(Shortcut, { data: headlessContentData.content, args: args });
     },
-    table: function (headlessContentData, args) {
-        return React.createElement(Table, { data: headlessContentData.content });
-    },
+    // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     div: function (headlessContentData, args) {
         return React.createElement(Div, { data: headlessContentData.content });
+    },
+    uploads: function (headlessContentData, args) {
+        return React.createElement(Uploads, { data: headlessContentData.content });
     },
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
 };

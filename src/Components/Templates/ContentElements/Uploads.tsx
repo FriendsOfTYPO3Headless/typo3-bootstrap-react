@@ -1,56 +1,68 @@
 import React from 'react';
-import getOwnPropertyDescriptor = Reflect.getOwnPropertyDescriptor;
+import {Col, Row} from "react-bootstrap";
 
 const Uploads: React.FC<{ data: any }> = props => {
 
     return <div className="uploads">
-        <ul className="media-list">
-
+        <ul className="media-list filelink-list">
             {Object.keys(props.data.media).map((key) => {
 
-                let description = props.data.media[key].properties.description;
-                let filesize = props.data.media[key].properties.size ;
+                const description = props.data.displayDescription === '1' ?
+                    <p className={'filelink-filedescription'}>{props.data.media[key].properties.description}</p> : null
+                const filesize = props.data.displayFileSizeInformation === '1' ?
+                    <span className={'filelink-filesize ms-2 small'}>{props.data.media[key].properties.size}</span> : null;
+                const title = props.data.media[key].properties.title !== '' ? props.data.media[key].properties.title : props.data.media[key].properties.filename;
+                const heading = (contentBefore = null) => <span className={'title'}>
+                    <h5 className={'filelink-heading '}>
+                        <a href={props.data.media[key].publicUrl}>
+                            {contentBefore}
+                            {title}
+                        </a>
+                        {filesize}
+                    </h5>
+
+                </span>
                 let content;
-
+                console.log(props.data.displayInformation);
                 switch (props.data.displayInformation) {
-
                     case "1" :
                         content = <>
-                            <a href={props.data.media[key].publicUrl}>
-                                {props.data.media[key].properties.type === 'video' ?
-                                    <i className="bi bi-camera-video-fill"/> :
-                                    <i className="bi bi-file-image"/>}
-                                {props.data.media[key].properties.filename}
-                            </a>
-                            {props.data.displayDescription === '1' ? description : ' '}
-                            {props.data.displayFileSizeInformation === '1' ? filesize : ''}
+                            {heading(props.data.media[key].properties.type === 'video' ?
+                                <i className="bi bi-camera-video-fill me-2"/> : <i className="bi bi-file-image me-2"/>
+                            )}
+                            {description}
                         </>
                         break;
-
-
                     case  "2":
-                        content = <>
-                            <a href={props.data.media[key].publicUrl}>
-                                <iframe
-                                    src={props.data.media[key].publicUrl}/>
-                                {props.data.media[key].properties.filename}
-                            </a>
-                            {props.data.displayDescription === '1' ? description : ' '}
-                            {props.data.displayFileSizeInformation === '1' ? filesize : ''}
-                        </>
+                        let media = null;
+                        switch (props.data.media[key].properties.type) {
+                            case 'video':
+                                media = <iframe src={props.data.media[key].publicUrl} className={'mw-100'}/>
+                                break;
+                            default:
+                                media = <img src={props.data.media[key].publicUrl} alt={title} className={'img-fluid'}/>
+                        }
+
+                        content = <Row>
+                            <Col className={'filelink-media'} xs={3} sm={3} md={3} lg={2} xl={2} xxl={2}>
+                                {media}
+                            </Col>
+                            <Col className={'filelink-body'}>
+                                {heading()}
+                                {description}
+                            </Col>
+                        </Row>
                         break;
 
 
-                    default :
-                        content =
-                            <a href={props.data.media[key].publicUrl}> {props.data.media[key].properties.filename}  </a>
-                    {props.data.displayDescription === '1' ? description : ' '}
-                    {props.data.displayFileSizeInformation === '1' ? filesize : ''}
+                    default:
+                        content = <>
+                            {heading()}
+                            {description}
+                        </>
                 }
 
-                return <li key={key}>
-                    {content}
-                </li>
+                return <li className={'filelink-item mb-2'} key={key}>{content}</li>
 
             })}
         </ul>

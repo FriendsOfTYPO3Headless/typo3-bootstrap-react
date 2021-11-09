@@ -268,14 +268,54 @@ var Html = function (props) {
     return React__default['default'].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
 };
 
-var Table = function (props) {
-    props.data.tableCaption;
-    return React__default['default'].createElement("div", { className: "table" }, props.data.bodytext.map(function (rowObject) {
-        {
-            props.data.tableCaption;
-        }
-        return rowObject;
-    }));
+var Uploads = function (props) {
+    return React__default['default'].createElement("div", { className: "uploads" },
+        React__default['default'].createElement("ul", { className: "media-list filelink-list" }, Object.keys(props.data.media).map(function (key) {
+            var description = props.data.displayDescription === '1' ?
+                React__default['default'].createElement("p", { className: 'filelink-filedescription' }, props.data.media[key].properties.description) : null;
+            var filesize = props.data.displayFileSizeInformation === '1' ?
+                React__default['default'].createElement("span", { className: 'filelink-filesize ms-2 small' }, props.data.media[key].properties.size) : null;
+            var title = props.data.media[key].properties.title !== '' ? props.data.media[key].properties.title : props.data.media[key].properties.filename;
+            var heading = function (contentBefore) {
+                if (contentBefore === void 0) { contentBefore = null; }
+                return React__default['default'].createElement("span", { className: 'title' },
+                    React__default['default'].createElement("h5", { className: 'filelink-heading ' },
+                        React__default['default'].createElement("a", { href: props.data.media[key].publicUrl },
+                            contentBefore,
+                            title),
+                        filesize));
+            };
+            var content;
+            console.log(props.data.displayInformation);
+            switch (props.data.displayInformation) {
+                case "1":
+                    content = React__default['default'].createElement(React__default['default'].Fragment, null,
+                        heading(props.data.media[key].properties.type === 'video' ?
+                            React__default['default'].createElement("i", { className: "bi bi-camera-video-fill me-2" }) : React__default['default'].createElement("i", { className: "bi bi-file-image me-2" })),
+                        description);
+                    break;
+                case "2":
+                    var media = null;
+                    switch (props.data.media[key].properties.type) {
+                        case 'video':
+                            media = React__default['default'].createElement("iframe", { src: props.data.media[key].publicUrl, className: 'mw-100' });
+                            break;
+                        default:
+                            media = React__default['default'].createElement("img", { src: props.data.media[key].publicUrl, alt: title, className: 'img-fluid' });
+                    }
+                    content = React__default['default'].createElement(reactBootstrap.Row, null,
+                        React__default['default'].createElement(reactBootstrap.Col, { className: 'filelink-media', xs: 3, sm: 3, md: 3, lg: 2, xl: 2, xxl: 2 }, media),
+                        React__default['default'].createElement(reactBootstrap.Col, { className: 'filelink-body' },
+                            heading(),
+                            description));
+                    break;
+                default:
+                    content = React__default['default'].createElement(React__default['default'].Fragment, null,
+                        heading(),
+                        description);
+            }
+            return React__default['default'].createElement("li", { className: 'filelink-item mb-2', key: key }, content);
+        })));
 };
 
 var BackgroundImage = function (props) {
@@ -735,11 +775,12 @@ var contentElementTemplates = {
         if (args === void 0) { args = {}; }
         return React__default['default'].createElement(Shortcut, { data: headlessContentData.content, args: args });
     },
-    table: function (headlessContentData, args) {
-        return React__default['default'].createElement(Table, { data: headlessContentData.content });
-    },
+    // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     div: function (headlessContentData, args) {
         return React__default['default'].createElement(Div, { data: headlessContentData.content });
+    },
+    uploads: function (headlessContentData, args) {
+        return React__default['default'].createElement(Uploads, { data: headlessContentData.content });
     },
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
 };

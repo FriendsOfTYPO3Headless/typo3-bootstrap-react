@@ -540,8 +540,9 @@ const contentElementTemplates = {
     // bullets: (headlessContentData, args = {}) => <CE.Bullets data={headlessContentData.content}/>,
     // image: (headlessContentData, args = {}) => <CE.Image data={headlessContentData.content}/>,
     shortcut: (headlessContentData, args = {}) => <CE.Shortcut data={headlessContentData.content} args={ args}/>,
-    table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
+    // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     div: (headlessContentData, args = {}) => <CE.Div data={headlessContentData.content}/>,
+    uploads: (headlessContentData, args = {}) => <CE.Uploads data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
 }
 
