@@ -8,17 +8,18 @@ const ImageLightbox: React.FC<{
     photoIndex: number,
     setPhotoIndex: (value: (((prevState: number) => number) | number)) => void,
 }> = props => {
-
-
     const nextSrc = () => {
         props.setPhotoIndex(prevPhotoIndex => (prevPhotoIndex + 1) % props.images.length)
     }
+
     const prevSrc = () => {
         props.setPhotoIndex(prevPhotoIndex => (prevPhotoIndex + props.images.length - 1) % props.images.length)
     }
+
     const onClose = () => {
         props.setShowLightbox(false)
     }
+
     if (props.showLightbox) {
         return <Lightbox
             mainSrc={props.images[props.photoIndex]}
@@ -28,11 +29,8 @@ const ImageLightbox: React.FC<{
             onMovePrevRequest={prevSrc}
             onMoveNextRequest={nextSrc}
         />
-
     }
     return <></>;
-
-
 }
 
 export default ImageLightbox;
