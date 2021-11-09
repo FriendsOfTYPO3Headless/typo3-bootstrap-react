@@ -149,70 +149,60 @@ var ImageLightbox = function (props) {
     return React__default['default'].createElement(React__default['default'].Fragment, null);
 };
 
-var Textpic = function (props) {
-    var _a = React.useState(false), showLightbox = _a[0], setShowlightbox = _a[1];
-    var _b = React.useState(0), photoIndex = _b[0], setPhotoIndex = _b[1];
-    var images = [];
-    Object.keys(props.data.gallery.rows).forEach(function (rowKey) {
-        Object.keys(props.data.gallery.rows[rowKey].columns).forEach(function (columnKey) {
-            images.push(props.data.gallery.rows[rowKey].columns[columnKey].publicUrl);
+var imageUris = function (data) {
+    var _images = [];
+    Object.keys(data.gallery.rows).forEach(function (rowKey) {
+        Object.keys(data.gallery.rows[rowKey].columns).forEach(function (columnKey) {
+            _images.push(data.gallery.rows[rowKey].columns[columnKey].publicUrl);
         });
     });
-    var textpicClassName;
+    return _images;
+};
+var ImageCols = function (props) {
+    var _a = React.useState(false), showLightbox = _a[0], setShowlightbox = _a[1];
+    var _b = React.useState(0), photoIndex = _b[0], setPhotoIndex = _b[1];
+    var images = imageUris(props.data);
+    return React__default['default'].createElement(React__default['default'].Fragment, null,
+        React__default['default'].createElement(ImageLightbox, { images: images, setShowLightbox: setShowlightbox, showLightbox: showLightbox, photoIndex: photoIndex, setPhotoIndex: setPhotoIndex }),
+        Object.keys(props.data.gallery.rows).map(function (rowKey) {
+            return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
+                var _a, _b;
+                var image = React__default['default'].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, alt: (_b = (_a = props.data.gallery.rows[rowKey].columns[columnKey]) === null || _a === void 0 ? void 0 : _a.properties) === null || _b === void 0 ? void 0 : _b.title });
+                return React__default['default'].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns, key: rowKey + '-' + columnKey },
+                    props.data.enlargeImageOnClick ?
+                        React__default['default'].createElement("a", { onClick: function (e) {
+                                e.preventDefault();
+                                setPhotoIndex(images.indexOf(props.data.gallery.rows[rowKey].columns[columnKey].publicUrl));
+                                setShowlightbox(true);
+                                return true;
+                            }, href: '#' }, image) : image,
+                    props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+            });
+        }));
+};
+
+var Textpic = function (props) {
+    var textpicClassName = '';
     if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
         textpicClassName = props.data.gallery.position.horizontal;
     }
     if (props.data.gallery.position.horizontal === 'center') {
         textpicClassName = props.data.gallery.position.vertical;
     }
-    //TODO: Klick-Vergrößerung nur, wenn Option aktiviert
-    var imageCols = Object.keys(props.data.gallery.rows).map(function (rowKey) {
-        return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
-            var _a, _b;
-            return React__default['default'].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns, key: columnKey },
-                React__default['default'].createElement("a", { onClick: function (e) {
-                        e.preventDefault();
-                        setPhotoIndex(images.indexOf(props.data.gallery.rows[rowKey].columns[columnKey].publicUrl));
-                        setShowlightbox(true);
-                        return true;
-                    }, href: '#' },
-                    React__default['default'].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, alt: (_b = (_a = props.data.gallery.rows[rowKey].columns[columnKey]) === null || _a === void 0 ? void 0 : _a.properties) === null || _b === void 0 ? void 0 : _b.title })),
-                props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-        });
-    });
     return React__default['default'].createElement("div", { className: "textpic" },
-        React__default['default'].createElement(ImageLightbox, { images: images, setShowLightbox: setShowlightbox, showLightbox: showLightbox, photoIndex: photoIndex, setPhotoIndex: setPhotoIndex }),
         React__default['default'].createElement("div", { className: "gallery-row" },
             React__default['default'].createElement(reactBootstrap.Row, { className: "textpic textpic-" + textpicClassName },
                 React__default['default'].createElement(reactBootstrap.Col, { className: "textpic-item textpic-gallery", md: textpicClassName === props.data.gallery.position.vertical ? "auto" : "6" },
-                    React__default['default'].createElement(reactBootstrap.Row, null, imageCols)),
+                    React__default['default'].createElement(reactBootstrap.Row, null,
+                        React__default['default'].createElement(ImageCols, { data: props.data }))),
                 React__default['default'].createElement(reactBootstrap.Col, { className: "textpic-item textpic-text", md: "6", dangerouslySetInnerHTML: { __html: props.data.bodytext } }))));
 };
 
 var Image = function (props) {
-    var _a = React.useState(false), showLightbox = _a[0], setShowlightbox = _a[1];
-    var _b = React.useState(0), photoIndex = _b[0], setPhotoIndex = _b[1];
-    var images = [];
-    Object.keys(props.data.gallery.rows).forEach(function (rowKey) {
-        Object.keys(props.data.gallery.rows[rowKey].columns).forEach(function (columnKey) {
-            images.push(props.data.gallery.rows[rowKey].columns[columnKey].publicUrl);
-        });
-    });
-    var imageCols = Object.keys(props.data.gallery.rows).map(function (rowKey, indexRow) {
-        return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey, indexCol) {
-            return React__default['default'].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns, key: rowKey + '-' + columnKey },
-                React__default['default'].createElement("a", { onClick: function () {
-                        setPhotoIndex(images.indexOf(props.data.gallery.rows[rowKey].columns[columnKey].publicUrl));
-                        setShowlightbox(true);
-                    } },
-                    React__default['default'].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
-                props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-        });
-    });
     return React__default['default'].createElement("div", { className: "image" },
-        React__default['default'].createElement(ImageLightbox, { images: images, setShowLightbox: setShowlightbox, showLightbox: showLightbox, photoIndex: photoIndex, setPhotoIndex: setPhotoIndex }),
         React__default['default'].createElement("div", { className: "gallery-row" },
-            React__default['default'].createElement(reactBootstrap.Row, null, imageCols)));
+            React__default['default'].createElement(reactBootstrap.Row, null,
+                React__default['default'].createElement(ImageCols, { data: props.data }))));
 };
 
 var Div = function (props) {
