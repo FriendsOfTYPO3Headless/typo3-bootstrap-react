@@ -66,11 +66,6 @@ const Textmedia: React.FC<{ data: any }> = props => {
                                         </Col>
                                 }
 
-
-
-
-
-
                             })
                         })}
                     </Row>
