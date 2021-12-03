@@ -7,7 +7,7 @@ const AllHeader: React.FC<{ data: any }> = props => {
     let content = <></>
     if (props.data.content.hasOwnProperty('headerLayout') && props.data.content.headerLayout !== 100) {
         if (props.data.content.header !== '' || props.data.content.subheader !== '' || props.data.content.date !== '') {
-            content = <header className="frame-header">
+            content = <div className="frame-header">
                 {props.data.content.header !== '' ?
                     <Header layout={props.data.content.headerLayout}
                             positionClass={props.data.content.headerPosition ? 'text-' + props.data.content.headerPosition : ''}
@@ -33,7 +33,7 @@ const AllHeader: React.FC<{ data: any }> = props => {
                     />
                     :
                     null}
-            </header>
+            </div>
         }
     }
 

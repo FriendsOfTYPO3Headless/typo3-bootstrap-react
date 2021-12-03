@@ -3,7 +3,6 @@ import Page from './Components/Templates/Page';
 import Section from './Components/Partials/Page/Section';
 import Content from './Components/Templates/Content';
 import {TYPO3PagePropsInterface, TYPO3PageHeadlessDataInterface} from "./Components/Interfaces";
-// import * as ContentElements from './Components/Templates/ContentElements'
 
 export {
     TYPO3Page,
@@ -12,5 +11,4 @@ export {
     Page,
     Section,
     Content
-    // ContentElements
 };
