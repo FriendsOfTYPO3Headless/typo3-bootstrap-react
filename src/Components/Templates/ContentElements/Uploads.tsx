@@ -53,7 +53,6 @@ const Uploads: React.FC<{ data: any }> = props => {
                                 }
                                 break;
                             default:
-                                console.log(props.data.media[key]);
                                 media = <img src={props.data.media[key].publicUrl} alt={title} className={'img-fluid'}/>
                         }
 
