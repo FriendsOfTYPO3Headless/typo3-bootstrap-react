@@ -9,9 +9,16 @@ const Uploads: React.FC<{ data: any }> = props => {
 
                 const description = props.data.displayDescription === '1' ?
                     <p className={'filelink-filedescription'}>{props.data.media[key].properties.description}</p> : null
+
                 const filesize = props.data.displayFileSizeInformation === '1' ?
-                    <span className={'filelink-filesize ms-2 small'}>{props.data.media[key].properties.size}</span> : null;
-                const title = props.data.media[key].properties.title !== '' ? props.data.media[key].properties.title : props.data.media[key].properties.filename;
+                    <span
+                        className={'filelink-filesize ms-2 small'}>{props.data.media[key].properties.size}</span> : null;
+
+                let title = props.data.media[key].properties.title;
+                if(title === null || title === '') {
+                    title = props.data.media[key].properties.filename;
+                }
+
                 const heading = (contentBefore = null) => <span className={'title'}>
                     <h5 className={'filelink-heading '}>
                         <a href={props.data.media[key].publicUrl}>
@@ -20,10 +27,10 @@ const Uploads: React.FC<{ data: any }> = props => {
                         </a>
                         {filesize}
                     </h5>
-
                 </span>
+
                 let content;
-                console.log(props.data.displayInformation);
+
                 switch (props.data.displayInformation) {
                     case "1" :
                         content = <>
@@ -39,7 +46,14 @@ const Uploads: React.FC<{ data: any }> = props => {
                             case 'video':
                                 media = <iframe src={props.data.media[key].publicUrl} className={'mw-100'}/>
                                 break;
+                                //TODO: add preview for application/*
+                            case 'application':
+                                if(props.data.media[key].properties.mimeType === 'application/pdf') {
+                                    media = <iframe src={props.data.media[key].publicUrl} className={'mw-100'}/>
+                                }
+                                break;
                             default:
+                                console.log(props.data.media[key]);
                                 media = <img src={props.data.media[key].publicUrl} alt={title} className={'img-fluid'}/>
                         }
 
@@ -54,7 +68,6 @@ const Uploads: React.FC<{ data: any }> = props => {
                         </Row>
                         break;
 
-
                     default:
                         content = <>
                             {heading()}
@@ -63,7 +76,6 @@ const Uploads: React.FC<{ data: any }> = props => {
                 }
 
                 return <li className={'filelink-item mb-2'} key={key}>{content}</li>
-
             })}
         </ul>
     </div>

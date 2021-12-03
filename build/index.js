@@ -275,7 +275,10 @@ var Uploads = function (props) {
                 React__default['default'].createElement("p", { className: 'filelink-filedescription' }, props.data.media[key].properties.description) : null;
             var filesize = props.data.displayFileSizeInformation === '1' ?
                 React__default['default'].createElement("span", { className: 'filelink-filesize ms-2 small' }, props.data.media[key].properties.size) : null;
-            var title = props.data.media[key].properties.title !== '' ? props.data.media[key].properties.title : props.data.media[key].properties.filename;
+            var title = props.data.media[key].properties.title;
+            if (title === null || title === '') {
+                title = props.data.media[key].properties.filename;
+            }
             var heading = function (contentBefore) {
                 if (contentBefore === void 0) { contentBefore = null; }
                 return React__default['default'].createElement("span", { className: 'title' },
@@ -286,7 +289,6 @@ var Uploads = function (props) {
                         filesize));
             };
             var content;
-            console.log(props.data.displayInformation);
             switch (props.data.displayInformation) {
                 case "1":
                     content = React__default['default'].createElement(React__default['default'].Fragment, null,
@@ -300,7 +302,14 @@ var Uploads = function (props) {
                         case 'video':
                             media = React__default['default'].createElement("iframe", { src: props.data.media[key].publicUrl, className: 'mw-100' });
                             break;
+                        //TODO: add preview for application/*
+                        case 'application':
+                            if (props.data.media[key].properties.mimeType === 'application/pdf') {
+                                media = React__default['default'].createElement("iframe", { src: props.data.media[key].publicUrl, className: 'mw-100' });
+                            }
+                            break;
                         default:
+                            console.log(props.data.media[key]);
                             media = React__default['default'].createElement("img", { src: props.data.media[key].publicUrl, alt: title, className: 'img-fluid' });
                     }
                     content = React__default['default'].createElement(reactBootstrap.Row, null,
