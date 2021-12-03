@@ -19,41 +19,43 @@ const Textmedia: React.FC<{ data: any }> = props => {
                         {Object.keys(props.data.gallery.rows).map((rowKey) => {
                             return Object.keys(props.data.gallery.rows[rowKey].columns).map((columnKey) => {
 
-                                switch (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType){
-                                    case   'video/youtube' :
+                                switch (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType) {
+                                    case 'video/youtube':
                                         return <Col
                                             className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
                                             <iframe src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
                                                     className="embed-responsive-item"/>
                                             {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
                                         </Col>
-                                    case   'image/jpeg'     :
+                                    case 'image/jpeg':
                                         return <Col
                                             className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
                                             <img src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
                                                  className="embed-responsive-item"/>
                                             {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
                                         </Col>
-                                    case   'image/svg+xml' :
+                                    case 'image/svg+xml':
                                         return <Col
                                             className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
                                             <img src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
                                                  className="embed-responsive-item"/>
                                             {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
                                         </Col>
-                                    case   'video/mp4' :
+                                    case 'video/mp4':
                                         return <Col
                                             className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
                                             <video controls>
-                                                <source type="video/mp4" src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl} />
+                                                <source type="video/mp4"
+                                                        src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}/>
                                             </video>
                                             {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
                                         </Col>
-                                    case   'video/vimeo' :
+                                    case 'video/vimeo':
                                         return <Col
                                             className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
                                             <video controls>
-                                                <source type="video/mp4" src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl} />
+                                                <source type="video/mp4"
+                                                        src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}/>
                                             </video>
                                             {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
                                         </Col>
