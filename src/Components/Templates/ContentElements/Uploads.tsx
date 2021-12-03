@@ -1,100 +1,81 @@
 import React from 'react';
-import getOwnPropertyDescriptor = Reflect.getOwnPropertyDescriptor;
+import {Col, Row} from "react-bootstrap";
 
 const Uploads: React.FC<{ data: any }> = props => {
 
-
-    console.log(props.data.media)
-
     return <div className="uploads">
-        <ul className="media-list">
-
+        <ul className="media-list filelink-list">
             {Object.keys(props.data.media).map((key) => {
-               // console.log(props.data)
-                let description = props.data.media[key].properties.description;
-                if(description === true){
-                   description = props.data.media[key].properties.description
+
+                const description = props.data.displayDescription === '1' ?
+                    <p className={'filelink-filedescription'}>{props.data.media[key].properties.description}</p> : null
+
+                const filesize = props.data.displayFileSizeInformation === '1' ?
+                    <span
+                        className={'filelink-filesize ms-2 small'}>{props.data.media[key].properties.size}</span> : null;
+
+                let title = props.data.media[key].properties.title;
+                if(title === null || title === '') {
+                    title = props.data.media[key].properties.filename;
                 }
 
+                const heading = (contentBefore = null) => <span className={'title'}>
+                    <h5 className={'filelink-heading '}>
+                        <a href={props.data.media[key].publicUrl}>
+                            {contentBefore}
+                            {title}
+                        </a>
+                        {filesize}
+                    </h5>
+                </span>
 
-                let content ;
+                let content;
 
                 switch (props.data.displayInformation) {
-                    case  "2":
-                        content = <>  <img src={props.data.media[key].publicUrl}/>
-                            <a href={props.data.media[key].publicUrl}> {props.data.media[key].properties.filename}  </a>
-                         </>
+                    case "1" :
+                        content = <>
+                            {heading(props.data.media[key].properties.type === 'video' ?
+                                <i className="bi bi-camera-video-fill me-2"/> : <i className="bi bi-file-image me-2"/>
+                            )}
+                            {description}
+                        </>
                         break;
-                    default :
-                      content = <a href={props.data.media[key].publicUrl}> {props.data.media[key].properties.filename}  </a>
-
-                }
-            return <li key={key} >
-                {content}
-                {description}
-                </li>
-
-            })}
-
-
-            {/*
-
-</ul>
-        {Object.keys(props.data.media.properties.publicUrl).map((key) =>
-            <option key={'Links-' + key} value={key}>{data.media[key]}</option>
-        )}
-
-
-
-
-        <a href="props.data."
-               title="filename" target="_blank"><span className="uploads-filename">{props.data.media.properties.filename}</span></a> */}
-
-            {/*
-
-                    <div className="media-body">
-                        <h4 className="media-heading">
-                            <a href="{file.publicUrl}"{f:if(condition: file.properties.title, then: ' title="{file.properties.title}"')}{f:if(condition: data.target, then: ' target="{data.target}"')}>
-                                <f:if condition="{data.uploads_type} == 1">
-                                    <span class="uploads-fileicon">
-                                        <f:switch expression="{f:format.case(value: file.properties.extension, mode: 'lower')}">
-                                            <f:case value="mp3"><span class="bootstrappackageicon bootstrappackageicon-file-audio"></span></f:case>
-                                            <f:case value="avi"><span class="bootstrappackageicon bootstrappackageicon-file-video"></span></f:case>
-                                            <f:case value="mov"><span class="bootstrappackageicon bootstrappackageicon-file-video"></span></f:case>
-                                            <f:case value="mpg"><span class="bootstrappackageicon bootstrappackageicon-file-video"></span></f:case>
-                                            <f:case value="mpeg"><span class="bootstrappackageicon bootstrappackageicon-file-video"></span></f:case>
-                                            <f:case value="mkv"><span class="bootstrappackageicon bootstrappackageicon-file-video"></span></f:case>
-                                            <f:case value="jpg"><span class="bootstrappackageicon bootstrappackageicon-file-image"></span></f:case>
-                                            <f:case value="gif"><span class="bootstrappackageicon bootstrappackageicon-file-image"></span></f:case>
-                                            <f:case value="png"><span class="bootstrappackageicon bootstrappackageicon-file-image"></span></f:case>
-                                            <f:case value="bmp"><span class="bootstrappackageicon bootstrappackageicon-file-image"></span></f:case>
-                                            <f:case value="ai"><span class="bootstrappackageicon bootstrappackageicon-file-image"></span></f:case>
-                                            <f:case value="eps"><span class="bootstrappackageicon bootstrappackageicon-file-image"></span></f:case>
-                                            <f:case value="ico"><span class="bootstrappackageicon bootstrappackageicon-file-image"></span></f:case>
-                                            <f:case value="tga"><span class="bootstrappackageicon bootstrappackageicon-file-image"></span></f:case>
-                                            <f:case value="tif"><span class="bootstrappackageicon bootstrappackageicon-file-image"></span></f:case>
-                                            <f:case value="youtube"><span class="bootstrappackageicon bootstrappackageicon-youtube"></span></f:case>
-                                            <f:defaultCase><span class="bootstrappackageicon bootstrappackageicon-file"></span></f:defaultCase>
-                                        </f:switch>
-                                    </span>
-                                </f:if>
-                                <span class="uploads-filename">{f:if(condition: file.properties.title, then: file.properties.title, else: file.properties.name)}</span>
-                            </a>
-                            if (data.filelink_size) {
-                                <span class="uploads-filesize"><f:format.bytes value="{file.properties.size}" /></span>
-                            }
-                        </h4>
-                        if (data.uploads_description)
-                            if(file.properties.description) {
-                                <p className="uploads-filedescription">{file.properties.description}</p>
-                            }
+                    case  "2":
+                        let media = null;
+                        switch (props.data.media[key].properties.type) {
+                            case 'video':
+                                media = <iframe src={props.data.media[key].publicUrl} className={'mw-100'}/>
+                                break;
+                                //TODO: add preview for application/*
+                            case 'application':
+                                if(props.data.media[key].properties.mimeType === 'application/pdf') {
+                                    media = <iframe src={props.data.media[key].publicUrl} className={'mw-100'}/>
+                                }
+                                break;
+                            default:
+                                media = <img src={props.data.media[key].publicUrl} alt={title} className={'img-fluid'}/>
                         }
-                    </div>
-                </li>
-            </f:for>
-        </ul>
-       }
-    </div> */}
+
+                        content = <Row>
+                            <Col className={'filelink-media'} xs={3} sm={3} md={3} lg={2} xl={2} xxl={2}>
+                                {media}
+                            </Col>
+                            <Col className={'filelink-body'}>
+                                {heading()}
+                                {description}
+                            </Col>
+                        </Row>
+                        break;
+
+                    default:
+                        content = <>
+                            {heading()}
+                            {description}
+                        </>
+                }
+
+                return <li className={'filelink-item mb-2'} key={key}>{content}</li>
+            })}
         </ul>
     </div>
 }

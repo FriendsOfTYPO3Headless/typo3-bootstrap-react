@@ -1,30 +1,30 @@
 import React from 'react';
 
 const Table: React.FC<{ data: any }> = props => {
-console.log(props.data)
+
+let tableCaption =    props.data.tableCaption;
     return <div className="table">
-        {Object.keys(props.data).map((key)=> {
+
+        {props.data.bodytext.map((rowObject) => {
+            {props.data.tableCaption}
+            return rowObject;
 
 
-                if (props.data.tableCaption === true){
-                    {props.data.tableCaption}
+            if (tableCaption) {
+                {
+                    return tableCaption;
                 }
-
-            if (props.data.headerPosition === 1){
+            }
+            if (props.data.headerPosition === 1) {
 
             } else {
 
             }
-            if (props.data.tabelTfoot ){
-
+            if (props.data.tabelTfoot) {
 
             }
 
         })}
-
-
-
-
 
 
         {/*
