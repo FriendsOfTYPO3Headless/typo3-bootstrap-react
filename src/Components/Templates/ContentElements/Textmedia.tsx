@@ -18,7 +18,7 @@ const Textmedia: React.FC<{ data: any }> = props => {
                     <Row>
                         {Object.keys(props.data.gallery.rows).map((rowKey) => {
                             return Object.keys(props.data.gallery.rows[rowKey].columns).map((columnKey) => {
-console.log(props.data.gallery.rows[rowKey].columns[columnKey].properties);
+
                                 switch (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType) {
                                     case 'video/youtube':
                                         return <Col
