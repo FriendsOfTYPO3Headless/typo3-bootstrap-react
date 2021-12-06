@@ -4,21 +4,21 @@ import {TYPO3PagePropsInterface} from "../Interfaces";
 
 const Page: React.FC<TYPO3PagePropsInterface> = props => {
     let layout;
-    if(props.pageLayouts.hasOwnProperty(props.headlessData.page.appearance.layout)) {
-        layout = props.pageLayouts[props.headlessData.page.appearance.layout];
+    if(props.pageLayouts.hasOwnProperty(props.headlessData.appearance.layout)) {
+        layout = props.pageLayouts[props.headlessData.appearance.layout];
     } else if(props.pageLayouts.hasOwnProperty('__generic')) {
         layout = props.pageLayouts.__generic;
     } else {
-        return <>Page-layout not found: {props.headlessData.page.appearance.layout}</>
+        return <>Page-layout not found: {props.headlessData.appearance.layout}</>
     }
 
     let template;
-    if(props.pageTemplates.hasOwnProperty(props.headlessData.page.appearance.backendLayout)) {
-        template = props.pageTemplates[props.headlessData.page.appearance.backendLayout];
+    if(props.pageTemplates.hasOwnProperty(props.headlessData.appearance.backendLayout)) {
+        template = props.pageTemplates[props.headlessData.appearance.backendLayout];
     } else if (props.pageTemplates.hasOwnProperty('__generic')) {
         template = props.pageTemplates.__generic;
     } else {
-        return <>Page-template not found: {props.headlessData.page.appereance.backendLayout} </>
+        return <>Page-template not found: {props.headlessData.appearance.backendLayout} </>
     }
 
 

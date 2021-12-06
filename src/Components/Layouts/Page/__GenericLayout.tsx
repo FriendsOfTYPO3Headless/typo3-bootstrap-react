@@ -12,7 +12,7 @@ const __GenericLayout: React.FC<{headlessData:TYPO3PageHeadlessDataInterface, pa
     });
 
 
-    return <div className={'backendlayout-' + props.headlessData.page.appearance.backendLayout}>
+    return <div className={'backendlayout-' + props.headlessData.appearance.backendLayout}>
         {genericSections}
     </div>
 }

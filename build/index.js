@@ -26,13 +26,13 @@ var __GenericLayout = function (props) {
         return React__default['default'].createElement("section", { key: sectionName, className: sectionName },
             React__default['default'].createElement(section, { name: sectionName, pageTemplate: props.pageTemplate }));
     });
-    return React__default['default'].createElement("div", { className: 'backendlayout-' + props.headlessData.page.appearance.backendLayout }, genericSections);
+    return React__default['default'].createElement("div", { className: 'backendlayout-' + props.headlessData.appearance.backendLayout }, genericSections);
 };
 
 var Page = function (props) {
     var layout;
-    if (props.pageLayouts.hasOwnProperty(props.headlessData.page.appearance.layout)) {
-        layout = props.pageLayouts[props.headlessData.page.appearance.layout];
+    if (props.pageLayouts.hasOwnProperty(props.headlessData.appearance.layout)) {
+        layout = props.pageLayouts[props.headlessData.appearance.layout];
     }
     else if (props.pageLayouts.hasOwnProperty('__generic')) {
         layout = props.pageLayouts.__generic;
@@ -40,11 +40,11 @@ var Page = function (props) {
     else {
         return React__default['default'].createElement(React__default['default'].Fragment, null,
             "Page-layout not found: ",
-            props.headlessData.page.appearance.layout);
+            props.headlessData.appearance.layout);
     }
     var template;
-    if (props.pageTemplates.hasOwnProperty(props.headlessData.page.appearance.backendLayout)) {
-        template = props.pageTemplates[props.headlessData.page.appearance.backendLayout];
+    if (props.pageTemplates.hasOwnProperty(props.headlessData.appearance.backendLayout)) {
+        template = props.pageTemplates[props.headlessData.appearance.backendLayout];
     }
     else if (props.pageTemplates.hasOwnProperty('__generic')) {
         template = props.pageTemplates.__generic;
@@ -52,7 +52,7 @@ var Page = function (props) {
     else {
         return React__default['default'].createElement(React__default['default'].Fragment, null,
             "Page-template not found: ",
-            props.headlessData.page.appereance.backendLayout,
+            props.headlessData.appearance.backendLayout,
             " ");
     }
     return layout(props.headlessData, template(props.headlessData, props.contentElementLayouts, props.contentElementTemplates));
@@ -459,8 +459,8 @@ var getGridElement = function (element, content, contentElementLayouts, contentE
 };
 var GenericPage = function (props) {
     var content = React__default['default'].createElement(React__default['default'].Fragment, null);
-    if (props.headlessData.page.appearance.pageContentRows) {
-        content = props.headlessData.page.appearance.pageContentRows.map(function (gridElement, index) {
+    if (props.headlessData.appearance.pageContentRows) {
+        content = props.headlessData.appearance.pageContentRows.map(function (gridElement, index) {
             return getGridElement(gridElement, props.headlessData.content, props.contentElementLayouts, props.contentElementTemplates, index);
         });
     }
@@ -470,8 +470,8 @@ var GenericPage = function (props) {
 var pageLayouts = {
     //TODO: implement example
     'layout-0': function (headlessData, pageTemplate, args) {
-        return React__default['default'].createElement("div", { className: 'backendlayout-' + headlessData.page.appearance.backendLayout },
-            React__default['default'].createElement("header", null, "LOGO"),
+        return React__default['default'].createElement("div", { className: 'backendlayout-' + headlessData.appearance.backendLayout },
+            React__default['default'].createElement("header", null),
             React__default['default'].createElement("section", null,
                 React__default['default'].createElement(section, { name: 'main', pageTemplate: pageTemplate })),
             React__default['default'].createElement("footer", null,

@@ -1,5 +1,11 @@
 interface TYPO3PageHeadlessDataInterface {
-    page: any;
+    id: number
+    type: string,
+    slug: string,
+    media: any,
+    meta: any,
+    categories: string,
+    appearance: any,
     content: any;
     navigations: any;
 }

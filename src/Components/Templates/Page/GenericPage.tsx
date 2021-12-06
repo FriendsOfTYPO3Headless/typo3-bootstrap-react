@@ -45,8 +45,8 @@ const getGridElement = (element: gridElementInterface, content: any, contentElem
 
 const GenericPage: React.FC<{headlessData:TYPO3PageHeadlessDataInterface, contentElementLayouts : any, contentElementTemplates: any}> = props => {
     let content = <></>
-    if(props.headlessData.page.appearance.pageContentRows) {
-        content = props.headlessData.page.appearance.pageContentRows.map((gridElement:any, index: number) =>  {
+    if(props.headlessData.appearance.pageContentRows) {
+        content = props.headlessData.appearance.pageContentRows.map((gridElement:any, index: number) =>  {
             return getGridElement(gridElement, props.headlessData.content, props.contentElementLayouts, props.contentElementTemplates, index);
         });
     }
