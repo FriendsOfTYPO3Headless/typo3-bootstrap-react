@@ -1,32 +1,28 @@
 import React from "react";
-import {TYPO3PagePropsInterface} from "../Interfaces";
+import TYPO3PageContext from "../../Context/TYPO3PageContext";
 
 
-const Page: React.FC<TYPO3PagePropsInterface> = props => {
-    let layout;
-    if(props.pageLayouts.hasOwnProperty(props.headlessData.appearance.layout)) {
-        layout = props.pageLayouts[props.headlessData.appearance.layout];
-    } else if(props.pageLayouts.hasOwnProperty('__generic')) {
-        layout = props.pageLayouts.__generic;
+const Page: React.FC = props => {
+    const context = React.useContext(TYPO3PageContext);
+    let pageLayout;
+    if (context.pageLayouts.hasOwnProperty(context.headlessData.appearance.layout)) {
+        pageLayout = context.pageLayouts[context.headlessData.appearance.layout];
+    } else if (context.pageLayouts.hasOwnProperty('__generic')) {
+        pageLayout = context.pageLayouts.__generic;
     } else {
-        return <>Page-layout not found: {props.headlessData.appearance.layout}</>
+        return <>Page-layout not found: {context.headlessData.appearance.layout}</>
     }
 
-    let template;
-    if(props.pageTemplates.hasOwnProperty(props.headlessData.appearance.backendLayout)) {
-        template = props.pageTemplates[props.headlessData.appearance.backendLayout];
-    } else if (props.pageTemplates.hasOwnProperty('__generic')) {
-        template = props.pageTemplates.__generic;
+    let pageTemplate;
+    if (context.pageTemplates.hasOwnProperty(context.headlessData.appearance.backendLayout)) {
+        pageTemplate = context.pageTemplates[context.headlessData.appearance.backendLayout];
+    } else if (context.pageTemplates.hasOwnProperty('__generic')) {
+        pageTemplate = context.pageTemplates.__generic;
     } else {
-        return <>Page-template not found: {props.headlessData.appearance.backendLayout} </>
+        return <>Page-template not found: {context.headlessData.appearance.backendLayout} </>
     }
 
-
-    return layout(
-        props.headlessData,
-        template(props.headlessData, props.contentElementLayouts, props.contentElementTemplates),
-    );
-    // return <>Page: {props.config.navigations.navigation1[0].title}</>
+    return pageLayout(context.headlessData, pageTemplate);
 }
 
 

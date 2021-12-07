@@ -29,66 +29,43 @@ var __GenericLayout = function (props) {
     return React__default["default"].createElement("div", { className: 'backendlayout-' + props.headlessData.appearance.backendLayout }, genericSections);
 };
 
+var TYPO3PageContext = React__default["default"].createContext(null);
+
 var Page = function (props) {
-    var layout;
-    if (props.pageLayouts.hasOwnProperty(props.headlessData.appearance.layout)) {
-        layout = props.pageLayouts[props.headlessData.appearance.layout];
+    var context = React__default["default"].useContext(TYPO3PageContext);
+    var pageLayout;
+    if (context.pageLayouts.hasOwnProperty(context.headlessData.appearance.layout)) {
+        pageLayout = context.pageLayouts[context.headlessData.appearance.layout];
     }
-    else if (props.pageLayouts.hasOwnProperty('__generic')) {
-        layout = props.pageLayouts.__generic;
+    else if (context.pageLayouts.hasOwnProperty('__generic')) {
+        pageLayout = context.pageLayouts.__generic;
     }
     else {
         return React__default["default"].createElement(React__default["default"].Fragment, null,
             "Page-layout not found: ",
-            props.headlessData.appearance.layout);
+            context.headlessData.appearance.layout);
     }
-    var template;
-    if (props.pageTemplates.hasOwnProperty(props.headlessData.appearance.backendLayout)) {
-        template = props.pageTemplates[props.headlessData.appearance.backendLayout];
+    var pageTemplate;
+    if (context.pageTemplates.hasOwnProperty(context.headlessData.appearance.backendLayout)) {
+        pageTemplate = context.pageTemplates[context.headlessData.appearance.backendLayout];
     }
-    else if (props.pageTemplates.hasOwnProperty('__generic')) {
-        template = props.pageTemplates.__generic;
+    else if (context.pageTemplates.hasOwnProperty('__generic')) {
+        pageTemplate = context.pageTemplates.__generic;
     }
     else {
         return React__default["default"].createElement(React__default["default"].Fragment, null,
             "Page-template not found: ",
-            props.headlessData.appearance.backendLayout,
+            context.headlessData.appearance.backendLayout,
             " ");
     }
-    return layout(props.headlessData, template(props.headlessData, props.contentElementLayouts, props.contentElementTemplates));
-    // return <>Page: {props.config.navigations.navigation1[0].title}</>
+    return pageLayout(context.headlessData, pageTemplate);
 };
 
-/*! *****************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
-
-var __assign = function() {
-    __assign = Object.assign || function __assign(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-
-var RenderContent = function (contentElementLayouts, contentElementTemplates, content, args) {
+var RenderContent = function (contentData) {
+    var _a = React__default["default"].useContext(TYPO3PageContext), contentElementLayouts = _a.contentElementLayouts, contentElementTemplates = _a.contentElementTemplates;
     var layout;
-    if (contentElementLayouts.hasOwnProperty(content.appearance.layout)) {
-        layout = contentElementLayouts[content.appearance.layout];
+    if (contentElementLayouts.hasOwnProperty(contentData.appearance.layout)) {
+        layout = contentElementLayouts[contentData.appearance.layout];
     }
     else if (contentElementLayouts.hasOwnProperty('__generic')) {
         layout = contentElementLayouts.__generic;
@@ -96,11 +73,11 @@ var RenderContent = function (contentElementLayouts, contentElementTemplates, co
     else {
         return React__default["default"].createElement(React__default["default"].Fragment, null,
             "CE-layout not found: ",
-            content.appearance.layout);
+            contentData.appearance.layout);
     }
     var template;
-    if (contentElementTemplates.hasOwnProperty(content.type)) {
-        template = contentElementTemplates[content.type];
+    if (contentElementTemplates.hasOwnProperty(contentData.type)) {
+        template = contentElementTemplates[contentData.type];
     }
     else if (contentElementTemplates.hasOwnProperty('__generic')) {
         template = contentElementTemplates.__generic;
@@ -108,22 +85,19 @@ var RenderContent = function (contentElementLayouts, contentElementTemplates, co
     else {
         return React__default["default"].createElement(React__default["default"].Fragment, null,
             "CE-template not found: ",
-            content.type,
+            contentData.type,
             " ");
     }
-    var _args = __assign({}, args);
-    if (content.type === 'shortcut') {
-        _args = __assign(__assign({}, _args), { contentElementTemplates: contentElementTemplates, contentElementLayouts: contentElementLayouts });
-    }
-    return React__default["default"].createElement(React__default["default"].Fragment, { key: content.id }, layout({ children: template(content, _args), content: content, args: _args }));
-};
+    return React__default["default"].createElement(React__default["default"].Fragment, { key: contentData.id }, layout({ children: template(contentData), content: contentData }));
+}; //, args: _args
 
 var PREFIX_COLPOS = 'colPos';
 var Content = function (props) {
+    var context = React__default["default"].useContext(TYPO3PageContext);
     var content = React__default["default"].createElement(React__default["default"].Fragment, null);
-    if (props.content.hasOwnProperty(PREFIX_COLPOS + props.colPos)) {
-        content = props.content[PREFIX_COLPOS + props.colPos].map(function (content) {
-            return RenderContent(props.contentElementLayouts, props.contentElementTemplates, content, props.args);
+    if (context.headlessData.content.hasOwnProperty(PREFIX_COLPOS + props.colPos)) {
+        content = context.headlessData.content[PREFIX_COLPOS + props.colPos].map(function (content) {
+            return RenderContent(content);
         });
     }
     return content;
@@ -212,7 +186,7 @@ var Div = function (props) {
 
 var Shortcut = function (props) {
     return React__default["default"].createElement("div", { className: "shortcut" }, props.data.shortcut.map(function (cObject) {
-        return RenderContent(props.args.contentElementLayouts, props.args.contentElementTemplates, cObject, props.args);
+        return RenderContent(cObject);
     }));
 };
 
@@ -394,6 +368,7 @@ var AllHeader = function (props) {
     return content;
 };
 
+//Data is ContentData
 var Layout0 = function (props) {
     var frameClass = 'frame-' + props.data.appearance.frameClass;
     var typeClass = 'frame-type-' + props.data.type;
@@ -431,16 +406,16 @@ var Layout0 = function (props) {
     return content;
 };
 
-var FooterContent = function (props) {
+var FooterContent = function () {
     return React__default["default"].createElement("footer", { className: "section footer-section footer-section-content" },
         React__default["default"].createElement(reactBootstrap.Container, null,
             React__default["default"].createElement(reactBootstrap.Row, null,
                 React__default["default"].createElement(reactBootstrap.Col, { className: "footer-section-content-column footer-section-content-column-left" },
-                    React__default["default"].createElement(Content, { colPos: '10', slide: -1, content: props.content, contentElementLayouts: props.contentElementLayouts, contentElementTemplates: props.contentElementTemplates })),
+                    React__default["default"].createElement(Content, { colPos: '10' })),
                 React__default["default"].createElement(reactBootstrap.Col, { className: " footer-section-content-column footer-section-content-column-middle" },
-                    React__default["default"].createElement(Content, { colPos: '11', slide: -1, content: props.content, contentElementLayouts: props.contentElementLayouts, contentElementTemplates: props.contentElementTemplates })),
+                    React__default["default"].createElement(Content, { colPos: '11' })),
                 React__default["default"].createElement(reactBootstrap.Col, { className: " footer-section-content-column footer-section-content-column-right" },
-                    React__default["default"].createElement(Content, { colPos: '12', slide: -1, content: props.content, contentElementLayouts: props.contentElementLayouts, contentElementTemplates: props.contentElementTemplates })))));
+                    React__default["default"].createElement(Content, { colPos: '12' })))));
 };
 
 var getGridElement = function (element, content, contentElementLayouts, contentElementTemplates, index) {
@@ -452,16 +427,17 @@ var getGridElement = function (element, content, contentElementLayouts, contentE
             return React__default["default"].createElement(reactBootstrap.Row, { as: element.tag, key: index }, children);
         case 'col':
             return React__default["default"].createElement(reactBootstrap.Col, { as: element.tag, lg: element.size, md: element.size, sm: element.size, xl: element.size, key: index },
-                React__default["default"].createElement(Content, { colPos: element.colPos, content: content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }));
+                React__default["default"].createElement(Content, { colPos: element.colPos }));
         default:
             return React__default["default"].createElement(React__default["default"].Fragment, null);
     }
 };
-var GenericPage = function (props) {
+var GenericPage = function () {
+    var context = React__default["default"].useContext(TYPO3PageContext);
     var content = React__default["default"].createElement(React__default["default"].Fragment, null);
-    if (props.headlessData.appearance.pageContentRows) {
-        content = props.headlessData.appearance.pageContentRows.map(function (gridElement, index) {
-            return getGridElement(gridElement, props.headlessData.content, props.contentElementLayouts, props.contentElementTemplates, index);
+    if (context.headlessData.appearance.pageContentRows) {
+        content = context.headlessData.appearance.pageContentRows.map(function (gridElement, index) {
+            return getGridElement(gridElement, context.headlessData.content, context.contentElementLayouts, context.contentElementTemplates, index);
         });
     }
     return content;
@@ -469,236 +445,210 @@ var GenericPage = function (props) {
 
 var pageLayouts = {
     //TODO: implement example
-    'layout-0': function (headlessData, pageTemplate, args) {
-        return React__default["default"].createElement("div", { className: 'backendlayout-' + headlessData.appearance.backendLayout },
-            React__default["default"].createElement("header", null),
-            React__default["default"].createElement("section", null,
-                React__default["default"].createElement(section, { name: 'main', pageTemplate: pageTemplate })),
-            React__default["default"].createElement("footer", null,
-                React__default["default"].createElement(section, { name: 'footer', pageTemplate: pageTemplate })));
-    },
-    __generic: function (headlessData, pageTemplate, args) {
-        return React__default["default"].createElement(React__default["default"].Fragment, null,
-            React__default["default"].createElement(__GenericLayout, { headlessData: headlessData, pageTemplate: pageTemplate }));
-    },
-    Default: function (headlessData, pageTemplate, args) {
-        return React__default["default"].createElement(React__default["default"].Fragment, null,
-            React__default["default"].createElement(__GenericLayout, { headlessData: headlessData, pageTemplate: pageTemplate }));
-    }
+    'layout-0': function (headlessData, pageTemplate) { return React__default["default"].createElement("div", { className: 'backendlayout-' + headlessData.appearance.backendLayout },
+        React__default["default"].createElement("header", null),
+        React__default["default"].createElement("section", null,
+            React__default["default"].createElement(section, { name: 'main', pageTemplate: pageTemplate })),
+        React__default["default"].createElement("footer", null,
+            React__default["default"].createElement(section, { name: 'footer', pageTemplate: pageTemplate }))); },
+    __generic: function (headlessData, pageTemplate) { return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(__GenericLayout, { headlessData: headlessData, pageTemplate: pageTemplate })); },
+    Default: function (headlessData, pageTemplate) { return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(__GenericLayout, { headlessData: headlessData, pageTemplate: pageTemplate })); }
 };
 var pageTemplates = {
-    __generic: function (headlessData, contentElementLayouts, contentElementTemplates, args) {
-        return {
-            main: React__default["default"].createElement(GenericPage, { headlessData: headlessData, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })
-        };
+    __generic: {
+        main: React__default["default"].createElement(GenericPage, null)
     },
-    default: function (headlessData, contentElementLayouts, contentElementTemplates, args) {
-        return {
-            border: React__default["default"].createElement(reactBootstrap.Row, null,
+    default: {
+        border: React__default["default"].createElement(reactBootstrap.Row, null,
+            React__default["default"].createElement(reactBootstrap.Col, null,
+                React__default["default"].createElement(Content, { colPos: '3' }))),
+        main: React__default["default"].createElement(React__default["default"].Fragment, null,
+            React__default["default"].createElement(reactBootstrap.Row, null,
                 React__default["default"].createElement(reactBootstrap.Col, null,
-                    React__default["default"].createElement(Content, { colPos: '3', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))),
-            main: React__default["default"].createElement(React__default["default"].Fragment, null,
+                    React__default["default"].createElement(Content, { colPos: '8' }))),
+            React__default["default"].createElement("div", { className: "section section-default" },
                 React__default["default"].createElement(reactBootstrap.Row, null,
                     React__default["default"].createElement(reactBootstrap.Col, null,
-                        React__default["default"].createElement(Content, { colPos: '8', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))),
-                React__default["default"].createElement("div", { className: "section section-default" },
+                        React__default["default"].createElement(Content, { colPos: '0' })))),
+            React__default["default"].createElement(reactBootstrap.Row, null,
+                React__default["default"].createElement(reactBootstrap.Col, null,
+                    React__default["default"].createElement(Content, { colPos: '9' })))),
+        footer: React__default["default"].createElement(FooterContent, null),
+    },
+    simple: {
+        border: React__default["default"].createElement(reactBootstrap.Row, null,
+            React__default["default"].createElement(reactBootstrap.Col, null,
+                React__default["default"].createElement(Content, { colPos: '3' }))),
+        main: React__default["default"].createElement(React__default["default"].Fragment, null,
+            React__default["default"].createElement(reactBootstrap.Row, null,
+                React__default["default"].createElement(reactBootstrap.Col, null,
+                    React__default["default"].createElement(Content, { colPos: '8' }))),
+            React__default["default"].createElement("div", { className: "section section-default" },
+                React__default["default"].createElement(reactBootstrap.Row, null,
+                    React__default["default"].createElement(reactBootstrap.Col, null,
+                        React__default["default"].createElement(Content, { colPos: '0' })))),
+            React__default["default"].createElement(reactBootstrap.Row, null,
+                React__default["default"].createElement(reactBootstrap.Col, null,
+                    React__default["default"].createElement(Content, { colPos: '9' })))),
+    },
+    '2_columns': {
+        border: React__default["default"].createElement(reactBootstrap.Row, null,
+            React__default["default"].createElement(reactBootstrap.Col, null,
+                React__default["default"].createElement(Content, { colPos: '3' }))),
+        main: React__default["default"].createElement(React__default["default"].Fragment, null,
+            React__default["default"].createElement(reactBootstrap.Row, null,
+                React__default["default"].createElement(reactBootstrap.Col, null,
+                    React__default["default"].createElement(Content, { colPos: '8' }))),
+            React__default["default"].createElement("div", { className: "section section-default" },
+                React__default["default"].createElement(reactBootstrap.Container, null,
                     React__default["default"].createElement(reactBootstrap.Row, null,
-                        React__default["default"].createElement(reactBootstrap.Col, null,
-                            React__default["default"].createElement(Content, { colPos: '0', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })))),
-                React__default["default"].createElement(reactBootstrap.Row, null,
-                    React__default["default"].createElement(reactBootstrap.Col, null,
-                        React__default["default"].createElement(Content, { colPos: '9', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })))),
-            footer: React__default["default"].createElement(FooterContent, { content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }),
-        };
-    },
-    simple: function (headlessData, contentElementLayouts, contentElementTemplates, args) {
-        return {
-            border: React__default["default"].createElement(reactBootstrap.Row, null,
+                        React__default["default"].createElement(reactBootstrap.Col, { md: "8", as: "main", className: " maincontent-wrap", role: "main" },
+                            React__default["default"].createElement(Content, { colPos: '0' })),
+                        React__default["default"].createElement(reactBootstrap.Col, { className: " subcontent-wrap ", md: "4" },
+                            React__default["default"].createElement(Content, { colPos: '2' }))))),
+            React__default["default"].createElement(reactBootstrap.Row, null,
                 React__default["default"].createElement(reactBootstrap.Col, null,
-                    React__default["default"].createElement(Content, { colPos: '3', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))),
-            main: React__default["default"].createElement(React__default["default"].Fragment, null,
-                React__default["default"].createElement(reactBootstrap.Row, null,
-                    React__default["default"].createElement(reactBootstrap.Col, null,
-                        React__default["default"].createElement(Content, { colPos: '8', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))),
-                React__default["default"].createElement("div", { className: "section section-default" },
+                    React__default["default"].createElement(Content, { colPos: '9' })))),
+        footer: React__default["default"].createElement(FooterContent, null),
+    },
+    '2_columns_25_75': {
+        border: React__default["default"].createElement(reactBootstrap.Row, null,
+            React__default["default"].createElement(reactBootstrap.Col, null,
+                React__default["default"].createElement(Content, { colPos: '3' }))),
+        main: React__default["default"].createElement(React__default["default"].Fragment, null,
+            React__default["default"].createElement(reactBootstrap.Row, null,
+                React__default["default"].createElement(reactBootstrap.Col, null,
+                    React__default["default"].createElement(Content, { colPos: '8' }))),
+            React__default["default"].createElement("div", { className: "section section-default" },
+                React__default["default"].createElement(reactBootstrap.Container, null,
                     React__default["default"].createElement(reactBootstrap.Row, null,
-                        React__default["default"].createElement(reactBootstrap.Col, null,
-                            React__default["default"].createElement(Content, { colPos: '0', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })))),
-                React__default["default"].createElement(reactBootstrap.Row, null,
-                    React__default["default"].createElement(reactBootstrap.Col, null,
-                        React__default["default"].createElement(Content, { colPos: '9', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })))),
-        };
-    },
-    '2_columns': function (headlessData, contentElementLayouts, contentElementTemplates, args) {
-        return {
-            border: React__default["default"].createElement(reactBootstrap.Row, null,
+                        React__default["default"].createElement(reactBootstrap.Col, { md: "8", as: "main", className: " maincontent-wrap", role: "main" },
+                            React__default["default"].createElement(Content, { colPos: '0' })),
+                        React__default["default"].createElement(reactBootstrap.Col, { className: " subcontent-wrap", md: "4" },
+                            React__default["default"].createElement(Content, { colPos: '1' }))))),
+            React__default["default"].createElement(reactBootstrap.Row, null,
                 React__default["default"].createElement(reactBootstrap.Col, null,
-                    React__default["default"].createElement(Content, { colPos: '3', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))),
-            main: React__default["default"].createElement(React__default["default"].Fragment, null,
-                React__default["default"].createElement(reactBootstrap.Row, null,
-                    React__default["default"].createElement(reactBootstrap.Col, null,
-                        React__default["default"].createElement(Content, { colPos: '8', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))),
-                React__default["default"].createElement("div", { className: "section section-default" },
-                    React__default["default"].createElement(reactBootstrap.Container, null,
-                        React__default["default"].createElement(reactBootstrap.Row, null,
-                            React__default["default"].createElement(reactBootstrap.Col, { md: "8", as: "main", className: " maincontent-wrap", role: "main" },
-                                React__default["default"].createElement(Content, { colPos: '0', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
-                            React__default["default"].createElement(reactBootstrap.Col, { className: " subcontent-wrap ", md: "4" },
-                                React__default["default"].createElement(Content, { colPos: '2', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))))),
-                React__default["default"].createElement(reactBootstrap.Row, null,
-                    React__default["default"].createElement(reactBootstrap.Col, null,
-                        React__default["default"].createElement(Content, { colPos: '9', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })))),
-            footer: React__default["default"].createElement(FooterContent, { content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }),
-        };
+                    React__default["default"].createElement(Content, { colPos: '9' })))),
+        footer: React__default["default"].createElement(FooterContent, null),
     },
-    '2_columns_25_75': function (headlessData, contentElementLayouts, contentElementTemplates, args) {
-        return {
-            border: React__default["default"].createElement(reactBootstrap.Row, null,
+    '2_columns_50_50': {
+        border: React__default["default"].createElement(reactBootstrap.Row, null,
+            React__default["default"].createElement(reactBootstrap.Col, null,
+                React__default["default"].createElement(Content, { colPos: '3' }))),
+        main: React__default["default"].createElement(React__default["default"].Fragment, null,
+            React__default["default"].createElement(reactBootstrap.Row, null,
                 React__default["default"].createElement(reactBootstrap.Col, null,
-                    React__default["default"].createElement(Content, { colPos: '3', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))),
-            main: React__default["default"].createElement(React__default["default"].Fragment, null,
-                React__default["default"].createElement(reactBootstrap.Row, null,
-                    React__default["default"].createElement(reactBootstrap.Col, null,
-                        React__default["default"].createElement(Content, { colPos: '8', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))),
-                React__default["default"].createElement("div", { className: "section section-default" },
-                    React__default["default"].createElement(reactBootstrap.Container, null,
-                        React__default["default"].createElement(reactBootstrap.Row, null,
-                            React__default["default"].createElement(reactBootstrap.Col, { md: "8", as: "main", className: " maincontent-wrap", role: "main" },
-                                React__default["default"].createElement(Content, { colPos: '0', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
-                            React__default["default"].createElement(reactBootstrap.Col, { className: " subcontent-wrap", md: "4" },
-                                React__default["default"].createElement(Content, { colPos: '1', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))))),
-                React__default["default"].createElement(reactBootstrap.Row, null,
-                    React__default["default"].createElement(reactBootstrap.Col, null,
-                        React__default["default"].createElement(Content, { colPos: '9', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })))),
-            footer: React__default["default"].createElement(FooterContent, { content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }),
-        };
-    },
-    '2_columns_50_50': function (headlessData, contentElementLayouts, contentElementTemplates, args) {
-        return {
-            border: React__default["default"].createElement(reactBootstrap.Row, null,
-                React__default["default"].createElement(reactBootstrap.Col, null,
-                    React__default["default"].createElement(Content, { colPos: '3', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))),
-            main: React__default["default"].createElement(React__default["default"].Fragment, null,
-                React__default["default"].createElement(reactBootstrap.Row, null,
-                    React__default["default"].createElement(reactBootstrap.Col, null,
-                        React__default["default"].createElement(Content, { colPos: '8', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))),
-                React__default["default"].createElement("div", { className: "section section-default" },
-                    React__default["default"].createElement(reactBootstrap.Container, null,
-                        React__default["default"].createElement(reactBootstrap.Row, null,
-                            React__default["default"].createElement(reactBootstrap.Col, { md: "6", as: "main", className: " maincontent-wrap", role: "main" },
-                                React__default["default"].createElement(Content, { colPos: '0', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
-                            React__default["default"].createElement(reactBootstrap.Col, { className: " subcontent-wrap ", md: "6" },
-                                React__default["default"].createElement(Content, { colPos: '2', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))))),
-                React__default["default"].createElement(reactBootstrap.Row, null,
-                    React__default["default"].createElement(reactBootstrap.Col, null,
-                        React__default["default"].createElement(Content, { colPos: '9', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })))),
-            footer: React__default["default"].createElement(FooterContent, { content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }),
-        };
-    },
-    '3_columns': function (headlessData, contentElementLayouts, contentElementTemplates, args) {
-        return {
-            border: React__default["default"].createElement(reactBootstrap.Row, null,
-                React__default["default"].createElement(reactBootstrap.Col, null,
-                    " ",
-                    React__default["default"].createElement(Content, { colPos: '3', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }),
-                    " ")),
-            main: React__default["default"].createElement(React__default["default"].Fragment, null,
-                React__default["default"].createElement(reactBootstrap.Row, null,
-                    React__default["default"].createElement(reactBootstrap.Col, null,
-                        React__default["default"].createElement(Content, { colPos: '8', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))),
-                React__default["default"].createElement("div", { className: "section section-default" },
-                    React__default["default"].createElement(reactBootstrap.Container, null,
-                        React__default["default"].createElement(reactBootstrap.Row, null,
-                            React__default["default"].createElement(reactBootstrap.Col, { lg: "6", as: "main", className: " maincontent-wrap ", role: "main" },
-                                React__default["default"].createElement(Content, { colPos: '0', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
-                            React__default["default"].createElement(reactBootstrap.Col, { className: " subcontent-wrap ", lg: "3" },
-                                React__default["default"].createElement(Content, { colPos: '1', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
-                            React__default["default"].createElement(reactBootstrap.Col, { className: " subcontent-wrap ", lg: "3" },
-                                React__default["default"].createElement(Content, { colPos: '2', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))))),
-                React__default["default"].createElement(reactBootstrap.Row, null,
-                    React__default["default"].createElement(reactBootstrap.Col, null,
-                        React__default["default"].createElement(Content, { colPos: '9', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })))),
-            footer: React__default["default"].createElement(FooterContent, { content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }),
-        };
-    },
-    'special_feature': function (headlessData, contentElementLayouts, contentElementTemplates, args) {
-        return {
-            border: React__default["default"].createElement(reactBootstrap.Row, null,
-                React__default["default"].createElement(reactBootstrap.Col, null,
-                    React__default["default"].createElement(Content, { colPos: '3', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))),
-            main: React__default["default"].createElement(React__default["default"].Fragment, null,
-                React__default["default"].createElement(reactBootstrap.Row, null,
-                    React__default["default"].createElement(reactBootstrap.Col, null,
-                        React__default["default"].createElement(Content, { colPos: '8', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))),
-                React__default["default"].createElement("div", { className: "section section-default" },
+                    React__default["default"].createElement(Content, { colPos: '8' }))),
+            React__default["default"].createElement("div", { className: "section section-default" },
+                React__default["default"].createElement(reactBootstrap.Container, null,
                     React__default["default"].createElement(reactBootstrap.Row, null,
-                        React__default["default"].createElement(reactBootstrap.Col, null,
-                            React__default["default"].createElement(Content, { colPos: '0', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })))),
-                React__default["default"].createElement("div", { className: "section section-primary" },
-                    React__default["default"].createElement(reactBootstrap.Container, null,
-                        React__default["default"].createElement(reactBootstrap.Row, null,
-                            React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-half ", md: "6" },
-                                React__default["default"].createElement(Content, { colPos: '30', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
-                            React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-half ", md: "6" },
-                                React__default["default"].createElement(Content, { colPos: '31', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))))),
-                React__default["default"].createElement("div", { className: "section section-primary" },
-                    React__default["default"].createElement(reactBootstrap.Container, null,
-                        React__default["default"].createElement(reactBootstrap.Row, null,
-                            React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-half ", md: "6" },
-                                React__default["default"].createElement(Content, { colPos: '32', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
-                            React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-half ", md: "6" },
-                                React__default["default"].createElement(Content, { colPos: '33', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))))),
-                React__default["default"].createElement("div", { className: "section section-default" },
-                    React__default["default"].createElement(reactBootstrap.Row, null,
-                        React__default["default"].createElement(reactBootstrap.Col, null,
-                            React__default["default"].createElement(Content, { colPos: '4', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })))),
-                React__default["default"].createElement("div", { className: "section section-light" },
-                    React__default["default"].createElement(reactBootstrap.Container, null,
-                        React__default["default"].createElement(reactBootstrap.Row, null,
-                            React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-half ", md: "6" },
-                                React__default["default"].createElement(Content, { colPos: '34', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
-                            React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-half ", md: "6" },
-                                React__default["default"].createElement(Content, { colPos: '35', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))))),
-                React__default["default"].createElement("div", { className: "section section-light" },
-                    React__default["default"].createElement(reactBootstrap.Container, null,
-                        React__default["default"].createElement(reactBootstrap.Row, null,
-                            React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-half ", md: "6" },
-                                React__default["default"].createElement(Content, { colPos: '36', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
-                            React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-half ", md: "6" },
-                                React__default["default"].createElement(Content, { colPos: '37', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))))),
-                React__default["default"].createElement(reactBootstrap.Row, null,
-                    React__default["default"].createElement(reactBootstrap.Col, null,
-                        React__default["default"].createElement(Content, { colPos: '9', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })))),
-            footer: React__default["default"].createElement(FooterContent, { content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }),
-        };
-    },
-    'special_start': function (headlessData, contentElementLayouts, contentElementTemplates, args) {
-        return {
-            border: React__default["default"].createElement(reactBootstrap.Row, null,
+                        React__default["default"].createElement(reactBootstrap.Col, { md: "6", as: "main", className: " maincontent-wrap", role: "main" },
+                            React__default["default"].createElement(Content, { colPos: '0' })),
+                        React__default["default"].createElement(reactBootstrap.Col, { className: " subcontent-wrap ", md: "6" },
+                            React__default["default"].createElement(Content, { colPos: '2' }))))),
+            React__default["default"].createElement(reactBootstrap.Row, null,
                 React__default["default"].createElement(reactBootstrap.Col, null,
-                    React__default["default"].createElement(Content, { colPos: '3', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))),
-            main: React__default["default"].createElement(React__default["default"].Fragment, null,
-                React__default["default"].createElement(reactBootstrap.Row, null,
-                    React__default["default"].createElement(reactBootstrap.Col, null,
-                        React__default["default"].createElement(Content, { colPos: '8', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))),
-                React__default["default"].createElement("div", { className: "section section-default" },
-                    React__default["default"].createElement(reactBootstrap.Container, null,
-                        React__default["default"].createElement(reactBootstrap.Row, null,
-                            React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-third ", md: "4" },
-                                React__default["default"].createElement(Content, { colPos: '20', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
-                            React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-third ", md: "4" },
-                                React__default["default"].createElement(Content, { colPos: '21', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })),
-                            React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-third ", md: "4" },
-                                React__default["default"].createElement(Content, { colPos: '22', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }))))),
-                React__default["default"].createElement("div", { className: "section section-light" },
+                    React__default["default"].createElement(Content, { colPos: '9' })))),
+        footer: React__default["default"].createElement(FooterContent, null),
+    },
+    '3_columns': {
+        border: React__default["default"].createElement(reactBootstrap.Row, null,
+            React__default["default"].createElement(reactBootstrap.Col, null,
+                React__default["default"].createElement(Content, { colPos: '3' }))),
+        main: React__default["default"].createElement(React__default["default"].Fragment, null,
+            React__default["default"].createElement(reactBootstrap.Row, null,
+                React__default["default"].createElement(reactBootstrap.Col, null,
+                    React__default["default"].createElement(Content, { colPos: '8' }))),
+            React__default["default"].createElement("div", { className: "section section-default" },
+                React__default["default"].createElement(reactBootstrap.Container, null,
                     React__default["default"].createElement(reactBootstrap.Row, null,
-                        React__default["default"].createElement(reactBootstrap.Col, null,
-                            React__default["default"].createElement(Content, { colPos: '0', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })))),
+                        React__default["default"].createElement(reactBootstrap.Col, { lg: "6", as: "main", className: " maincontent-wrap ", role: "main" },
+                            React__default["default"].createElement(Content, { colPos: '0' })),
+                        React__default["default"].createElement(reactBootstrap.Col, { className: " subcontent-wrap ", lg: "3" },
+                            React__default["default"].createElement(Content, { colPos: '1' })),
+                        React__default["default"].createElement(reactBootstrap.Col, { className: " subcontent-wrap ", lg: "3" },
+                            React__default["default"].createElement(Content, { colPos: '2' }))))),
+            React__default["default"].createElement(reactBootstrap.Row, null,
+                React__default["default"].createElement(reactBootstrap.Col, null,
+                    React__default["default"].createElement(Content, { colPos: '9' })))),
+        footer: React__default["default"].createElement(FooterContent, null),
+    },
+    'special_feature': {
+        border: React__default["default"].createElement(reactBootstrap.Row, null,
+            React__default["default"].createElement(reactBootstrap.Col, null,
+                React__default["default"].createElement(Content, { colPos: '3' }))),
+        main: React__default["default"].createElement(React__default["default"].Fragment, null,
+            React__default["default"].createElement(reactBootstrap.Row, null,
+                React__default["default"].createElement(reactBootstrap.Col, null,
+                    React__default["default"].createElement(Content, { colPos: '8' }))),
+            React__default["default"].createElement("div", { className: "section section-default" },
                 React__default["default"].createElement(reactBootstrap.Row, null,
                     React__default["default"].createElement(reactBootstrap.Col, null,
-                        React__default["default"].createElement(Content, { colPos: '9', content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates })))),
-            footer: React__default["default"].createElement(FooterContent, { content: headlessData.content, contentElementLayouts: contentElementLayouts, contentElementTemplates: contentElementTemplates }),
-        };
+                        React__default["default"].createElement(Content, { colPos: '0' })))),
+            React__default["default"].createElement("div", { className: "section section-primary" },
+                React__default["default"].createElement(reactBootstrap.Container, null,
+                    React__default["default"].createElement(reactBootstrap.Row, null,
+                        React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-half ", md: "6" },
+                            React__default["default"].createElement(Content, { colPos: '30' })),
+                        React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-half ", md: "6" },
+                            React__default["default"].createElement(Content, { colPos: '31' }))))),
+            React__default["default"].createElement("div", { className: "section section-primary" },
+                React__default["default"].createElement(reactBootstrap.Container, null,
+                    React__default["default"].createElement(reactBootstrap.Row, null,
+                        React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-half ", md: "6" },
+                            React__default["default"].createElement(Content, { colPos: '32' })),
+                        React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-half ", md: "6" },
+                            React__default["default"].createElement(Content, { colPos: '33' }))))),
+            React__default["default"].createElement("div", { className: "section section-default" },
+                React__default["default"].createElement(reactBootstrap.Row, null,
+                    React__default["default"].createElement(reactBootstrap.Col, null,
+                        React__default["default"].createElement(Content, { colPos: '4' })))),
+            React__default["default"].createElement("div", { className: "section section-light" },
+                React__default["default"].createElement(reactBootstrap.Container, null,
+                    React__default["default"].createElement(reactBootstrap.Row, null,
+                        React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-half ", md: "6" },
+                            React__default["default"].createElement(Content, { colPos: '34' })),
+                        React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-half ", md: "6" },
+                            React__default["default"].createElement(Content, { colPos: '35' }))))),
+            React__default["default"].createElement("div", { className: "section section-light" },
+                React__default["default"].createElement(reactBootstrap.Container, null,
+                    React__default["default"].createElement(reactBootstrap.Row, null,
+                        React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-half ", md: "6" },
+                            React__default["default"].createElement(Content, { colPos: '36' })),
+                        React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-half ", md: "6" },
+                            React__default["default"].createElement(Content, { colPos: '37' }))))),
+            React__default["default"].createElement(reactBootstrap.Row, null,
+                React__default["default"].createElement(reactBootstrap.Col, null,
+                    React__default["default"].createElement(Content, { colPos: '9' })))),
+        footer: React__default["default"].createElement(FooterContent, null),
+    },
+    'special_start': {
+        border: React__default["default"].createElement(reactBootstrap.Row, null,
+            React__default["default"].createElement(reactBootstrap.Col, null,
+                React__default["default"].createElement(Content, { colPos: '3' }))),
+        main: React__default["default"].createElement(React__default["default"].Fragment, null,
+            React__default["default"].createElement(reactBootstrap.Row, null,
+                React__default["default"].createElement(reactBootstrap.Col, null,
+                    React__default["default"].createElement(Content, { colPos: '8' }))),
+            React__default["default"].createElement("div", { className: "section section-default" },
+                React__default["default"].createElement(reactBootstrap.Container, null,
+                    React__default["default"].createElement(reactBootstrap.Row, null,
+                        React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-third ", md: "4" },
+                            React__default["default"].createElement(Content, { colPos: '20' })),
+                        React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-third ", md: "4" },
+                            React__default["default"].createElement(Content, { colPos: '21' })),
+                        React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-third ", md: "4" },
+                            React__default["default"].createElement(Content, { colPos: '22' }))))),
+            React__default["default"].createElement("div", { className: "section section-light" },
+                React__default["default"].createElement(reactBootstrap.Row, null,
+                    React__default["default"].createElement(reactBootstrap.Col, null,
+                        React__default["default"].createElement(Content, { colPos: '0' })))),
+            React__default["default"].createElement(reactBootstrap.Row, null,
+                React__default["default"].createElement(reactBootstrap.Col, null,
+                    React__default["default"].createElement(Content, { colPos: '9' })))),
+        footer: React__default["default"].createElement(FooterContent, null),
     },
 };
 var contentElementLayouts = {
@@ -708,52 +658,46 @@ var contentElementLayouts = {
 };
 var contentElementTemplates = {
     //Resources/Private/Templates/ContentElements/**
-    __generic: function (headlessContentData, args) {
+    __generic: function (headlessContentData) {
         return React__default["default"].createElement(React__default["default"].Fragment, null,
             headlessContentData.type,
             " has no Template");
     },
-    text: function (headlessContentData, args) {
-        return React__default["default"].createElement(Text, { data: headlessContentData.content });
-    },
-    html: function (headlessContentData, args) {
-        return React__default["default"].createElement(Html, { data: headlessContentData.content });
-    },
-    textpic: function (headlessContentData, args) {
-        return React__default["default"].createElement(Textpic, { data: headlessContentData.content });
-    },
-    image: function (headlessContentData, args) {
-        return React__default["default"].createElement(Image, { data: headlessContentData.content });
-    },
+    text: function (headlessContentData) { return React__default["default"].createElement(Text, { data: headlessContentData.content }); },
+    html: function (headlessContentData) { return React__default["default"].createElement(Html, { data: headlessContentData.content }); },
+    textpic: function (headlessContentData) { return React__default["default"].createElement(Textpic, { data: headlessContentData.content }); },
+    image: function (headlessContentData) { return React__default["default"].createElement(Image, { data: headlessContentData.content }); },
+    shortcut: function (headlessContentData) { return React__default["default"].createElement(Shortcut, { data: headlessContentData.content }); },
+    div: function (headlessContentData) { return React__default["default"].createElement(Div, { data: headlessContentData.content }); },
+    uploads: function (headlessContentData) { return React__default["default"].createElement(Uploads, { data: headlessContentData.content }); },
+    // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
+    // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     // textmedia: (headlessContentData, args = {}) => <CE.Textmedia data={headlessContentData.content}/>,
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
     // bullets: (headlessContentData, args = {}) => <CE.Bullets data={headlessContentData.content}/>,
     // image: (headlessContentData, args = {}) => <CE.Image data={headlessContentData.content}/>,
-    shortcut: function (headlessContentData, args) {
-        if (args === void 0) { args = {}; }
-        return React__default["default"].createElement(Shortcut, { data: headlessContentData.content, args: args });
-    },
-    // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
-    div: function (headlessContentData, args) {
-        return React__default["default"].createElement(Div, { data: headlessContentData.content });
-    },
-    uploads: function (headlessContentData, args) {
-        return React__default["default"].createElement(Uploads, { data: headlessContentData.content });
-    },
-    // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
 };
 var TYPO3Page = function (props) {
     var _pageLayouts = Object.assign({}, pageLayouts, props.pageLayouts);
     var _pageTemplates = Object.assign({}, pageTemplates, props.pageTemplates);
     var _contentElementLayouts = Object.assign({}, contentElementLayouts, props.contentElementLayouts);
     var _contentElementTemplates = Object.assign({}, contentElementTemplates, props.contentElementTemplates);
-    return React__default["default"].createElement(Page, { headlessData: props.headlessData, pageLayouts: _pageLayouts, pageTemplates: _pageTemplates, contentElementLayouts: _contentElementLayouts, contentElementTemplates: _contentElementTemplates });
+    return React__default["default"].createElement(TYPO3PageContext.Provider, { value: {
+            headlessData: props.headlessData,
+            pageLayouts: _pageLayouts,
+            pageTemplates: _pageTemplates,
+            contentElementLayouts: _contentElementLayouts,
+            contentElementTemplates: _contentElementTemplates,
+            additionalParams: props.additionalParams,
+        } },
+        React__default["default"].createElement(Page, null));
 };
 TYPO3Page.defaultProps = {
     pageLayouts: null,
     pageTemplates: null,
     contentElementLayouts: null,
     contentElementTemplates: null,
+    additionalParams: null,
 };
 var TYPO3Page$1 = React__default["default"].memo(TYPO3Page);
 
@@ -761,4 +705,5 @@ exports.Content = Content;
 exports.Page = Page;
 exports.Section = section;
 exports.TYPO3Page = TYPO3Page$1;
+exports.TYPO3PageContext = TYPO3PageContext;
 //# sourceMappingURL=index.js.map

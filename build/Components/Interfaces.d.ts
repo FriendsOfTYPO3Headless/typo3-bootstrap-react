@@ -15,5 +15,6 @@ interface TYPO3PagePropsInterface {
     pageTemplates?: any | null;
     contentElementLayouts?: any | null;
     contentElementTemplates?: any | null;
+    additionalParams?: any | null;
 }
 export { TYPO3PageHeadlessDataInterface, TYPO3PagePropsInterface };
