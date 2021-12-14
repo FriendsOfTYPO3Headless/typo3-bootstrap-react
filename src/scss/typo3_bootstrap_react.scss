@@ -1,4 +1,40 @@
+@import "./list";
+@import "./backendlayouts";
+@import "./section";
+@import "./footer";
+@import "./frame";
+@import "./card";
+@import "./address";
+@import "./buttons";
+@import "./text";
+@import "./media";
+@import "./blockquote";
+@import "./navbar";
+@import "./subnav";
+@import "./breadcrumb";
+@import "./gallery";
+@import "./figure";
+@import "./carousel";
+@import "./form";
+@import "./textpic";
+@import "./textteaser";
+@import "./texticon";
+@import "./accordion";
+@import "./tab";
+@import "./icongroup";
+@import "./uploads";
+@import "./thumbnail-menu";
+@import "./link";
+@import "./socialmedia";
+@import "./timeline";
+@import "./well";
+@import "./misc";
+
 .gallery-item {
   flex-basis: auto;
   flex-grow: inherit;
+}
+
+video{
+  max-width: inherit;
 }
