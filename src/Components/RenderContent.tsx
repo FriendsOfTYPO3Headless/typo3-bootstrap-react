@@ -1,33 +1,28 @@
 import React from "react";
+import TYPO3PageContext from "../Context/TYPO3PageContext";
 
-export const RenderContent = (contentElementLayouts, contentElementTemplates, content, args) => {
+export const RenderContent = (contentData) => {
+    const {contentElementLayouts, contentElementTemplates} = React.useContext(TYPO3PageContext);
+
     let layout;
-    if (contentElementLayouts.hasOwnProperty(content.appearance.layout)) {
-        layout = contentElementLayouts[content.appearance.layout];
+    if (contentElementLayouts.hasOwnProperty(contentData.appearance.layout)) {
+        layout = contentElementLayouts[contentData.appearance.layout];
     } else if (contentElementLayouts.hasOwnProperty('__generic')) {
         layout = contentElementLayouts.__generic;
     } else {
-        return <>CE-layout not found: {content.appearance.layout}</>
+        return <>CE-layout not found: {contentData.appearance.layout}</>
     }
+
     let template;
-    if (contentElementTemplates.hasOwnProperty(content.type)) {
-        template = contentElementTemplates[content.type];
+    if (contentElementTemplates.hasOwnProperty(contentData.type)) {
+        template = contentElementTemplates[contentData.type];
     } else if (contentElementTemplates.hasOwnProperty('__generic')) {
         template = contentElementTemplates.__generic;
     } else {
-        return <>CE-template not found: {content.type} </>
+        return <>CE-template not found: {contentData.type} </>
     }
-    let _args = {
-        ...args
-    }
-    if (content.type === 'shortcut') {
-        _args = {
-            ..._args,
-            contentElementTemplates: contentElementTemplates,
-            contentElementLayouts: contentElementLayouts,
-        }
-    }
-    return <React.Fragment key={content.id}>
-        {layout({children: template(content, _args), content: content, args: _args})}
+
+    return <React.Fragment key={contentData.id}>
+        {layout({children: template(contentData), content: contentData})}
     </React.Fragment>
-}
+}//, args: _args

@@ -3,7 +3,7 @@ import {TYPO3PageHeadlessDataInterface} from "../../Interfaces";
 import Section from "../../Partials/Page/Section";
 
 
-const __GenericLayout: React.FC<{headlessData:TYPO3PageHeadlessDataInterface, pageTemplate: any}> = props => {
+const __GenericLayout: React.FC<{ headlessData:TYPO3PageHeadlessDataInterface, pageTemplate: any}> = props => {
 
     const genericSections = Object.keys(props.pageTemplate).map(sectionName => {
         return <section key={sectionName} className={sectionName}>
@@ -12,7 +12,7 @@ const __GenericLayout: React.FC<{headlessData:TYPO3PageHeadlessDataInterface, pa
     });
 
 
-    return <div className={'backendlayout-' + props.headlessData.page.appearance.backendLayout}>
+    return <div className={'backendlayout-' + props.headlessData.appearance.backendLayout}>
         {genericSections}
     </div>
 }

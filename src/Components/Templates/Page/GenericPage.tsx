@@ -1,7 +1,7 @@
 import React from "react";
-import {TYPO3PageHeadlessDataInterface} from "../../Interfaces";
 import {Col, Row} from "react-bootstrap";
 import Content from "../Content";
+import TYPO3PageContext from "../../../Context/TYPO3PageContext";
 
 interface gridElementInterface {
     tag: string | any,
@@ -11,7 +11,6 @@ interface gridElementInterface {
     colPos: string,
     size: number,
 }
-
 
 const getGridElement = (element: gridElementInterface, content: any, contentElementLayouts : any, contentElementTemplates: any, index: number) => {
     switch (element.type) {
@@ -32,10 +31,7 @@ const getGridElement = (element: gridElementInterface, content: any, contentElem
                 xl={element.size}
                 key={index}
             >
-                <Content colPos={element.colPos}
-                         content={content}
-                         contentElementLayouts={contentElementLayouts}
-                         contentElementTemplates={contentElementTemplates} />
+                <Content colPos={element.colPos} />
             </Col>
 
         default:
@@ -43,11 +39,12 @@ const getGridElement = (element: gridElementInterface, content: any, contentElem
     }
 }
 
-const GenericPage: React.FC<{headlessData:TYPO3PageHeadlessDataInterface, contentElementLayouts : any, contentElementTemplates: any}> = props => {
+const GenericPage: React.FC = () => {
+    const context = React.useContext(TYPO3PageContext);
     let content = <></>
-    if(props.headlessData.page.appearance.pageContentRows) {
-        content = props.headlessData.page.appearance.pageContentRows.map((gridElement:any, index: number) =>  {
-            return getGridElement(gridElement, props.headlessData.content, props.contentElementLayouts, props.contentElementTemplates, index);
+    if(context.headlessData.appearance.pageContentRows) {
+        content = context.headlessData.appearance.pageContentRows.map((gridElement:any, index: number) =>  {
+            return getGridElement(gridElement, context.headlessData.content, context.contentElementLayouts, context.contentElementTemplates, index);
         });
     }
 
