@@ -7,7 +7,7 @@ const section: React.FC<{
     if(props.pageTemplate.hasOwnProperty(props.name)) {
         return props.pageTemplate[props.name];
     }
-    return <>Template section {props.name} not found</>
+    return <></>
 }
 
 export default section;
