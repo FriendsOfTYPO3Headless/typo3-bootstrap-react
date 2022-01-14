@@ -15,10 +15,7 @@ var section = function (props) {
     if (props.pageTemplate.hasOwnProperty(props.name)) {
         return props.pageTemplate[props.name];
     }
-    return React__default["default"].createElement(React__default["default"].Fragment, null,
-        "Template section ",
-        props.name,
-        " not found");
+    return React__default["default"].createElement(React__default["default"].Fragment, null);
 };
 
 var __GenericLayout = function (props) {
