@@ -1,6 +1,6 @@
 {
   "name": "typo3-bootstrap-react",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "repository": "https://github.com/TYPO3-Bootstrap/react.git",
   "author": "Niels Seelhöfer <dev@seeli.net>",
   "license": "MIT",
