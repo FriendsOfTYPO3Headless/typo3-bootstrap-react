@@ -1,23 +1,16 @@
 import React from "react";
 import {RenderContent} from "../RenderContent";
+import TYPO3PageContext from "../../Context/TYPO3PageContext";
 
 const PREFIX_COLPOS = 'colPos';
 
-const Content: React.FC<{
-    colPos: string;
-    content: any;
-    contentElementLayouts: any;
-    contentElementTemplates: any;
-    slide?: number;
-    args?: any;
-}> = props => {
+const Content: React.FC<{ colPos: string }> = props => {
+    const context = React.useContext(TYPO3PageContext);
     let content = <></>
 
-    if (props.content.hasOwnProperty(PREFIX_COLPOS + props.colPos)) {
-        content = props.content[PREFIX_COLPOS + props.colPos].map(content => {
-
-          return   RenderContent(props.contentElementLayouts, props.contentElementTemplates, content, props.args)
-
+    if (context.headlessData.content.hasOwnProperty(PREFIX_COLPOS + props.colPos)) {
+        content = context.headlessData.content[PREFIX_COLPOS + props.colPos].map(content => {
+            return RenderContent(content)
         });
     }
     return content
