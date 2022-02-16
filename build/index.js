@@ -100,7 +100,42 @@ var Content = function (props) {
     return content;
 };
 
-var Text = function (props) {
+var Div = function (props) {
+    return React__default["default"].createElement("div", { className: "div" },
+        React__default["default"].createElement("hr", null));
+};
+
+var FormElement = function (props) {
+    var element = props.element;
+    var content;
+    switch (element.type) {
+        case 'Textarea':
+            content = 'textarea';
+            break;
+        default:
+            content = "".concat(element.type, " type not defined");
+    }
+    return React__default["default"].createElement(reactBootstrap.Form.Group, { className: "mb-3", controlId: element.identifier },
+        React__default["default"].createElement(reactBootstrap.Form.Label, null, element.label),
+        content);
+};
+
+var FormFormFramework = function (props) {
+    var _a = props.data, form = _a.form, link = _a.link;
+    console.log(form);
+    var submitHandler = React.useCallback(function (e) {
+        e.preventDefault();
+        console.log("send POST request to ".concat(link.href));
+    }, [form, link]);
+    return React__default["default"].createElement("div", { className: "formFormFramework", onSubmit: submitHandler },
+        React__default["default"].createElement(reactBootstrap.Form, { id: form.id },
+            form.elements.map(function (element) {
+                return React__default["default"].createElement(FormElement, { element: element });
+            }),
+            React__default["default"].createElement(reactBootstrap.Button, { type: "submit" }, "Submit")));
+};
+
+var Html = function (props) {
     return React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
 };
 
@@ -152,6 +187,23 @@ var ImageCols = function (props) {
         }));
 };
 
+var Image = function (props) {
+    return React__default["default"].createElement("div", { className: "image" },
+        React__default["default"].createElement("div", { className: "gallery-row" },
+            React__default["default"].createElement(reactBootstrap.Row, null,
+                React__default["default"].createElement(ImageCols, { data: props.data }))));
+};
+
+var Shortcut = function (props) {
+    return React__default["default"].createElement("div", { className: "shortcut" }, props.data.shortcut.map(function (cObject) {
+        return RenderContent(cObject);
+    }));
+};
+
+var Text = function (props) {
+    return React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
+};
+
 var Textpic = function (props) {
     var textpicClassName = '';
     if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
@@ -167,28 +219,6 @@ var Textpic = function (props) {
                     React__default["default"].createElement(reactBootstrap.Row, null,
                         React__default["default"].createElement(ImageCols, { data: props.data }))),
                 React__default["default"].createElement(reactBootstrap.Col, { className: "textpic-item textpic-text", md: "6", dangerouslySetInnerHTML: { __html: props.data.bodytext } }))));
-};
-
-var Image = function (props) {
-    return React__default["default"].createElement("div", { className: "image" },
-        React__default["default"].createElement("div", { className: "gallery-row" },
-            React__default["default"].createElement(reactBootstrap.Row, null,
-                React__default["default"].createElement(ImageCols, { data: props.data }))));
-};
-
-var Div = function (props) {
-    return React__default["default"].createElement("div", { className: "div" },
-        React__default["default"].createElement("hr", null));
-};
-
-var Shortcut = function (props) {
-    return React__default["default"].createElement("div", { className: "shortcut" }, props.data.shortcut.map(function (cObject) {
-        return RenderContent(cObject);
-    }));
-};
-
-var Html = function (props) {
-    return React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
 };
 
 var Uploads = function (props) {
@@ -669,6 +699,7 @@ var contentElementTemplates = {
     shortcut: function (headlessContentData) { return React__default["default"].createElement(Shortcut, { data: headlessContentData.content }); },
     div: function (headlessContentData) { return React__default["default"].createElement(Div, { data: headlessContentData.content }); },
     uploads: function (headlessContentData) { return React__default["default"].createElement(Uploads, { data: headlessContentData.content }); },
+    form_formframework: function (headlessContentData) { return React__default["default"].createElement(FormFormFramework, { data: headlessContentData.content }); }
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     // textmedia: (headlessContentData, args = {}) => <CE.Textmedia data={headlessContentData.content}/>,

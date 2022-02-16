@@ -10,6 +10,7 @@ import {Col, Row, Container} from "react-bootstrap";
 import FooterContent from "./Partials/Page/Structure/FooterContent";
 import GenericPage from "./Templates/Page/GenericPage";
 import TYPO3PageContext from "../Context/TYPO3PageContext";
+import FormFormFramework from "./Templates/ContentElements/FormFormFramework";
 
 
 const pageLayouts = {
@@ -406,9 +407,11 @@ const contentElementTemplates = {
     html: (headlessContentData) => <CE.Html data={headlessContentData.content}/>,
     textpic: (headlessContentData) => <CE.Textpic data={headlessContentData.content}/>,
     image: (headlessContentData) => <CE.Image data={headlessContentData.content}/>,
-    shortcut: (headlessContentData) => <CE.Shortcut data={headlessContentData.content} />,
+    shortcut: (headlessContentData) => <CE.Shortcut data={headlessContentData.content}/>,
     div: (headlessContentData) => <CE.Div data={headlessContentData.content}/>,
     uploads: (headlessContentData) => <CE.Uploads data={headlessContentData.content}/>,
+    form_formframework: (headlessContentData) => <CE.FormFormFramework data={headlessContentData.content}/>
+
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     // textmedia: (headlessContentData, args = {}) => <CE.Textmedia data={headlessContentData.content}/>,

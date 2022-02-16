@@ -62,6 +62,7 @@ declare const contentElementTemplates: {
     shortcut: (headlessContentData: any) => JSX.Element;
     div: (headlessContentData: any) => JSX.Element;
     uploads: (headlessContentData: any) => JSX.Element;
+    form_formframework: (headlessContentData: any) => JSX.Element;
 };
 declare const _default: React.NamedExoticComponent<TYPO3PagePropsInterface>;
 export default _default;

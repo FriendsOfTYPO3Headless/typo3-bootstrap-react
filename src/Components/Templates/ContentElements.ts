@@ -1,19 +1,20 @@
-import Text from './ContentElements/Text'
-import Textpic from './ContentElements/Textpic'
+import Div from './ContentElements/Div'
+import FormFormFramework from './ContentElements/FormFormFramework'
+import Html from './ContentElements/Html'
 import Image from './ContentElements/Image'
 import ImageLightbox from './ContentElements/Image'
-import Div from './ContentElements/Div'
-// import Textmedia from './ContentElements/Textmedia'
 import Shortcut from './ContentElements/Shortcut'
-import Html from './ContentElements/Html'
-//import ImageModal from './ContentElements/ImageModal'
+import Text from './ContentElements/Text'
+import Textpic from './ContentElements/Textpic'
 import Uploads from './ContentElements/Uploads'
+// import Textmedia from './ContentElements/Textmedia'
+//import ImageModal from './ContentElements/ImageModal'
+
+
 import MenuSitemap from './ContentElements/MenuSitemap'
 
-
 // import MenuSitemap from './ContentElements/MenuSitemap'
-
-/* import FormFormFramework from './ContentElements/FormFormFramework'
+/*
 import Html from './ContentElements/Html'
 
 import List from './ContentElements/List'
@@ -42,6 +43,7 @@ export {
     ImageLightbox,
     //Bullets,
     Div,
+    FormFormFramework,
     /*  FormFormFramework,
    Html,
    List,

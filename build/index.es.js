@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Col, Row, Container } from 'react-bootstrap';
+import React, { useCallback, useState } from 'react';
+import { Form, Button, Col, Row, Container } from 'react-bootstrap';
 import Lightbox from 'react-image-lightbox';
 
 var section = function (props) {
@@ -91,7 +91,42 @@ var Content = function (props) {
     return content;
 };
 
-var Text = function (props) {
+var Div = function (props) {
+    return React.createElement("div", { className: "div" },
+        React.createElement("hr", null));
+};
+
+var FormElement = function (props) {
+    var element = props.element;
+    var content;
+    switch (element.type) {
+        case 'Textarea':
+            content = 'textarea';
+            break;
+        default:
+            content = "".concat(element.type, " type not defined");
+    }
+    return React.createElement(Form.Group, { className: "mb-3", controlId: element.identifier },
+        React.createElement(Form.Label, null, element.label),
+        content);
+};
+
+var FormFormFramework = function (props) {
+    var _a = props.data, form = _a.form, link = _a.link;
+    console.log(form);
+    var submitHandler = useCallback(function (e) {
+        e.preventDefault();
+        console.log("send POST request to ".concat(link.href));
+    }, [form, link]);
+    return React.createElement("div", { className: "formFormFramework", onSubmit: submitHandler },
+        React.createElement(Form, { id: form.id },
+            form.elements.map(function (element) {
+                return React.createElement(FormElement, { element: element });
+            }),
+            React.createElement(Button, { type: "submit" }, "Submit")));
+};
+
+var Html = function (props) {
     return React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
 };
 
@@ -143,6 +178,23 @@ var ImageCols = function (props) {
         }));
 };
 
+var Image = function (props) {
+    return React.createElement("div", { className: "image" },
+        React.createElement("div", { className: "gallery-row" },
+            React.createElement(Row, null,
+                React.createElement(ImageCols, { data: props.data }))));
+};
+
+var Shortcut = function (props) {
+    return React.createElement("div", { className: "shortcut" }, props.data.shortcut.map(function (cObject) {
+        return RenderContent(cObject);
+    }));
+};
+
+var Text = function (props) {
+    return React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
+};
+
 var Textpic = function (props) {
     var textpicClassName = '';
     if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
@@ -158,28 +210,6 @@ var Textpic = function (props) {
                     React.createElement(Row, null,
                         React.createElement(ImageCols, { data: props.data }))),
                 React.createElement(Col, { className: "textpic-item textpic-text", md: "6", dangerouslySetInnerHTML: { __html: props.data.bodytext } }))));
-};
-
-var Image = function (props) {
-    return React.createElement("div", { className: "image" },
-        React.createElement("div", { className: "gallery-row" },
-            React.createElement(Row, null,
-                React.createElement(ImageCols, { data: props.data }))));
-};
-
-var Div = function (props) {
-    return React.createElement("div", { className: "div" },
-        React.createElement("hr", null));
-};
-
-var Shortcut = function (props) {
-    return React.createElement("div", { className: "shortcut" }, props.data.shortcut.map(function (cObject) {
-        return RenderContent(cObject);
-    }));
-};
-
-var Html = function (props) {
-    return React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
 };
 
 var Uploads = function (props) {
@@ -660,6 +690,7 @@ var contentElementTemplates = {
     shortcut: function (headlessContentData) { return React.createElement(Shortcut, { data: headlessContentData.content }); },
     div: function (headlessContentData) { return React.createElement(Div, { data: headlessContentData.content }); },
     uploads: function (headlessContentData) { return React.createElement(Uploads, { data: headlessContentData.content }); },
+    form_formframework: function (headlessContentData) { return React.createElement(FormFormFramework, { data: headlessContentData.content }); }
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     // textmedia: (headlessContentData, args = {}) => <CE.Textmedia data={headlessContentData.content}/>,
