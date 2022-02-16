@@ -249,6 +249,25 @@ var Uploads = function (props) {
         })));
 };
 
+var Accordion = function (props) {
+    var _a;
+    var _b = props.data, accordionItems = _b.accordionItems, pi_flexform = _b.pi_flexform;
+    var activeElement = (_a = pi_flexform.default_element) !== null && _a !== void 0 ? _a : '';
+    if (!accordionItems || accordionItems.length < 0) {
+        return React__default["default"].createElement(React__default["default"].Fragment, null);
+    }
+    var accorditionItemsTemplate = accordionItems.map(function (accordionItem) {
+        // TODO: Add Media-Gallery
+        return React__default["default"].createElement(reactBootstrap.Accordion.Item, { key: accordionItem.uid, eventKey: accordionItem.uid.toString() },
+            React__default["default"].createElement(reactBootstrap.Accordion.Header, { as: "h4", id: "accordion-heading-".concat(accordionItem.uid) },
+                React__default["default"].createElement("span", { className: "accordion-title-link-text" }, accordionItem.header)),
+            React__default["default"].createElement(reactBootstrap.Accordion.Body, null,
+                React__default["default"].createElement("div", { className: "accordion-content accordion-content-".concat(accordionItem.mediaorient) },
+                    React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: accordionItem.bodytext } }))));
+    });
+    return React__default["default"].createElement(reactBootstrap.Accordion, { defaultActiveKey: activeElement }, accorditionItemsTemplate);
+};
+
 var BackgroundImage = function (props) {
     if (props.data.appearance.backgroundImage.length < 1) {
         return null;
@@ -667,6 +686,7 @@ var contentElementTemplates = {
     shortcut: function (headlessContentData) { return React__default["default"].createElement(Shortcut, { data: headlessContentData.content }); },
     div: function (headlessContentData) { return React__default["default"].createElement(Div, { data: headlessContentData.content }); },
     uploads: function (headlessContentData) { return React__default["default"].createElement(Uploads, { data: headlessContentData.content }); },
+    accordion: function (headlessContentData) { return React__default["default"].createElement(Accordion, { data: headlessContentData.content }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     // textmedia: (headlessContentData, args = {}) => <CE.Textmedia data={headlessContentData.content}/>,

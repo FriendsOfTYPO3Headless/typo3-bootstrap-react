@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Col, Row, Container } from 'react-bootstrap';
+import { Col, Row, Accordion as Accordion$1, Container } from 'react-bootstrap';
 import Lightbox from 'react-image-lightbox';
 
 var section = function (props) {
@@ -238,6 +238,25 @@ var Uploads = function (props) {
             }
             return React.createElement("li", { className: 'filelink-item mb-2', key: key }, content);
         })));
+};
+
+var Accordion = function (props) {
+    var _a;
+    var _b = props.data, accordionItems = _b.accordionItems, pi_flexform = _b.pi_flexform;
+    var activeElement = (_a = pi_flexform.default_element) !== null && _a !== void 0 ? _a : '';
+    if (!accordionItems || accordionItems.length < 0) {
+        return React.createElement(React.Fragment, null);
+    }
+    var accorditionItemsTemplate = accordionItems.map(function (accordionItem) {
+        // TODO: Add Media-Gallery
+        return React.createElement(Accordion$1.Item, { key: accordionItem.uid, eventKey: accordionItem.uid.toString() },
+            React.createElement(Accordion$1.Header, { as: "h4", id: "accordion-heading-".concat(accordionItem.uid) },
+                React.createElement("span", { className: "accordion-title-link-text" }, accordionItem.header)),
+            React.createElement(Accordion$1.Body, null,
+                React.createElement("div", { className: "accordion-content accordion-content-".concat(accordionItem.mediaorient) },
+                    React.createElement("div", { dangerouslySetInnerHTML: { __html: accordionItem.bodytext } }))));
+    });
+    return React.createElement(Accordion$1, { defaultActiveKey: activeElement }, accorditionItemsTemplate);
 };
 
 var BackgroundImage = function (props) {
@@ -658,6 +677,7 @@ var contentElementTemplates = {
     shortcut: function (headlessContentData) { return React.createElement(Shortcut, { data: headlessContentData.content }); },
     div: function (headlessContentData) { return React.createElement(Div, { data: headlessContentData.content }); },
     uploads: function (headlessContentData) { return React.createElement(Uploads, { data: headlessContentData.content }); },
+    accordion: function (headlessContentData) { return React.createElement(Accordion, { data: headlessContentData.content }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     // textmedia: (headlessContentData, args = {}) => <CE.Textmedia data={headlessContentData.content}/>,
