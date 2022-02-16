@@ -1,10 +1,10 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {Accordion as ReactAccordion} from "react-bootstrap"
 
 const Accordion: React.FC<{ data: any }> = (props) => {
-    const {accordionItems} = props.data
+    const {accordionItems, pi_flexform} = props.data
+    const activeElement = pi_flexform.default_element ?? null
 
-    console.log(props.data)
 
     if (!accordionItems || accordionItems.length < 0) {
         return <></>
@@ -13,8 +13,8 @@ const Accordion: React.FC<{ data: any }> = (props) => {
 
     const accorditionItemsTemplate = accordionItems.map((accordionItem, index) => {
         console.log('item', accordionItem)
-        const id = `${accordionItem.pid}-${accordionItem.uid}`;
-        const eventKey = `#accordion-${id}`;
+        const id = `${accordionItem.pid}-${accordionItem.uid}`
+        const eventKey = `#accordion-${id}`
 
         // TODO: Add Media-Gallery
         return <ReactAccordion.Item key={eventKey} eventKey={eventKey} className={'card'}>
@@ -24,7 +24,7 @@ const Accordion: React.FC<{ data: any }> = (props) => {
             <ReactAccordion.Body className={'card-body'}>
                 <div className={`accordion-content accordion-content-${accordionItem.mediaorient}`}>
 
-                    <div dangerouslySetInnerHTML={{__html: accordionItem.bodytext}} />
+                    <div dangerouslySetInnerHTML={{__html: accordionItem.bodytext}}/>
                 </div>
             </ReactAccordion.Body>
         </ReactAccordion.Item>

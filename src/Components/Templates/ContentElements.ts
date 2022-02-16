@@ -8,6 +8,7 @@ import Shortcut from './ContentElements/Shortcut'
 import Html from './ContentElements/Html'
 //import ImageModal from './ContentElements/ImageModal'
 import Uploads from './ContentElements/Uploads'
+import Accordion from "./ContentElements/Accordion";
 import MenuSitemap from './ContentElements/MenuSitemap'
 
 
@@ -62,5 +63,6 @@ export {
     Shortcut,
     //Image,
    // Textmedia,
-    Uploads
+    Uploads,
+    Accordion
 }

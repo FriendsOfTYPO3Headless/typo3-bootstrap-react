@@ -6,4 +6,5 @@ import Div from './ContentElements/Div';
 import Shortcut from './ContentElements/Shortcut';
 import Html from './ContentElements/Html';
 import Uploads from './ContentElements/Uploads';
-export { Text, Html, Textpic, Image, ImageLightbox, Div, Shortcut, Uploads };
+import Accordion from "./ContentElements/Accordion";
+export { Text, Html, Textpic, Image, ImageLightbox, Div, Shortcut, Uploads, Accordion };
