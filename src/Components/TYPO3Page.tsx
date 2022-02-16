@@ -409,6 +409,7 @@ const contentElementTemplates = {
     shortcut: (headlessContentData) => <CE.Shortcut data={headlessContentData.content} />,
     div: (headlessContentData) => <CE.Div data={headlessContentData.content}/>,
     uploads: (headlessContentData) => <CE.Uploads data={headlessContentData.content}/>,
+    accordion: (headlessContentData) => <CE.Accordion data={headlessContentData.content}/>,
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     // textmedia: (headlessContentData, args = {}) => <CE.Textmedia data={headlessContentData.content}/>,
