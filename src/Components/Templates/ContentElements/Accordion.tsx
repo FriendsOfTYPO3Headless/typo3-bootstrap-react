@@ -1,6 +1,7 @@
 import React from 'react'
 import {Accordion as ReactAccordion} from "react-bootstrap"
 import Image from "./Image";
+import Gallery from "./Gallery";
 
 const Accordion: React.FC<{ data: any }> = (props) => {
     const {accordionItems, pi_flexform} = props.data
@@ -16,9 +17,7 @@ const Accordion: React.FC<{ data: any }> = (props) => {
     const accorditionItemsTemplate = accordionItems.map((accordionItem) => {
         let galleryTemplate = <></>
         if(accordionItem.media.length > 0) {
-            galleryTemplate = <div className={'accordion-content-item accordion-content-media'}>
-                {/*<Image data={accordionItem} />*/}
-            </div>
+            galleryTemplate = <Gallery data={{images: accordionItem.media, ...accordionItem}} />
         }
 
         return <ReactAccordion.Item key={accordionItem.uid} eventKey={accordionItem.uid.toString()} >

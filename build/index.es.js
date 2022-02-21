@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Col, Row, Accordion as Accordion$1, Figure, Alert, Container } from 'react-bootstrap';
+import { Col, Row, Figure, Alert, Accordion as Accordion$1, Container } from 'react-bootstrap';
 import Lightbox from 'react-image-lightbox';
 import FigureImage from 'react-bootstrap/FigureImage';
 
@@ -270,28 +270,30 @@ var Uploads = function (props) {
         })));
 };
 
-var Accordion = function (props) {
-    var _a;
-    var _b = props.data, accordionItems = _b.accordionItems, pi_flexform = _b.pi_flexform;
-    var activeElement = (_a = pi_flexform.default_element) !== null && _a !== void 0 ? _a : '';
-    if (!accordionItems || accordionItems.length < 0) {
-        return React.createElement(React.Fragment, null);
-    }
-    console.log(accordionItems);
-    var accorditionItemsTemplate = accordionItems.map(function (accordionItem) {
-        var galleryTemplate = React.createElement(React.Fragment, null);
-        if (accordionItem.media.length > 0) {
-            galleryTemplate = React.createElement("div", { className: 'accordion-content-item accordion-content-media' });
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
         }
-        return React.createElement(Accordion$1.Item, { key: accordionItem.uid, eventKey: accordionItem.uid.toString() },
-            React.createElement(Accordion$1.Header, { as: "h4", id: "accordion-heading-".concat(accordionItem.uid) },
-                React.createElement("span", { className: "accordion-title-link-text" }, accordionItem.header)),
-            React.createElement(Accordion$1.Body, null,
-                React.createElement("div", { className: "accordion-content accordion-content-".concat(accordionItem.mediaorient) },
-                    galleryTemplate,
-                    React.createElement("div", { className: 'accordion-content-item accordion-content-text', dangerouslySetInnerHTML: { __html: accordionItem.bodytext } }))));
-    });
-    return React.createElement(Accordion$1, { defaultActiveKey: activeElement }, accorditionItemsTemplate);
+        return t;
+    };
+    return __assign.apply(this, arguments);
 };
 
 var Image = function (props) {
@@ -332,6 +334,30 @@ var Gallery = function (props) {
             React.createElement(Type, { data: props.data, file: image }));
     });
     return React.createElement("div", { className: 'gallery-row' }, galleryItems);
+};
+
+var Accordion = function (props) {
+    var _a;
+    var _b = props.data, accordionItems = _b.accordionItems, pi_flexform = _b.pi_flexform;
+    var activeElement = (_a = pi_flexform.default_element) !== null && _a !== void 0 ? _a : '';
+    if (!accordionItems || accordionItems.length < 0) {
+        return React.createElement(React.Fragment, null);
+    }
+    console.log(accordionItems);
+    var accorditionItemsTemplate = accordionItems.map(function (accordionItem) {
+        var galleryTemplate = React.createElement(React.Fragment, null);
+        if (accordionItem.media.length > 0) {
+            galleryTemplate = React.createElement(Gallery, { data: __assign({ images: accordionItem.media }, accordionItem) });
+        }
+        return React.createElement(Accordion$1.Item, { key: accordionItem.uid, eventKey: accordionItem.uid.toString() },
+            React.createElement(Accordion$1.Header, { as: "h4", id: "accordion-heading-".concat(accordionItem.uid) },
+                React.createElement("span", { className: "accordion-title-link-text" }, accordionItem.header)),
+            React.createElement(Accordion$1.Body, null,
+                React.createElement("div", { className: "accordion-content accordion-content-".concat(accordionItem.mediaorient) },
+                    galleryTemplate,
+                    React.createElement("div", { className: 'accordion-content-item accordion-content-text', dangerouslySetInnerHTML: { __html: accordionItem.bodytext } }))));
+    });
+    return React.createElement(Accordion$1, { defaultActiveKey: activeElement }, accorditionItemsTemplate);
 };
 
 var BackgroundImage = function (props) {
