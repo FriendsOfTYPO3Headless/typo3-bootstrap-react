@@ -1,5 +1,6 @@
 import React from 'react'
 import {Accordion as ReactAccordion} from "react-bootstrap"
+import Image from "./Image";
 
 const Accordion: React.FC<{ data: any }> = (props) => {
     const {accordionItems, pi_flexform} = props.data
@@ -9,16 +10,25 @@ const Accordion: React.FC<{ data: any }> = (props) => {
         return <></>
     }
 
+    console.log(accordionItems)
+
 
     const accorditionItemsTemplate = accordionItems.map((accordionItem) => {
-        // TODO: Add Media-Gallery
+        let galleryTemplate = <></>
+        if(accordionItem.media.length > 0) {
+            galleryTemplate = <div className={'accordion-content-item accordion-content-media'}>
+                {/*<Image data={accordionItem} />*/}
+            </div>
+        }
+
         return <ReactAccordion.Item key={accordionItem.uid} eventKey={accordionItem.uid.toString()} >
             <ReactAccordion.Header as={"h4"} id={`accordion-heading-${accordionItem.uid}`}>
                 <span className="accordion-title-link-text">{accordionItem.header}</span>
             </ReactAccordion.Header>
             <ReactAccordion.Body>
                 <div className={`accordion-content accordion-content-${accordionItem.mediaorient}`}>
-                    <div dangerouslySetInnerHTML={{__html: accordionItem.bodytext}}/>
+                    {galleryTemplate}
+                    <div className={'accordion-content-item accordion-content-text'} dangerouslySetInnerHTML={{__html: accordionItem.bodytext}}/>
                 </div>
             </ReactAccordion.Body>
         </ReactAccordion.Item>

@@ -7,4 +7,5 @@ import Shortcut from './ContentElements/Shortcut';
 import Html from './ContentElements/Html';
 import Uploads from './ContentElements/Uploads';
 import Accordion from "./ContentElements/Accordion";
-export { Text, Html, Textpic, Image, ImageLightbox, Div, Shortcut, Uploads, Accordion };
+import Gallery from "./ContentElements/Gallery";
+export { Text, Html, Textpic, Image, ImageLightbox, Div, Shortcut, Uploads, Accordion, Gallery };

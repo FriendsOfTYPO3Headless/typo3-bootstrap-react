@@ -410,6 +410,7 @@ const contentElementTemplates = {
     div: (headlessContentData) => <CE.Div data={headlessContentData.content}/>,
     uploads: (headlessContentData) => <CE.Uploads data={headlessContentData.content}/>,
     accordion: (headlessContentData) => <CE.Accordion data={headlessContentData.content}/>,
+    gallery: (headlessContentData) => <CE.Gallery data={headlessContentData.content}/>,
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     // textmedia: (headlessContentData, args = {}) => <CE.Textmedia data={headlessContentData.content}/>,

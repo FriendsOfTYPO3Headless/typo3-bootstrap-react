@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Col, Row, Accordion as Accordion$1, Container } from 'react-bootstrap';
+import { Col, Row, Accordion as Accordion$1, Figure, Alert, Container } from 'react-bootstrap';
 import Lightbox from 'react-image-lightbox';
+import FigureImage from 'react-bootstrap/FigureImage';
 
 var section = function (props) {
     if (props.pageTemplate.hasOwnProperty(props.name)) {
@@ -111,6 +112,35 @@ var ImageLightbox = function (props) {
     return React.createElement(React.Fragment, null);
 };
 
+var Image$2 = function (props) {
+    props.data; var file = props.file;
+    var crops = Object.keys(file.properties.crop);
+    var finalWidth = file.properties.dimensions.width;
+    var finalHeight = file.properties.dimensions.height;
+    var sources = crops.map(function (cropIdentifier, index) {
+        var src = file.publicUrl; // TODO get an URL for every crop
+        var media = '';
+        switch (cropIdentifier) {
+            case 'extrasmall':
+                media = '(max-width: 575px)';
+                break;
+            case 'small':
+                media = '(min-width: 576px)';
+                break;
+            case 'medium':
+                media = '(min-width: 768px)';
+                break;
+            case 'large':
+                media = '(min-width: 992px)';
+                break;
+        }
+        return React.createElement("source", { key: index, src: src, media: media });
+    });
+    return React.createElement("picture", null,
+        sources,
+        React.createElement(FigureImage, { loading: "lazy", className: 'img-fluid', src: file.publicUrl, width: finalWidth, height: finalHeight, title: file.properties.title, alt: file.properties.alternative }));
+};
+
 var imageUris = function (data) {
     var _images = [];
     Object.keys(data.gallery.rows).forEach(function (rowKey) {
@@ -128,17 +158,17 @@ var ImageCols = function (props) {
         React.createElement(ImageLightbox, { images: images, setShowLightbox: setShowlightbox, showLightbox: showLightbox, photoIndex: photoIndex, setPhotoIndex: setPhotoIndex }),
         Object.keys(props.data.gallery.rows).map(function (rowKey) {
             return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
-                var _a, _b;
-                var image = React.createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, alt: (_b = (_a = props.data.gallery.rows[rowKey].columns[columnKey]) === null || _a === void 0 ? void 0 : _a.properties) === null || _b === void 0 ? void 0 : _b.title });
+                var file = props.data.gallery.rows[rowKey].columns[columnKey];
+                var image = React.createElement(Image$2, { data: props.data, file: file });
                 return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns, key: rowKey + '-' + columnKey },
                     props.data.enlargeImageOnClick ?
                         React.createElement("a", { onClick: function (e) {
                                 e.preventDefault();
-                                setPhotoIndex(images.indexOf(props.data.gallery.rows[rowKey].columns[columnKey].publicUrl));
+                                setPhotoIndex(images.indexOf(file.publicUrl));
                                 setShowlightbox(true);
                                 return true;
                             }, href: '#' }, image) : image,
-                    props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                    file.properties.description);
             });
         }));
 };
@@ -160,7 +190,7 @@ var Textpic = function (props) {
                 React.createElement(Col, { className: "textpic-item textpic-text", md: "6", dangerouslySetInnerHTML: { __html: props.data.bodytext } }))));
 };
 
-var Image = function (props) {
+var Image$1 = function (props) {
     return React.createElement("div", { className: "image" },
         React.createElement("div", { className: "gallery-row" },
             React.createElement(Row, null,
@@ -247,16 +277,61 @@ var Accordion = function (props) {
     if (!accordionItems || accordionItems.length < 0) {
         return React.createElement(React.Fragment, null);
     }
+    console.log(accordionItems);
     var accorditionItemsTemplate = accordionItems.map(function (accordionItem) {
-        // TODO: Add Media-Gallery
+        var galleryTemplate = React.createElement(React.Fragment, null);
+        if (accordionItem.media.length > 0) {
+            galleryTemplate = React.createElement("div", { className: 'accordion-content-item accordion-content-media' });
+        }
         return React.createElement(Accordion$1.Item, { key: accordionItem.uid, eventKey: accordionItem.uid.toString() },
             React.createElement(Accordion$1.Header, { as: "h4", id: "accordion-heading-".concat(accordionItem.uid) },
                 React.createElement("span", { className: "accordion-title-link-text" }, accordionItem.header)),
             React.createElement(Accordion$1.Body, null,
                 React.createElement("div", { className: "accordion-content accordion-content-".concat(accordionItem.mediaorient) },
-                    React.createElement("div", { dangerouslySetInnerHTML: { __html: accordionItem.bodytext } }))));
+                    galleryTemplate,
+                    React.createElement("div", { className: 'accordion-content-item accordion-content-text', dangerouslySetInnerHTML: { __html: accordionItem.bodytext } }))));
     });
     return React.createElement(Accordion$1, { defaultActiveKey: activeElement }, accorditionItemsTemplate);
+};
+
+var Image = function (props) {
+    var file = props.file, data = props.data;
+    var caption = file.properties.description ?
+        React.createElement(Figure.Caption, { className: "caption" }, file.properties.description) : React.createElement(React.Fragment, null);
+    return React.createElement(Figure, { className: 'image' },
+        React.createElement(Image$2, { data: data, file: file }),
+        caption);
+};
+
+var Type = function (props) {
+    var file = props.file, data = props.data;
+    var fileType = file.properties.type;
+    if (!isNaN(+file.properties.type)) {
+        var fileExtension_1 = file.properties.filename.split('.').pop();
+        console.log('ext', fileExtension_1);
+        if (['jpg', 'png'].some(function (type) { return type === fileExtension_1; })) {
+            console.log('ext', fileExtension_1);
+            fileType = 'image';
+        }
+    }
+    switch (fileType) {
+        case 'image':
+            return React.createElement(Image, { file: file, data: data });
+        default:
+            return React.createElement(Alert, { variant: "info" },
+                "Filetype unknown ",
+                file.properties.filename);
+    }
+};
+
+// TODO Add
+var Gallery = function (props) {
+    var _a = props.data, images = _a.images, imagecols = _a.imagecols;
+    var galleryItems = images.map(function (image, index) {
+        return React.createElement(Col, { className: "gallery-item gallery-item-size-".concat(imagecols), md: imagecols },
+            React.createElement(Type, { data: props.data, file: image }));
+    });
+    return React.createElement("div", { className: 'gallery-row' }, galleryItems);
 };
 
 var BackgroundImage = function (props) {
@@ -673,11 +748,12 @@ var contentElementTemplates = {
     text: function (headlessContentData) { return React.createElement(Text, { data: headlessContentData.content }); },
     html: function (headlessContentData) { return React.createElement(Html, { data: headlessContentData.content }); },
     textpic: function (headlessContentData) { return React.createElement(Textpic, { data: headlessContentData.content }); },
-    image: function (headlessContentData) { return React.createElement(Image, { data: headlessContentData.content }); },
+    image: function (headlessContentData) { return React.createElement(Image$1, { data: headlessContentData.content }); },
     shortcut: function (headlessContentData) { return React.createElement(Shortcut, { data: headlessContentData.content }); },
     div: function (headlessContentData) { return React.createElement(Div, { data: headlessContentData.content }); },
     uploads: function (headlessContentData) { return React.createElement(Uploads, { data: headlessContentData.content }); },
     accordion: function (headlessContentData) { return React.createElement(Accordion, { data: headlessContentData.content }); },
+    gallery: function (headlessContentData) { return React.createElement(Gallery, { data: headlessContentData.content }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     // textmedia: (headlessContentData, args = {}) => <CE.Textmedia data={headlessContentData.content}/>,

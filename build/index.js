@@ -5,11 +5,13 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var React = require('react');
 var reactBootstrap = require('react-bootstrap');
 var Lightbox = require('react-image-lightbox');
+var FigureImage = require('react-bootstrap/FigureImage');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 var Lightbox__default = /*#__PURE__*/_interopDefaultLegacy(Lightbox);
+var FigureImage__default = /*#__PURE__*/_interopDefaultLegacy(FigureImage);
 
 var section = function (props) {
     if (props.pageTemplate.hasOwnProperty(props.name)) {
@@ -120,6 +122,35 @@ var ImageLightbox = function (props) {
     return React__default["default"].createElement(React__default["default"].Fragment, null);
 };
 
+var Image$2 = function (props) {
+    props.data; var file = props.file;
+    var crops = Object.keys(file.properties.crop);
+    var finalWidth = file.properties.dimensions.width;
+    var finalHeight = file.properties.dimensions.height;
+    var sources = crops.map(function (cropIdentifier, index) {
+        var src = file.publicUrl; // TODO get an URL for every crop
+        var media = '';
+        switch (cropIdentifier) {
+            case 'extrasmall':
+                media = '(max-width: 575px)';
+                break;
+            case 'small':
+                media = '(min-width: 576px)';
+                break;
+            case 'medium':
+                media = '(min-width: 768px)';
+                break;
+            case 'large':
+                media = '(min-width: 992px)';
+                break;
+        }
+        return React__default["default"].createElement("source", { key: index, src: src, media: media });
+    });
+    return React__default["default"].createElement("picture", null,
+        sources,
+        React__default["default"].createElement(FigureImage__default["default"], { loading: "lazy", className: 'img-fluid', src: file.publicUrl, width: finalWidth, height: finalHeight, title: file.properties.title, alt: file.properties.alternative }));
+};
+
 var imageUris = function (data) {
     var _images = [];
     Object.keys(data.gallery.rows).forEach(function (rowKey) {
@@ -137,17 +168,17 @@ var ImageCols = function (props) {
         React__default["default"].createElement(ImageLightbox, { images: images, setShowLightbox: setShowlightbox, showLightbox: showLightbox, photoIndex: photoIndex, setPhotoIndex: setPhotoIndex }),
         Object.keys(props.data.gallery.rows).map(function (rowKey) {
             return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
-                var _a, _b;
-                var image = React__default["default"].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, alt: (_b = (_a = props.data.gallery.rows[rowKey].columns[columnKey]) === null || _a === void 0 ? void 0 : _a.properties) === null || _b === void 0 ? void 0 : _b.title });
+                var file = props.data.gallery.rows[rowKey].columns[columnKey];
+                var image = React__default["default"].createElement(Image$2, { data: props.data, file: file });
                 return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns, key: rowKey + '-' + columnKey },
                     props.data.enlargeImageOnClick ?
                         React__default["default"].createElement("a", { onClick: function (e) {
                                 e.preventDefault();
-                                setPhotoIndex(images.indexOf(props.data.gallery.rows[rowKey].columns[columnKey].publicUrl));
+                                setPhotoIndex(images.indexOf(file.publicUrl));
                                 setShowlightbox(true);
                                 return true;
                             }, href: '#' }, image) : image,
-                    props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                    file.properties.description);
             });
         }));
 };
@@ -169,7 +200,7 @@ var Textpic = function (props) {
                 React__default["default"].createElement(reactBootstrap.Col, { className: "textpic-item textpic-text", md: "6", dangerouslySetInnerHTML: { __html: props.data.bodytext } }))));
 };
 
-var Image = function (props) {
+var Image$1 = function (props) {
     return React__default["default"].createElement("div", { className: "image" },
         React__default["default"].createElement("div", { className: "gallery-row" },
             React__default["default"].createElement(reactBootstrap.Row, null,
@@ -256,16 +287,61 @@ var Accordion = function (props) {
     if (!accordionItems || accordionItems.length < 0) {
         return React__default["default"].createElement(React__default["default"].Fragment, null);
     }
+    console.log(accordionItems);
     var accorditionItemsTemplate = accordionItems.map(function (accordionItem) {
-        // TODO: Add Media-Gallery
+        var galleryTemplate = React__default["default"].createElement(React__default["default"].Fragment, null);
+        if (accordionItem.media.length > 0) {
+            galleryTemplate = React__default["default"].createElement("div", { className: 'accordion-content-item accordion-content-media' });
+        }
         return React__default["default"].createElement(reactBootstrap.Accordion.Item, { key: accordionItem.uid, eventKey: accordionItem.uid.toString() },
             React__default["default"].createElement(reactBootstrap.Accordion.Header, { as: "h4", id: "accordion-heading-".concat(accordionItem.uid) },
                 React__default["default"].createElement("span", { className: "accordion-title-link-text" }, accordionItem.header)),
             React__default["default"].createElement(reactBootstrap.Accordion.Body, null,
                 React__default["default"].createElement("div", { className: "accordion-content accordion-content-".concat(accordionItem.mediaorient) },
-                    React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: accordionItem.bodytext } }))));
+                    galleryTemplate,
+                    React__default["default"].createElement("div", { className: 'accordion-content-item accordion-content-text', dangerouslySetInnerHTML: { __html: accordionItem.bodytext } }))));
     });
     return React__default["default"].createElement(reactBootstrap.Accordion, { defaultActiveKey: activeElement }, accorditionItemsTemplate);
+};
+
+var Image = function (props) {
+    var file = props.file, data = props.data;
+    var caption = file.properties.description ?
+        React__default["default"].createElement(reactBootstrap.Figure.Caption, { className: "caption" }, file.properties.description) : React__default["default"].createElement(React__default["default"].Fragment, null);
+    return React__default["default"].createElement(reactBootstrap.Figure, { className: 'image' },
+        React__default["default"].createElement(Image$2, { data: data, file: file }),
+        caption);
+};
+
+var Type = function (props) {
+    var file = props.file, data = props.data;
+    var fileType = file.properties.type;
+    if (!isNaN(+file.properties.type)) {
+        var fileExtension_1 = file.properties.filename.split('.').pop();
+        console.log('ext', fileExtension_1);
+        if (['jpg', 'png'].some(function (type) { return type === fileExtension_1; })) {
+            console.log('ext', fileExtension_1);
+            fileType = 'image';
+        }
+    }
+    switch (fileType) {
+        case 'image':
+            return React__default["default"].createElement(Image, { file: file, data: data });
+        default:
+            return React__default["default"].createElement(reactBootstrap.Alert, { variant: "info" },
+                "Filetype unknown ",
+                file.properties.filename);
+    }
+};
+
+// TODO Add
+var Gallery = function (props) {
+    var _a = props.data, images = _a.images, imagecols = _a.imagecols;
+    var galleryItems = images.map(function (image, index) {
+        return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item gallery-item-size-".concat(imagecols), md: imagecols },
+            React__default["default"].createElement(Type, { data: props.data, file: image }));
+    });
+    return React__default["default"].createElement("div", { className: 'gallery-row' }, galleryItems);
 };
 
 var BackgroundImage = function (props) {
@@ -682,11 +758,12 @@ var contentElementTemplates = {
     text: function (headlessContentData) { return React__default["default"].createElement(Text, { data: headlessContentData.content }); },
     html: function (headlessContentData) { return React__default["default"].createElement(Html, { data: headlessContentData.content }); },
     textpic: function (headlessContentData) { return React__default["default"].createElement(Textpic, { data: headlessContentData.content }); },
-    image: function (headlessContentData) { return React__default["default"].createElement(Image, { data: headlessContentData.content }); },
+    image: function (headlessContentData) { return React__default["default"].createElement(Image$1, { data: headlessContentData.content }); },
     shortcut: function (headlessContentData) { return React__default["default"].createElement(Shortcut, { data: headlessContentData.content }); },
     div: function (headlessContentData) { return React__default["default"].createElement(Div, { data: headlessContentData.content }); },
     uploads: function (headlessContentData) { return React__default["default"].createElement(Uploads, { data: headlessContentData.content }); },
     accordion: function (headlessContentData) { return React__default["default"].createElement(Accordion, { data: headlessContentData.content }); },
+    gallery: function (headlessContentData) { return React__default["default"].createElement(Gallery, { data: headlessContentData.content }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     // textmedia: (headlessContentData, args = {}) => <CE.Textmedia data={headlessContentData.content}/>,

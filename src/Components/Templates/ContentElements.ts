@@ -9,6 +9,7 @@ import Html from './ContentElements/Html'
 //import ImageModal from './ContentElements/ImageModal'
 import Uploads from './ContentElements/Uploads'
 import Accordion from "./ContentElements/Accordion";
+import Gallery from "./ContentElements/Gallery";
 import MenuSitemap from './ContentElements/MenuSitemap'
 
 
@@ -64,5 +65,6 @@ export {
     //Image,
    // Textmedia,
     Uploads,
-    Accordion
+    Accordion,
+    Gallery
 }
