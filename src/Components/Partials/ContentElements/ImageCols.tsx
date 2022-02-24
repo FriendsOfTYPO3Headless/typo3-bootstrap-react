@@ -1,7 +1,7 @@
 import {Col} from "react-bootstrap";
 import React, {useState} from 'react';
 import ImageLightbox from "./ImageLightbox";
-import Image from "./Media/Rendering/Image";
+import Image from "./Media/Type/Image";
 
 const imageUris = (data: any) => {
     const _images = [];
@@ -36,7 +36,6 @@ const ImageCols: React.FC<{ data: any }> = (props) => {
                         }} href={'#'}>
                             {image}
                         </a> : image}
-                    {file.properties.description}
                 </Col>
             })
         })

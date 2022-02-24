@@ -151,6 +151,15 @@ var Image$2 = function (props) {
         React__default["default"].createElement(FigureImage__default["default"], { loading: "lazy", className: 'img-fluid', src: file.publicUrl, width: finalWidth, height: finalHeight, title: file.properties.title, alt: file.properties.alternative }));
 };
 
+var Image$1 = function (props) {
+    var file = props.file, data = props.data;
+    var caption = file.properties.description ?
+        React__default["default"].createElement(reactBootstrap.Figure.Caption, { className: "caption" }, file.properties.description) : React__default["default"].createElement(React__default["default"].Fragment, null);
+    return React__default["default"].createElement(reactBootstrap.Figure, { className: 'image' },
+        React__default["default"].createElement(Image$2, { data: data, file: file }),
+        caption);
+};
+
 var imageUris = function (data) {
     var _images = [];
     Object.keys(data.gallery.rows).forEach(function (rowKey) {
@@ -169,16 +178,14 @@ var ImageCols = function (props) {
         Object.keys(props.data.gallery.rows).map(function (rowKey) {
             return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
                 var file = props.data.gallery.rows[rowKey].columns[columnKey];
-                var image = React__default["default"].createElement(Image$2, { data: props.data, file: file });
-                return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns, key: rowKey + '-' + columnKey },
-                    props.data.enlargeImageOnClick ?
-                        React__default["default"].createElement("a", { onClick: function (e) {
-                                e.preventDefault();
-                                setPhotoIndex(images.indexOf(file.publicUrl));
-                                setShowlightbox(true);
-                                return true;
-                            }, href: '#' }, image) : image,
-                    file.properties.description);
+                var image = React__default["default"].createElement(Image$1, { data: props.data, file: file });
+                return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns, key: rowKey + '-' + columnKey }, props.data.enlargeImageOnClick ?
+                    React__default["default"].createElement("a", { onClick: function (e) {
+                            e.preventDefault();
+                            setPhotoIndex(images.indexOf(file.publicUrl));
+                            setShowlightbox(true);
+                            return true;
+                        }, href: '#' }, image) : image);
             });
         }));
 };
@@ -200,7 +207,7 @@ var Textpic = function (props) {
                 React__default["default"].createElement(reactBootstrap.Col, { className: "textpic-item textpic-text", md: "6", dangerouslySetInnerHTML: { __html: props.data.bodytext } }))));
 };
 
-var Image$1 = function (props) {
+var Image = function (props) {
     return React__default["default"].createElement("div", { className: "image" },
         React__default["default"].createElement("div", { className: "gallery-row" },
             React__default["default"].createElement(reactBootstrap.Row, null,
@@ -306,15 +313,6 @@ var __assign = function() {
     return __assign.apply(this, arguments);
 };
 
-var Image = function (props) {
-    var file = props.file, data = props.data;
-    var caption = file.properties.description ?
-        React__default["default"].createElement(reactBootstrap.Figure.Caption, { className: "caption" }, file.properties.description) : React__default["default"].createElement(React__default["default"].Fragment, null);
-    return React__default["default"].createElement(reactBootstrap.Figure, { className: 'image' },
-        React__default["default"].createElement(Image$2, { data: data, file: file }),
-        caption);
-};
-
 var Type = function (props) {
     var file = props.file, data = props.data;
     var fileType = file.properties.type;
@@ -328,7 +326,7 @@ var Type = function (props) {
     }
     switch (fileType) {
         case 'image':
-            return React__default["default"].createElement(Image, { file: file, data: data });
+            return React__default["default"].createElement(Image$1, { file: file, data: data });
         default:
             return React__default["default"].createElement(reactBootstrap.Alert, { variant: "info" },
                 "Filetype unknown ",
@@ -784,7 +782,7 @@ var contentElementTemplates = {
     text: function (headlessContentData) { return React__default["default"].createElement(Text, { data: headlessContentData.content }); },
     html: function (headlessContentData) { return React__default["default"].createElement(Html, { data: headlessContentData.content }); },
     textpic: function (headlessContentData) { return React__default["default"].createElement(Textpic, { data: headlessContentData.content }); },
-    image: function (headlessContentData) { return React__default["default"].createElement(Image$1, { data: headlessContentData.content }); },
+    image: function (headlessContentData) { return React__default["default"].createElement(Image, { data: headlessContentData.content }); },
     shortcut: function (headlessContentData) { return React__default["default"].createElement(Shortcut, { data: headlessContentData.content }); },
     div: function (headlessContentData) { return React__default["default"].createElement(Div, { data: headlessContentData.content }); },
     uploads: function (headlessContentData) { return React__default["default"].createElement(Uploads, { data: headlessContentData.content }); },
