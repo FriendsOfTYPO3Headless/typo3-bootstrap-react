@@ -8,4 +8,5 @@ import Html from './ContentElements/Html';
 import Uploads from './ContentElements/Uploads';
 import Accordion from "./ContentElements/Accordion";
 import Gallery from "./ContentElements/Gallery";
-export { Text, Html, Textpic, Image, ImageLightbox, Div, Shortcut, Uploads, Accordion, Gallery };
+import CardGroup from "./ContentElements/CardGroup";
+export { Text, Html, Textpic, Image, ImageLightbox, Div, Shortcut, Uploads, Accordion, Gallery, CardGroup };

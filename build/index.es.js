@@ -358,6 +358,10 @@ var Accordion = function (props) {
     return React.createElement(Accordion$1, { defaultActiveKey: activeElement }, accorditionItemsTemplate);
 };
 
+var CardGroup = function (props) {
+    return React.createElement(React.Fragment, null);
+};
+
 var BackgroundImage = function (props) {
     if (props.data.appearance.backgroundImage.length < 1) {
         return null;
@@ -778,6 +782,7 @@ var contentElementTemplates = {
     uploads: function (headlessContentData) { return React.createElement(Uploads, { data: headlessContentData.content }); },
     accordion: function (headlessContentData) { return React.createElement(Accordion, { data: headlessContentData.content }); },
     gallery: function (headlessContentData) { return React.createElement(Gallery, { data: headlessContentData.content }); },
+    card_group: function (headlessContentData) { return React.createElement(CardGroup, { data: headlessContentData.content }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     // textmedia: (headlessContentData, args = {}) => <CE.Textmedia data={headlessContentData.content}/>,
