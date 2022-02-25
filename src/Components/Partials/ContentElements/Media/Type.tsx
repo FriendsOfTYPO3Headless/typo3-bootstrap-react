@@ -12,9 +12,7 @@ export const Type: React.FC<IType> = (props) => {
     let fileType = file.properties.type
     if(!isNaN(+file.properties.type)){
         const fileExtension = file.properties.filename.split('.').pop()
-        console.log('ext', fileExtension)
         if(['jpg','png'].some((type) => type === fileExtension)){
-            console.log('ext', fileExtension)
             fileType = 'image'
         }
     }

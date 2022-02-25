@@ -318,9 +318,7 @@ var Type = function (props) {
     var fileType = file.properties.type;
     if (!isNaN(+file.properties.type)) {
         var fileExtension_1 = file.properties.filename.split('.').pop();
-        console.log('ext', fileExtension_1);
         if (['jpg', 'png'].some(function (type) { return type === fileExtension_1; })) {
-            console.log('ext', fileExtension_1);
             fileType = 'image';
         }
     }
@@ -368,8 +366,50 @@ var Accordion = function (props) {
     return React__default["default"].createElement(reactBootstrap.Accordion, { defaultActiveKey: activeElement }, accorditionItemsTemplate);
 };
 
+var defaultProperties = {
+    href: '',
+    target: '',
+    className: 'btn-link',
+    title: '',
+    linkText: '',
+    additionalAttributes: []
+};
+var Link = function (props) {
+    var href = props.href, target = props.target, className = props.className, title = props.title, linkText = props.linkText; props.additionalAttributes;
+    return React__default["default"].createElement("a", { href: href, target: target, className: "btn ".concat(className), title: title }, linkText);
+};
+Link.defaultProps = defaultProperties;
+
 var CardGroup = function (props) {
-    return React__default["default"].createElement(React__default["default"].Fragment, null);
+    var _a = props.data, items = _a.items, pi_flexform = _a.pi_flexform;
+    var cards = items.map(function (cardData, index_number) {
+        var header = cardData.header, subheader = cardData.subheader, bodytext = cardData.bodytext, image = cardData.image, link = cardData.link, link_title = cardData.link_title, link_class = cardData.link_class;
+        var imageTemplate = image ? image.map(function (imageData, index) { return React__default["default"].createElement(reactBootstrap.Card.Img, { key: "image-data-".concat(index), variant: "top", src: imageData.publicUrl }); }) : React__default["default"].createElement(React__default["default"].Fragment, null);
+        var linkButton = React__default["default"].createElement(React__default["default"].Fragment, null);
+        if (link) {
+            if (link_title && link_title.length > 0) {
+                link.title = link_title;
+            }
+            if (link_class && link_class.length > 0) {
+                link["class"] = "".concat(link["class"], " btn-").concat(link_class);
+            }
+            linkButton = React__default["default"].createElement(Link, { href: link.href, title: link.title, className: link['class'], target: link.target, linkText: link.linkText });
+        }
+        return React__default["default"].createElement(reactBootstrap.Col, { key: "card-group-col-".concat(index_number) },
+            React__default["default"].createElement(reactBootstrap.Card, null,
+                header.length > 0 && React__default["default"].createElement(reactBootstrap.Card.Header, null, header),
+                imageTemplate,
+                React__default["default"].createElement(reactBootstrap.Card.Body, null,
+                    subheader.length > 0 && React__default["default"].createElement(reactBootstrap.Card.Title, null, subheader),
+                    bodytext.length > 0 && React__default["default"].createElement(reactBootstrap.Card.Text, { as: "div" },
+                        React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: bodytext } })),
+                    linkButton)));
+    });
+    var alignment = 'justify-content-left';
+    if (pi_flexform.align.length > 0) {
+        alignment = "justify-content-".concat(pi_flexform.align);
+    }
+    return React__default["default"].createElement(reactBootstrap.Row, { xs: 1, md: pi_flexform.columns, className: "card-group ".concat(alignment) }, cards);
 };
 
 var BackgroundImage = function (props) {
