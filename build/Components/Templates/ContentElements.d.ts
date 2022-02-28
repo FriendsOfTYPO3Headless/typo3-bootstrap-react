@@ -10,4 +10,5 @@ import Uploads from './ContentElements/Uploads';
 import Accordion from "./ContentElements/Accordion";
 import Gallery from "./ContentElements/Gallery";
 import CardGroup from "./ContentElements/CardGroup";
-export { Text, Html, Textpic, Image, ImageLightbox, Div, Shortcut, Textmedia, Uploads, Accordion, Gallery, CardGroup };
+import TextColumns from "./ContentElements/TextColumns";
+export { Text, Html, Textpic, Image, ImageLightbox, Div, Shortcut, Textmedia, Uploads, Accordion, Gallery, CardGroup, TextColumns, };

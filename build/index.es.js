@@ -448,6 +448,12 @@ var CardGroup = function (props) {
     return React.createElement(Row, { xs: 1, md: pi_flexform.columns, className: "card-group ".concat(alignment) }, cards);
 };
 
+var TextColumns = function (props) {
+    var bodytext = props.data.bodytext;
+    return React.createElement("div", { className: "text-column" },
+        React.createElement("div", { dangerouslySetInnerHTML: { __html: bodytext } }));
+};
+
 var BackgroundImage = function (props) {
     if (props.data.appearance.backgroundImage.length < 1) {
         return null;
@@ -868,12 +874,11 @@ var contentElementTemplates = {
     uploads: function (headlessContentData) { return React.createElement(Uploads, { data: headlessContentData.content }); },
     accordion: function (headlessContentData) { return React.createElement(Accordion, { data: headlessContentData.content }); },
     gallery: function (headlessContentData) { return React.createElement(Gallery, { data: headlessContentData.content }); },
+    textmedia: function (headlessContentData) { return React.createElement(Textmedia, { data: headlessContentData.content }); },
     card_group: function (headlessContentData) { return React.createElement(CardGroup, { data: headlessContentData.content }); },
+    textcolumn: function (headlessContentData) { return React.createElement(TextColumns, { data: headlessContentData.content }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
-    textmedia: function (headlessContentData, args) {
-        return React.createElement(Textmedia, { data: headlessContentData.content });
-    },
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
     // bullets: (headlessContentData, args = {}) => <CE.Bullets data={headlessContentData.content}/>,
     // image: (headlessContentData, args = {}) => <CE.Image data={headlessContentData.content}/>,

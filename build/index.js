@@ -458,6 +458,12 @@ var CardGroup = function (props) {
     return React__default["default"].createElement(reactBootstrap.Row, { xs: 1, md: pi_flexform.columns, className: "card-group ".concat(alignment) }, cards);
 };
 
+var TextColumns = function (props) {
+    var bodytext = props.data.bodytext;
+    return React__default["default"].createElement("div", { className: "text-column" },
+        React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: bodytext } }));
+};
+
 var BackgroundImage = function (props) {
     if (props.data.appearance.backgroundImage.length < 1) {
         return null;
@@ -878,12 +884,11 @@ var contentElementTemplates = {
     uploads: function (headlessContentData) { return React__default["default"].createElement(Uploads, { data: headlessContentData.content }); },
     accordion: function (headlessContentData) { return React__default["default"].createElement(Accordion, { data: headlessContentData.content }); },
     gallery: function (headlessContentData) { return React__default["default"].createElement(Gallery, { data: headlessContentData.content }); },
+    textmedia: function (headlessContentData) { return React__default["default"].createElement(Textmedia, { data: headlessContentData.content }); },
     card_group: function (headlessContentData) { return React__default["default"].createElement(CardGroup, { data: headlessContentData.content }); },
+    textcolumn: function (headlessContentData) { return React__default["default"].createElement(TextColumns, { data: headlessContentData.content }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
-    textmedia: function (headlessContentData, args) {
-        return React__default["default"].createElement(Textmedia, { data: headlessContentData.content });
-    },
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
     // bullets: (headlessContentData, args = {}) => <CE.Bullets data={headlessContentData.content}/>,
     // image: (headlessContentData, args = {}) => <CE.Image data={headlessContentData.content}/>,
