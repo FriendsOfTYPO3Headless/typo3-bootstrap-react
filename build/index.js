@@ -258,12 +258,6 @@ var Textmedia = function (props) {
                                         props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
                                 default:
                                     return React__default["default"].createElement(React__default["default"].Fragment, null);
-                                // return <Col
-                                //     className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
-                                //     <iframe src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
-                                //             className="embed-responsive-item"/>
-                                //     {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
-                                // </Col>
                             }
                         });
                     }))),
