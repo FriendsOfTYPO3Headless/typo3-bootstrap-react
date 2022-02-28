@@ -219,6 +219,58 @@ var Div = function (props) {
         React__default["default"].createElement("hr", null));
 };
 
+var Textmedia = function (props) {
+    var textmediaClassName;
+    if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
+        textmediaClassName = props.data.gallery.position.horizontal;
+    }
+    if (props.data.gallery.position.horizontal === 'center') {
+        textmediaClassName = props.data.gallery.position.vertical;
+    }
+    return React__default["default"].createElement("div", { className: "textmedia" },
+        React__default["default"].createElement("div", { className: "gallery-row" },
+            React__default["default"].createElement(reactBootstrap.Row, { className: "textmedia textmedia-" + textmediaClassName },
+                React__default["default"].createElement(reactBootstrap.Col, { className: "textmedia-item textmedia-gallery", md: textmediaClassName === props.data.gallery.position.vertical ? "auto" : "6" },
+                    React__default["default"].createElement(reactBootstrap.Row, null, Object.keys(props.data.gallery.rows).map(function (rowKey) {
+                        return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
+                            switch (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType) {
+                                case 'video/youtube':
+                                    return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                        React__default["default"].createElement("iframe", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
+                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                case 'image/jpeg':
+                                    return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                        React__default["default"].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
+                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                case 'image/svg+xml':
+                                    return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                        React__default["default"].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
+                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                case 'video/mp4':
+                                    return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                        React__default["default"].createElement("video", { controls: true },
+                                            React__default["default"].createElement("source", { type: "video/mp4", src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                case 'video/vimeo':
+                                    return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                        React__default["default"].createElement("video", { controls: true },
+                                            React__default["default"].createElement("source", { type: "video/mp4", src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                default:
+                                    return React__default["default"].createElement(React__default["default"].Fragment, null);
+                                // return <Col
+                                //     className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
+                                //     <iframe src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
+                                //             className="embed-responsive-item"/>
+                                //     {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
+                                // </Col>
+                            }
+                        });
+                    }))),
+                React__default["default"].createElement(reactBootstrap.Col, { className: "textmedia-item textmedia-text" },
+                    React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } })))));
+};
+
 var Shortcut = function (props) {
     return React__default["default"].createElement("div", { className: "shortcut" }, props.data.shortcut.map(function (cObject) {
         return RenderContent(cObject);
@@ -835,7 +887,9 @@ var contentElementTemplates = {
     card_group: function (headlessContentData) { return React__default["default"].createElement(CardGroup, { data: headlessContentData.content }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
-    // textmedia: (headlessContentData, args = {}) => <CE.Textmedia data={headlessContentData.content}/>,
+    textmedia: function (headlessContentData, args) {
+        return React__default["default"].createElement(Textmedia, { data: headlessContentData.content });
+    },
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
     // bullets: (headlessContentData, args = {}) => <CE.Bullets data={headlessContentData.content}/>,
     // image: (headlessContentData, args = {}) => <CE.Image data={headlessContentData.content}/>,

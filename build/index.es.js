@@ -209,6 +209,58 @@ var Div = function (props) {
         React.createElement("hr", null));
 };
 
+var Textmedia = function (props) {
+    var textmediaClassName;
+    if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
+        textmediaClassName = props.data.gallery.position.horizontal;
+    }
+    if (props.data.gallery.position.horizontal === 'center') {
+        textmediaClassName = props.data.gallery.position.vertical;
+    }
+    return React.createElement("div", { className: "textmedia" },
+        React.createElement("div", { className: "gallery-row" },
+            React.createElement(Row, { className: "textmedia textmedia-" + textmediaClassName },
+                React.createElement(Col, { className: "textmedia-item textmedia-gallery", md: textmediaClassName === props.data.gallery.position.vertical ? "auto" : "6" },
+                    React.createElement(Row, null, Object.keys(props.data.gallery.rows).map(function (rowKey) {
+                        return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
+                            switch (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType) {
+                                case 'video/youtube':
+                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                        React.createElement("iframe", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
+                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                case 'image/jpeg':
+                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                        React.createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
+                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                case 'image/svg+xml':
+                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                        React.createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
+                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                case 'video/mp4':
+                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                        React.createElement("video", { controls: true },
+                                            React.createElement("source", { type: "video/mp4", src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                case 'video/vimeo':
+                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                        React.createElement("video", { controls: true },
+                                            React.createElement("source", { type: "video/mp4", src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                default:
+                                    return React.createElement(React.Fragment, null);
+                                // return <Col
+                                //     className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}>
+                                //     <iframe src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
+                                //             className="embed-responsive-item"/>
+                                //     {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
+                                // </Col>
+                            }
+                        });
+                    }))),
+                React.createElement(Col, { className: "textmedia-item textmedia-text" },
+                    React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } })))));
+};
+
 var Shortcut = function (props) {
     return React.createElement("div", { className: "shortcut" }, props.data.shortcut.map(function (cObject) {
         return RenderContent(cObject);
@@ -825,7 +877,9 @@ var contentElementTemplates = {
     card_group: function (headlessContentData) { return React.createElement(CardGroup, { data: headlessContentData.content }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
-    // textmedia: (headlessContentData, args = {}) => <CE.Textmedia data={headlessContentData.content}/>,
+    textmedia: function (headlessContentData, args) {
+        return React.createElement(Textmedia, { data: headlessContentData.content });
+    },
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
     // bullets: (headlessContentData, args = {}) => <CE.Bullets data={headlessContentData.content}/>,
     // image: (headlessContentData, args = {}) => <CE.Image data={headlessContentData.content}/>,

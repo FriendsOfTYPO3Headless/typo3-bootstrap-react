@@ -65,6 +65,7 @@ declare const contentElementTemplates: {
     accordion: (headlessContentData: any) => JSX.Element;
     gallery: (headlessContentData: any) => JSX.Element;
     card_group: (headlessContentData: any) => JSX.Element;
+    textmedia: (headlessContentData: any, args?: {}) => JSX.Element;
 };
 declare const _default: React.NamedExoticComponent<TYPO3PagePropsInterface>;
 export default _default;
