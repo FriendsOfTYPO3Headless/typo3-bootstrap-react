@@ -125,30 +125,38 @@ var ImageLightbox = function (props) {
 var Image$2 = function (props) {
     props.data; var file = props.file;
     var crops = Object.keys(file.properties.crop);
-    var finalWidth = file.properties.dimensions.width;
-    var finalHeight = file.properties.dimensions.height;
+    file.properties.dimensions.width;
+    file.properties.dimensions.height;
     var sources = crops.map(function (cropIdentifier, index) {
-        var src = file.publicUrl; // TODO get an URL for every crop
-        var media = '';
+        var src;
+        var media;
         switch (cropIdentifier) {
             case 'extrasmall':
                 media = '(max-width: 575px)';
+                src = file.cropVariants.extrasmall.publicUrl;
                 break;
             case 'small':
                 media = '(min-width: 576px)';
+                src = file.cropVariants.small.publicUrl;
                 break;
             case 'medium':
                 media = '(min-width: 768px)';
+                src = file.cropVariants.medium.publicUrl;
                 break;
             case 'large':
                 media = '(min-width: 992px)';
+                src = file.cropVariants.large.publicUrl;
+                break;
+            default:
+                media = '(min-width: 1200px)';
+                src = file.cropVariants.default.publicUrl;
                 break;
         }
-        return React__default["default"].createElement("source", { key: index, src: src, media: media });
+        return React__default["default"].createElement("source", { key: index, srcSet: src, media: media });
     });
     return React__default["default"].createElement("picture", null,
         sources,
-        React__default["default"].createElement(FigureImage__default["default"], { loading: "lazy", className: 'img-fluid', src: file.publicUrl, width: finalWidth, height: finalHeight, title: file.properties.title, alt: file.properties.alternative }));
+        React__default["default"].createElement(FigureImage__default["default"], { loading: "lazy", className: 'img-fluid', src: file.publicUrl, title: file.properties.title, alt: file.properties.alternative }));
 };
 
 var Image$1 = function (props) {
@@ -395,7 +403,6 @@ var Accordion = function (props) {
     if (!accordionItems || accordionItems.length < 0) {
         return React__default["default"].createElement(React__default["default"].Fragment, null);
     }
-    console.log(accordionItems);
     var accorditionItemsTemplate = accordionItems.map(function (accordionItem) {
         var galleryTemplate = React__default["default"].createElement(React__default["default"].Fragment, null);
         if (accordionItem.media.length > 0) {
