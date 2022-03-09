@@ -459,6 +459,10 @@ var TextColumns = function (props) {
         React.createElement("div", { dangerouslySetInnerHTML: { __html: bodytext } }));
 };
 
+var Quote = function (props) {
+    return React.createElement(React.Fragment, null);
+};
+
 var BackgroundImage = function (props) {
     if (props.data.appearance.backgroundImage.length < 1) {
         return null;
@@ -882,6 +886,7 @@ var contentElementTemplates = {
     textmedia: function (headlessContentData) { return React.createElement(Textmedia, { data: headlessContentData.content }); },
     card_group: function (headlessContentData) { return React.createElement(CardGroup, { data: headlessContentData.content }); },
     textcolumn: function (headlessContentData) { return React.createElement(TextColumns, { data: headlessContentData.content }); },
+    quote: function (headlessContentData) { return React.createElement(Quote, { data: headlessContentData.content }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,

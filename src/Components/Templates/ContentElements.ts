@@ -11,6 +11,7 @@ import Accordion from "./ContentElements/Accordion";
 import Gallery from "./ContentElements/Gallery";
 import CardGroup from "./ContentElements/CardGroup";
 import TextColumns from "./ContentElements/TextColumns";
+import Quote from "./ContentElements/Quote";
 //import ImageModal from './ContentElements/ImageModal'
 //import MenuSitemap from './ContentElements/MenuSitemap'
 
@@ -70,4 +71,5 @@ export {
     Gallery,
     CardGroup,
     TextColumns,
+    Quote,
 }
