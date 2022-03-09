@@ -113,10 +113,8 @@ var ImageLightbox = function (props) {
 };
 
 var Image$2 = function (props) {
-    props.data; var file = props.file;
+    var file = props.file;
     var crops = Object.keys(file.properties.crop);
-    file.properties.dimensions.width;
-    file.properties.dimensions.height;
     var sources = crops.map(function (cropIdentifier, index) {
         var src;
         var media;
