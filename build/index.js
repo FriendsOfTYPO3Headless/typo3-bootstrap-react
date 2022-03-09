@@ -470,7 +470,12 @@ var TextColumns = function (props) {
 };
 
 var Quote = function (props) {
-    return React__default["default"].createElement(React__default["default"].Fragment, null);
+    var _a = props.data, bodytext = _a.bodytext, quoteSource = _a.quoteSource; _a.quoteLink;
+    return React__default["default"].createElement("figure", null,
+        React__default["default"].createElement("blockquote", { className: 'blockquote' },
+            React__default["default"].createElement("p", { dangerouslySetInnerHTML: { __html: bodytext } })),
+        quoteSource.length > 0 && React__default["default"].createElement("figcaption", { className: "blockquote-footer" },
+            React__default["default"].createElement("cite", { title: quoteSource }, quoteSource)));
 };
 
 var BackgroundImage = function (props) {

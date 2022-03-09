@@ -460,7 +460,12 @@ var TextColumns = function (props) {
 };
 
 var Quote = function (props) {
-    return React.createElement(React.Fragment, null);
+    var _a = props.data, bodytext = _a.bodytext, quoteSource = _a.quoteSource; _a.quoteLink;
+    return React.createElement("figure", null,
+        React.createElement("blockquote", { className: 'blockquote' },
+            React.createElement("p", { dangerouslySetInnerHTML: { __html: bodytext } })),
+        quoteSource.length > 0 && React.createElement("figcaption", { className: "blockquote-footer" },
+            React.createElement("cite", { title: quoteSource }, quoteSource)));
 };
 
 var BackgroundImage = function (props) {
