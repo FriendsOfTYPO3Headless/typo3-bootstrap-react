@@ -56,6 +56,7 @@ declare const contentElementLayouts: {
 declare const contentElementTemplates: {
     __generic: (headlessContentData: any) => JSX.Element;
     text: (headlessContentData: any) => JSX.Element;
+    header: (headlessContentData: any) => JSX.Element;
     html: (headlessContentData: any) => JSX.Element;
     textpic: (headlessContentData: any) => JSX.Element;
     image: (headlessContentData: any) => JSX.Element;

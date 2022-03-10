@@ -1,10 +1,11 @@
 import Div from './ContentElements/Div';
 import FormFormFramework from './ContentElements/FormFormFramework';
 import Html from './ContentElements/Html';
+import Header from './ContentElements/Header';
 import Image from './ContentElements/Image';
 import ImageLightbox from './ContentElements/Image';
 import Shortcut from './ContentElements/Shortcut';
 import Text from './ContentElements/Text';
 import Textpic from './ContentElements/Textpic';
 import Uploads from './ContentElements/Uploads';
-export { Text, Html, Textpic, Image, ImageLightbox, Div, FormFormFramework, Shortcut, Uploads };
+export { Text, Html, Textpic, Image, ImageLightbox, Div, FormFormFramework, Header, Shortcut, Uploads };

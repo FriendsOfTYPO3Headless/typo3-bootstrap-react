@@ -130,6 +130,10 @@ var Html = function (props) {
     return React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
 };
 
+var Header$1 = function (props) {
+    return React.createElement("div", { className: "header" });
+};
+
 var ImageLightbox = function (props) {
     var nextSrc = function () {
         props.setPhotoIndex(function (prevPhotoIndex) { return (prevPhotoIndex + 1) % props.images.length; });
@@ -684,6 +688,7 @@ var contentElementTemplates = {
             " has no Template");
     },
     text: function (headlessContentData) { return React.createElement(Text, { data: headlessContentData.content }); },
+    header: function (headlessContentData) { return React.createElement(Header$1, { data: headlessContentData.content }); },
     html: function (headlessContentData) { return React.createElement(Html, { data: headlessContentData.content }); },
     textpic: function (headlessContentData) { return React.createElement(Textpic, { data: headlessContentData.content }); },
     image: function (headlessContentData) { return React.createElement(Image, { data: headlessContentData.content }); },

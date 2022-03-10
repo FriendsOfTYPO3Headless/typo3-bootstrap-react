@@ -1,6 +1,7 @@
 import Div from './ContentElements/Div'
 import FormFormFramework from './ContentElements/FormFormFramework'
 import Html from './ContentElements/Html'
+import Header from './ContentElements/Header'
 import Image from './ContentElements/Image'
 import ImageLightbox from './ContentElements/Image'
 import Shortcut from './ContentElements/Shortcut'
@@ -44,6 +45,7 @@ export {
     //Bullets,
     Div,
     FormFormFramework,
+    Header,
     /*  FormFormFramework,
    Html,
    List,
