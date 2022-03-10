@@ -483,7 +483,7 @@ var Quote = function (props) {
         return React__default["default"].createElement(React__default["default"].Fragment, null);
     };
     var bodyTemplate = function () {
-        return (bodytext.length > 0) ? React__default["default"].createElement("p", null, bodytext) : React__default["default"].createElement(React__default["default"].Fragment, null);
+        return (bodytext.length > 0) ? React__default["default"].createElement("blockquote", { className: 'blockquote', dangerouslySetInnerHTML: { __html: bodytext } }) : React__default["default"].createElement(React__default["default"].Fragment, null);
     };
     var figcaptionTemplate = function () {
         if (quoteSource.length > 0) {
@@ -495,7 +495,7 @@ var Quote = function (props) {
         return React__default["default"].createElement(React__default["default"].Fragment, null);
     };
     return React__default["default"].createElement("figure", null,
-        React__default["default"].createElement("blockquote", { className: 'blockquote' }, bodyTemplate()),
+        bodyTemplate(),
         figcaptionTemplate());
 };
 

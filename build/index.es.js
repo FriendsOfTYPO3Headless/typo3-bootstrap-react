@@ -473,7 +473,7 @@ var Quote = function (props) {
         return React.createElement(React.Fragment, null);
     };
     var bodyTemplate = function () {
-        return (bodytext.length > 0) ? React.createElement("p", null, bodytext) : React.createElement(React.Fragment, null);
+        return (bodytext.length > 0) ? React.createElement("blockquote", { className: 'blockquote', dangerouslySetInnerHTML: { __html: bodytext } }) : React.createElement(React.Fragment, null);
     };
     var figcaptionTemplate = function () {
         if (quoteSource.length > 0) {
@@ -485,7 +485,7 @@ var Quote = function (props) {
         return React.createElement(React.Fragment, null);
     };
     return React.createElement("figure", null,
-        React.createElement("blockquote", { className: 'blockquote' }, bodyTemplate()),
+        bodyTemplate(),
         figcaptionTemplate());
 };
 

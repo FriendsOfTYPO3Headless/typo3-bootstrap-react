@@ -28,7 +28,7 @@ const Quote: React.FC<{ data: IQuoteData }> = (props) => {
     }
 
     const bodyTemplate = () => {
-        return (bodytext.length > 0) ? <p>{bodytext}</p> : <></>
+        return (bodytext.length > 0) ? <blockquote className={'blockquote'} dangerouslySetInnerHTML={{__html: bodytext}} /> : <></>
     }
 
     const figcaptionTemplate = () => {
@@ -42,7 +42,7 @@ const Quote: React.FC<{ data: IQuoteData }> = (props) => {
     }
 
     return <figure>
-        <blockquote className={'blockquote'}>{bodyTemplate()}</blockquote>
+        {bodyTemplate()}
         {figcaptionTemplate()}
     </figure>
 }
