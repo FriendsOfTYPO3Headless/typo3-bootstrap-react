@@ -10,8 +10,6 @@ import {Col, Row, Container} from "react-bootstrap";
 import FooterContent from "./Partials/Page/Structure/FooterContent";
 import GenericPage from "./Templates/Page/GenericPage";
 import TYPO3PageContext from "../Context/TYPO3PageContext";
-import FormFormFramework from "./Templates/ContentElements/FormFormFramework";
-
 
 const pageLayouts = {
     //TODO: implement example
@@ -60,13 +58,13 @@ const pageTemplates = {
                     <Content colPos={'8'}/>
                 </Col>
             </Row>
-            <div className="section section-default">
+            <section className="section section-default">
                 <Row>
                     <Col>
                         <Content colPos={'0'}/>
                     </Col>
                 </Row>
-            </div>
+            </section>
             <Row>
                 <Col>
                     <Content colPos={'9'}/>
@@ -91,13 +89,13 @@ const pageTemplates = {
                     <Content colPos={'8'}/>
                 </Col>
             </Row>
-            <div className="section section-default">
+            <section className="section section-default">
                 <Row>
                     <Col>
                         <Content colPos={'0'}/>
                     </Col>
                 </Row>
-            </div>
+            </section>
             <Row>
                 <Col>
                     <Content colPos={'9'}/>
@@ -120,7 +118,7 @@ const pageTemplates = {
                 </Col>
             </Row>
 
-            <div className="section section-default">
+            <section className="section section-default">
                 <Container>
                     <Row>
                         <Col md="8" as="main" className=" maincontent-wrap" role="main">
@@ -131,7 +129,7 @@ const pageTemplates = {
                         </Col>
                     </Row>
                 </Container>
-            </div>
+            </section>
             <Row>
                 <Col>
                     <Content colPos={'9'}/>
@@ -155,7 +153,7 @@ const pageTemplates = {
                     <Content colPos={'8'}/>
                 </Col>
             </Row>
-            <div className="section section-default">
+            <section className="section section-default">
                 <Container>
                     <Row>
                         <Col md="8" as="main" className=" maincontent-wrap" role="main">
@@ -166,7 +164,7 @@ const pageTemplates = {
                         </Col>
                     </Row>
                 </Container>
-            </div>
+            </section>
 
             <Row>
                 <Col>
@@ -190,7 +188,7 @@ const pageTemplates = {
                     <Content colPos={'8'}/>
                 </Col>
             </Row>
-            <div className="section section-default">
+            <section className="section section-default">
                 <Container>
                     <Row>
                         <Col md="6" as="main" className=" maincontent-wrap" role="main">
@@ -201,7 +199,7 @@ const pageTemplates = {
                         </Col>
                     </Row>
                 </Container>
-            </div>
+            </section>
 
             <Row>
                 <Col>
@@ -223,7 +221,7 @@ const pageTemplates = {
                     <Content colPos={'8'}/>
                 </Col>
             </Row>
-            <div className="section section-default">
+            <section className="section section-default">
                 <Container>
                     <Row>
                         <Col lg="6" as="main" className=" maincontent-wrap " role="main">
@@ -237,7 +235,7 @@ const pageTemplates = {
                         </Col>
                     </Row>
                 </Container>
-            </div>
+            </section>
 
             <Row>
                 <Col>
@@ -263,15 +261,15 @@ const pageTemplates = {
                 </Col>
             </Row>
 
-            <div className="section section-default">
+            <section className="section section-default">
                 <Row>
                     <Col>
                         <Content colPos={'0'}/>
                     </Col>
                 </Row>
-            </div>
+            </section>
 
-            <div className="section section-primary">
+            <section className="section section-primary">
                 <Container>
                     <Row>
                         <Col className="section-column-half " md="6">
@@ -284,8 +282,8 @@ const pageTemplates = {
                         </Col>
                     </Row>
                 </Container>
-            </div>
-            <div className="section section-primary">
+            </section>
+            <section className="section section-primary">
                 <Container>
                     <Row>
                         <Col className="section-column-half " md="6">
@@ -298,15 +296,15 @@ const pageTemplates = {
                         </Col>
                     </Row>
                 </Container>
-            </div>
-            <div className="section section-default">
+            </section>
+            <section className="section section-default">
                 <Row>
                     <Col>
                         <Content colPos={'4'}/>
                     </Col>
                 </Row>
-            </div>
-            <div className="section section-light">
+            </section>
+            <section className="section section-light">
                 <Container>
                     <Row>
                         <Col className="section-column-half " md="6">
@@ -319,8 +317,8 @@ const pageTemplates = {
                         </Col>
                     </Row>
                 </Container>
-            </div>
-            <div className="section section-light">
+            </section>
+            <section className="section section-light">
                 <Container>
                     <Row>
                         <Col className="section-column-half " md="6">
@@ -333,7 +331,7 @@ const pageTemplates = {
                         </Col>
                     </Row>
                 </Container>
-            </div>
+            </section>
             <Row>
                 <Col>
                     <Content colPos={'9'}/>
@@ -353,11 +351,10 @@ const pageTemplates = {
         main: <>
             <Row>
                 <Col>
-
                     <Content colPos={'8'}/>
                 </Col>
             </Row>
-            <div className="section section-default">
+            <section className="section section-default">
                 <Container>
                     <Row>
                         <Col className="section-column-third " md="4">
@@ -371,14 +368,14 @@ const pageTemplates = {
                         </Col>
                     </Row>
                 </Container>
-            </div>
-            <div className="section section-light">
+            </section>
+            <section className="section section-light">
                 <Row>
                     <Col>
                         <Content colPos={'0'}/>
                     </Col>
                 </Row>
-            </div>
+            </section>
             <Row>
                 <Col>
                     <Content colPos={'9'}/>
