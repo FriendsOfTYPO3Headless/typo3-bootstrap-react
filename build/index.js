@@ -123,32 +123,38 @@ var ImageLightbox = function (props) {
 };
 
 var Image$2 = function (props) {
-    props.data; var file = props.file;
+    var file = props.file;
     var crops = Object.keys(file.properties.crop);
-    var finalWidth = file.properties.dimensions.width;
-    var finalHeight = file.properties.dimensions.height;
     var sources = crops.map(function (cropIdentifier, index) {
-        var src = file.publicUrl; // TODO get an URL for every crop
-        var media = '';
+        var src;
+        var media;
         switch (cropIdentifier) {
             case 'extrasmall':
                 media = '(max-width: 575px)';
+                src = file.cropVariants.extrasmall.publicUrl;
                 break;
             case 'small':
                 media = '(min-width: 576px)';
+                src = file.cropVariants.small.publicUrl;
                 break;
             case 'medium':
                 media = '(min-width: 768px)';
+                src = file.cropVariants.medium.publicUrl;
                 break;
             case 'large':
                 media = '(min-width: 992px)';
+                src = file.cropVariants.large.publicUrl;
+                break;
+            default:
+                media = '(min-width: 1200px)';
+                src = file.cropVariants.default.publicUrl;
                 break;
         }
-        return React__default["default"].createElement("source", { key: index, src: src, media: media });
+        return React__default["default"].createElement("source", { key: index, srcSet: src, media: media });
     });
     return React__default["default"].createElement("picture", null,
         sources,
-        React__default["default"].createElement(FigureImage__default["default"], { loading: "lazy", className: 'img-fluid', src: file.publicUrl, width: finalWidth, height: finalHeight, title: file.properties.title, alt: file.properties.alternative }));
+        React__default["default"].createElement(FigureImage__default["default"], { loading: "lazy", className: 'img-fluid', src: file.publicUrl, title: file.properties.title, alt: file.properties.alternative }));
 };
 
 var Image$1 = function (props) {
@@ -395,7 +401,6 @@ var Accordion = function (props) {
     if (!accordionItems || accordionItems.length < 0) {
         return React__default["default"].createElement(React__default["default"].Fragment, null);
     }
-    console.log(accordionItems);
     var accorditionItemsTemplate = accordionItems.map(function (accordionItem) {
         var galleryTemplate = React__default["default"].createElement(React__default["default"].Fragment, null);
         if (accordionItem.media.length > 0) {
@@ -462,6 +467,36 @@ var TextColumns = function (props) {
     var bodytext = props.data.bodytext;
     return React__default["default"].createElement("div", { className: "text-column" },
         React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: bodytext } }));
+};
+
+var Quote = function (props) {
+    var _a = props.data, bodytext = _a.bodytext, quoteSource = _a.quoteSource, quoteLink = _a.quoteLink;
+    var sourceLink = function () {
+        if (typeof quoteLink === 'object' && quoteLink !== null) {
+            var href = quoteLink.href, target = quoteLink.target, title = quoteLink.title, linkText = quoteLink.linkText;
+            var className = quoteLink['class'];
+            return React__default["default"].createElement("span", null,
+                "(",
+                React__default["default"].createElement("a", { href: href, target: target, title: title, className: className }, linkText),
+                ")");
+        }
+        return React__default["default"].createElement(React__default["default"].Fragment, null);
+    };
+    var bodyTemplate = function () {
+        return (bodytext.length > 0) ? React__default["default"].createElement("blockquote", { className: 'blockquote', dangerouslySetInnerHTML: { __html: bodytext } }) : React__default["default"].createElement(React__default["default"].Fragment, null);
+    };
+    var figcaptionTemplate = function () {
+        if (quoteSource.length > 0) {
+            return React__default["default"].createElement("figcaption", { className: "blockquote-footer" },
+                React__default["default"].createElement("cite", { title: quoteSource },
+                    quoteSource,
+                    sourceLink()));
+        }
+        return React__default["default"].createElement(React__default["default"].Fragment, null);
+    };
+    return React__default["default"].createElement("figure", null,
+        bodyTemplate(),
+        figcaptionTemplate());
 };
 
 var BackgroundImage = function (props) {
@@ -887,6 +922,7 @@ var contentElementTemplates = {
     textmedia: function (headlessContentData) { return React__default["default"].createElement(Textmedia, { data: headlessContentData.content }); },
     card_group: function (headlessContentData) { return React__default["default"].createElement(CardGroup, { data: headlessContentData.content }); },
     textcolumn: function (headlessContentData) { return React__default["default"].createElement(TextColumns, { data: headlessContentData.content }); },
+    quote: function (headlessContentData) { return React__default["default"].createElement(Quote, { data: headlessContentData.content }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
