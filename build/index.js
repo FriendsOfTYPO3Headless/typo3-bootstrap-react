@@ -470,12 +470,33 @@ var TextColumns = function (props) {
 };
 
 var Quote = function (props) {
-    var _a = props.data, bodytext = _a.bodytext, quoteSource = _a.quoteSource; _a.quoteLink;
+    var _a = props.data, bodytext = _a.bodytext, quoteSource = _a.quoteSource, quoteLink = _a.quoteLink;
+    var sourceLink = function () {
+        if (typeof quoteLink === 'object' && quoteLink !== null) {
+            var href = quoteLink.href, target = quoteLink.target, title = quoteLink.title, linkText = quoteLink.linkText;
+            var className = quoteLink['class'];
+            return React__default["default"].createElement("span", null,
+                "(",
+                React__default["default"].createElement("a", { href: href, target: target, title: title, className: className }, linkText),
+                ")");
+        }
+        return React__default["default"].createElement(React__default["default"].Fragment, null);
+    };
+    var bodyTemplate = function () {
+        return (bodytext.length > 0) ? React__default["default"].createElement("p", null, bodytext) : React__default["default"].createElement(React__default["default"].Fragment, null);
+    };
+    var figcaptionTemplate = function () {
+        if (quoteSource.length > 0) {
+            return React__default["default"].createElement("figcaption", { className: "blockquote-footer" },
+                React__default["default"].createElement("cite", { title: quoteSource },
+                    quoteSource,
+                    sourceLink()));
+        }
+        return React__default["default"].createElement(React__default["default"].Fragment, null);
+    };
     return React__default["default"].createElement("figure", null,
-        React__default["default"].createElement("blockquote", { className: 'blockquote' },
-            React__default["default"].createElement("p", { dangerouslySetInnerHTML: { __html: bodytext } })),
-        quoteSource.length > 0 && React__default["default"].createElement("figcaption", { className: "blockquote-footer" },
-            React__default["default"].createElement("cite", { title: quoteSource }, quoteSource)));
+        React__default["default"].createElement("blockquote", { className: 'blockquote' }, bodyTemplate()),
+        figcaptionTemplate());
 };
 
 var BackgroundImage = function (props) {

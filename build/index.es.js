@@ -460,12 +460,33 @@ var TextColumns = function (props) {
 };
 
 var Quote = function (props) {
-    var _a = props.data, bodytext = _a.bodytext, quoteSource = _a.quoteSource; _a.quoteLink;
+    var _a = props.data, bodytext = _a.bodytext, quoteSource = _a.quoteSource, quoteLink = _a.quoteLink;
+    var sourceLink = function () {
+        if (typeof quoteLink === 'object' && quoteLink !== null) {
+            var href = quoteLink.href, target = quoteLink.target, title = quoteLink.title, linkText = quoteLink.linkText;
+            var className = quoteLink['class'];
+            return React.createElement("span", null,
+                "(",
+                React.createElement("a", { href: href, target: target, title: title, className: className }, linkText),
+                ")");
+        }
+        return React.createElement(React.Fragment, null);
+    };
+    var bodyTemplate = function () {
+        return (bodytext.length > 0) ? React.createElement("p", null, bodytext) : React.createElement(React.Fragment, null);
+    };
+    var figcaptionTemplate = function () {
+        if (quoteSource.length > 0) {
+            return React.createElement("figcaption", { className: "blockquote-footer" },
+                React.createElement("cite", { title: quoteSource },
+                    quoteSource,
+                    sourceLink()));
+        }
+        return React.createElement(React.Fragment, null);
+    };
     return React.createElement("figure", null,
-        React.createElement("blockquote", { className: 'blockquote' },
-            React.createElement("p", { dangerouslySetInnerHTML: { __html: bodytext } })),
-        quoteSource.length > 0 && React.createElement("figcaption", { className: "blockquote-footer" },
-            React.createElement("cite", { title: quoteSource }, quoteSource)));
+        React.createElement("blockquote", { className: 'blockquote' }, bodyTemplate()),
+        figcaptionTemplate());
 };
 
 var BackgroundImage = function (props) {
