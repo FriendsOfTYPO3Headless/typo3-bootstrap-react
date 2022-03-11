@@ -12,4 +12,5 @@ import Gallery from "./ContentElements/Gallery";
 import CardGroup from "./ContentElements/CardGroup";
 import TextColumns from "./ContentElements/TextColumns";
 import Quote from "./ContentElements/Quote";
-export { Text, Html, Textpic, Image, ImageLightbox, Div, Shortcut, Textmedia, Uploads, Accordion, Gallery, CardGroup, TextColumns, Quote, };
+import Header from "./ContentElements/Header";
+export { Text, Html, Textpic, Image, ImageLightbox, Div, Shortcut, Textmedia, Uploads, Accordion, Gallery, CardGroup, TextColumns, Quote, Header, };

@@ -415,6 +415,7 @@ const contentElementTemplates = {
     card_group: (headlessContentData) => <CE.CardGroup data={headlessContentData} />,
     textcolumn: (headlessContentData) => <CE.TextColumns data={headlessContentData.content}/>,
     quote: (headlessContentData) => <CE.Quote data={headlessContentData.content}/>,
+    header: (headlessContentData) => <CE.Header data={headlessContentData.content}/>,
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
