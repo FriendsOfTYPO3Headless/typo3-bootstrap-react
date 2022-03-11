@@ -581,6 +581,7 @@ Subheader.defaultProps = {
 };
 
 var HeaderDate = function (props) {
+    //TODO: Date initialisieren, toLocaleDateString...
     return React.createElement("p", { className: props.positionClass }, props.date);
 };
 
@@ -657,14 +658,15 @@ var FooterContent = function () {
 };
 
 var getGridElement = function (element, content, contentElementLayouts, contentElementTemplates, index) {
+    var _a, _b;
     switch (element.type) {
         case 'row':
             var children = element.children.map(function (child, index) {
                 return getGridElement(child, content, contentElementLayouts, contentElementTemplates, index);
             });
-            return React.createElement(Row, { as: element.tag, key: index }, children);
+            return React.createElement(Row, { as: (_a = element.tag) !== null && _a !== void 0 ? _a : 'div', key: index }, children);
         case 'col':
-            return React.createElement(Col, { as: element.tag, lg: element.size, md: element.size, sm: element.size, xl: element.size, key: index },
+            return React.createElement(Col, { as: (_b = element.tag) !== null && _b !== void 0 ? _b : 'div', lg: element.colspan, md: element.colspan, sm: element.colspan, xl: element.colspan, key: index },
                 React.createElement(Content, { colPos: element.colPos }));
         default:
             return React.createElement(React.Fragment, null);
