@@ -5,7 +5,7 @@ import FormElement from "../../Partials/ContentElements/FormFramework/Elements/E
 const FormFormFramework: React.FC<{ data: any }> = props => {
 
     const {form, link} = props.data;
-    console.log(form)
+    console.log('FORM',form)
 
     const submitHandler = useCallback(
         (e) => {

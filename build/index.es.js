@@ -113,7 +113,7 @@ var FormElement = function (props) {
 
 var FormFormFramework = function (props) {
     var _a = props.data, form = _a.form, link = _a.link;
-    console.log(form);
+    console.log('FORM', form);
     var submitHandler = useCallback(function (e) {
         e.preventDefault();
         console.log("send POST request to ".concat(link.href));
