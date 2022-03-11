@@ -68,6 +68,7 @@ declare const contentElementTemplates: {
     card_group: (headlessContentData: any) => JSX.Element;
     textcolumn: (headlessContentData: any) => JSX.Element;
     quote: (headlessContentData: any) => JSX.Element;
+    header: (headlessContentData: any) => JSX.Element;
 };
 declare const _default: React.NamedExoticComponent<TYPO3PagePropsInterface>;
 export default _default;
