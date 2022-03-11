@@ -3,21 +3,21 @@ import {Accordion as ReactAccordion} from "react-bootstrap"
 import Gallery from "./Gallery"
 
 const Accordion: React.FC<{ data: any }> = (props) => {
-    const {accordionItems, pi_flexform} = props.data
-    const activeElement = pi_flexform.default_element ?? ''
+    const accordionItems = props.data.content.items
+    const activeElement = props.data.flexform.default_element ?? ''
 
     if (!accordionItems || accordionItems.length < 0) {
         return <></>
     }
 
-    const accorditionItemsTemplate = accordionItems.map((accordionItem) => {
+    const accorditionItemsTemplate = accordionItems.map((accordionItem, index: number) => {
         let galleryTemplate = <></>
         if (accordionItem.media.length > 0) {
             galleryTemplate = <Gallery data={{images: accordionItem.media, ...accordionItem}}/>
         }
 
-        return <ReactAccordion.Item key={accordionItem.uid} eventKey={accordionItem.uid.toString()}>
-            <ReactAccordion.Header as={"h4"} id={`accordion-heading-${accordionItem.uid}`}>
+        return <ReactAccordion.Item key={accordionItem.id} eventKey={accordionItem.id.toString()}>
+            <ReactAccordion.Header as={"h4"} id={`accordion-heading-${accordionItem.id}`}>
                 <span className="accordion-title-link-text">{accordionItem.header}</span>
             </ReactAccordion.Header>
             <ReactAccordion.Body>

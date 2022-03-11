@@ -396,18 +396,18 @@ var Gallery = function (props) {
 
 var Accordion = function (props) {
     var _a;
-    var _b = props.data, accordionItems = _b.accordionItems, pi_flexform = _b.pi_flexform;
-    var activeElement = (_a = pi_flexform.default_element) !== null && _a !== void 0 ? _a : '';
+    var accordionItems = props.data.content.items;
+    var activeElement = (_a = props.data.flexform.default_element) !== null && _a !== void 0 ? _a : '';
     if (!accordionItems || accordionItems.length < 0) {
         return React__default["default"].createElement(React__default["default"].Fragment, null);
     }
-    var accorditionItemsTemplate = accordionItems.map(function (accordionItem) {
+    var accorditionItemsTemplate = accordionItems.map(function (accordionItem, index) {
         var galleryTemplate = React__default["default"].createElement(React__default["default"].Fragment, null);
         if (accordionItem.media.length > 0) {
             galleryTemplate = React__default["default"].createElement(Gallery, { data: __assign({ images: accordionItem.media }, accordionItem) });
         }
-        return React__default["default"].createElement(reactBootstrap.Accordion.Item, { key: accordionItem.uid, eventKey: accordionItem.uid.toString() },
-            React__default["default"].createElement(reactBootstrap.Accordion.Header, { as: "h4", id: "accordion-heading-".concat(accordionItem.uid) },
+        return React__default["default"].createElement(reactBootstrap.Accordion.Item, { key: accordionItem.id, eventKey: accordionItem.id.toString() },
+            React__default["default"].createElement(reactBootstrap.Accordion.Header, { as: "h4", id: "accordion-heading-".concat(accordionItem.id) },
                 React__default["default"].createElement("span", { className: "accordion-title-link-text" }, accordionItem.header)),
             React__default["default"].createElement(reactBootstrap.Accordion.Body, null,
                 React__default["default"].createElement("div", { className: "accordion-content accordion-content-".concat(accordionItem.mediaorient) },
@@ -432,17 +432,18 @@ var Link = function (props) {
 Link.defaultProps = defaultProperties;
 
 var CardGroup = function (props) {
-    var _a = props.data, items = _a.items, pi_flexform = _a.pi_flexform;
+    var items = props.data.content.items;
+    var flexform = props.data.flexform;
     var cards = items.map(function (cardData, index_number) {
-        var header = cardData.header, subheader = cardData.subheader, bodytext = cardData.bodytext, image = cardData.image, link = cardData.link, link_title = cardData.link_title, link_class = cardData.link_class;
+        var header = cardData.header, subheader = cardData.subheader, bodytext = cardData.bodytext, image = cardData.image, link = cardData.link, linkTitle = cardData.linkTitle, linkClass = cardData.linkClass;
         var imageTemplate = image ? image.map(function (imageData, index) { return React__default["default"].createElement(reactBootstrap.Card.Img, { key: "image-data-".concat(index), variant: "top", src: imageData.publicUrl }); }) : React__default["default"].createElement(React__default["default"].Fragment, null);
         var linkButton = React__default["default"].createElement(React__default["default"].Fragment, null);
         if (link) {
-            if (link_title && link_title.length > 0) {
-                link.title = link_title;
+            if (linkTitle && linkTitle.length > 0) {
+                link.title = linkTitle;
             }
-            if (link_class && link_class.length > 0) {
-                link["class"] = "".concat(link["class"], " btn-").concat(link_class);
+            if (linkClass && linkClass.length > 0) {
+                link["class"] = "".concat(link["class"], " btn-").concat(linkClass);
             }
             linkButton = React__default["default"].createElement(Link, { href: link.href, title: link.title, className: link['class'], target: link.target, linkText: link.linkText });
         }
@@ -457,10 +458,10 @@ var CardGroup = function (props) {
                     linkButton)));
     });
     var alignment = 'justify-content-left';
-    if (pi_flexform.align.length > 0) {
-        alignment = "justify-content-".concat(pi_flexform.align);
+    if (flexform.align.length > 0) {
+        alignment = "justify-content-".concat(flexform.align);
     }
-    return React__default["default"].createElement(reactBootstrap.Row, { xs: 1, md: pi_flexform.columns, className: "card-group ".concat(alignment) }, cards);
+    return React__default["default"].createElement(reactBootstrap.Row, { xs: 1, md: flexform.columns, className: "card-group ".concat(alignment) }, cards);
 };
 
 var TextColumns = function (props) {
@@ -917,10 +918,10 @@ var contentElementTemplates = {
     shortcut: function (headlessContentData) { return React__default["default"].createElement(Shortcut, { data: headlessContentData.content }); },
     div: function (headlessContentData) { return React__default["default"].createElement(Div, { data: headlessContentData.content }); },
     uploads: function (headlessContentData) { return React__default["default"].createElement(Uploads, { data: headlessContentData.content }); },
-    accordion: function (headlessContentData) { return React__default["default"].createElement(Accordion, { data: headlessContentData.content }); },
+    accordion: function (headlessContentData) { return React__default["default"].createElement(Accordion, { data: headlessContentData }); },
     gallery: function (headlessContentData) { return React__default["default"].createElement(Gallery, { data: headlessContentData.content }); },
     textmedia: function (headlessContentData) { return React__default["default"].createElement(Textmedia, { data: headlessContentData.content }); },
-    card_group: function (headlessContentData) { return React__default["default"].createElement(CardGroup, { data: headlessContentData.content }); },
+    card_group: function (headlessContentData) { return React__default["default"].createElement(CardGroup, { data: headlessContentData }); },
     textcolumn: function (headlessContentData) { return React__default["default"].createElement(TextColumns, { data: headlessContentData.content }); },
     quote: function (headlessContentData) { return React__default["default"].createElement(Quote, { data: headlessContentData.content }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
