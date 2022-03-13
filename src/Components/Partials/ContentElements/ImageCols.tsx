@@ -33,7 +33,7 @@ const ImageCols: React.FC<{ data: any }> = (props) => {
                             setPhotoIndex(images.indexOf(file.publicUrl));
                             setShowlightbox(true);
                             return true;
-                        }} href={'#'}>
+                        }} href={file.publicUrl}>
                             {image}
                         </a> : image}
                 </Col>

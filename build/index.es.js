@@ -181,7 +181,7 @@ var ImageCols = function (props) {
                             setPhotoIndex(images.indexOf(file.publicUrl));
                             setShowlightbox(true);
                             return true;
-                        }, href: '#' }, image) : image);
+                        }, href: file.publicUrl }, image) : image);
             });
         }));
 };
