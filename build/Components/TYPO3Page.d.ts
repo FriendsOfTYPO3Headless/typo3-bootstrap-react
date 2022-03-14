@@ -62,6 +62,13 @@ declare const contentElementTemplates: {
     shortcut: (headlessContentData: any) => JSX.Element;
     div: (headlessContentData: any) => JSX.Element;
     uploads: (headlessContentData: any) => JSX.Element;
+    accordion: (headlessContentData: any) => JSX.Element;
+    gallery: (headlessContentData: any) => JSX.Element;
+    textmedia: (headlessContentData: any) => JSX.Element;
+    card_group: (headlessContentData: any) => JSX.Element;
+    textcolumn: (headlessContentData: any) => JSX.Element;
+    quote: (headlessContentData: any) => JSX.Element;
+    header: (headlessContentData: any) => JSX.Element;
 };
 declare const _default: React.NamedExoticComponent<TYPO3PagePropsInterface>;
 export default _default;

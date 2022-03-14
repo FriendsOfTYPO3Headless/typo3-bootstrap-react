@@ -2,7 +2,7 @@ import React from "react";
 import __GenericLayout from "./Layouts/Page/__GenericLayout";
 import Page from "./Templates/Page";
 import Content from "./Templates/Content";
-import {TYPO3PageHeadlessDataInterface, TYPO3PagePropsInterface} from "./Interfaces";
+import {TYPO3PagePropsInterface} from "./Interfaces";
 import Section from './Partials/Page/Section';
 import * as CE from './Templates/ContentElements';
 import * as CELayouts from './Layouts/ContentElementsLayouts';
@@ -409,9 +409,15 @@ const contentElementTemplates = {
     shortcut: (headlessContentData) => <CE.Shortcut data={headlessContentData.content} />,
     div: (headlessContentData) => <CE.Div data={headlessContentData.content}/>,
     uploads: (headlessContentData) => <CE.Uploads data={headlessContentData.content}/>,
+    accordion: (headlessContentData) => <CE.Accordion data={headlessContentData}/>,
+    gallery: (headlessContentData) => <CE.Gallery data={headlessContentData.content}/>,
+    textmedia: (headlessContentData) => <CE.Textmedia data={headlessContentData.content}/>,
+    card_group: (headlessContentData) => <CE.CardGroup data={headlessContentData} />,
+    textcolumn: (headlessContentData) => <CE.TextColumns data={headlessContentData.content}/>,
+    quote: (headlessContentData) => <CE.Quote data={headlessContentData.content}/>,
+    header: (headlessContentData) => <CE.Header data={headlessContentData.content}/>,
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
-    // textmedia: (headlessContentData, args = {}) => <CE.Textmedia data={headlessContentData.content}/>,
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
     // bullets: (headlessContentData, args = {}) => <CE.Bullets data={headlessContentData.content}/>,
     // image: (headlessContentData, args = {}) => <CE.Image data={headlessContentData.content}/>,

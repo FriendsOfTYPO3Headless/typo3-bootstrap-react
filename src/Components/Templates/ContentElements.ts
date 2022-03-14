@@ -3,12 +3,18 @@ import Textpic from './ContentElements/Textpic'
 import Image from './ContentElements/Image'
 import ImageLightbox from './ContentElements/Image'
 import Div from './ContentElements/Div'
-// import Textmedia from './ContentElements/Textmedia'
+import Textmedia from './ContentElements/Textmedia'
 import Shortcut from './ContentElements/Shortcut'
 import Html from './ContentElements/Html'
-//import ImageModal from './ContentElements/ImageModal'
 import Uploads from './ContentElements/Uploads'
-import MenuSitemap from './ContentElements/MenuSitemap'
+import Accordion from "./ContentElements/Accordion";
+import Gallery from "./ContentElements/Gallery";
+import CardGroup from "./ContentElements/CardGroup";
+import TextColumns from "./ContentElements/TextColumns";
+import Quote from "./ContentElements/Quote";
+import Header from "./ContentElements/Header";
+//import ImageModal from './ContentElements/ImageModal'
+//import MenuSitemap from './ContentElements/MenuSitemap'
 
 
 // import MenuSitemap from './ContentElements/MenuSitemap'
@@ -60,7 +66,12 @@ export {
     //MenuSitemap,
     //  Table,
     Shortcut,
-    //Image,
-   // Textmedia,
-    Uploads
+   Textmedia,
+    Uploads,
+    Accordion,
+    Gallery,
+    CardGroup,
+    TextColumns,
+    Quote,
+    Header,
 }

@@ -1,6 +1,7 @@
 import {Col} from "react-bootstrap";
 import React, {useState} from 'react';
 import ImageLightbox from "./ImageLightbox";
+import Image from "./Media/Type/Image";
 
 const imageUris = (data: any) => {
     const _images = [];
@@ -22,20 +23,19 @@ const ImageCols: React.FC<{ data: any }> = (props) => {
                        photoIndex={photoIndex} setPhotoIndex={setPhotoIndex}/>
         {Object.keys(props.data.gallery.rows).map((rowKey) => {
             return Object.keys(props.data.gallery.rows[rowKey].columns).map((columnKey) => {
-                const image = <img src={props.data.gallery.rows[rowKey].columns[columnKey].publicUrl}
-                                   alt={props.data.gallery.rows[rowKey].columns[columnKey]?.properties?.title}/>;
+                const file = props.data.gallery.rows[rowKey].columns[columnKey]
+                const image = <Image data={props.data} file={file} />
                 return <Col className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}
                             key={rowKey + '-' + columnKey}>
                     {props.data.enlargeImageOnClick ?
                         <a onClick={(e) => {
                             e.preventDefault();
-                            setPhotoIndex(images.indexOf(props.data.gallery.rows[rowKey].columns[columnKey].publicUrl));
+                            setPhotoIndex(images.indexOf(file.publicUrl));
                             setShowlightbox(true);
                             return true;
-                        }} href={'#'}>
+                        }} href={file.publicUrl}>
                             {image}
                         </a> : image}
-                    {props.data.gallery.rows[rowKey].columns[columnKey].properties.description}
                 </Col>
             })
         })
