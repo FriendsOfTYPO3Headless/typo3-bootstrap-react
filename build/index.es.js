@@ -121,23 +121,23 @@ var Image$2 = function (props) {
         switch (cropIdentifier) {
             case 'extrasmall':
                 media = '(max-width: 575px)';
-                src = file.cropVariants.extrasmall.publicUrl;
+                src = file.cropVariants ? file.cropVariants.extrasmall.publicUrl : file.publicUrl;
                 break;
             case 'small':
                 media = '(min-width: 576px)';
-                src = file.cropVariants.small.publicUrl;
+                src = file.cropVariants ? file.cropVariants.small.publicUrl : file.publicUrl;
                 break;
             case 'medium':
                 media = '(min-width: 768px)';
-                src = file.cropVariants.medium.publicUrl;
+                src = file.cropVariants ? file.cropVariants.medium.publicUrl : file.publicUrl;
                 break;
             case 'large':
                 media = '(min-width: 992px)';
-                src = file.cropVariants.large.publicUrl;
+                src = file.cropVariants ? file.cropVariants.large.publicUrl : file.publicUrl;
                 break;
             default:
                 media = '(min-width: 1200px)';
-                src = file.cropVariants.default.publicUrl;
+                src = file.cropVariants ? file.cropVariants.default.publicUrl : file.publicUrl;
                 break;
         }
         return React.createElement("source", { key: index, srcSet: src, media: media });
@@ -374,10 +374,9 @@ var Type = function (props) {
     }
 };
 
-// TODO Add
 var Gallery = function (props) {
-    var _a = props.data, images = _a.images, imagecols = _a.imagecols;
-    var galleryItems = images.map(function (image, index) {
+    var _a = props.data, items = _a.items, imagecols = _a.imagecols;
+    var galleryItems = items.map(function (image, index) {
         return React.createElement(Col, { className: "gallery-item gallery-item-size-".concat(imagecols), md: imagecols },
             React.createElement(Type, { data: props.data, file: image }));
     });
@@ -394,7 +393,7 @@ var Accordion = function (props) {
     var accorditionItemsTemplate = accordionItems.map(function (accordionItem, index) {
         var galleryTemplate = React.createElement(React.Fragment, null);
         if (accordionItem.media.length > 0) {
-            galleryTemplate = React.createElement(Gallery, { data: __assign({ images: accordionItem.media }, accordionItem) });
+            galleryTemplate = React.createElement(Gallery, { data: __assign({ items: accordionItem.media }, accordionItem) });
         }
         return React.createElement(Accordion$1.Item, { key: accordionItem.id, eventKey: accordionItem.id.toString() },
             React.createElement(Accordion$1.Header, { as: "h4", id: "accordion-heading-".concat(accordionItem.id) },

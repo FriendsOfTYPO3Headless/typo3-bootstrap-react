@@ -10,23 +10,23 @@ export const Image: React.FC<IImageCompomentProperties> = (props) => {
         switch (cropIdentifier) {
             case 'extrasmall':
                 media = '(max-width: 575px)'
-                src = file.cropVariants.extrasmall.publicUrl
+                src = file.cropVariants ? file.cropVariants.extrasmall.publicUrl : file.publicUrl
                 break;
             case 'small':
                 media = '(min-width: 576px)'
-                src = file.cropVariants.small.publicUrl
+                src = file.cropVariants ? file.cropVariants.small.publicUrl : file.publicUrl
                 break
             case 'medium':
                 media = '(min-width: 768px)'
-                src = file.cropVariants.medium.publicUrl
+                src = file.cropVariants ? file.cropVariants.medium.publicUrl : file.publicUrl
                 break
             case 'large':
                 media = '(min-width: 992px)'
-                src = file.cropVariants.large.publicUrl
+                src = file.cropVariants ? file.cropVariants.large.publicUrl : file.publicUrl
                 break
             default:
                 media = '(min-width: 1200px)'
-                src = file.cropVariants.default.publicUrl
+                src = file.cropVariants ? file.cropVariants.default.publicUrl : file.publicUrl
                 break;
         }
         return <source key={index} srcSet={src} media={media}/>

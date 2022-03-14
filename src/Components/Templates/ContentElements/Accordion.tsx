@@ -13,7 +13,7 @@ const Accordion: React.FC<{ data: any }> = (props) => {
     const accorditionItemsTemplate = accordionItems.map((accordionItem, index: number) => {
         let galleryTemplate = <></>
         if (accordionItem.media.length > 0) {
-            galleryTemplate = <Gallery data={{images: accordionItem.media, ...accordionItem}}/>
+            galleryTemplate = <Gallery data={{items: accordionItem.media, ...accordionItem}}/>
         }
 
         return <ReactAccordion.Item key={accordionItem.id} eventKey={accordionItem.id.toString()}>
