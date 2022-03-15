@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Figure, Col, Row, Alert, Accordion as Accordion$1, Card, Container } from 'react-bootstrap';
+import React, { useState, useCallback } from 'react';
+import { Figure, Col, Row, Alert, Accordion as Accordion$1, Card, Form, Button, Container } from 'react-bootstrap';
 import Lightbox from 'react-image-lightbox';
 import FigureImage from 'react-bootstrap/FigureImage';
 
@@ -493,6 +493,36 @@ var Header$1 = function (props) {
     return React.createElement("div", { className: "header" });
 };
 
+var FormElement = function (props) {
+    var element = props.element;
+    var content;
+    switch (element.type) {
+        case 'Textarea':
+            content = 'textarea';
+            break;
+        default:
+            content = "".concat(element.type, " type not defined");
+    }
+    return React.createElement(Form.Group, { className: "mb-3", controlId: element.identifier },
+        React.createElement(Form.Label, null, element.label),
+        content);
+};
+
+var FormFormFramework = function (props) {
+    var _a = props.data, form = _a.form, link = _a.link;
+    console.log('FORM', form);
+    var submitHandler = useCallback(function (e) {
+        e.preventDefault();
+        console.log("send POST request to ".concat(link.href));
+    }, [form, link]);
+    return React.createElement("div", { className: "formFormFramework", onSubmit: submitHandler },
+        React.createElement(Form, { id: form.id },
+            form.elements.map(function (element) {
+                return React.createElement(FormElement, { element: element });
+            }),
+            React.createElement(Button, { type: "submit" }, "Submit")));
+};
+
 var BackgroundImage = function (props) {
     if (props.data.appearance.backgroundImage.length < 1) {
         return null;
@@ -711,7 +741,7 @@ var pageTemplates = {
             React.createElement(Row, null,
                 React.createElement(Col, null,
                     React.createElement(Content, { colPos: '8' }))),
-            React.createElement("div", { className: "section section-default" },
+            React.createElement("section", { className: "section section-default" },
                 React.createElement(Row, null,
                     React.createElement(Col, null,
                         React.createElement(Content, { colPos: '0' })))),
@@ -728,7 +758,7 @@ var pageTemplates = {
             React.createElement(Row, null,
                 React.createElement(Col, null,
                     React.createElement(Content, { colPos: '8' }))),
-            React.createElement("div", { className: "section section-default" },
+            React.createElement("section", { className: "section section-default" },
                 React.createElement(Row, null,
                     React.createElement(Col, null,
                         React.createElement(Content, { colPos: '0' })))),
@@ -744,7 +774,7 @@ var pageTemplates = {
             React.createElement(Row, null,
                 React.createElement(Col, null,
                     React.createElement(Content, { colPos: '8' }))),
-            React.createElement("div", { className: "section section-default" },
+            React.createElement("section", { className: "section section-default" },
                 React.createElement(Container, null,
                     React.createElement(Row, null,
                         React.createElement(Col, { md: "8", as: "main", className: " maincontent-wrap", role: "main" },
@@ -764,7 +794,7 @@ var pageTemplates = {
             React.createElement(Row, null,
                 React.createElement(Col, null,
                     React.createElement(Content, { colPos: '8' }))),
-            React.createElement("div", { className: "section section-default" },
+            React.createElement("section", { className: "section section-default" },
                 React.createElement(Container, null,
                     React.createElement(Row, null,
                         React.createElement(Col, { md: "8", as: "main", className: " maincontent-wrap", role: "main" },
@@ -784,7 +814,7 @@ var pageTemplates = {
             React.createElement(Row, null,
                 React.createElement(Col, null,
                     React.createElement(Content, { colPos: '8' }))),
-            React.createElement("div", { className: "section section-default" },
+            React.createElement("section", { className: "section section-default" },
                 React.createElement(Container, null,
                     React.createElement(Row, null,
                         React.createElement(Col, { md: "6", as: "main", className: " maincontent-wrap", role: "main" },
@@ -804,7 +834,7 @@ var pageTemplates = {
             React.createElement(Row, null,
                 React.createElement(Col, null,
                     React.createElement(Content, { colPos: '8' }))),
-            React.createElement("div", { className: "section section-default" },
+            React.createElement("section", { className: "section section-default" },
                 React.createElement(Container, null,
                     React.createElement(Row, null,
                         React.createElement(Col, { lg: "6", as: "main", className: " maincontent-wrap ", role: "main" },
@@ -826,36 +856,36 @@ var pageTemplates = {
             React.createElement(Row, null,
                 React.createElement(Col, null,
                     React.createElement(Content, { colPos: '8' }))),
-            React.createElement("div", { className: "section section-default" },
+            React.createElement("section", { className: "section section-default" },
                 React.createElement(Row, null,
                     React.createElement(Col, null,
                         React.createElement(Content, { colPos: '0' })))),
-            React.createElement("div", { className: "section section-primary" },
+            React.createElement("section", { className: "section section-primary" },
                 React.createElement(Container, null,
                     React.createElement(Row, null,
                         React.createElement(Col, { className: "section-column-half ", md: "6" },
                             React.createElement(Content, { colPos: '30' })),
                         React.createElement(Col, { className: "section-column-half ", md: "6" },
                             React.createElement(Content, { colPos: '31' }))))),
-            React.createElement("div", { className: "section section-primary" },
+            React.createElement("section", { className: "section section-primary" },
                 React.createElement(Container, null,
                     React.createElement(Row, null,
                         React.createElement(Col, { className: "section-column-half ", md: "6" },
                             React.createElement(Content, { colPos: '32' })),
                         React.createElement(Col, { className: "section-column-half ", md: "6" },
                             React.createElement(Content, { colPos: '33' }))))),
-            React.createElement("div", { className: "section section-default" },
+            React.createElement("section", { className: "section section-default" },
                 React.createElement(Row, null,
                     React.createElement(Col, null,
                         React.createElement(Content, { colPos: '4' })))),
-            React.createElement("div", { className: "section section-light" },
+            React.createElement("section", { className: "section section-light" },
                 React.createElement(Container, null,
                     React.createElement(Row, null,
                         React.createElement(Col, { className: "section-column-half ", md: "6" },
                             React.createElement(Content, { colPos: '34' })),
                         React.createElement(Col, { className: "section-column-half ", md: "6" },
                             React.createElement(Content, { colPos: '35' }))))),
-            React.createElement("div", { className: "section section-light" },
+            React.createElement("section", { className: "section section-light" },
                 React.createElement(Container, null,
                     React.createElement(Row, null,
                         React.createElement(Col, { className: "section-column-half ", md: "6" },
@@ -875,7 +905,7 @@ var pageTemplates = {
             React.createElement(Row, null,
                 React.createElement(Col, null,
                     React.createElement(Content, { colPos: '8' }))),
-            React.createElement("div", { className: "section section-default" },
+            React.createElement("section", { className: "section section-default" },
                 React.createElement(Container, null,
                     React.createElement(Row, null,
                         React.createElement(Col, { className: "section-column-third ", md: "4" },
@@ -884,7 +914,7 @@ var pageTemplates = {
                             React.createElement(Content, { colPos: '21' })),
                         React.createElement(Col, { className: "section-column-third ", md: "4" },
                             React.createElement(Content, { colPos: '22' }))))),
-            React.createElement("div", { className: "section section-light" },
+            React.createElement("section", { className: "section section-light" },
                 React.createElement(Row, null,
                     React.createElement(Col, null,
                         React.createElement(Content, { colPos: '0' })))),
@@ -907,6 +937,7 @@ var contentElementTemplates = {
             " has no Template");
     },
     text: function (headlessContentData) { return React.createElement(Text, { data: headlessContentData.content }); },
+    header: function (headlessContentData) { return React.createElement(Header$1, { data: headlessContentData.content }); },
     html: function (headlessContentData) { return React.createElement(Html, { data: headlessContentData.content }); },
     textpic: function (headlessContentData) { return React.createElement(Textpic, { data: headlessContentData.content }); },
     image: function (headlessContentData) { return React.createElement(Image, { data: headlessContentData.content }); },
@@ -919,9 +950,10 @@ var contentElementTemplates = {
     card_group: function (headlessContentData) { return React.createElement(CardGroup, { data: headlessContentData }); },
     textcolumn: function (headlessContentData) { return React.createElement(TextColumns, { data: headlessContentData.content }); },
     quote: function (headlessContentData) { return React.createElement(Quote, { data: headlessContentData.content }); },
-    header: function (headlessContentData) { return React.createElement(Header$1, { data: headlessContentData.content }); },
+    form_formframework: function (headlessContentData) { return React.createElement(FormFormFramework, { data: headlessContentData.content }); }
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
+    // textmedia: (headlessContentData, args = {}) => <CE.Textmedia data={headlessContentData.content}/>,
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
     // bullets: (headlessContentData, args = {}) => <CE.Bullets data={headlessContentData.content}/>,
     // image: (headlessContentData, args = {}) => <CE.Image data={headlessContentData.content}/>,

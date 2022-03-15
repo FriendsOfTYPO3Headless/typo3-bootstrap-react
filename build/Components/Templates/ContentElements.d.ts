@@ -14,4 +14,4 @@ import TextColumns from "./ContentElements/TextColumns";
 import Quote from "./ContentElements/Quote";
 import Header from "./ContentElements/Header";
 import FormFormFramework from './ContentElements/FormFormFramework';
-export { Text, Html, Textpic, Image, ImageLightbox, Div, Shortcut, Textmedia, Uploads, Accordion, Gallery, CardGroup, TextColumns, Quote, Header, FormFormFramework};
+export { Text, Html, Textpic, Image, ImageLightbox, Div, FormFormFramework, Shortcut, Textmedia, Uploads, Accordion, Gallery, CardGroup, TextColumns, Quote, Header, };

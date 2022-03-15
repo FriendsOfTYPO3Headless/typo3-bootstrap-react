@@ -355,7 +355,7 @@ const pageTemplates = {
                     <Content colPos={'8'}/>
                 </Col>
             </Row>
-            <div className="section section-default">
+            <section className="section section-default">
                 <Container>
                     <Row>
                         <Col className="section-column-third " md="4">
@@ -415,7 +415,6 @@ const contentElementTemplates = {
     card_group: (headlessContentData) => <CE.CardGroup data={headlessContentData} />,
     textcolumn: (headlessContentData) => <CE.TextColumns data={headlessContentData.content}/>,
     quote: (headlessContentData) => <CE.Quote data={headlessContentData.content}/>,
-    header: (headlessContentData) => <CE.Header data={headlessContentData.content}/>,
     form_formframework: (headlessContentData) => <CE.FormFormFramework data={headlessContentData.content}/>
 
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
