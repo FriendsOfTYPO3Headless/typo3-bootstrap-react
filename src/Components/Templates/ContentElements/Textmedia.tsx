@@ -1,7 +1,8 @@
 import React from 'react';
 import {Col, Row} from "react-bootstrap";
+import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
 
-const Textmedia: React.FC<{ data: any }> = props => {
+const Textmedia: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
 
     let textmediaClassName;
     if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {

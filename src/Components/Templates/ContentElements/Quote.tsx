@@ -1,6 +1,7 @@
 import React from "react"
+import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
 
-interface IQuoteData {
+interface IQuoteData extends TYPO3BootstrapContentElementBaseInterface {
     bodytext: string,
     quoteLink: {
         href: string,
@@ -13,8 +14,8 @@ interface IQuoteData {
     quoteSource: string
 }
 
-const Quote: React.FC<{ data: IQuoteData }> = (props) => {
-    const {bodytext, quoteSource, quoteLink} = props.data
+const Quote: React.FC<TYPO3BootstrapContentElementBaseInterface> = (props) => {
+    const {bodytext, quoteSource, quoteLink} = props.data.content
 
     let sourceLink = () => {
         if (typeof quoteLink === 'object' && quoteLink !== null) {

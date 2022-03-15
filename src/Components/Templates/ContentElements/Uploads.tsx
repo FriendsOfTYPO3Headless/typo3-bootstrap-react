@@ -1,7 +1,8 @@
 import React from 'react';
 import {Col, Row} from "react-bootstrap";
+import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
 
-const Uploads: React.FC<{ data: any }> = props => {
+const Uploads: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
 
     return <div className="uploads">
         <ul className="media-list filelink-list">

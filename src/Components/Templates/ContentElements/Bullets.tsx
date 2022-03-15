@@ -1,6 +1,7 @@
 import React from 'react';
+import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
 
-const Bullets: React.FC<{ data: any }> = props => {
+const Bullets: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
 console.log(props.data)
     return <div className="bullets">
 

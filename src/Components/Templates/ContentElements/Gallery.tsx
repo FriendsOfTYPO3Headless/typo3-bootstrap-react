@@ -1,12 +1,13 @@
 import React from "react";
 import Type from "../../Partials/ContentElements/Media/Type";
 import {Col} from "react-bootstrap";
+import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
 
 interface IGalleryProperties {
     data: any
 }
 
-const Gallery: React.FC<IGalleryProperties> = (props) => {
+const Gallery: React.FC<TYPO3BootstrapContentElementBaseInterface> = (props) => {
     const {items, imagecols} = props.data
 
     const galleryItems = items.map((image, index) => {

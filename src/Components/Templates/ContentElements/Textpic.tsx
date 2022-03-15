@@ -2,8 +2,9 @@ import React from 'react';
 import {Col, Row} from "react-bootstrap";
 import ImageCols from "../../Partials/ContentElements/ImageCols";
 import AllHeader from "../../Partials/ContentElements/Header/All";
+import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
 
-const Textpic: React.FC<{ data: any }> = props => {
+const Textpic: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
     let textpicClassName = '';
 
     if (props.data.content.gallery.position.horizontal === 'left' || props.data.content.gallery.position.horizontal === 'right') {
