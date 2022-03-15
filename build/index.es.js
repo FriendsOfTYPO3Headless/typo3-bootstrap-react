@@ -286,6 +286,7 @@ var AllHeader = function (props) {
 
 var Textpic = function (props) {
     var textpicClassName = '';
+    console.log('TExtpic', props.data);
     if (props.data.content.gallery.position.horizontal === 'left' || props.data.content.gallery.position.horizontal === 'right') {
         textpicClassName = props.data.content.gallery.position.horizontal;
     }
@@ -299,8 +300,9 @@ var Textpic = function (props) {
                     React.createElement(Row, null,
                         React.createElement(ImageCols, { data: props.data.content }))),
                 React.createElement(Col, { className: "textpic-item textpic-text", md: "6" },
-                    React.createElement(AllHeader, { data: props.data.data }),
-                    React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } })))));
+                    React.createElement(AllHeader, { data: props.data }),
+                    React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } }),
+                    props.additionalContent))));
 };
 
 var Image = function (props) {

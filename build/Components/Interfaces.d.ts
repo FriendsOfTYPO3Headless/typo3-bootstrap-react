@@ -1,4 +1,3 @@
-import React from "react";
 interface TYPO3PageHeadlessDataInterface {
     id: number;
     type: string;
@@ -21,6 +20,6 @@ interface TYPO3PagePropsInterface {
 }
 interface TYPO3BootstrapContentElementBaseInterface {
     data: any;
-    addtionalContent?: React.FC;
+    additionalContent?: JSX.Element;
 }
 export { TYPO3PageHeadlessDataInterface, TYPO3PagePropsInterface, TYPO3BootstrapContentElementBaseInterface };
