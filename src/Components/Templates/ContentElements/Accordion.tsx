@@ -1,8 +1,9 @@
 import React from 'react'
 import {Accordion as ReactAccordion} from "react-bootstrap"
 import Gallery from "./Gallery"
+import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
 
-const Accordion: React.FC<{ data: any }> = (props) => {
+const Accordion: React.FC<TYPO3BootstrapContentElementBaseInterface> = (props) => {
     const accordionItems = props.data.content.items
     const activeElement = props.data.flexform.default_element ?? ''
 

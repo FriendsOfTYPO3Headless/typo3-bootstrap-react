@@ -1,8 +1,9 @@
 import React from "react"
 import {Card, Col, Row} from "react-bootstrap"
 import Link from "../../Partials/ContentElements/Link"
+import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
 
-const CardGroup: React.FC<{ data: any }> = (props) => {
+const CardGroup: React.FC<TYPO3BootstrapContentElementBaseInterface> = (props) => {
     const {items} = props.data.content
     const flexform = props.data.flexform;
     const cards = items.map((cardData: any, index_number: number) => {
