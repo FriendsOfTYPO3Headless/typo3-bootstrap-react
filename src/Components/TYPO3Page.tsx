@@ -404,7 +404,7 @@ const contentElementTemplates = {
     },
     text: (headlessContentData) => <CE.Text data={headlessContentData.content}/>,
     html: (headlessContentData) => <CE.Html data={headlessContentData.content}/>,
-    textpic: (headlessContentData) => <CE.Textpic data={headlessContentData.content}/>,
+    textpic: (headlessContentData) => <CE.Textpic data={headlessContentData}/>,
     image: (headlessContentData) => <CE.Image data={headlessContentData.content}/>,
     shortcut: (headlessContentData) => <CE.Shortcut data={headlessContentData.content} />,
     div: (headlessContentData) => <CE.Div data={headlessContentData.content}/>,
