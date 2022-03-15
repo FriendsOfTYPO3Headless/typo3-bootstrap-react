@@ -18,8 +18,8 @@ const FormFormFramework: React.FC<{ data: any }> = props => {
 
     return <div className="formFormFramework" onSubmit={submitHandler}>
         <Form id={form.id}>
-            {form.elements.map(element => {
-                return <FormElement element={element} />
+            {form.elements.map((element, index) => {
+                return <FormElement element={element} key={`${form.id}-${index}`}/>
             })}
             <Button type={"submit"}>Submit</Button>
         </Form>
