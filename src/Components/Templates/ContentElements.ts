@@ -1,18 +1,24 @@
-import Div from './ContentElements/Div'
-import FormFormFramework from './ContentElements/FormFormFramework'
-import Html from './ContentElements/Html'
-import Header from './ContentElements/Header'
-import Image from './ContentElements/Image'
-import ImageLightbox from './ContentElements/Image'
-import Shortcut from './ContentElements/Shortcut'
 import Text from './ContentElements/Text'
 import Textpic from './ContentElements/Textpic'
+import Image from './ContentElements/Image'
+import ImageLightbox from './ContentElements/Image'
+import Div from './ContentElements/Div'
+import Textmedia from './ContentElements/Textmedia'
+import Shortcut from './ContentElements/Shortcut'
+import Html from './ContentElements/Html'
 import Uploads from './ContentElements/Uploads'
-// import Textmedia from './ContentElements/Textmedia'
+import Accordion from "./ContentElements/Accordion";
+import Gallery from "./ContentElements/Gallery";
+import CardGroup from "./ContentElements/CardGroup";
+import TextColumns from "./ContentElements/TextColumns";
+import Quote from "./ContentElements/Quote";
+import Header from "./ContentElements/Header";
 //import ImageModal from './ContentElements/ImageModal'
-
-
 import MenuSitemap from './ContentElements/MenuSitemap'
+
+import FormFormFramework from './ContentElements/FormFormFramework';
+
+
 
 // import MenuSitemap from './ContentElements/MenuSitemap'
 /*
@@ -45,7 +51,6 @@ export {
     //Bullets,
     Div,
     FormFormFramework,
-    Header,
     /*  FormFormFramework,
    Html,
    List,
@@ -64,7 +69,12 @@ export {
     //MenuSitemap,
     //  Table,
     Shortcut,
-    //Image,
-   // Textmedia,
-    Uploads
+   Textmedia,
+    Uploads,
+    Accordion,
+    Gallery,
+    CardGroup,
+    TextColumns,
+    Quote,
+    Header,
 }

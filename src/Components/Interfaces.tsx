@@ -8,6 +8,7 @@ interface TYPO3PageHeadlessDataInterface {
     appearance: any,
     content: any;
     navigations: any;
+    error?: any | null;
 }
 
 interface TYPO3PagePropsInterface {

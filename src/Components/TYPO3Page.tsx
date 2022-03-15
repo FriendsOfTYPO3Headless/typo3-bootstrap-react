@@ -2,7 +2,7 @@ import React from "react";
 import __GenericLayout from "./Layouts/Page/__GenericLayout";
 import Page from "./Templates/Page";
 import Content from "./Templates/Content";
-import {TYPO3PageHeadlessDataInterface, TYPO3PagePropsInterface} from "./Interfaces";
+import {TYPO3PagePropsInterface} from "./Interfaces";
 import Section from './Partials/Page/Section';
 import * as CE from './Templates/ContentElements';
 import * as CELayouts from './Layouts/ContentElementsLayouts';
@@ -10,6 +10,7 @@ import {Col, Row, Container} from "react-bootstrap";
 import FooterContent from "./Partials/Page/Structure/FooterContent";
 import GenericPage from "./Templates/Page/GenericPage";
 import TYPO3PageContext from "../Context/TYPO3PageContext";
+
 
 const pageLayouts = {
     //TODO: implement example
@@ -354,7 +355,7 @@ const pageTemplates = {
                     <Content colPos={'8'}/>
                 </Col>
             </Row>
-            <section className="section section-default">
+            <div className="section section-default">
                 <Container>
                     <Row>
                         <Col className="section-column-third " md="4">
@@ -408,6 +409,13 @@ const contentElementTemplates = {
     shortcut: (headlessContentData) => <CE.Shortcut data={headlessContentData.content}/>,
     div: (headlessContentData) => <CE.Div data={headlessContentData.content}/>,
     uploads: (headlessContentData) => <CE.Uploads data={headlessContentData.content}/>,
+    accordion: (headlessContentData) => <CE.Accordion data={headlessContentData}/>,
+    gallery: (headlessContentData) => <CE.Gallery data={headlessContentData.content}/>,
+    textmedia: (headlessContentData) => <CE.Textmedia data={headlessContentData.content}/>,
+    card_group: (headlessContentData) => <CE.CardGroup data={headlessContentData} />,
+    textcolumn: (headlessContentData) => <CE.TextColumns data={headlessContentData.content}/>,
+    quote: (headlessContentData) => <CE.Quote data={headlessContentData.content}/>,
+    header: (headlessContentData) => <CE.Header data={headlessContentData.content}/>,
     form_formframework: (headlessContentData) => <CE.FormFormFramework data={headlessContentData.content}/>
 
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,

@@ -5,11 +5,13 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var React = require('react');
 var reactBootstrap = require('react-bootstrap');
 var Lightbox = require('react-image-lightbox');
+var FigureImage = require('react-bootstrap/FigureImage');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 var Lightbox__default = /*#__PURE__*/_interopDefaultLegacy(Lightbox);
+var FigureImage__default = /*#__PURE__*/_interopDefaultLegacy(FigureImage);
 
 var section = function (props) {
     if (props.pageTemplate.hasOwnProperty(props.name)) {
@@ -100,47 +102,8 @@ var Content = function (props) {
     return content;
 };
 
-var Div = function (props) {
-    return React__default["default"].createElement("div", { className: "div" },
-        React__default["default"].createElement("hr", null));
-};
-
-var FormElement = function (props) {
-    var element = props.element;
-    var content;
-    switch (element.type) {
-        case 'Textarea':
-            content = 'textarea';
-            break;
-        default:
-            content = "".concat(element.type, " type not defined");
-    }
-    return React__default["default"].createElement(reactBootstrap.Form.Group, { className: "mb-3", controlId: element.identifier },
-        React__default["default"].createElement(reactBootstrap.Form.Label, null, element.label),
-        content);
-};
-
-var FormFormFramework = function (props) {
-    var _a = props.data, form = _a.form, link = _a.link;
-    console.log('FORM', form);
-    var submitHandler = React.useCallback(function (e) {
-        e.preventDefault();
-        console.log("send POST request to ".concat(link.href));
-    }, [form, link]);
-    return React__default["default"].createElement("div", { className: "formFormFramework", onSubmit: submitHandler },
-        React__default["default"].createElement(reactBootstrap.Form, { id: form.id },
-            form.elements.map(function (element) {
-                return React__default["default"].createElement(FormElement, { element: element });
-            }),
-            React__default["default"].createElement(reactBootstrap.Button, { type: "submit" }, "Submit")));
-};
-
-var Html = function (props) {
+var Text = function (props) {
     return React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
-};
-
-var Header$1 = function (props) {
-    return React__default["default"].createElement("div", { className: "header" });
 };
 
 var ImageLightbox = function (props) {
@@ -157,6 +120,50 @@ var ImageLightbox = function (props) {
         return React__default["default"].createElement(Lightbox__default["default"], { mainSrc: props.images[props.photoIndex], nextSrc: props.images[(props.photoIndex + 1) % props.images.length], prevSrc: props.images[(props.photoIndex + props.images.length - 1) % props.images.length], onCloseRequest: onClose, onMovePrevRequest: prevSrc, onMoveNextRequest: nextSrc });
     }
     return React__default["default"].createElement(React__default["default"].Fragment, null);
+};
+
+var Image$2 = function (props) {
+    var file = props.file;
+    var crops = Object.keys(file.properties.crop);
+    var sources = crops.map(function (cropIdentifier, index) {
+        var src;
+        var media;
+        switch (cropIdentifier) {
+            case 'extrasmall':
+                media = '(max-width: 575px)';
+                src = file.cropVariants ? file.cropVariants.extrasmall.publicUrl : file.publicUrl;
+                break;
+            case 'small':
+                media = '(min-width: 576px)';
+                src = file.cropVariants ? file.cropVariants.small.publicUrl : file.publicUrl;
+                break;
+            case 'medium':
+                media = '(min-width: 768px)';
+                src = file.cropVariants ? file.cropVariants.medium.publicUrl : file.publicUrl;
+                break;
+            case 'large':
+                media = '(min-width: 992px)';
+                src = file.cropVariants ? file.cropVariants.large.publicUrl : file.publicUrl;
+                break;
+            default:
+                media = '(min-width: 1200px)';
+                src = file.cropVariants ? file.cropVariants.default.publicUrl : file.publicUrl;
+                break;
+        }
+        return React__default["default"].createElement("source", { key: index, srcSet: src, media: media });
+    });
+    return React__default["default"].createElement("picture", null,
+        sources,
+        React__default["default"].createElement(FigureImage__default["default"], { loading: "lazy", className: 'img-fluid', src: file.publicUrl, title: file.properties.title, alt: file.properties.alternative }));
+};
+
+var Image$1 = function (props) {
+    var file = props.file, data = props.data;
+    var caption = file.properties.description ?
+        React__default["default"].createElement(reactBootstrap.Figure.Caption, { className: "caption" }, file.properties.description) : React__default["default"].createElement(React__default["default"].Fragment, null);
+    return React__default["default"].createElement(reactBootstrap.Figure, { className: 'image' },
+        React__default["default"].createElement(Image$2, { data: data, file: file }),
+        caption);
 };
 
 var imageUris = function (data) {
@@ -176,36 +183,17 @@ var ImageCols = function (props) {
         React__default["default"].createElement(ImageLightbox, { images: images, setShowLightbox: setShowlightbox, showLightbox: showLightbox, photoIndex: photoIndex, setPhotoIndex: setPhotoIndex }),
         Object.keys(props.data.gallery.rows).map(function (rowKey) {
             return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
-                var _a, _b;
-                var image = React__default["default"].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, alt: (_b = (_a = props.data.gallery.rows[rowKey].columns[columnKey]) === null || _a === void 0 ? void 0 : _a.properties) === null || _b === void 0 ? void 0 : _b.title });
-                return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns, key: rowKey + '-' + columnKey },
-                    props.data.enlargeImageOnClick ?
-                        React__default["default"].createElement("a", { onClick: function (e) {
-                                e.preventDefault();
-                                setPhotoIndex(images.indexOf(props.data.gallery.rows[rowKey].columns[columnKey].publicUrl));
-                                setShowlightbox(true);
-                                return true;
-                            }, href: '#' }, image) : image,
-                    props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                var file = props.data.gallery.rows[rowKey].columns[columnKey];
+                var image = React__default["default"].createElement(Image$1, { data: props.data, file: file });
+                return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns, key: rowKey + '-' + columnKey }, props.data.enlargeImageOnClick ?
+                    React__default["default"].createElement("a", { onClick: function (e) {
+                            e.preventDefault();
+                            setPhotoIndex(images.indexOf(file.publicUrl));
+                            setShowlightbox(true);
+                            return true;
+                        }, href: file.publicUrl }, image) : image);
             });
         }));
-};
-
-var Image = function (props) {
-    return React__default["default"].createElement("div", { className: "image" },
-        React__default["default"].createElement("div", { className: "gallery-row" },
-            React__default["default"].createElement(reactBootstrap.Row, null,
-                React__default["default"].createElement(ImageCols, { data: props.data }))));
-};
-
-var Shortcut = function (props) {
-    return React__default["default"].createElement("div", { className: "shortcut" }, props.data.shortcut.map(function (cObject) {
-        return RenderContent(cObject);
-    }));
-};
-
-var Text = function (props) {
-    return React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
 };
 
 var Textpic = function (props) {
@@ -223,6 +211,74 @@ var Textpic = function (props) {
                     React__default["default"].createElement(reactBootstrap.Row, null,
                         React__default["default"].createElement(ImageCols, { data: props.data }))),
                 React__default["default"].createElement(reactBootstrap.Col, { className: "textpic-item textpic-text", md: "6", dangerouslySetInnerHTML: { __html: props.data.bodytext } }))));
+};
+
+var Image = function (props) {
+    return React__default["default"].createElement("div", { className: "image" },
+        React__default["default"].createElement("div", { className: "gallery-row" },
+            React__default["default"].createElement(reactBootstrap.Row, null,
+                React__default["default"].createElement(ImageCols, { data: props.data }))));
+};
+
+var Div = function (props) {
+    return React__default["default"].createElement("div", { className: "div" },
+        React__default["default"].createElement("hr", null));
+};
+
+var Textmedia = function (props) {
+    var textmediaClassName;
+    if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
+        textmediaClassName = props.data.gallery.position.horizontal;
+    }
+    if (props.data.gallery.position.horizontal === 'center') {
+        textmediaClassName = props.data.gallery.position.vertical;
+    }
+    return React__default["default"].createElement("div", { className: "textmedia" },
+        React__default["default"].createElement("div", { className: "gallery-row" },
+            React__default["default"].createElement(reactBootstrap.Row, { className: "textmedia textmedia-" + textmediaClassName },
+                React__default["default"].createElement(reactBootstrap.Col, { className: "textmedia-item textmedia-gallery", md: textmediaClassName === props.data.gallery.position.vertical ? "auto" : "6" },
+                    React__default["default"].createElement(reactBootstrap.Row, null, Object.keys(props.data.gallery.rows).map(function (rowKey) {
+                        return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
+                            switch (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType) {
+                                case 'video/youtube':
+                                    return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                        React__default["default"].createElement("iframe", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
+                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                case 'image/jpeg':
+                                    return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                        React__default["default"].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
+                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                case 'image/svg+xml':
+                                    return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                        React__default["default"].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
+                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                case 'video/mp4':
+                                    return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                        React__default["default"].createElement("video", { controls: true },
+                                            React__default["default"].createElement("source", { type: "video/mp4", src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                case 'video/vimeo':
+                                    return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
+                                        React__default["default"].createElement("video", { controls: true },
+                                            React__default["default"].createElement("source", { type: "video/mp4", src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                default:
+                                    return React__default["default"].createElement(React__default["default"].Fragment, null);
+                            }
+                        });
+                    }))),
+                React__default["default"].createElement(reactBootstrap.Col, { className: "textmedia-item textmedia-text" },
+                    React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } })))));
+};
+
+var Shortcut = function (props) {
+    return React__default["default"].createElement("div", { className: "shortcut" }, props.data.shortcut.map(function (cObject) {
+        return RenderContent(cObject);
+    }));
+};
+
+var Html = function (props) {
+    return React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
 };
 
 var Uploads = function (props) {
@@ -281,6 +337,170 @@ var Uploads = function (props) {
             }
             return React__default["default"].createElement("li", { className: 'filelink-item mb-2', key: key }, content);
         })));
+};
+
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
+var Type = function (props) {
+    var file = props.file, data = props.data;
+    var fileType = file.properties.type;
+    if (!isNaN(+file.properties.type)) {
+        var fileExtension_1 = file.properties.filename.split('.').pop();
+        if (['jpg', 'png'].some(function (type) { return type === fileExtension_1; })) {
+            fileType = 'image';
+        }
+    }
+    switch (fileType) {
+        case 'image':
+            return React__default["default"].createElement(Image$1, { file: file, data: data });
+        default:
+            return React__default["default"].createElement(reactBootstrap.Alert, { variant: "info" },
+                "Filetype unknown ",
+                file.properties.filename);
+    }
+};
+
+var Gallery = function (props) {
+    var _a = props.data, items = _a.items, imagecols = _a.imagecols;
+    var galleryItems = items.map(function (image, index) {
+        return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item gallery-item-size-".concat(imagecols), md: imagecols },
+            React__default["default"].createElement(Type, { data: props.data, file: image }));
+    });
+    return React__default["default"].createElement("div", { className: 'gallery-row' }, galleryItems);
+};
+
+var Accordion = function (props) {
+    var _a;
+    var accordionItems = props.data.content.items;
+    var activeElement = (_a = props.data.flexform.default_element) !== null && _a !== void 0 ? _a : '';
+    if (!accordionItems || accordionItems.length < 0) {
+        return React__default["default"].createElement(React__default["default"].Fragment, null);
+    }
+    var accorditionItemsTemplate = accordionItems.map(function (accordionItem, index) {
+        var galleryTemplate = React__default["default"].createElement(React__default["default"].Fragment, null);
+        if (accordionItem.media.length > 0) {
+            galleryTemplate = React__default["default"].createElement(Gallery, { data: __assign({ items: accordionItem.media }, accordionItem) });
+        }
+        return React__default["default"].createElement(reactBootstrap.Accordion.Item, { key: accordionItem.id, eventKey: accordionItem.id.toString() },
+            React__default["default"].createElement(reactBootstrap.Accordion.Header, { as: "h4", id: "accordion-heading-".concat(accordionItem.id) },
+                React__default["default"].createElement("span", { className: "accordion-title-link-text" }, accordionItem.header)),
+            React__default["default"].createElement(reactBootstrap.Accordion.Body, null,
+                React__default["default"].createElement("div", { className: "accordion-content accordion-content-".concat(accordionItem.mediaorient) },
+                    galleryTemplate,
+                    React__default["default"].createElement("div", { className: 'accordion-content-item accordion-content-text', dangerouslySetInnerHTML: { __html: accordionItem.bodytext } }))));
+    });
+    return React__default["default"].createElement(reactBootstrap.Accordion, { defaultActiveKey: activeElement }, accorditionItemsTemplate);
+};
+
+var defaultProperties = {
+    href: '',
+    target: '',
+    className: 'btn-link',
+    title: '',
+    linkText: '',
+    additionalAttributes: []
+};
+var Link = function (props) {
+    var href = props.href, target = props.target, className = props.className, title = props.title, linkText = props.linkText; props.additionalAttributes;
+    return React__default["default"].createElement("a", { href: href, target: target, className: "btn ".concat(className), title: title }, linkText);
+};
+Link.defaultProps = defaultProperties;
+
+var CardGroup = function (props) {
+    var items = props.data.content.items;
+    var flexform = props.data.flexform;
+    var cards = items.map(function (cardData, index_number) {
+        var header = cardData.header, subheader = cardData.subheader, bodytext = cardData.bodytext, image = cardData.image, link = cardData.link, linkTitle = cardData.linkTitle, linkClass = cardData.linkClass;
+        var imageTemplate = image ? image.map(function (imageData, index) { return React__default["default"].createElement(reactBootstrap.Card.Img, { key: "image-data-".concat(index), variant: "top", src: imageData.publicUrl }); }) : React__default["default"].createElement(React__default["default"].Fragment, null);
+        var linkButton = React__default["default"].createElement(React__default["default"].Fragment, null);
+        if (link) {
+            if (linkTitle && linkTitle.length > 0) {
+                link.title = linkTitle;
+            }
+            if (linkClass && linkClass.length > 0) {
+                link["class"] = "".concat(link["class"], " btn-").concat(linkClass);
+            }
+            linkButton = React__default["default"].createElement(Link, { href: link.href, title: link.title, className: link['class'], target: link.target, linkText: link.linkText });
+        }
+        return React__default["default"].createElement(reactBootstrap.Col, { key: "card-group-col-".concat(index_number) },
+            React__default["default"].createElement(reactBootstrap.Card, null,
+                header.length > 0 && React__default["default"].createElement(reactBootstrap.Card.Header, null, header),
+                imageTemplate,
+                React__default["default"].createElement(reactBootstrap.Card.Body, null,
+                    subheader.length > 0 && React__default["default"].createElement(reactBootstrap.Card.Title, null, subheader),
+                    bodytext.length > 0 && React__default["default"].createElement(reactBootstrap.Card.Text, { as: "div" },
+                        React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: bodytext } })),
+                    linkButton)));
+    });
+    var alignment = 'justify-content-left';
+    if (flexform.align.length > 0) {
+        alignment = "justify-content-".concat(flexform.align);
+    }
+    return React__default["default"].createElement(reactBootstrap.Row, { xs: 1, md: flexform.columns, className: "card-group ".concat(alignment) }, cards);
+};
+
+var TextColumns = function (props) {
+    var bodytext = props.data.bodytext;
+    return React__default["default"].createElement("div", { className: "text-column" },
+        React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: bodytext } }));
+};
+
+var Quote = function (props) {
+    var _a = props.data, bodytext = _a.bodytext, quoteSource = _a.quoteSource, quoteLink = _a.quoteLink;
+    var sourceLink = function () {
+        if (typeof quoteLink === 'object' && quoteLink !== null) {
+            var href = quoteLink.href, target = quoteLink.target, title = quoteLink.title, linkText = quoteLink.linkText;
+            var className = quoteLink['class'];
+            return React__default["default"].createElement("span", null,
+                "(",
+                React__default["default"].createElement("a", { href: href, target: target, title: title, className: className }, linkText),
+                ")");
+        }
+        return React__default["default"].createElement(React__default["default"].Fragment, null);
+    };
+    var bodyTemplate = function () {
+        return (bodytext.length > 0) ? React__default["default"].createElement("blockquote", { className: 'blockquote', dangerouslySetInnerHTML: { __html: bodytext } }) : React__default["default"].createElement(React__default["default"].Fragment, null);
+    };
+    var figcaptionTemplate = function () {
+        if (quoteSource.length > 0) {
+            return React__default["default"].createElement("figcaption", { className: "blockquote-footer" },
+                React__default["default"].createElement("cite", { title: quoteSource },
+                    quoteSource,
+                    sourceLink()));
+        }
+        return React__default["default"].createElement(React__default["default"].Fragment, null);
+    };
+    return React__default["default"].createElement("figure", null,
+        bodyTemplate(),
+        figcaptionTemplate());
+};
+
+var Header$1 = function (props) {
+    return React__default["default"].createElement("div", { className: "header" });
 };
 
 var BackgroundImage = function (props) {
@@ -501,7 +721,7 @@ var pageTemplates = {
             React__default["default"].createElement(reactBootstrap.Row, null,
                 React__default["default"].createElement(reactBootstrap.Col, null,
                     React__default["default"].createElement(Content, { colPos: '8' }))),
-            React__default["default"].createElement("section", { className: "section section-default" },
+            React__default["default"].createElement("div", { className: "section section-default" },
                 React__default["default"].createElement(reactBootstrap.Row, null,
                     React__default["default"].createElement(reactBootstrap.Col, null,
                         React__default["default"].createElement(Content, { colPos: '0' })))),
@@ -518,7 +738,7 @@ var pageTemplates = {
             React__default["default"].createElement(reactBootstrap.Row, null,
                 React__default["default"].createElement(reactBootstrap.Col, null,
                     React__default["default"].createElement(Content, { colPos: '8' }))),
-            React__default["default"].createElement("section", { className: "section section-default" },
+            React__default["default"].createElement("div", { className: "section section-default" },
                 React__default["default"].createElement(reactBootstrap.Row, null,
                     React__default["default"].createElement(reactBootstrap.Col, null,
                         React__default["default"].createElement(Content, { colPos: '0' })))),
@@ -534,7 +754,7 @@ var pageTemplates = {
             React__default["default"].createElement(reactBootstrap.Row, null,
                 React__default["default"].createElement(reactBootstrap.Col, null,
                     React__default["default"].createElement(Content, { colPos: '8' }))),
-            React__default["default"].createElement("section", { className: "section section-default" },
+            React__default["default"].createElement("div", { className: "section section-default" },
                 React__default["default"].createElement(reactBootstrap.Container, null,
                     React__default["default"].createElement(reactBootstrap.Row, null,
                         React__default["default"].createElement(reactBootstrap.Col, { md: "8", as: "main", className: " maincontent-wrap", role: "main" },
@@ -554,7 +774,7 @@ var pageTemplates = {
             React__default["default"].createElement(reactBootstrap.Row, null,
                 React__default["default"].createElement(reactBootstrap.Col, null,
                     React__default["default"].createElement(Content, { colPos: '8' }))),
-            React__default["default"].createElement("section", { className: "section section-default" },
+            React__default["default"].createElement("div", { className: "section section-default" },
                 React__default["default"].createElement(reactBootstrap.Container, null,
                     React__default["default"].createElement(reactBootstrap.Row, null,
                         React__default["default"].createElement(reactBootstrap.Col, { md: "8", as: "main", className: " maincontent-wrap", role: "main" },
@@ -574,7 +794,7 @@ var pageTemplates = {
             React__default["default"].createElement(reactBootstrap.Row, null,
                 React__default["default"].createElement(reactBootstrap.Col, null,
                     React__default["default"].createElement(Content, { colPos: '8' }))),
-            React__default["default"].createElement("section", { className: "section section-default" },
+            React__default["default"].createElement("div", { className: "section section-default" },
                 React__default["default"].createElement(reactBootstrap.Container, null,
                     React__default["default"].createElement(reactBootstrap.Row, null,
                         React__default["default"].createElement(reactBootstrap.Col, { md: "6", as: "main", className: " maincontent-wrap", role: "main" },
@@ -594,7 +814,7 @@ var pageTemplates = {
             React__default["default"].createElement(reactBootstrap.Row, null,
                 React__default["default"].createElement(reactBootstrap.Col, null,
                     React__default["default"].createElement(Content, { colPos: '8' }))),
-            React__default["default"].createElement("section", { className: "section section-default" },
+            React__default["default"].createElement("div", { className: "section section-default" },
                 React__default["default"].createElement(reactBootstrap.Container, null,
                     React__default["default"].createElement(reactBootstrap.Row, null,
                         React__default["default"].createElement(reactBootstrap.Col, { lg: "6", as: "main", className: " maincontent-wrap ", role: "main" },
@@ -616,36 +836,36 @@ var pageTemplates = {
             React__default["default"].createElement(reactBootstrap.Row, null,
                 React__default["default"].createElement(reactBootstrap.Col, null,
                     React__default["default"].createElement(Content, { colPos: '8' }))),
-            React__default["default"].createElement("section", { className: "section section-default" },
+            React__default["default"].createElement("div", { className: "section section-default" },
                 React__default["default"].createElement(reactBootstrap.Row, null,
                     React__default["default"].createElement(reactBootstrap.Col, null,
                         React__default["default"].createElement(Content, { colPos: '0' })))),
-            React__default["default"].createElement("section", { className: "section section-primary" },
+            React__default["default"].createElement("div", { className: "section section-primary" },
                 React__default["default"].createElement(reactBootstrap.Container, null,
                     React__default["default"].createElement(reactBootstrap.Row, null,
                         React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-half ", md: "6" },
                             React__default["default"].createElement(Content, { colPos: '30' })),
                         React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-half ", md: "6" },
                             React__default["default"].createElement(Content, { colPos: '31' }))))),
-            React__default["default"].createElement("section", { className: "section section-primary" },
+            React__default["default"].createElement("div", { className: "section section-primary" },
                 React__default["default"].createElement(reactBootstrap.Container, null,
                     React__default["default"].createElement(reactBootstrap.Row, null,
                         React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-half ", md: "6" },
                             React__default["default"].createElement(Content, { colPos: '32' })),
                         React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-half ", md: "6" },
                             React__default["default"].createElement(Content, { colPos: '33' }))))),
-            React__default["default"].createElement("section", { className: "section section-default" },
+            React__default["default"].createElement("div", { className: "section section-default" },
                 React__default["default"].createElement(reactBootstrap.Row, null,
                     React__default["default"].createElement(reactBootstrap.Col, null,
                         React__default["default"].createElement(Content, { colPos: '4' })))),
-            React__default["default"].createElement("section", { className: "section section-light" },
+            React__default["default"].createElement("div", { className: "section section-light" },
                 React__default["default"].createElement(reactBootstrap.Container, null,
                     React__default["default"].createElement(reactBootstrap.Row, null,
                         React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-half ", md: "6" },
                             React__default["default"].createElement(Content, { colPos: '34' })),
                         React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-half ", md: "6" },
                             React__default["default"].createElement(Content, { colPos: '35' }))))),
-            React__default["default"].createElement("section", { className: "section section-light" },
+            React__default["default"].createElement("div", { className: "section section-light" },
                 React__default["default"].createElement(reactBootstrap.Container, null,
                     React__default["default"].createElement(reactBootstrap.Row, null,
                         React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-half ", md: "6" },
@@ -665,7 +885,7 @@ var pageTemplates = {
             React__default["default"].createElement(reactBootstrap.Row, null,
                 React__default["default"].createElement(reactBootstrap.Col, null,
                     React__default["default"].createElement(Content, { colPos: '8' }))),
-            React__default["default"].createElement("section", { className: "section section-default" },
+            React__default["default"].createElement("div", { className: "section section-default" },
                 React__default["default"].createElement(reactBootstrap.Container, null,
                     React__default["default"].createElement(reactBootstrap.Row, null,
                         React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-third ", md: "4" },
@@ -674,7 +894,7 @@ var pageTemplates = {
                             React__default["default"].createElement(Content, { colPos: '21' })),
                         React__default["default"].createElement(reactBootstrap.Col, { className: "section-column-third ", md: "4" },
                             React__default["default"].createElement(Content, { colPos: '22' }))))),
-            React__default["default"].createElement("section", { className: "section section-light" },
+            React__default["default"].createElement("div", { className: "section section-light" },
                 React__default["default"].createElement(reactBootstrap.Row, null,
                     React__default["default"].createElement(reactBootstrap.Col, null,
                         React__default["default"].createElement(Content, { colPos: '0' })))),
@@ -697,17 +917,21 @@ var contentElementTemplates = {
             " has no Template");
     },
     text: function (headlessContentData) { return React__default["default"].createElement(Text, { data: headlessContentData.content }); },
-    header: function (headlessContentData) { return React__default["default"].createElement(Header$1, { data: headlessContentData.content }); },
     html: function (headlessContentData) { return React__default["default"].createElement(Html, { data: headlessContentData.content }); },
     textpic: function (headlessContentData) { return React__default["default"].createElement(Textpic, { data: headlessContentData.content }); },
     image: function (headlessContentData) { return React__default["default"].createElement(Image, { data: headlessContentData.content }); },
     shortcut: function (headlessContentData) { return React__default["default"].createElement(Shortcut, { data: headlessContentData.content }); },
     div: function (headlessContentData) { return React__default["default"].createElement(Div, { data: headlessContentData.content }); },
     uploads: function (headlessContentData) { return React__default["default"].createElement(Uploads, { data: headlessContentData.content }); },
-    form_formframework: function (headlessContentData) { return React__default["default"].createElement(FormFormFramework, { data: headlessContentData.content }); }
+    accordion: function (headlessContentData) { return React__default["default"].createElement(Accordion, { data: headlessContentData }); },
+    gallery: function (headlessContentData) { return React__default["default"].createElement(Gallery, { data: headlessContentData.content }); },
+    textmedia: function (headlessContentData) { return React__default["default"].createElement(Textmedia, { data: headlessContentData.content }); },
+    card_group: function (headlessContentData) { return React__default["default"].createElement(CardGroup, { data: headlessContentData }); },
+    textcolumn: function (headlessContentData) { return React__default["default"].createElement(TextColumns, { data: headlessContentData.content }); },
+    quote: function (headlessContentData) { return React__default["default"].createElement(Quote, { data: headlessContentData.content }); },
+    header: function (headlessContentData) { return React__default["default"].createElement(Header$1, { data: headlessContentData.content }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
-    // textmedia: (headlessContentData, args = {}) => <CE.Textmedia data={headlessContentData.content}/>,
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
     // bullets: (headlessContentData, args = {}) => <CE.Bullets data={headlessContentData.content}/>,
     // image: (headlessContentData, args = {}) => <CE.Image data={headlessContentData.content}/>,
