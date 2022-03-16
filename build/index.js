@@ -312,6 +312,7 @@ var Textpic = function (props) {
 
 var Image = function (props) {
     return React__default["default"].createElement("div", { className: "image" },
+        React__default["default"].createElement(AllHeader, { data: props.data }),
         React__default["default"].createElement("div", { className: "gallery-row" },
             React__default["default"].createElement(reactBootstrap.Row, null,
                 React__default["default"].createElement(ImageCols, { data: props.data.content }))));
@@ -920,7 +921,7 @@ var contentElementTemplates = {
     text: function (headlessContentData) { return React__default["default"].createElement(Text, { data: headlessContentData }); },
     html: function (headlessContentData) { return React__default["default"].createElement(Html, { data: headlessContentData }); },
     textpic: function (headlessContentData) { return React__default["default"].createElement(Textpic, { data: headlessContentData }); },
-    image: function (headlessContentData) { return React__default["default"].createElement(Image, { data: headlessContentData.content }); },
+    image: function (headlessContentData) { return React__default["default"].createElement(Image, { data: headlessContentData }); },
     shortcut: function (headlessContentData) { return React__default["default"].createElement(Shortcut, { data: headlessContentData.content }); },
     div: function (headlessContentData) { return React__default["default"].createElement(Div, { data: headlessContentData.content }); },
     uploads: function (headlessContentData) { return React__default["default"].createElement(Uploads, { data: headlessContentData.content }); },

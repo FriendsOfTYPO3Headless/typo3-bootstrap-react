@@ -7,7 +7,6 @@ import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
 const Textpic: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
     let textpicClassName = '';
 
-    console.log('TExtpic',props.data)
     if (props.data.content.gallery.position.horizontal === 'left' || props.data.content.gallery.position.horizontal === 'right') {
         textpicClassName = props.data.content.gallery.position.horizontal;
 

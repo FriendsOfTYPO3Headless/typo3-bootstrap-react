@@ -302,6 +302,7 @@ var Textpic = function (props) {
 
 var Image = function (props) {
     return React.createElement("div", { className: "image" },
+        React.createElement(AllHeader, { data: props.data }),
         React.createElement("div", { className: "gallery-row" },
             React.createElement(Row, null,
                 React.createElement(ImageCols, { data: props.data.content }))));
@@ -910,7 +911,7 @@ var contentElementTemplates = {
     text: function (headlessContentData) { return React.createElement(Text, { data: headlessContentData }); },
     html: function (headlessContentData) { return React.createElement(Html, { data: headlessContentData }); },
     textpic: function (headlessContentData) { return React.createElement(Textpic, { data: headlessContentData }); },
-    image: function (headlessContentData) { return React.createElement(Image, { data: headlessContentData.content }); },
+    image: function (headlessContentData) { return React.createElement(Image, { data: headlessContentData }); },
     shortcut: function (headlessContentData) { return React.createElement(Shortcut, { data: headlessContentData.content }); },
     div: function (headlessContentData) { return React.createElement(Div, { data: headlessContentData.content }); },
     uploads: function (headlessContentData) { return React.createElement(Uploads, { data: headlessContentData.content }); },
