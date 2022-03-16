@@ -1,7 +1,8 @@
 import React from "react"
 import {Card, Col, Row} from "react-bootstrap"
 import Link from "../../Partials/ContentElements/Link"
-import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
+import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces"
+import AllHeader from "../../Partials/ContentElements/Header/All";
 
 const CardGroup: React.FC<TYPO3BootstrapContentElementBaseInterface> = (props) => {
     const {items} = props.data.content
@@ -45,12 +46,15 @@ const CardGroup: React.FC<TYPO3BootstrapContentElementBaseInterface> = (props) =
 
 
     let alignment = 'justify-content-left'
-    if(flexform.align.length > 0) {
+    if (flexform.align.length > 0) {
         alignment = `justify-content-${flexform.align}`
     }
-    return <Row xs={1} md={flexform.columns} className={`card-group ${alignment}` } >
-        {cards}
-    </Row>
+    return <>
+        <AllHeader data={props.data}/>
+        <Row xs={1} md={flexform.columns} className={`card-group ${alignment}`}>
+            {cards}
+        </Row>
+    </>
 }
 
 export default CardGroup

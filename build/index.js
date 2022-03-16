@@ -575,7 +575,9 @@ var CardGroup = function (props) {
     if (flexform.align.length > 0) {
         alignment = "justify-content-".concat(flexform.align);
     }
-    return React__default["default"].createElement(reactBootstrap.Row, { xs: 1, md: flexform.columns, className: "card-group ".concat(alignment) }, cards);
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(AllHeader, { data: props.data }),
+        React__default["default"].createElement(reactBootstrap.Row, { xs: 1, md: flexform.columns, className: "card-group ".concat(alignment) }, cards));
 };
 
 var TextColumns = function (props) {

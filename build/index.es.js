@@ -565,7 +565,9 @@ var CardGroup = function (props) {
     if (flexform.align.length > 0) {
         alignment = "justify-content-".concat(flexform.align);
     }
-    return React.createElement(Row, { xs: 1, md: flexform.columns, className: "card-group ".concat(alignment) }, cards);
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement(Row, { xs: 1, md: flexform.columns, className: "card-group ".concat(alignment) }, cards));
 };
 
 var TextColumns = function (props) {
