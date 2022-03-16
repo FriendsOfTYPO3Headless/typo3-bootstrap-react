@@ -319,8 +319,10 @@ var Image = function (props) {
 };
 
 var Div = function (props) {
-    return React__default["default"].createElement("div", { className: "div" },
-        React__default["default"].createElement("hr", null));
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(AllHeader, { data: props.data }),
+        React__default["default"].createElement("div", { className: "div" },
+            React__default["default"].createElement("hr", null)));
 };
 
 var Textmedia = function (props) {
@@ -925,7 +927,7 @@ var contentElementTemplates = {
     textpic: function (headlessContentData) { return React__default["default"].createElement(Textpic, { data: headlessContentData }); },
     image: function (headlessContentData) { return React__default["default"].createElement(Image, { data: headlessContentData }); },
     shortcut: function (headlessContentData) { return React__default["default"].createElement(Shortcut, { data: headlessContentData }); },
-    div: function (headlessContentData) { return React__default["default"].createElement(Div, { data: headlessContentData.content }); },
+    div: function (headlessContentData) { return React__default["default"].createElement(Div, { data: headlessContentData }); },
     uploads: function (headlessContentData) { return React__default["default"].createElement(Uploads, { data: headlessContentData.content }); },
     accordion: function (headlessContentData) { return React__default["default"].createElement(Accordion, { data: headlessContentData }); },
     gallery: function (headlessContentData) { return React__default["default"].createElement(Gallery, { data: headlessContentData.content }); },

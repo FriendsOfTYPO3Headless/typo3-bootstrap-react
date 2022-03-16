@@ -309,8 +309,10 @@ var Image = function (props) {
 };
 
 var Div = function (props) {
-    return React.createElement("div", { className: "div" },
-        React.createElement("hr", null));
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement("div", { className: "div" },
+            React.createElement("hr", null)));
 };
 
 var Textmedia = function (props) {
@@ -915,7 +917,7 @@ var contentElementTemplates = {
     textpic: function (headlessContentData) { return React.createElement(Textpic, { data: headlessContentData }); },
     image: function (headlessContentData) { return React.createElement(Image, { data: headlessContentData }); },
     shortcut: function (headlessContentData) { return React.createElement(Shortcut, { data: headlessContentData }); },
-    div: function (headlessContentData) { return React.createElement(Div, { data: headlessContentData.content }); },
+    div: function (headlessContentData) { return React.createElement(Div, { data: headlessContentData }); },
     uploads: function (headlessContentData) { return React.createElement(Uploads, { data: headlessContentData.content }); },
     accordion: function (headlessContentData) { return React.createElement(Accordion, { data: headlessContentData }); },
     gallery: function (headlessContentData) { return React.createElement(Gallery, { data: headlessContentData.content }); },
