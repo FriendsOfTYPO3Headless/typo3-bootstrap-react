@@ -411,7 +411,7 @@ const contentElementTemplates = {
     uploads: (headlessContentData) => <CE.Uploads data={headlessContentData}/>,
     accordion: (headlessContentData) => <CE.Accordion data={headlessContentData}/>,
     gallery: (headlessContentData) => <CE.Gallery data={headlessContentData}/>,
-    textmedia: (headlessContentData) => <CE.Textmedia data={headlessContentData.content}/>,
+    textmedia: (headlessContentData) => <CE.Textmedia data={headlessContentData}/>,
     card_group: (headlessContentData) => <CE.CardGroup data={headlessContentData} />,
     textcolumn: (headlessContentData) => <CE.TextColumns data={headlessContentData.content}/>,
     quote: (headlessContentData) => <CE.Quote data={headlessContentData.content}/>,

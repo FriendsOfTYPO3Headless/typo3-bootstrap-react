@@ -327,48 +327,50 @@ var Div = function (props) {
 
 var Textmedia = function (props) {
     var textmediaClassName;
-    if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
-        textmediaClassName = props.data.gallery.position.horizontal;
+    if (props.data.content.gallery.position.horizontal === 'left' || props.data.content.gallery.position.horizontal === 'right') {
+        textmediaClassName = props.data.content.gallery.position.horizontal;
     }
-    if (props.data.gallery.position.horizontal === 'center') {
-        textmediaClassName = props.data.gallery.position.vertical;
+    if (props.data.content.gallery.position.horizontal === 'center') {
+        textmediaClassName = props.data.content.gallery.position.vertical;
     }
-    return React__default["default"].createElement("div", { className: "textmedia" },
-        React__default["default"].createElement("div", { className: "gallery-row" },
-            React__default["default"].createElement(reactBootstrap.Row, { className: "textmedia textmedia-" + textmediaClassName },
-                React__default["default"].createElement(reactBootstrap.Col, { className: "textmedia-item textmedia-gallery", md: textmediaClassName === props.data.gallery.position.vertical ? "auto" : "6" },
-                    React__default["default"].createElement(reactBootstrap.Row, null, Object.keys(props.data.gallery.rows).map(function (rowKey) {
-                        return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
-                            switch (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType) {
-                                case 'video/youtube':
-                                    return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React__default["default"].createElement("iframe", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                case 'image/jpeg':
-                                    return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React__default["default"].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                case 'image/svg+xml':
-                                    return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React__default["default"].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                case 'video/mp4':
-                                    return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React__default["default"].createElement("video", { controls: true },
-                                            React__default["default"].createElement("source", { type: "video/mp4", src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                case 'video/vimeo':
-                                    return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React__default["default"].createElement("video", { controls: true },
-                                            React__default["default"].createElement("source", { type: "video/mp4", src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                default:
-                                    return React__default["default"].createElement(React__default["default"].Fragment, null);
-                            }
-                        });
-                    }))),
-                React__default["default"].createElement(reactBootstrap.Col, { className: "textmedia-item textmedia-text" },
-                    React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } })))));
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement("div", { className: "textmedia" },
+            React__default["default"].createElement("div", { className: "gallery-row" },
+                React__default["default"].createElement(reactBootstrap.Row, { className: "textmedia textmedia-" + textmediaClassName },
+                    React__default["default"].createElement(reactBootstrap.Col, { className: "textmedia-item textmedia-gallery", md: textmediaClassName === props.data.content.gallery.position.vertical ? "auto" : "6" },
+                        React__default["default"].createElement(reactBootstrap.Row, null, Object.keys(props.data.content.gallery.rows).map(function (rowKey) {
+                            return Object.keys(props.data.content.gallery.rows[rowKey].columns).map(function (columnKey) {
+                                switch (props.data.content.gallery.rows[rowKey].columns[columnKey].properties.mimeType) {
+                                    case 'video/youtube':
+                                        return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                            React__default["default"].createElement("iframe", { src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
+                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                    case 'image/jpeg':
+                                        return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                            React__default["default"].createElement("img", { src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item", alt: props.data.content.gallery.rows[rowKey].columns[columnKey].properties.title }),
+                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                    case 'image/svg+xml':
+                                        return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                            React__default["default"].createElement("img", { src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item", alt: props.data.content.gallery.rows[rowKey].columns[columnKey].properties.title }),
+                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                    case 'video/mp4':
+                                        return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                            React__default["default"].createElement("video", { controls: true },
+                                                React__default["default"].createElement("source", { type: "video/mp4", src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                    case 'video/vimeo':
+                                        return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                            React__default["default"].createElement("video", { controls: true },
+                                                React__default["default"].createElement("source", { type: "video/mp4", src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                    default:
+                                        return React__default["default"].createElement(React__default["default"].Fragment, null);
+                                }
+                            });
+                        }))),
+                    React__default["default"].createElement(reactBootstrap.Col, { className: "textmedia-item textmedia-text" },
+                        React__default["default"].createElement(AllHeader, { data: props.data }),
+                        React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } }))))));
 };
 
 var Shortcut = function (props) {
@@ -940,7 +942,7 @@ var contentElementTemplates = {
     uploads: function (headlessContentData) { return React__default["default"].createElement(Uploads, { data: headlessContentData }); },
     accordion: function (headlessContentData) { return React__default["default"].createElement(Accordion, { data: headlessContentData }); },
     gallery: function (headlessContentData) { return React__default["default"].createElement(Gallery, { data: headlessContentData }); },
-    textmedia: function (headlessContentData) { return React__default["default"].createElement(Textmedia, { data: headlessContentData.content }); },
+    textmedia: function (headlessContentData) { return React__default["default"].createElement(Textmedia, { data: headlessContentData }); },
     card_group: function (headlessContentData) { return React__default["default"].createElement(CardGroup, { data: headlessContentData }); },
     textcolumn: function (headlessContentData) { return React__default["default"].createElement(TextColumns, { data: headlessContentData.content }); },
     quote: function (headlessContentData) { return React__default["default"].createElement(Quote, { data: headlessContentData.content }); },

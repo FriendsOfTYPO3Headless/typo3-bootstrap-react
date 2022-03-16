@@ -317,48 +317,50 @@ var Div = function (props) {
 
 var Textmedia = function (props) {
     var textmediaClassName;
-    if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
-        textmediaClassName = props.data.gallery.position.horizontal;
+    if (props.data.content.gallery.position.horizontal === 'left' || props.data.content.gallery.position.horizontal === 'right') {
+        textmediaClassName = props.data.content.gallery.position.horizontal;
     }
-    if (props.data.gallery.position.horizontal === 'center') {
-        textmediaClassName = props.data.gallery.position.vertical;
+    if (props.data.content.gallery.position.horizontal === 'center') {
+        textmediaClassName = props.data.content.gallery.position.vertical;
     }
-    return React.createElement("div", { className: "textmedia" },
-        React.createElement("div", { className: "gallery-row" },
-            React.createElement(Row, { className: "textmedia textmedia-" + textmediaClassName },
-                React.createElement(Col, { className: "textmedia-item textmedia-gallery", md: textmediaClassName === props.data.gallery.position.vertical ? "auto" : "6" },
-                    React.createElement(Row, null, Object.keys(props.data.gallery.rows).map(function (rowKey) {
-                        return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
-                            switch (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType) {
-                                case 'video/youtube':
-                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React.createElement("iframe", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                case 'image/jpeg':
-                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React.createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                case 'image/svg+xml':
-                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React.createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                case 'video/mp4':
-                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React.createElement("video", { controls: true },
-                                            React.createElement("source", { type: "video/mp4", src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                case 'video/vimeo':
-                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React.createElement("video", { controls: true },
-                                            React.createElement("source", { type: "video/mp4", src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                default:
-                                    return React.createElement(React.Fragment, null);
-                            }
-                        });
-                    }))),
-                React.createElement(Col, { className: "textmedia-item textmedia-text" },
-                    React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } })))));
+    return React.createElement(React.Fragment, null,
+        React.createElement("div", { className: "textmedia" },
+            React.createElement("div", { className: "gallery-row" },
+                React.createElement(Row, { className: "textmedia textmedia-" + textmediaClassName },
+                    React.createElement(Col, { className: "textmedia-item textmedia-gallery", md: textmediaClassName === props.data.content.gallery.position.vertical ? "auto" : "6" },
+                        React.createElement(Row, null, Object.keys(props.data.content.gallery.rows).map(function (rowKey) {
+                            return Object.keys(props.data.content.gallery.rows[rowKey].columns).map(function (columnKey) {
+                                switch (props.data.content.gallery.rows[rowKey].columns[columnKey].properties.mimeType) {
+                                    case 'video/youtube':
+                                        return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                            React.createElement("iframe", { src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
+                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                    case 'image/jpeg':
+                                        return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                            React.createElement("img", { src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item", alt: props.data.content.gallery.rows[rowKey].columns[columnKey].properties.title }),
+                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                    case 'image/svg+xml':
+                                        return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                            React.createElement("img", { src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item", alt: props.data.content.gallery.rows[rowKey].columns[columnKey].properties.title }),
+                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                    case 'video/mp4':
+                                        return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                            React.createElement("video", { controls: true },
+                                                React.createElement("source", { type: "video/mp4", src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                    case 'video/vimeo':
+                                        return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                            React.createElement("video", { controls: true },
+                                                React.createElement("source", { type: "video/mp4", src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                    default:
+                                        return React.createElement(React.Fragment, null);
+                                }
+                            });
+                        }))),
+                    React.createElement(Col, { className: "textmedia-item textmedia-text" },
+                        React.createElement(AllHeader, { data: props.data }),
+                        React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } }))))));
 };
 
 var Shortcut = function (props) {
@@ -930,7 +932,7 @@ var contentElementTemplates = {
     uploads: function (headlessContentData) { return React.createElement(Uploads, { data: headlessContentData }); },
     accordion: function (headlessContentData) { return React.createElement(Accordion, { data: headlessContentData }); },
     gallery: function (headlessContentData) { return React.createElement(Gallery, { data: headlessContentData }); },
-    textmedia: function (headlessContentData) { return React.createElement(Textmedia, { data: headlessContentData.content }); },
+    textmedia: function (headlessContentData) { return React.createElement(Textmedia, { data: headlessContentData }); },
     card_group: function (headlessContentData) { return React.createElement(CardGroup, { data: headlessContentData }); },
     textcolumn: function (headlessContentData) { return React.createElement(TextColumns, { data: headlessContentData.content }); },
     quote: function (headlessContentData) { return React.createElement(Quote, { data: headlessContentData.content }); },
