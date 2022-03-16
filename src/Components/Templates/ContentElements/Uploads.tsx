@@ -85,6 +85,7 @@ const Uploads: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
                 })}
             </ul>
         </div>
+        {props.children}
     </>
 }
 

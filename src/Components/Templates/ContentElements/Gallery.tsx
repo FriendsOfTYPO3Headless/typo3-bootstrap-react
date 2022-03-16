@@ -18,6 +18,7 @@ const Gallery: React.FC<TYPO3BootstrapContentElementBaseInterface> = (props) => 
         <div className={'gallery-row'}>
             {galleryItems}
         </div>
+        {props.children}
     </>
 }
 

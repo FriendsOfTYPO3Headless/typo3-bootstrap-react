@@ -76,6 +76,7 @@ const Textmedia: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => 
                     <Col className="textmedia-item textmedia-text">
                         <AllHeader data={props.data}/>
                         <div dangerouslySetInnerHTML={{__html: props.data.content.bodytext}}/>
+                        {props.children}
                     </Col>
 
                 </Row>

@@ -10,6 +10,7 @@ const TextColumns: React.FC<TYPO3BootstrapContentElementBaseInterface> = (props)
         <div className="text-column">
             <div dangerouslySetInnerHTML={{__html: bodytext}}/>
         </div>
+        {props.children}
     </>
 }
 

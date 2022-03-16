@@ -8,6 +8,7 @@ const Div: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
         <div className="div">
             <hr/>
         </div>
+        {props.children}
     </>
 }
 

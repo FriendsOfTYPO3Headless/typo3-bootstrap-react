@@ -6,6 +6,7 @@ const Html : React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
     return <>
         <AllHeader data={props.data} />
         <div dangerouslySetInnerHTML={{__html: props.data.content.bodytext}} />
+        {props.children}
     </>
 }
 

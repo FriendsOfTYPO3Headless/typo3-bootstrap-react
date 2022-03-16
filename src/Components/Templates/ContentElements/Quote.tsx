@@ -50,6 +50,7 @@ const Quote: React.FC<TYPO3BootstrapContentElementBaseInterface> = (props) => {
             {bodyTemplate()}
             {figcaptionTemplate()}
         </figure>
+        {props.children}
     </>
 }
 

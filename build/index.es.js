@@ -187,7 +187,8 @@ var Text = function (props) {
     var bodytext = props.data.content.bodytext;
     return React.createElement(React.Fragment, null,
         React.createElement(AllHeader, { data: props.data }),
-        React.createElement("div", { dangerouslySetInnerHTML: { __html: bodytext } }));
+        React.createElement("div", { dangerouslySetInnerHTML: { __html: bodytext } }),
+        props.children);
 };
 
 var ImageLightbox = function (props) {
@@ -288,31 +289,35 @@ var Textpic = function (props) {
     if (props.data.content.gallery.position.horizontal === 'center') {
         textpicClassName = props.data.content.gallery.position.vertical;
     }
-    return React.createElement("div", { className: "textpic" },
-        React.createElement("div", { className: "gallery-row" },
-            React.createElement(Row, { className: "textpic textpic-" + textpicClassName },
-                React.createElement(Col, { className: "textpic-item textpic-gallery", md: textpicClassName === props.data.content.gallery.position.vertical ? "auto" : "6" },
-                    React.createElement(Row, null,
-                        React.createElement(ImageCols, { data: props.data.content }))),
-                React.createElement(Col, { className: "textpic-item textpic-text", md: "6" },
-                    React.createElement(AllHeader, { data: props.data }),
-                    React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } }),
-                    props.additionalContent))));
+    return React.createElement(React.Fragment, null,
+        React.createElement("div", { className: "textpic" },
+            React.createElement("div", { className: "gallery-row" },
+                React.createElement(Row, { className: "textpic textpic-" + textpicClassName },
+                    React.createElement(Col, { className: "textpic-item textpic-gallery", md: textpicClassName === props.data.content.gallery.position.vertical ? "auto" : "6" },
+                        React.createElement(Row, null,
+                            React.createElement(ImageCols, { data: props.data.content }))),
+                    React.createElement(Col, { className: "textpic-item textpic-text", md: "6" },
+                        React.createElement(AllHeader, { data: props.data }),
+                        React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } }),
+                        props.children)))));
 };
 
 var Image = function (props) {
-    return React.createElement("div", { className: "image" },
-        React.createElement(AllHeader, { data: props.data }),
-        React.createElement("div", { className: "gallery-row" },
-            React.createElement(Row, null,
-                React.createElement(ImageCols, { data: props.data.content }))));
+    return React.createElement(React.Fragment, null,
+        React.createElement("div", { className: "image" },
+            React.createElement(AllHeader, { data: props.data }),
+            React.createElement("div", { className: "gallery-row" },
+                React.createElement(Row, null,
+                    React.createElement(ImageCols, { data: props.data.content })))),
+        props.children);
 };
 
 var Div = function (props) {
     return React.createElement(React.Fragment, null,
         React.createElement(AllHeader, { data: props.data }),
         React.createElement("div", { className: "div" },
-            React.createElement("hr", null)));
+            React.createElement("hr", null)),
+        props.children);
 };
 
 var Textmedia = function (props) {
@@ -360,7 +365,8 @@ var Textmedia = function (props) {
                         }))),
                     React.createElement(Col, { className: "textmedia-item textmedia-text" },
                         React.createElement(AllHeader, { data: props.data }),
-                        React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } }))))));
+                        React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } }),
+                        props.children)))));
 };
 
 var Shortcut = function (props) {
@@ -368,13 +374,15 @@ var Shortcut = function (props) {
         React.createElement(AllHeader, { data: props.data }),
         React.createElement("div", { className: "shortcut" }, props.data.content.shortcut.map(function (cObject) {
             return RenderContent(cObject);
-        })));
+        })),
+        props.children);
 };
 
 var Html = function (props) {
     return React.createElement(React.Fragment, null,
         React.createElement(AllHeader, { data: props.data }),
-        React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } }));
+        React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } }),
+        props.children);
 };
 
 var Uploads = function (props) {
@@ -437,7 +445,8 @@ var Uploads = function (props) {
                             description);
                 }
                 return React.createElement("li", { className: 'filelink-item mb-2', key: key }, content);
-            }))));
+            }))),
+        props.children);
 };
 
 /*! *****************************************************************************
@@ -493,7 +502,8 @@ var Gallery = function (props) {
     });
     return React.createElement(React.Fragment, null,
         React.createElement(AllHeader, { data: props.data }),
-        React.createElement("div", { className: 'gallery-row' }, galleryItems));
+        React.createElement("div", { className: 'gallery-row' }, galleryItems),
+        props.children);
 };
 
 var Accordion = function (props) {
@@ -518,7 +528,8 @@ var Accordion = function (props) {
     });
     return React.createElement(React.Fragment, null,
         React.createElement(AllHeader, { data: props.data }),
-        React.createElement(Accordion$1, { defaultActiveKey: activeElement }, accorditionItemsTemplate));
+        React.createElement(Accordion$1, { defaultActiveKey: activeElement }, accorditionItemsTemplate),
+        props.children);
 };
 
 var defaultProperties = {
@@ -567,7 +578,8 @@ var CardGroup = function (props) {
     }
     return React.createElement(React.Fragment, null,
         React.createElement(AllHeader, { data: props.data }),
-        React.createElement(Row, { xs: 1, md: flexform.columns, className: "card-group ".concat(alignment) }, cards));
+        React.createElement(Row, { xs: 1, md: flexform.columns, className: "card-group ".concat(alignment) }, cards),
+        props.children);
 };
 
 var TextColumns = function (props) {
@@ -575,7 +587,8 @@ var TextColumns = function (props) {
     return React.createElement(React.Fragment, null,
         React.createElement(AllHeader, { data: props.data }),
         React.createElement("div", { className: "text-column" },
-            React.createElement("div", { dangerouslySetInnerHTML: { __html: bodytext } })));
+            React.createElement("div", { dangerouslySetInnerHTML: { __html: bodytext } })),
+        props.children);
 };
 
 var Quote = function (props) {
@@ -608,13 +621,15 @@ var Quote = function (props) {
         React.createElement(AllHeader, { data: props.data }),
         React.createElement("figure", null,
             bodyTemplate(),
-            figcaptionTemplate()));
+            figcaptionTemplate()),
+        props.children);
 };
 
 var Header = function (props) {
     return React.createElement(React.Fragment, null,
         React.createElement(AllHeader, { data: props.data }),
-        React.createElement("div", { className: "header" }));
+        React.createElement("div", { className: "header" }),
+        props.children);
 };
 
 var BackgroundImage = function (props) {

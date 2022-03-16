@@ -23,8 +23,7 @@ interface TYPO3PagePropsInterface {
 }
 
 interface TYPO3BootstrapContentElementBaseInterface {
-    data: any,
-    additionalContent?: JSX.Element
+    data: any
 }
 
 export {TYPO3PageHeadlessDataInterface, TYPO3PagePropsInterface, TYPO3BootstrapContentElementBaseInterface};

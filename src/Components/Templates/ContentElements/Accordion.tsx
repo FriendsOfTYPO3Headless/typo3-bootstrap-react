@@ -37,6 +37,7 @@ const Accordion: React.FC<TYPO3BootstrapContentElementBaseInterface> = (props) =
         <ReactAccordion defaultActiveKey={activeElement}>
             {accorditionItemsTemplate}
         </ReactAccordion>
+        {props.children}
     </>
 }
 

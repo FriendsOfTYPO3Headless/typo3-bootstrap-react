@@ -54,6 +54,7 @@ const CardGroup: React.FC<TYPO3BootstrapContentElementBaseInterface> = (props) =
         <Row xs={1} md={flexform.columns} className={`card-group ${alignment}`}>
             {cards}
         </Row>
+        {props.children}
     </>
 }
 

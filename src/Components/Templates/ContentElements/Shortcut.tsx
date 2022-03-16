@@ -11,6 +11,7 @@ const Shortcut: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
                 return RenderContent(cObject)
             })}
         </div>
+        {props.children}
     </>
 }
 
