@@ -1,5 +1,4 @@
 import React from 'react';
-declare const MenuSectionPages: React.FC<{
-    data: any;
-}>;
+import { TYPO3BootstrapContentElementBaseInterface } from "../../Interfaces";
+declare const MenuSectionPages: React.FC<TYPO3BootstrapContentElementBaseInterface>;
 export default MenuSectionPages;

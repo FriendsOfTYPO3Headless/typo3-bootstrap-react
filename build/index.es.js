@@ -92,10 +92,102 @@ var Content = function (props) {
     return content;
 };
 
+var HeaderLink = function (props) {
+    if (props.headerLink === null || typeof props.headerLink === 'string') {
+        return React.createElement(React.Fragment, null, props.children);
+    }
+    return React.createElement("a", { href: props.headerLink.url }, props.children);
+};
+
+var Header$1 = function (props) {
+    switch (props.layout) {
+        case 1:
+            return React.createElement("h1", { className: props.class + ' ' + props.positionClass },
+                React.createElement(HeaderLink, { headerLink: props.headerLink },
+                    React.createElement("span", null, props.header)));
+        case 3:
+            return React.createElement("h3", { className: props.class + ' ' + props.positionClass },
+                React.createElement(HeaderLink, { headerLink: props.headerLink },
+                    React.createElement("span", null, props.header)));
+        case 4:
+            return React.createElement("h4", { className: props.class + ' ' + props.positionClass },
+                React.createElement(HeaderLink, { headerLink: props.headerLink },
+                    React.createElement("span", null, props.header)));
+        case 5:
+            return React.createElement("h5", { className: props.class + ' ' + props.positionClass },
+                React.createElement(HeaderLink, { headerLink: props.headerLink },
+                    React.createElement("span", null, props.header)));
+        case 100:
+            return React.createElement(React.Fragment, null);
+        default:
+            return React.createElement("h2", { className: props.class + ' ' + props.positionClass },
+                React.createElement(HeaderLink, { headerLink: props.headerLink },
+                    React.createElement("span", null, props.header)));
+    }
+};
+Header$1.defaultProps = {
+    class: 'element-header',
+    headerLink: null
+};
+
+var Subheader = function (props) {
+    switch (props.layout) {
+        case 1:
+            return React.createElement("h2", { className: props.class + ' ' + props.positionClass },
+                React.createElement(HeaderLink, { headerLink: props.headerLink },
+                    React.createElement("span", null, props.header)));
+        case 3:
+            return React.createElement("h4", { className: props.class + ' ' + props.positionClass },
+                React.createElement(HeaderLink, { headerLink: props.headerLink },
+                    React.createElement("span", null, props.header)));
+        case 4:
+            return React.createElement("h5", { className: props.class + ' ' + props.positionClass },
+                React.createElement(HeaderLink, { headerLink: props.headerLink },
+                    React.createElement("span", null, props.header)));
+        case 5:
+            return React.createElement("h6", { className: props.class + ' ' + props.positionClass },
+                React.createElement(HeaderLink, { headerLink: props.headerLink },
+                    React.createElement("span", null, props.header)));
+        case 100:
+            return React.createElement(React.Fragment, null);
+        default:
+            return React.createElement("h3", { className: props.class + ' ' + props.positionClass },
+                React.createElement(HeaderLink, { headerLink: props.headerLink },
+                    React.createElement("span", null, props.header)));
+    }
+};
+Subheader.defaultProps = {
+    class: 'element-subheader',
+    headerLink: null
+};
+
+var HeaderDate = function (props) {
+    //TODO: Date initialisieren, toLocaleDateString...
+    return React.createElement("p", { className: props.positionClass }, props.date);
+};
+
+var AllHeader = function (props) {
+    var _a = props.data.content, header = _a.header, subheader = _a.subheader, date = _a.date, headerPosition = _a.headerPosition, headerLink = _a.headerLink, headerLayout = _a.headerLayout;
+    var content = React.createElement(React.Fragment, null);
+    if (props.data.content.hasOwnProperty('headerLayout') && headerLayout !== 100) {
+        if (header !== '' || subheader !== '' || date !== '') {
+            content = React.createElement("div", { className: "frame-header" },
+                header.length > 0 &&
+                    React.createElement(Header$1, { layout: headerLayout, positionClass: headerPosition ? 'text-' + headerPosition : '', header: header, headerLink: headerLink !== '' ? headerLink : null }),
+                subheader.length > 0 &&
+                    React.createElement(Subheader, { layout: headerLayout, positionClass: headerPosition ? 'text-' + headerPosition : '', header: subheader, headerLink: headerLink !== '' ? headerLink : null }),
+                date.length > 0 &&
+                    React.createElement(HeaderDate, { date: date, positionClass: headerPosition ? 'text-' + headerPosition : '' }));
+        }
+    }
+    return content;
+};
+
 var Text = function (props) {
-    props.data;
+    var bodytext = props.data.content.bodytext;
     return React.createElement(React.Fragment, null,
-        React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } }));
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement("div", { dangerouslySetInnerHTML: { __html: bodytext } }));
 };
 
 var ImageLightbox = function (props) {
@@ -186,102 +278,6 @@ var ImageCols = function (props) {
                         }, href: file.publicUrl }, image) : image);
             });
         }));
-};
-
-var HeaderLink = function (props) {
-    if (props.headerLink === null || typeof props.headerLink === 'string') {
-        return React.createElement(React.Fragment, null, props.children);
-    }
-    return React.createElement("a", { href: props.headerLink.url }, props.children);
-};
-
-var Header$1 = function (props) {
-    switch (props.layout) {
-        case 1:
-            return React.createElement("h1", { className: props.class + ' ' + props.positionClass },
-                React.createElement(HeaderLink, { headerLink: props.headerLink },
-                    React.createElement("span", null, props.header)));
-        case 3:
-            return React.createElement("h3", { className: props.class + ' ' + props.positionClass },
-                React.createElement(HeaderLink, { headerLink: props.headerLink },
-                    React.createElement("span", null, props.header)));
-        case 4:
-            return React.createElement("h4", { className: props.class + ' ' + props.positionClass },
-                React.createElement(HeaderLink, { headerLink: props.headerLink },
-                    React.createElement("span", null, props.header)));
-        case 5:
-            return React.createElement("h5", { className: props.class + ' ' + props.positionClass },
-                React.createElement(HeaderLink, { headerLink: props.headerLink },
-                    React.createElement("span", null, props.header)));
-        case 100:
-            return React.createElement(React.Fragment, null);
-        default:
-            return React.createElement("h2", { className: props.class + ' ' + props.positionClass },
-                React.createElement(HeaderLink, { headerLink: props.headerLink },
-                    React.createElement("span", null, props.header)));
-    }
-};
-Header$1.defaultProps = {
-    class: 'element-header',
-    headerLink: null
-};
-
-var Subheader = function (props) {
-    switch (props.layout) {
-        case 1:
-            return React.createElement("h2", { className: props.class + ' ' + props.positionClass },
-                React.createElement(HeaderLink, { headerLink: props.headerLink },
-                    React.createElement("span", null, props.header)));
-        case 3:
-            return React.createElement("h4", { className: props.class + ' ' + props.positionClass },
-                React.createElement(HeaderLink, { headerLink: props.headerLink },
-                    React.createElement("span", null, props.header)));
-        case 4:
-            return React.createElement("h5", { className: props.class + ' ' + props.positionClass },
-                React.createElement(HeaderLink, { headerLink: props.headerLink },
-                    React.createElement("span", null, props.header)));
-        case 5:
-            return React.createElement("h6", { className: props.class + ' ' + props.positionClass },
-                React.createElement(HeaderLink, { headerLink: props.headerLink },
-                    React.createElement("span", null, props.header)));
-        case 100:
-            return React.createElement(React.Fragment, null);
-        default:
-            return React.createElement("h3", { className: props.class + ' ' + props.positionClass },
-                React.createElement(HeaderLink, { headerLink: props.headerLink },
-                    React.createElement("span", null, props.header)));
-    }
-};
-Subheader.defaultProps = {
-    class: 'element-subheader',
-    headerLink: null
-};
-
-var HeaderDate = function (props) {
-    //TODO: Date initialisieren, toLocaleDateString...
-    return React.createElement("p", { className: props.positionClass }, props.date);
-};
-
-var AllHeader = function (props) {
-    var content = React.createElement(React.Fragment, null);
-    if (props.data.content.hasOwnProperty('headerLayout') && props.data.content.headerLayout !== 100) {
-        if (props.data.content.header !== '' || props.data.content.subheader !== '' || props.data.content.date !== '') {
-            content = React.createElement("div", { className: "frame-header" },
-                props.data.content.header !== '' ?
-                    React.createElement(Header$1, { layout: props.data.content.headerLayout, positionClass: props.data.content.headerPosition ? 'text-' + props.data.content.headerPosition : '', header: props.data.content.header, headerLink: props.data.content.headerLink !== '' ? props.data.content.headerLink : null })
-                    :
-                        null,
-                props.data.content.subheader !== '' ?
-                    React.createElement(Subheader, { layout: props.data.content.headerLayout, positionClass: props.data.content.headerPosition ? 'text-' + props.data.content.headerPosition : '', header: props.data.content.subheader, headerLink: props.data.content.headerLink !== '' ? props.data.content.headerLink : null })
-                    :
-                        null,
-                props.data.content.date !== '' ?
-                    React.createElement(HeaderDate, { date: props.data.content.date, positionClass: props.data.content.headerPosition ? 'text-' + props.data.content.headerPosition : '' })
-                    :
-                        null);
-        }
-    }
-    return content;
 };
 
 var Textpic = function (props) {
@@ -910,7 +906,7 @@ var contentElementTemplates = {
             headlessContentData.type,
             " has no Template");
     },
-    text: function (headlessContentData) { return React.createElement(Text, { data: headlessContentData.content }); },
+    text: function (headlessContentData) { return React.createElement(Text, { data: headlessContentData }); },
     html: function (headlessContentData) { return React.createElement(Html, { data: headlessContentData.content }); },
     textpic: function (headlessContentData) { return React.createElement(Textpic, { data: headlessContentData }); },
     image: function (headlessContentData) { return React.createElement(Image, { data: headlessContentData.content }); },

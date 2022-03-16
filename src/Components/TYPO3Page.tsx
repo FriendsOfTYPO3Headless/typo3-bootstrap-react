@@ -402,7 +402,7 @@ const contentElementTemplates = {
     __generic: (headlessContentData) => {
         return <>{headlessContentData.type} has no Template</>
     },
-    text: (headlessContentData) => <CE.Text data={headlessContentData.content}/>,
+    text: (headlessContentData) => <CE.Text data={headlessContentData}/>,
     html: (headlessContentData) => <CE.Html data={headlessContentData.content}/>,
     textpic: (headlessContentData) => <CE.Textpic data={headlessContentData}/>,
     image: (headlessContentData) => <CE.Image data={headlessContentData.content}/>,
