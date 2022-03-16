@@ -602,7 +602,8 @@ var Quote = function (props) {
         return React__default["default"].createElement(React__default["default"].Fragment, null);
     };
     var bodyTemplate = function () {
-        return (bodytext.length > 0) ? React__default["default"].createElement("blockquote", { className: 'blockquote', dangerouslySetInnerHTML: { __html: bodytext } }) : React__default["default"].createElement(React__default["default"].Fragment, null);
+        return (bodytext.length > 0) ?
+            React__default["default"].createElement("blockquote", { className: 'blockquote', dangerouslySetInnerHTML: { __html: bodytext } }) : React__default["default"].createElement(React__default["default"].Fragment, null);
     };
     var figcaptionTemplate = function () {
         if (quoteSource.length > 0) {
@@ -613,9 +614,11 @@ var Quote = function (props) {
         }
         return React__default["default"].createElement(React__default["default"].Fragment, null);
     };
-    return React__default["default"].createElement("figure", null,
-        bodyTemplate(),
-        figcaptionTemplate());
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(AllHeader, { data: props.data }),
+        React__default["default"].createElement("figure", null,
+            bodyTemplate(),
+            figcaptionTemplate()));
 };
 
 var Header = function (props) {
@@ -949,7 +952,7 @@ var contentElementTemplates = {
     textmedia: function (headlessContentData) { return React__default["default"].createElement(Textmedia, { data: headlessContentData }); },
     card_group: function (headlessContentData) { return React__default["default"].createElement(CardGroup, { data: headlessContentData }); },
     textcolumn: function (headlessContentData) { return React__default["default"].createElement(TextColumns, { data: headlessContentData }); },
-    quote: function (headlessContentData) { return React__default["default"].createElement(Quote, { data: headlessContentData.content }); },
+    quote: function (headlessContentData) { return React__default["default"].createElement(Quote, { data: headlessContentData }); },
     header: function (headlessContentData) { return React__default["default"].createElement(Header, { data: headlessContentData.content }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>

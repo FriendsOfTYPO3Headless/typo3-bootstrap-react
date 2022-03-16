@@ -592,7 +592,8 @@ var Quote = function (props) {
         return React.createElement(React.Fragment, null);
     };
     var bodyTemplate = function () {
-        return (bodytext.length > 0) ? React.createElement("blockquote", { className: 'blockquote', dangerouslySetInnerHTML: { __html: bodytext } }) : React.createElement(React.Fragment, null);
+        return (bodytext.length > 0) ?
+            React.createElement("blockquote", { className: 'blockquote', dangerouslySetInnerHTML: { __html: bodytext } }) : React.createElement(React.Fragment, null);
     };
     var figcaptionTemplate = function () {
         if (quoteSource.length > 0) {
@@ -603,9 +604,11 @@ var Quote = function (props) {
         }
         return React.createElement(React.Fragment, null);
     };
-    return React.createElement("figure", null,
-        bodyTemplate(),
-        figcaptionTemplate());
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement("figure", null,
+            bodyTemplate(),
+            figcaptionTemplate()));
 };
 
 var Header = function (props) {
@@ -939,7 +942,7 @@ var contentElementTemplates = {
     textmedia: function (headlessContentData) { return React.createElement(Textmedia, { data: headlessContentData }); },
     card_group: function (headlessContentData) { return React.createElement(CardGroup, { data: headlessContentData }); },
     textcolumn: function (headlessContentData) { return React.createElement(TextColumns, { data: headlessContentData }); },
-    quote: function (headlessContentData) { return React.createElement(Quote, { data: headlessContentData.content }); },
+    quote: function (headlessContentData) { return React.createElement(Quote, { data: headlessContentData }); },
     header: function (headlessContentData) { return React.createElement(Header, { data: headlessContentData.content }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>

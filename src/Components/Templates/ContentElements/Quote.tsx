@@ -1,5 +1,6 @@
 import React from "react"
 import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
+import AllHeader from "../../Partials/ContentElements/Header/All";
 
 interface IQuoteData extends TYPO3BootstrapContentElementBaseInterface {
     bodytext: string,
@@ -29,11 +30,12 @@ const Quote: React.FC<TYPO3BootstrapContentElementBaseInterface> = (props) => {
     }
 
     const bodyTemplate = () => {
-        return (bodytext.length > 0) ? <blockquote className={'blockquote'} dangerouslySetInnerHTML={{__html: bodytext}} /> : <></>
+        return (bodytext.length > 0) ?
+            <blockquote className={'blockquote'} dangerouslySetInnerHTML={{__html: bodytext}}/> : <></>
     }
 
     const figcaptionTemplate = () => {
-        if(quoteSource.length > 0){
+        if (quoteSource.length > 0) {
             return <figcaption className="blockquote-footer">
                 <cite title={quoteSource}>{quoteSource}{sourceLink()}</cite>
             </figcaption>
@@ -42,10 +44,13 @@ const Quote: React.FC<TYPO3BootstrapContentElementBaseInterface> = (props) => {
         return <></>
     }
 
-    return <figure>
-        {bodyTemplate()}
-        {figcaptionTemplate()}
-    </figure>
+    return <>
+        <AllHeader data={props.data}/>
+        <figure>
+            {bodyTemplate()}
+            {figcaptionTemplate()}
+        </figure>
+    </>
 }
 
 export default Quote
