@@ -1,10 +1,12 @@
 import React from 'react';
 import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
+import AllHeader from "../../Partials/ContentElements/Header/All";
 
 const Text : React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
-    const {} = props.data
+    const {bodytext} = props.data.content
     return <>
-        <div dangerouslySetInnerHTML={{__html: props.data.bodytext}} />
+        <AllHeader data={props.data} />
+        <div dangerouslySetInnerHTML={{__html: bodytext}} />
     </>
 }
 
