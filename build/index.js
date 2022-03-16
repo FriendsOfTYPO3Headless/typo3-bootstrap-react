@@ -581,9 +581,11 @@ var CardGroup = function (props) {
 };
 
 var TextColumns = function (props) {
-    var bodytext = props.data.bodytext;
-    return React__default["default"].createElement("div", { className: "text-column" },
-        React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: bodytext } }));
+    var bodytext = props.data.content.bodytext;
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(AllHeader, { data: props.data }),
+        React__default["default"].createElement("div", { className: "text-column" },
+            React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: bodytext } })));
 };
 
 var Quote = function (props) {
@@ -946,7 +948,7 @@ var contentElementTemplates = {
     gallery: function (headlessContentData) { return React__default["default"].createElement(Gallery, { data: headlessContentData }); },
     textmedia: function (headlessContentData) { return React__default["default"].createElement(Textmedia, { data: headlessContentData }); },
     card_group: function (headlessContentData) { return React__default["default"].createElement(CardGroup, { data: headlessContentData }); },
-    textcolumn: function (headlessContentData) { return React__default["default"].createElement(TextColumns, { data: headlessContentData.content }); },
+    textcolumn: function (headlessContentData) { return React__default["default"].createElement(TextColumns, { data: headlessContentData }); },
     quote: function (headlessContentData) { return React__default["default"].createElement(Quote, { data: headlessContentData.content }); },
     header: function (headlessContentData) { return React__default["default"].createElement(Header, { data: headlessContentData.content }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,

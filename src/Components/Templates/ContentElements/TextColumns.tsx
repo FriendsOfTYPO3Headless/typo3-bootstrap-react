@@ -1,12 +1,16 @@
-import React from "react";
-import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
+import React from "react"
+import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces"
+import AllHeader from "../../Partials/ContentElements/Header/All"
 
 const TextColumns: React.FC<TYPO3BootstrapContentElementBaseInterface> = (props) => {
-    const {bodytext} = props.data
+    const {bodytext} = props.data.content
 
-    return <div className="text-column">
-        <div dangerouslySetInnerHTML={{__html: bodytext}}/>
-    </div>
+    return <>
+        <AllHeader data={props.data}/>
+        <div className="text-column">
+            <div dangerouslySetInnerHTML={{__html: bodytext}}/>
+        </div>
+    </>
 }
 
 export default TextColumns

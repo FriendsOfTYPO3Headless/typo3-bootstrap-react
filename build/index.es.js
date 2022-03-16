@@ -571,9 +571,11 @@ var CardGroup = function (props) {
 };
 
 var TextColumns = function (props) {
-    var bodytext = props.data.bodytext;
-    return React.createElement("div", { className: "text-column" },
-        React.createElement("div", { dangerouslySetInnerHTML: { __html: bodytext } }));
+    var bodytext = props.data.content.bodytext;
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement("div", { className: "text-column" },
+            React.createElement("div", { dangerouslySetInnerHTML: { __html: bodytext } })));
 };
 
 var Quote = function (props) {
@@ -936,7 +938,7 @@ var contentElementTemplates = {
     gallery: function (headlessContentData) { return React.createElement(Gallery, { data: headlessContentData }); },
     textmedia: function (headlessContentData) { return React.createElement(Textmedia, { data: headlessContentData }); },
     card_group: function (headlessContentData) { return React.createElement(CardGroup, { data: headlessContentData }); },
-    textcolumn: function (headlessContentData) { return React.createElement(TextColumns, { data: headlessContentData.content }); },
+    textcolumn: function (headlessContentData) { return React.createElement(TextColumns, { data: headlessContentData }); },
     quote: function (headlessContentData) { return React.createElement(Quote, { data: headlessContentData.content }); },
     header: function (headlessContentData) { return React.createElement(Header, { data: headlessContentData.content }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,

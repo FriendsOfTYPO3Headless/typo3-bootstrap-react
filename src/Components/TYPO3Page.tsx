@@ -413,7 +413,7 @@ const contentElementTemplates = {
     gallery: (headlessContentData) => <CE.Gallery data={headlessContentData}/>,
     textmedia: (headlessContentData) => <CE.Textmedia data={headlessContentData}/>,
     card_group: (headlessContentData) => <CE.CardGroup data={headlessContentData} />,
-    textcolumn: (headlessContentData) => <CE.TextColumns data={headlessContentData.content}/>,
+    textcolumn: (headlessContentData) => <CE.TextColumns data={headlessContentData}/>,
     quote: (headlessContentData) => <CE.Quote data={headlessContentData.content}/>,
     header: (headlessContentData) => <CE.Header data={headlessContentData.content}/>,
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
