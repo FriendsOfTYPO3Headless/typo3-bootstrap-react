@@ -360,9 +360,11 @@ var Textmedia = function (props) {
 };
 
 var Shortcut = function (props) {
-    return React.createElement("div", { className: "shortcut" }, props.data.shortcut.map(function (cObject) {
-        return RenderContent(cObject);
-    }));
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement("div", { className: "shortcut" }, props.data.content.shortcut.map(function (cObject) {
+            return RenderContent(cObject);
+        })));
 };
 
 var Html = function (props) {
@@ -912,7 +914,7 @@ var contentElementTemplates = {
     html: function (headlessContentData) { return React.createElement(Html, { data: headlessContentData }); },
     textpic: function (headlessContentData) { return React.createElement(Textpic, { data: headlessContentData }); },
     image: function (headlessContentData) { return React.createElement(Image, { data: headlessContentData }); },
-    shortcut: function (headlessContentData) { return React.createElement(Shortcut, { data: headlessContentData.content }); },
+    shortcut: function (headlessContentData) { return React.createElement(Shortcut, { data: headlessContentData }); },
     div: function (headlessContentData) { return React.createElement(Div, { data: headlessContentData.content }); },
     uploads: function (headlessContentData) { return React.createElement(Uploads, { data: headlessContentData.content }); },
     accordion: function (headlessContentData) { return React.createElement(Accordion, { data: headlessContentData }); },

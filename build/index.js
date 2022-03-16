@@ -370,9 +370,11 @@ var Textmedia = function (props) {
 };
 
 var Shortcut = function (props) {
-    return React__default["default"].createElement("div", { className: "shortcut" }, props.data.shortcut.map(function (cObject) {
-        return RenderContent(cObject);
-    }));
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(AllHeader, { data: props.data }),
+        React__default["default"].createElement("div", { className: "shortcut" }, props.data.content.shortcut.map(function (cObject) {
+            return RenderContent(cObject);
+        })));
 };
 
 var Html = function (props) {
@@ -922,7 +924,7 @@ var contentElementTemplates = {
     html: function (headlessContentData) { return React__default["default"].createElement(Html, { data: headlessContentData }); },
     textpic: function (headlessContentData) { return React__default["default"].createElement(Textpic, { data: headlessContentData }); },
     image: function (headlessContentData) { return React__default["default"].createElement(Image, { data: headlessContentData }); },
-    shortcut: function (headlessContentData) { return React__default["default"].createElement(Shortcut, { data: headlessContentData.content }); },
+    shortcut: function (headlessContentData) { return React__default["default"].createElement(Shortcut, { data: headlessContentData }); },
     div: function (headlessContentData) { return React__default["default"].createElement(Div, { data: headlessContentData.content }); },
     uploads: function (headlessContentData) { return React__default["default"].createElement(Uploads, { data: headlessContentData.content }); },
     accordion: function (headlessContentData) { return React__default["default"].createElement(Accordion, { data: headlessContentData }); },

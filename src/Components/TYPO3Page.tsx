@@ -406,7 +406,7 @@ const contentElementTemplates = {
     html: (headlessContentData) => <CE.Html data={headlessContentData}/>,
     textpic: (headlessContentData) => <CE.Textpic data={headlessContentData}/>,
     image: (headlessContentData) => <CE.Image data={headlessContentData}/>,
-    shortcut: (headlessContentData) => <CE.Shortcut data={headlessContentData.content} />,
+    shortcut: (headlessContentData) => <CE.Shortcut data={headlessContentData} />,
     div: (headlessContentData) => <CE.Div data={headlessContentData.content}/>,
     uploads: (headlessContentData) => <CE.Uploads data={headlessContentData.content}/>,
     accordion: (headlessContentData) => <CE.Accordion data={headlessContentData}/>,
