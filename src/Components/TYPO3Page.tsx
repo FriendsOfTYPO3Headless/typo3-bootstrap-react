@@ -410,7 +410,7 @@ const contentElementTemplates = {
     div: (headlessContentData) => <CE.Div data={headlessContentData}/>,
     uploads: (headlessContentData) => <CE.Uploads data={headlessContentData}/>,
     accordion: (headlessContentData) => <CE.Accordion data={headlessContentData}/>,
-    gallery: (headlessContentData) => <CE.Gallery data={headlessContentData.content}/>,
+    gallery: (headlessContentData) => <CE.Gallery data={headlessContentData}/>,
     textmedia: (headlessContentData) => <CE.Textmedia data={headlessContentData.content}/>,
     card_group: (headlessContentData) => <CE.CardGroup data={headlessContentData} />,
     textcolumn: (headlessContentData) => <CE.TextColumns data={headlessContentData.content}/>,

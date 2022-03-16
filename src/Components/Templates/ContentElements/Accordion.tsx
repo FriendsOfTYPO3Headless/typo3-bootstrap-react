@@ -15,7 +15,7 @@ const Accordion: React.FC<TYPO3BootstrapContentElementBaseInterface> = (props) =
     const accorditionItemsTemplate = accordionItems.map((accordionItem, index: number) => {
         let galleryTemplate = <></>
         if (accordionItem.media.length > 0) {
-            galleryTemplate = <Gallery data={{items: accordionItem.media, ...accordionItem}}/>
+            galleryTemplate = <Gallery data={{content: {items: accordionItem.media, ...accordionItem}}}/>
         }
 
         return <ReactAccordion.Item key={accordionItem.id} eventKey={accordionItem.id.toString()}>

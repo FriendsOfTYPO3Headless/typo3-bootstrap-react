@@ -484,12 +484,14 @@ var Type = function (props) {
 };
 
 var Gallery = function (props) {
-    var _a = props.data, items = _a.items, imagecols = _a.imagecols;
+    var _a = props.data.content, items = _a.items, imagecols = _a.imagecols;
     var galleryItems = items.map(function (image, index) {
-        return React.createElement(Col, { className: "gallery-item gallery-item-size-".concat(imagecols), md: imagecols },
+        return React.createElement(Col, { key: "".concat(index), className: "gallery-item gallery-item-size-".concat(imagecols), md: imagecols },
             React.createElement(Type, { data: props.data, file: image }));
     });
-    return React.createElement("div", { className: 'gallery-row' }, galleryItems);
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement("div", { className: 'gallery-row' }, galleryItems));
 };
 
 var Accordion = function (props) {
@@ -502,7 +504,7 @@ var Accordion = function (props) {
     var accorditionItemsTemplate = accordionItems.map(function (accordionItem, index) {
         var galleryTemplate = React.createElement(React.Fragment, null);
         if (accordionItem.media.length > 0) {
-            galleryTemplate = React.createElement(Gallery, { data: __assign({ items: accordionItem.media }, accordionItem) });
+            galleryTemplate = React.createElement(Gallery, { data: { content: __assign({ items: accordionItem.media }, accordionItem) } });
         }
         return React.createElement(Accordion$1.Item, { key: accordionItem.id, eventKey: accordionItem.id.toString() },
             React.createElement(Accordion$1.Header, { as: "h4", id: "accordion-heading-".concat(accordionItem.id) },
@@ -927,7 +929,7 @@ var contentElementTemplates = {
     div: function (headlessContentData) { return React.createElement(Div, { data: headlessContentData }); },
     uploads: function (headlessContentData) { return React.createElement(Uploads, { data: headlessContentData }); },
     accordion: function (headlessContentData) { return React.createElement(Accordion, { data: headlessContentData }); },
-    gallery: function (headlessContentData) { return React.createElement(Gallery, { data: headlessContentData.content }); },
+    gallery: function (headlessContentData) { return React.createElement(Gallery, { data: headlessContentData }); },
     textmedia: function (headlessContentData) { return React.createElement(Textmedia, { data: headlessContentData.content }); },
     card_group: function (headlessContentData) { return React.createElement(CardGroup, { data: headlessContentData }); },
     textcolumn: function (headlessContentData) { return React.createElement(TextColumns, { data: headlessContentData.content }); },

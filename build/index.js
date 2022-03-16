@@ -494,12 +494,14 @@ var Type = function (props) {
 };
 
 var Gallery = function (props) {
-    var _a = props.data, items = _a.items, imagecols = _a.imagecols;
+    var _a = props.data.content, items = _a.items, imagecols = _a.imagecols;
     var galleryItems = items.map(function (image, index) {
-        return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item gallery-item-size-".concat(imagecols), md: imagecols },
+        return React__default["default"].createElement(reactBootstrap.Col, { key: "".concat(index), className: "gallery-item gallery-item-size-".concat(imagecols), md: imagecols },
             React__default["default"].createElement(Type, { data: props.data, file: image }));
     });
-    return React__default["default"].createElement("div", { className: 'gallery-row' }, galleryItems);
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(AllHeader, { data: props.data }),
+        React__default["default"].createElement("div", { className: 'gallery-row' }, galleryItems));
 };
 
 var Accordion = function (props) {
@@ -512,7 +514,7 @@ var Accordion = function (props) {
     var accorditionItemsTemplate = accordionItems.map(function (accordionItem, index) {
         var galleryTemplate = React__default["default"].createElement(React__default["default"].Fragment, null);
         if (accordionItem.media.length > 0) {
-            galleryTemplate = React__default["default"].createElement(Gallery, { data: __assign({ items: accordionItem.media }, accordionItem) });
+            galleryTemplate = React__default["default"].createElement(Gallery, { data: { content: __assign({ items: accordionItem.media }, accordionItem) } });
         }
         return React__default["default"].createElement(reactBootstrap.Accordion.Item, { key: accordionItem.id, eventKey: accordionItem.id.toString() },
             React__default["default"].createElement(reactBootstrap.Accordion.Header, { as: "h4", id: "accordion-heading-".concat(accordionItem.id) },
@@ -937,7 +939,7 @@ var contentElementTemplates = {
     div: function (headlessContentData) { return React__default["default"].createElement(Div, { data: headlessContentData }); },
     uploads: function (headlessContentData) { return React__default["default"].createElement(Uploads, { data: headlessContentData }); },
     accordion: function (headlessContentData) { return React__default["default"].createElement(Accordion, { data: headlessContentData }); },
-    gallery: function (headlessContentData) { return React__default["default"].createElement(Gallery, { data: headlessContentData.content }); },
+    gallery: function (headlessContentData) { return React__default["default"].createElement(Gallery, { data: headlessContentData }); },
     textmedia: function (headlessContentData) { return React__default["default"].createElement(Textmedia, { data: headlessContentData.content }); },
     card_group: function (headlessContentData) { return React__default["default"].createElement(CardGroup, { data: headlessContentData }); },
     textcolumn: function (headlessContentData) { return React__default["default"].createElement(TextColumns, { data: headlessContentData.content }); },
