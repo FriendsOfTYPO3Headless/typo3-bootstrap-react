@@ -1,7 +1,8 @@
 import React from 'react'
 import {Accordion as ReactAccordion} from "react-bootstrap"
 import Gallery from "./Gallery"
-import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
+import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces"
+import AllHeader from "../../Partials/ContentElements/Header/All";
 
 const Accordion: React.FC<TYPO3BootstrapContentElementBaseInterface> = (props) => {
     const accordionItems = props.data.content.items
@@ -31,9 +32,12 @@ const Accordion: React.FC<TYPO3BootstrapContentElementBaseInterface> = (props) =
         </ReactAccordion.Item>
     })
 
-    return <ReactAccordion defaultActiveKey={activeElement}>
-        {accorditionItemsTemplate}
-    </ReactAccordion>
+    return <>
+        <AllHeader data={props.data}/>
+        <ReactAccordion defaultActiveKey={activeElement}>
+            {accorditionItemsTemplate}
+        </ReactAccordion>
+    </>
 }
 
 export default Accordion

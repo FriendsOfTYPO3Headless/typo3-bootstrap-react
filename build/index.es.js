@@ -512,7 +512,9 @@ var Accordion = function (props) {
                     galleryTemplate,
                     React.createElement("div", { className: 'accordion-content-item accordion-content-text', dangerouslySetInnerHTML: { __html: accordionItem.bodytext } }))));
     });
-    return React.createElement(Accordion$1, { defaultActiveKey: activeElement }, accorditionItemsTemplate);
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement(Accordion$1, { defaultActiveKey: activeElement }, accorditionItemsTemplate));
 };
 
 var defaultProperties = {
