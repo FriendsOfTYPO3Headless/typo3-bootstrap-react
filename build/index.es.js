@@ -376,61 +376,66 @@ var Html = function (props) {
 };
 
 var Uploads = function (props) {
-    return React.createElement("div", { className: "uploads" },
-        React.createElement("ul", { className: "media-list filelink-list" }, Object.keys(props.data.media).map(function (key) {
-            var description = props.data.displayDescription === '1' ?
-                React.createElement("p", { className: 'filelink-filedescription' }, props.data.media[key].properties.description) : null;
-            var filesize = props.data.displayFileSizeInformation === '1' ?
-                React.createElement("span", { className: 'filelink-filesize ms-2 small' }, props.data.media[key].properties.size) : null;
-            var title = props.data.media[key].properties.title;
-            if (title === null || title === '') {
-                title = props.data.media[key].properties.filename;
-            }
-            var heading = function (contentBefore) {
-                if (contentBefore === void 0) { contentBefore = null; }
-                return React.createElement("span", { className: 'title' },
-                    React.createElement("h5", { className: 'filelink-heading ' },
-                        React.createElement("a", { href: props.data.media[key].publicUrl },
-                            contentBefore,
-                            title),
-                        filesize));
-            };
-            var content;
-            switch (props.data.displayInformation) {
-                case "1":
-                    content = React.createElement(React.Fragment, null,
-                        heading(props.data.media[key].properties.type === 'video' ?
-                            React.createElement("i", { className: "bi bi-camera-video-fill me-2" }) : React.createElement("i", { className: "bi bi-file-image me-2" })),
-                        description);
-                    break;
-                case "2":
-                    var media = null;
-                    switch (props.data.media[key].properties.type) {
-                        case 'video':
-                            media = React.createElement("iframe", { src: props.data.media[key].publicUrl, className: 'mw-100' });
-                            break;
-                        //TODO: add preview for application/*
-                        case 'application':
-                            if (props.data.media[key].properties.mimeType === 'application/pdf') {
-                                media = React.createElement("iframe", { src: props.data.media[key].publicUrl, className: 'mw-100' });
-                            }
-                            break;
-                        default:
-                            media = React.createElement("img", { src: props.data.media[key].publicUrl, alt: title, className: 'img-fluid' });
-                    }
-                    content = React.createElement(Row, null,
-                        React.createElement(Col, { className: 'filelink-media', xs: 3, sm: 3, md: 3, lg: 2, xl: 2, xxl: 2 }, media),
-                        React.createElement(Col, { className: 'filelink-body' },
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement("div", { className: "uploads" },
+            React.createElement("ul", { className: "media-list filelink-list" }, Object.keys(props.data.content.media).map(function (key) {
+                var description = props.data.content.displayDescription === '1' ?
+                    React.createElement("p", { className: 'filelink-filedescription' }, props.data.content.media[key].properties.description) : null;
+                var filesize = props.data.content.displayFileSizeInformation === '1' ?
+                    React.createElement("span", { className: 'filelink-filesize ms-2 small' }, props.data.content.media[key].properties.size) : null;
+                var title = props.data.content.media[key].properties.title;
+                if (title === null || title === '') {
+                    title = props.data.content.media[key].properties.filename;
+                }
+                var heading = function (contentBefore) {
+                    if (contentBefore === void 0) { contentBefore = null; }
+                    return React.createElement("span", { className: 'title' },
+                        React.createElement("h5", { className: 'filelink-heading ' },
+                            React.createElement("a", { href: props.data.content.media[key].publicUrl },
+                                contentBefore,
+                                title),
+                            filesize));
+                };
+                var content;
+                switch (props.data.content.displayInformation) {
+                    case "1":
+                        content = React.createElement(React.Fragment, null,
+                            heading(props.data.content.media[key].properties.type === 'video' ?
+                                React.createElement("i", { className: "bi bi-camera-video-fill me-2" }) :
+                                React.createElement("i", { className: "bi bi-file-image me-2" })),
+                            description);
+                        break;
+                    case "2":
+                        var media = null;
+                        switch (props.data.content.media[key].properties.type) {
+                            case 'video':
+                                media = React.createElement("iframe", { src: props.data.content.media[key].publicUrl, className: 'mw-100' });
+                                break;
+                            //TODO: add preview for application/*
+                            case 'application':
+                                if (props.data.content.media[key].properties.mimeType === 'application/pdf') {
+                                    media =
+                                        React.createElement("iframe", { src: props.data.content.media[key].publicUrl, className: 'mw-100' });
+                                }
+                                break;
+                            default:
+                                media =
+                                    React.createElement("img", { src: props.data.content.media[key].publicUrl, alt: title, className: 'img-fluid' });
+                        }
+                        content = React.createElement(Row, null,
+                            React.createElement(Col, { className: 'filelink-media', xs: 3, sm: 3, md: 3, lg: 2, xl: 2, xxl: 2 }, media),
+                            React.createElement(Col, { className: 'filelink-body' },
+                                heading(),
+                                description));
+                        break;
+                    default:
+                        content = React.createElement(React.Fragment, null,
                             heading(),
-                            description));
-                    break;
-                default:
-                    content = React.createElement(React.Fragment, null,
-                        heading(),
-                        description);
-            }
-            return React.createElement("li", { className: 'filelink-item mb-2', key: key }, content);
-        })));
+                            description);
+                }
+                return React.createElement("li", { className: 'filelink-item mb-2', key: key }, content);
+            }))));
 };
 
 /*! *****************************************************************************
@@ -918,7 +923,7 @@ var contentElementTemplates = {
     image: function (headlessContentData) { return React.createElement(Image, { data: headlessContentData }); },
     shortcut: function (headlessContentData) { return React.createElement(Shortcut, { data: headlessContentData }); },
     div: function (headlessContentData) { return React.createElement(Div, { data: headlessContentData }); },
-    uploads: function (headlessContentData) { return React.createElement(Uploads, { data: headlessContentData.content }); },
+    uploads: function (headlessContentData) { return React.createElement(Uploads, { data: headlessContentData }); },
     accordion: function (headlessContentData) { return React.createElement(Accordion, { data: headlessContentData }); },
     gallery: function (headlessContentData) { return React.createElement(Gallery, { data: headlessContentData.content }); },
     textmedia: function (headlessContentData) { return React.createElement(Textmedia, { data: headlessContentData.content }); },

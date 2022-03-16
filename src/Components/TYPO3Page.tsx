@@ -408,7 +408,7 @@ const contentElementTemplates = {
     image: (headlessContentData) => <CE.Image data={headlessContentData}/>,
     shortcut: (headlessContentData) => <CE.Shortcut data={headlessContentData} />,
     div: (headlessContentData) => <CE.Div data={headlessContentData}/>,
-    uploads: (headlessContentData) => <CE.Uploads data={headlessContentData.content}/>,
+    uploads: (headlessContentData) => <CE.Uploads data={headlessContentData}/>,
     accordion: (headlessContentData) => <CE.Accordion data={headlessContentData}/>,
     gallery: (headlessContentData) => <CE.Gallery data={headlessContentData.content}/>,
     textmedia: (headlessContentData) => <CE.Textmedia data={headlessContentData.content}/>,
