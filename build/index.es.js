@@ -282,7 +282,6 @@ var ImageCols = function (props) {
 
 var Textpic = function (props) {
     var textpicClassName = '';
-    console.log('TExtpic', props.data);
     if (props.data.content.gallery.position.horizontal === 'left' || props.data.content.gallery.position.horizontal === 'right') {
         textpicClassName = props.data.content.gallery.position.horizontal;
     }
@@ -366,7 +365,9 @@ var Shortcut = function (props) {
 };
 
 var Html = function (props) {
-    return React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } }));
 };
 
 var Uploads = function (props) {
@@ -907,7 +908,7 @@ var contentElementTemplates = {
             " has no Template");
     },
     text: function (headlessContentData) { return React.createElement(Text, { data: headlessContentData }); },
-    html: function (headlessContentData) { return React.createElement(Html, { data: headlessContentData.content }); },
+    html: function (headlessContentData) { return React.createElement(Html, { data: headlessContentData }); },
     textpic: function (headlessContentData) { return React.createElement(Textpic, { data: headlessContentData }); },
     image: function (headlessContentData) { return React.createElement(Image, { data: headlessContentData.content }); },
     shortcut: function (headlessContentData) { return React.createElement(Shortcut, { data: headlessContentData.content }); },

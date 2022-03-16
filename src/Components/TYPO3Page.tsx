@@ -403,7 +403,7 @@ const contentElementTemplates = {
         return <>{headlessContentData.type} has no Template</>
     },
     text: (headlessContentData) => <CE.Text data={headlessContentData}/>,
-    html: (headlessContentData) => <CE.Html data={headlessContentData.content}/>,
+    html: (headlessContentData) => <CE.Html data={headlessContentData}/>,
     textpic: (headlessContentData) => <CE.Textpic data={headlessContentData}/>,
     image: (headlessContentData) => <CE.Image data={headlessContentData.content}/>,
     shortcut: (headlessContentData) => <CE.Shortcut data={headlessContentData.content} />,
