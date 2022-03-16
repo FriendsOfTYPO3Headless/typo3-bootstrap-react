@@ -612,7 +612,9 @@ var Quote = function (props) {
 };
 
 var Header = function (props) {
-    return React.createElement("div", { className: "header" });
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement("div", { className: "header" }));
 };
 
 var BackgroundImage = function (props) {
@@ -943,7 +945,7 @@ var contentElementTemplates = {
     card_group: function (headlessContentData) { return React.createElement(CardGroup, { data: headlessContentData }); },
     textcolumn: function (headlessContentData) { return React.createElement(TextColumns, { data: headlessContentData }); },
     quote: function (headlessContentData) { return React.createElement(Quote, { data: headlessContentData }); },
-    header: function (headlessContentData) { return React.createElement(Header, { data: headlessContentData.content }); },
+    header: function (headlessContentData) { return React.createElement(Header, { data: headlessContentData }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,

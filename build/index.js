@@ -622,7 +622,9 @@ var Quote = function (props) {
 };
 
 var Header = function (props) {
-    return React__default["default"].createElement("div", { className: "header" });
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(AllHeader, { data: props.data }),
+        React__default["default"].createElement("div", { className: "header" }));
 };
 
 var BackgroundImage = function (props) {
@@ -953,7 +955,7 @@ var contentElementTemplates = {
     card_group: function (headlessContentData) { return React__default["default"].createElement(CardGroup, { data: headlessContentData }); },
     textcolumn: function (headlessContentData) { return React__default["default"].createElement(TextColumns, { data: headlessContentData }); },
     quote: function (headlessContentData) { return React__default["default"].createElement(Quote, { data: headlessContentData }); },
-    header: function (headlessContentData) { return React__default["default"].createElement(Header, { data: headlessContentData.content }); },
+    header: function (headlessContentData) { return React__default["default"].createElement(Header, { data: headlessContentData }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
