@@ -1,5 +1,6 @@
 interface TYPO3ContentElementBaseInterface {
     data: any;
+    form?: any;
 }
 interface TYPO3PageHeadlessDataInterface {
     id: number;

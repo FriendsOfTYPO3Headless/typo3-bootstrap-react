@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import {TYPO3ContentElementBaseInterface} from "../../../../Interfaces"
 import {Form} from "react-bootstrap"
 
@@ -30,14 +30,15 @@ const Honeypot: React.FC<TYPO3ContentElementBaseInterface> = props => {
         renderAsHiddenField,
         styleAttribute
     } = properties
+    const [value, SetValue] = useState(defaultValue ?? '')
     return <div className={containerClassAttribute}>
         <Form.Control
             type={renderAsHiddenField.length > 0 ? 'hidden' : 'text'}
-            id={identifier}
             name={name}
-            value={defaultValue}
+            value={value}
             className={elementClassAttribute}
             style={CSSstring(styleAttribute)}
+            onChange={(e) => SetValue(e.target.value)}
         />
     </div>
 }

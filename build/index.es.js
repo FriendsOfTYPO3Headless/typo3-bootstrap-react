@@ -495,7 +495,8 @@ var Header$1 = function (props) {
 
 var Textarea = function (props) {
     var _a = props.data, type = _a.type, name = _a.name, defaultValue = _a.defaultValue;
-    return React.createElement(Form.Control, { as: type, name: name, value: defaultValue });
+    var _b = useState(defaultValue !== null && defaultValue !== void 0 ? defaultValue : ''), value = _b[0], SetValue = _b[1];
+    return React.createElement(Form.Control, { as: type.toLowerCase(), name: name, value: value, onChange: function (e) { return SetValue(e.target.value); } });
 };
 
 var Fieldset = function (props) {
@@ -504,7 +505,7 @@ var Fieldset = function (props) {
     var fieldSetElements = elements.map(function (element, index) {
         return React.createElement(FormElement, { element: element, key: "".concat(identifier, "-").concat(element.name, "-").concat(index) });
     });
-    return React.createElement("fieldset", { name: identifier, id: identifier },
+    return React.createElement("fieldset", { name: identifier },
         label && label.length > 0 && React.createElement("legend", null, label),
         fieldSetElements);
 };
@@ -521,7 +522,7 @@ var SingleSelect = function (props) {
         });
         return template;
     };
-    return React.createElement(Form.Select, { name: name, id: identifier }, optionTemplate());
+    return React.createElement(Form.Select, { name: name }, optionTemplate());
 };
 
 function CSSstring(string) {
@@ -534,16 +535,89 @@ function CSSstring(string) {
     return {};
 }
 var Honeypot = function (props) {
-    var _a = props.data, defaultValue = _a.defaultValue, identifier = _a.identifier; _a.label; var name = _a.name, properties = _a.properties;
+    var _a = props.data, defaultValue = _a.defaultValue; _a.identifier; _a.label; var name = _a.name, properties = _a.properties;
     var containerClassAttribute = properties.containerClassAttribute, elementClassAttribute = properties.elementClassAttribute; properties.elementErrorClassAttribute; var renderAsHiddenField = properties.renderAsHiddenField, styleAttribute = properties.styleAttribute;
+    var _b = useState(defaultValue !== null && defaultValue !== void 0 ? defaultValue : ''), value = _b[0], SetValue = _b[1];
     return React.createElement("div", { className: containerClassAttribute },
-        React.createElement(Form.Control, { type: renderAsHiddenField.length > 0 ? 'hidden' : 'text', id: identifier, name: name, value: defaultValue, className: elementClassAttribute, style: CSSstring(styleAttribute) }));
+        React.createElement(Form.Control, { type: renderAsHiddenField.length > 0 ? 'hidden' : 'text', name: name, value: value, className: elementClassAttribute, style: CSSstring(styleAttribute), onChange: function (e) { return SetValue(e.target.value); } }));
 };
 
 var FormControl = function (props) {
-    console.log('FormControl DATA', props.data);
-    var _a = props.data, defaultValue = _a.defaultValue, identifier = _a.identifier; _a.label; var name = _a.name; _a.properties; var type = _a.type;
-    return React.createElement(Form.Control, { type: type, value: defaultValue, id: identifier, name: name });
+    var _a = props.data, defaultValue = _a.defaultValue; _a.identifier; _a.label; var name = _a.name; _a.properties; var type = _a.type;
+    var _b = useState(defaultValue !== null && defaultValue !== void 0 ? defaultValue : ''), value = _b[0], SetValue = _b[1];
+    return React.createElement(Form.Control, { type: type.toLowerCase(), name: name, value: value, onChange: function (e) { return SetValue(e.target.value); } });
+};
+
+var FormControlHidden = function (props) {
+    return React.createElement(FormControl, { data: props.data });
+};
+
+var FormControlInput = function (props) {
+    return React.createElement(FormControl, { data: props.data });
+};
+
+var FormControlText = function (props) {
+    return React.createElement(FormControl, { data: props.data });
+};
+
+var FormControlPassword = function (props) {
+    return React.createElement(FormControl, { data: props.data });
+};
+
+var FormControlEmail = function (props) {
+    return React.createElement(FormControl, { data: props.data });
+};
+
+var FormControlTelephone = function (props) {
+    return React.createElement(FormControl, { data: props.data });
+};
+
+var FormControlUrl = function (props) {
+    return React.createElement(FormControl, { data: props.data });
+};
+
+var FormControlNumber = function (props) {
+    return React.createElement(FormControl, { data: props.data });
+};
+
+var FormControlDate = function (props) {
+    return React.createElement(FormControl, { data: props.data });
+};
+
+var FormControlCheckbox = function (props) {
+    return React.createElement(FormControl, { data: props.data });
+};
+
+var FormControlRadioButton = function (props) {
+    return React.createElement(FormControl, { data: props.data });
+};
+
+var FormControlMultiCheckbox = function (props) {
+    return React.createElement(FormControl, { data: props.data });
+};
+
+var FormControlMultiSelect = function (props) {
+    return React.createElement(FormControl, { data: props.data });
+};
+
+var FormControlDatePicker = function (props) {
+    return React.createElement(FormControl, { data: props.data });
+};
+
+var FormControlFileUpload = function (props) {
+    return React.createElement(FormControl, { data: props.data });
+};
+
+var FormControlImageUpload = function (props) {
+    return React.createElement(FormControl, { data: props.data });
+};
+
+var FormControlAdvancedPassword = function (props) {
+    return React.createElement(FormControl, { data: props.data });
+};
+
+var FormControlStaticText = function (props) {
+    return React.createElement(FormControl, { data: props.data });
 };
 
 var ElementType;
@@ -554,10 +628,25 @@ var ElementType;
     ElementType["fieldset"] = "Fieldset";
     ElementType["honeypot"] = "Honeypot";
     ElementType["hidden"] = "Hidden";
+    ElementType["text"] = "Text";
+    ElementType["password"] = "Password";
+    ElementType["email"] = "Email";
+    ElementType["telephone"] = "Telephone";
+    ElementType["url"] = "Url";
+    ElementType["number"] = "Number";
+    ElementType["date"] = "Date";
+    ElementType["checkbox"] = "Checkbox";
+    ElementType["radio"] = "RadioButton";
+    ElementType["multiCheckbox"] = "MultiCheckbox";
+    ElementType["multiSelect"] = "MultiSelect";
+    ElementType["datePicker"] = "DatePicker";
+    ElementType["fileUpload"] = "FileUpload";
+    ElementType["imageUpload"] = "ImageUpload";
+    ElementType["advancedPassword"] = "AdvancedPassword";
+    ElementType["staticText"] = "StaticText";
 })(ElementType || (ElementType = {}));
 var FormElement = function (props) {
     var element = props.element;
-    console.log('element', element);
     var content;
     switch (element.type) {
         case ElementType.textarea:
@@ -573,10 +662,61 @@ var FormElement = function (props) {
             content = React.createElement(Honeypot, { data: element });
             break;
         case ElementType.hidden:
+            content = React.createElement(FormControlHidden, { data: element });
+            break;
         case ElementType.input:
-            content = React.createElement(FormControl, { data: element });
+            content = React.createElement(FormControlInput, { data: element });
+            break;
+        case ElementType.text:
+            content = React.createElement(FormControlText, { data: element });
+            break;
+        case ElementType.password:
+            content = React.createElement(FormControlPassword, { data: element });
+            break;
+        case ElementType.email:
+            content = React.createElement(FormControlEmail, { data: element });
+            break;
+        case ElementType.telephone:
+            content = React.createElement(FormControlTelephone, { data: element });
+            break;
+        case ElementType.url:
+            content = React.createElement(FormControlUrl, { data: element });
+            break;
+        case ElementType.number:
+            content = React.createElement(FormControlNumber, { data: element });
+            break;
+        case ElementType.date:
+            content = React.createElement(FormControlDate, { data: element });
+            break;
+        case ElementType.checkbox:
+            content = React.createElement(FormControlCheckbox, { data: element });
+            break;
+        case ElementType.radio:
+            content = React.createElement(FormControlRadioButton, { data: element });
+            break;
+        case ElementType.multiCheckbox:
+            content = React.createElement(FormControlMultiCheckbox, { data: element });
+            break;
+        case ElementType.multiSelect:
+            content = React.createElement(FormControlMultiSelect, { data: element });
+            break;
+        case ElementType.datePicker:
+            content = React.createElement(FormControlDatePicker, { data: element });
+            break;
+        case ElementType.fileUpload:
+            content = React.createElement(FormControlFileUpload, { data: element });
+            break;
+        case ElementType.imageUpload:
+            content = React.createElement(FormControlImageUpload, { data: element });
+            break;
+        case ElementType.advancedPassword:
+            content = React.createElement(FormControlAdvancedPassword, { data: element });
+            break;
+        case ElementType.staticText:
+            content = React.createElement(FormControlStaticText, { data: element });
             break;
         default:
+            console.log('element', element.type);
             content = "".concat(element.type, " type not defined");
             break;
     }

@@ -1,5 +1,6 @@
 interface TYPO3ContentElementBaseInterface {
-    data: any
+    data: any,
+    form?: any
 }
 
 interface TYPO3PageHeadlessDataInterface {

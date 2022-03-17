@@ -16,7 +16,7 @@ const SingleSelect: React.FC<TYPO3ContentElementBaseInterface> = props => {
         return template
     }
 
-    return <Form.Select name={name} id={identifier}>
+    return <Form.Select name={name}>
         {optionTemplate()}
     </Form.Select>
 }

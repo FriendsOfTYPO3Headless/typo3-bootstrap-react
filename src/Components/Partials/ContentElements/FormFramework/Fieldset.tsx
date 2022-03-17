@@ -7,7 +7,7 @@ const Fieldset: React.FC<{ data: any }> = (props) => {
     const fieldSetElements = elements.map((element, index) => {
        return <Element element={element} key={`${identifier}-${element.name}-${index}`}/>
     })
-    return <fieldset name={identifier} id={identifier}>
+    return <fieldset name={identifier}>
         {label && label.length > 0 && <legend>{label}</legend>}
         {fieldSetElements}
     </fieldset>
