@@ -5,12 +5,12 @@ import FormElement from "../../Partials/ContentElements/FormFramework/Elements/E
 const FormFormFramework: React.FC<{ data: any }> = props => {
 
     const {form, link} = props.data;
-    console.log('FORM',form)
+    console.log('FORM',props.data)
 
     const submitHandler = useCallback(
         (e) => {
-            e.preventDefault();
-            console.log(`send POST request to ${link.href}`)
+            // e.preventDefault();
+            // console.log(`send POST request to ${link.href}`)
         },
         [form, link],
     );

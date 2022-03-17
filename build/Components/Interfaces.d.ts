@@ -1,3 +1,6 @@
+interface TYPO3ContentElementBaseInterface {
+    data: any;
+}
 interface TYPO3PageHeadlessDataInterface {
     id: number;
     type: string;
@@ -18,4 +21,4 @@ interface TYPO3PagePropsInterface {
     contentElementTemplates?: any | null;
     additionalParams?: any | null;
 }
-export { TYPO3PageHeadlessDataInterface, TYPO3PagePropsInterface };
+export { TYPO3PageHeadlessDataInterface, TYPO3PagePropsInterface, TYPO3ContentElementBaseInterface };

@@ -1,5 +1,4 @@
 import React from "react";
-declare const FormControl: React.FC<{
-    data: any;
-}>;
+import { TYPO3ContentElementBaseInterface } from "../../../../Interfaces";
+declare const FormControl: React.FC<TYPO3ContentElementBaseInterface>;
 export default FormControl;

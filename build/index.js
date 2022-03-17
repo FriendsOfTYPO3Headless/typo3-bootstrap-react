@@ -519,12 +519,51 @@ var Fieldset = function (props) {
         fieldSetElements);
 };
 
+var SingleSelect = function (props) {
+    console.log('SingleSelect data', props.data);
+    var _a = props.data; _a.defaultValue; var identifier = _a.identifier; _a.label; var name = _a.name, properties = _a.properties;
+    var options = properties.options; properties.fluidAdditionalAttributes; var prependOptionLabel = properties.prependOptionLabel;
+    var optionTemplate = function () {
+        var template = [];
+        template.push(React__default["default"].createElement("option", { key: "".concat(identifier, "-0"), value: '' }, prependOptionLabel));
+        Object.keys(options).map(function (optionValue, index) {
+            template.push(React__default["default"].createElement("option", { key: "".concat(identifier, "-").concat(index + 1), value: optionValue }, options[optionValue]));
+        });
+        return template;
+    };
+    return React__default["default"].createElement(reactBootstrap.Form.Select, { name: name, id: identifier }, optionTemplate());
+};
+
+function CSSstring(string) {
+    console.log('JSON', string);
+    var css_json = "{\"".concat(string
+        .replace(/; /g, '", "')
+        .replace(/: /g, '": "')
+        .replace(";", ""), "\"}");
+    console.log('JSON', css_json);
+    return {};
+}
+var Honeypot = function (props) {
+    var _a = props.data, defaultValue = _a.defaultValue, identifier = _a.identifier; _a.label; var name = _a.name, properties = _a.properties;
+    var containerClassAttribute = properties.containerClassAttribute, elementClassAttribute = properties.elementClassAttribute; properties.elementErrorClassAttribute; var renderAsHiddenField = properties.renderAsHiddenField, styleAttribute = properties.styleAttribute;
+    return React__default["default"].createElement("div", { className: containerClassAttribute },
+        React__default["default"].createElement(reactBootstrap.Form.Control, { type: renderAsHiddenField.length > 0 ? 'hidden' : 'text', id: identifier, name: name, value: defaultValue, className: elementClassAttribute, style: CSSstring(styleAttribute) }));
+};
+
+var FormControl = function (props) {
+    console.log('FormControl DATA', props.data);
+    var _a = props.data, defaultValue = _a.defaultValue, identifier = _a.identifier; _a.label; var name = _a.name; _a.properties; var type = _a.type;
+    return React__default["default"].createElement(reactBootstrap.Form.Control, { type: type, value: defaultValue, id: identifier, name: name });
+};
+
 var ElementType;
 (function (ElementType) {
     ElementType["select"] = "SingleSelect";
     ElementType["textarea"] = "Textarea";
     ElementType["input"] = "input";
     ElementType["fieldset"] = "Fieldset";
+    ElementType["honeypot"] = "Honeypot";
+    ElementType["hidden"] = "Hidden";
 })(ElementType || (ElementType = {}));
 var FormElement = function (props) {
     var element = props.element;
@@ -537,8 +576,16 @@ var FormElement = function (props) {
         case ElementType.fieldset:
             content = React__default["default"].createElement(Fieldset, { data: element });
             break;
-        case ElementType.input:
         case ElementType.select:
+            content = React__default["default"].createElement(SingleSelect, { data: element });
+            break;
+        case ElementType.honeypot:
+            content = React__default["default"].createElement(Honeypot, { data: element });
+            break;
+        case ElementType.hidden:
+        case ElementType.input:
+            content = React__default["default"].createElement(FormControl, { data: element });
+            break;
         default:
             content = "".concat(element.type, " type not defined");
             break;
@@ -550,10 +597,10 @@ var FormElement = function (props) {
 
 var FormFormFramework = function (props) {
     var _a = props.data, form = _a.form, link = _a.link;
-    console.log('FORM', form);
+    console.log('FORM', props.data);
     var submitHandler = React.useCallback(function (e) {
-        e.preventDefault();
-        console.log("send POST request to ".concat(link.href));
+        // e.preventDefault();
+        // console.log(`send POST request to ${link.href}`)
     }, [form, link]);
     return React__default["default"].createElement("div", { className: "formFormFramework", onSubmit: submitHandler },
         React__default["default"].createElement(reactBootstrap.Form, { id: form.id },
