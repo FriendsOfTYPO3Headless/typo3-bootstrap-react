@@ -553,12 +553,15 @@ var Honeypot = function (props) {
 };
 
 var FormControl = function (props) {
-    var _a = props.data, defaultValue = _a.defaultValue; _a.identifier; _a.label; var name = _a.name; _a.properties; var type = _a.type;
+    var _a = props.data, defaultValue = _a.defaultValue; _a.identifier; var label = _a.label, name = _a.name; _a.properties; var type = _a.type;
     var _b = React.useState(defaultValue !== null && defaultValue !== void 0 ? defaultValue : ''), value = _b[0], SetValue = _b[1];
-    return React__default["default"].createElement(reactBootstrap.Form.Control, { type: type.toLowerCase(), name: name, value: value, onChange: function (e) { return SetValue(e.target.value); } });
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        label.length > 0 && React__default["default"].createElement(reactBootstrap.Form.Label, null, label),
+        React__default["default"].createElement(reactBootstrap.Form.Control, { type: type.toLowerCase(), name: name, value: value, defaultValue: defaultValue, onChange: function (e) { return SetValue(e.target.value); } }));
 };
 
 var FormControlHidden = function (props) {
+    props.data.label = '';
     return React__default["default"].createElement(FormControl, { data: props.data });
 };
 
@@ -646,7 +649,8 @@ var ElementType;
     ElementType["number"] = "Number";
     ElementType["date"] = "Date";
     ElementType["checkbox"] = "Checkbox";
-    ElementType["radio"] = "RadioButton";
+    ElementType["radioButton"] = "RadioButton";
+    ElementType["radio"] = "radio";
     ElementType["multiCheckbox"] = "MultiCheckbox";
     ElementType["multiSelect"] = "MultiSelect";
     ElementType["datePicker"] = "DatePicker";
@@ -701,7 +705,12 @@ var FormElement = function (props) {
         case ElementType.checkbox:
             content = React__default["default"].createElement(FormControlCheckbox, { data: element });
             break;
+        case ElementType.radioButton:
+            element.type = 'radio';
+            content = React__default["default"].createElement(FormControlRadioButton, { data: element });
+            break;
         case ElementType.radio:
+            element.type = 'radio';
             content = React__default["default"].createElement(FormControlRadioButton, { data: element });
             break;
         case ElementType.multiCheckbox:
@@ -727,12 +736,14 @@ var FormElement = function (props) {
             break;
         default:
             console.log('element', element.type);
-            content = "".concat(element.type, " type not defined");
+            content = React__default["default"].createElement(reactBootstrap.Alert, { variant: "danger" },
+                React__default["default"].createElement(reactBootstrap.Alert.Heading, null, "Contentelement type unknown"),
+                React__default["default"].createElement("p", null,
+                    element.type,
+                    " type not defined"));
             break;
     }
-    return React__default["default"].createElement(reactBootstrap.Form.Group, { className: "mb-3", controlId: element.identifier },
-        React__default["default"].createElement(reactBootstrap.Form.Label, null, element.label),
-        content);
+    return React__default["default"].createElement(reactBootstrap.Form.Group, { className: "mb-3", controlId: element.identifier }, content);
 };
 
 var FormFormFramework = function (props) {

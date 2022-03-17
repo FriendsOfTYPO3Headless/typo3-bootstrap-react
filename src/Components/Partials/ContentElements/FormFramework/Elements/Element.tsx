@@ -1,5 +1,5 @@
 import React from "react";
-import {Form} from "react-bootstrap";
+import {Alert, Form} from "react-bootstrap";
 import Textarea from "./Textarea";
 import Fieldset from "../Fieldset";
 import SingleSelect from "./SingleSelect";
@@ -39,7 +39,8 @@ enum ElementType {
     number = 'Number',
     date = 'Date',
     checkbox = 'Checkbox',
-    radio = 'RadioButton',
+    radioButton = 'RadioButton',
+    radio = 'radio',
     multiCheckbox = 'MultiCheckbox',
     multiSelect = 'MultiSelect',
     datePicker = 'DatePicker',
@@ -97,7 +98,12 @@ const FormElement: React.FC<{ element: { defaultValue: string, type: string, ide
         case ElementType.checkbox:
             content = <FormControlCheckbox data={element} />
             break;
+        case ElementType.radioButton:
+            element.type = 'radio'
+            content = <FormControlRadioButton data={element} />
+            break;
         case ElementType.radio:
+            element.type = 'radio'
             content = <FormControlRadioButton data={element} />
             break;
         case ElementType.multiCheckbox:
@@ -123,13 +129,15 @@ const FormElement: React.FC<{ element: { defaultValue: string, type: string, ide
             break;
         default:
             console.log('element', element.type)
-            content = `${element.type} type not defined`
+            content = <Alert variant={"danger"}>
+                <Alert.Heading>Contentelement type unknown</Alert.Heading>
+                <p>{element.type} type not defined</p>
+            </Alert>
             break;
     }
 
 
     return <Form.Group className="mb-3" controlId={element.identifier}>
-        <Form.Label>{element.label}</Form.Label>
         {content}
     </Form.Group>
 
