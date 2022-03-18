@@ -1,6 +1,6 @@
 import React from "react"
 import {TYPO3ContentElementBaseInterface} from "../../../../Interfaces";
-import FormControl from "./FormControl";
+import FormControlBase from "./FormControlBase";
 import {Form} from "react-bootstrap";
 import FormControlCheckBase from "./FormControlCheckBase";
 

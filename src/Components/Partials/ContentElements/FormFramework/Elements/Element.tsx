@@ -1,8 +1,8 @@
 import React from "react"
 import {Alert, Form} from "react-bootstrap"
-import Textarea from "./Textarea"
+import FormControlTextarea from "./FormControlTextarea"
 import Fieldset from "../Fieldset"
-import SingleSelect from "./SingleSelect"
+import FormControlSelectBase from "./FormControlSelectBase"
 import Honeypot from "./Honeypot"
 import FormControlHidden from "./FormControlHidden"
 import FormControlInput from "./FormControlInput"
@@ -22,6 +22,7 @@ import FormControlFileUpload from "./FormControlfileUpload"
 import FormControlImageUpload from "./FormControlImageUpload"
 import FormControlAdvancedPassword from "./FormControlAdvancedPassword"
 import FormControlStaticText from "./FormControlStaticText"
+import FormControlSingleSelect from "./FormControlSingleSelect";
 
 enum ElementType {
     select = 'SingleSelect',
@@ -55,13 +56,13 @@ const FormElement: React.FC<{ element: { defaultValue: string, type: string, ide
     let content;
     switch (element.type) {
         case ElementType.textarea:
-            content = <Textarea data={element}/>
+            content = <FormControlTextarea data={element}/>
             break
         case ElementType.fieldset:
             content = <Fieldset data={element}/>
             break
         case ElementType.select:
-            content = <SingleSelect data={element}/>
+            content = <FormControlSingleSelect data={element}/>
             break
         case ElementType.honeypot:
             content = <Honeypot data={element}/>

@@ -1,10 +1,10 @@
 import React from "react"
 import {TYPO3ContentElementBaseInterface} from "../../../../Interfaces";
-import FormControl from "./FormControl";
+import FormControlBase from "./FormControlBase";
 
 const FormControlHidden:React.FC<TYPO3ContentElementBaseInterface> = props => {
     props.data.label = ''
-    return <FormControl data={props.data} />
+    return <FormControlBase data={props.data} />
 }
 
 export default FormControlHidden

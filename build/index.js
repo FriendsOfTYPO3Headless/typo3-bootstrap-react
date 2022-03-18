@@ -503,11 +503,13 @@ var Header$1 = function (props) {
     return React__default["default"].createElement("div", { className: "header" });
 };
 
-var Textarea = function (props) {
-    var _a = props.data, type = _a.type, name = _a.name, defaultValue = _a.defaultValue, label = _a.label;
+var FormControlTextarea = function (props) {
+    var _a = props.data, type = _a.type, name = _a.name, defaultValue = _a.defaultValue, label = _a.label, properties = _a.properties;
+    var fluidAdditionalAttributes = properties.fluidAdditionalAttributes, elementDescription = properties.elementDescription;
     return React__default["default"].createElement(React__default["default"].Fragment, null,
         label.length > 0 && React__default["default"].createElement(reactBootstrap.Form.Label, null, label),
-        React__default["default"].createElement(reactBootstrap.Form.Control, { as: type.toLowerCase(), name: name, defaultValue: defaultValue }));
+        React__default["default"].createElement(reactBootstrap.Form.Control, __assign({}, fluidAdditionalAttributes, { as: type.toLowerCase(), name: name, defaultValue: defaultValue })),
+        elementDescription && React__default["default"].createElement(reactBootstrap.Form.Text, { className: 'inline-muted' }, elementDescription));
 };
 
 var Fieldset = function (props) {
@@ -519,21 +521,6 @@ var Fieldset = function (props) {
     return React__default["default"].createElement("fieldset", { name: identifier },
         label && label.length > 0 && React__default["default"].createElement("legend", null, label),
         fieldSetElements);
-};
-
-var SingleSelect = function (props) {
-    console.log('SingleSelect data', props.data);
-    var _a = props.data; _a.defaultValue; var identifier = _a.identifier; _a.label; var name = _a.name, properties = _a.properties;
-    var options = properties.options; properties.fluidAdditionalAttributes; var prependOptionLabel = properties.prependOptionLabel;
-    var optionTemplate = function () {
-        var template = [];
-        template.push(React__default["default"].createElement("option", { key: "".concat(identifier, "-0"), value: '' }, prependOptionLabel));
-        Object.keys(options).map(function (optionValue, index) {
-            template.push(React__default["default"].createElement("option", { key: "".concat(identifier, "-").concat(index + 1), value: optionValue }, options[optionValue]));
-        });
-        return template;
-    };
-    return React__default["default"].createElement(reactBootstrap.Form.Select, { name: name }, optionTemplate());
 };
 
 function CSSstring(string) {
@@ -553,48 +540,50 @@ var Honeypot = function (props) {
         React__default["default"].createElement(reactBootstrap.Form.Control, { type: renderAsHiddenField.length > 0 ? 'hidden' : 'text', name: name, className: elementClassAttribute, defaultValue: defaultValue, style: CSSstring(styleAttribute) }));
 };
 
-var FormControl = function (props) {
+var FormControlBase = function (props) {
     var _a = props.data, defaultValue = _a.defaultValue; _a.identifier; var label = _a.label, name = _a.name, properties = _a.properties, type = _a.type;
+    var fluidAdditionalAttributes = properties.fluidAdditionalAttributes, elementDescription = properties.elementDescription;
     return React__default["default"].createElement(React__default["default"].Fragment, null,
         label.length > 0 && React__default["default"].createElement(reactBootstrap.Form.Label, null, label),
-        React__default["default"].createElement(reactBootstrap.Form.Control, __assign({}, properties.fluidAdditionalAttributes, { type: type.toLowerCase(), name: name, defaultValue: defaultValue })));
+        React__default["default"].createElement(reactBootstrap.Form.Control, __assign({}, fluidAdditionalAttributes, { type: type.toLowerCase(), name: name, defaultValue: defaultValue })),
+        elementDescription && React__default["default"].createElement(reactBootstrap.Form.Text, { className: 'inline-muted' }, elementDescription));
 };
 
 var FormControlHidden = function (props) {
     props.data.label = '';
-    return React__default["default"].createElement(FormControl, { data: props.data });
+    return React__default["default"].createElement(FormControlBase, { data: props.data });
 };
 
 var FormControlInput = function (props) {
-    return React__default["default"].createElement(FormControl, { data: props.data });
+    return React__default["default"].createElement(FormControlBase, { data: props.data });
 };
 
 var FormControlText = function (props) {
-    return React__default["default"].createElement(FormControl, { data: props.data });
+    return React__default["default"].createElement(FormControlBase, { data: props.data });
 };
 
 var FormControlPassword = function (props) {
-    return React__default["default"].createElement(FormControl, { data: props.data });
+    return React__default["default"].createElement(FormControlBase, { data: props.data });
 };
 
 var FormControlEmail = function (props) {
-    return React__default["default"].createElement(FormControl, { data: props.data });
+    return React__default["default"].createElement(FormControlBase, { data: props.data });
 };
 
 var FormControlTelephone = function (props) {
-    return React__default["default"].createElement(FormControl, { data: props.data });
+    return React__default["default"].createElement(FormControlBase, { data: props.data });
 };
 
 var FormControlUrl = function (props) {
-    return React__default["default"].createElement(FormControl, { data: props.data });
+    return React__default["default"].createElement(FormControlBase, { data: props.data });
 };
 
 var FormControlNumber = function (props) {
-    return React__default["default"].createElement(FormControl, { data: props.data });
+    return React__default["default"].createElement(FormControlBase, { data: props.data });
 };
 
 var FormControlDate = function (props) {
-    return React__default["default"].createElement(FormControl, { data: props.data });
+    return React__default["default"].createElement(FormControlBase, { data: props.data });
 };
 
 var FormControlCheckBase = function (props) {
@@ -634,28 +623,47 @@ var FormControlMultiCheckbox = function (props) {
     return React__default["default"].createElement(FormControlCheckBase, { data: __assign(__assign({}, props.data), { type: 'checkbox' }) });
 };
 
+var FormControlSelectBase = function (props) {
+    console.log('SingleSelect data', props.data);
+    var _a = props.data; _a.defaultValue; var identifier = _a.identifier; _a.label; var name = _a.name, properties = _a.properties, multiple = _a.multiple;
+    var options = properties.options; properties.fluidAdditionalAttributes; var prependOptionLabel = properties.prependOptionLabel;
+    var optionTemplate = function () {
+        var template = [];
+        template.push(React__default["default"].createElement("option", { key: "".concat(identifier, "-0"), value: '' }, prependOptionLabel));
+        Object.keys(options).map(function (optionValue, index) {
+            template.push(React__default["default"].createElement("option", { key: "".concat(identifier, "-").concat(index + 1), value: optionValue }, options[optionValue]));
+        });
+        return template;
+    };
+    return React__default["default"].createElement(reactBootstrap.Form.Select, { name: name, multiple: multiple }, optionTemplate());
+};
+
 var FormControlMultiSelect = function (props) {
-    return React__default["default"].createElement(FormControl, { data: props.data });
+    return React__default["default"].createElement(FormControlSelectBase, { data: __assign(__assign({}, props.data), { multiple: true }) });
 };
 
 var FormControlDatePicker = function (props) {
-    return React__default["default"].createElement(FormControl, { data: props.data });
+    return React__default["default"].createElement(FormControlBase, { data: props.data });
 };
 
 var FormControlFileUpload = function (props) {
-    return React__default["default"].createElement(FormControl, { data: props.data });
+    return React__default["default"].createElement(FormControlBase, { data: props.data });
 };
 
 var FormControlImageUpload = function (props) {
-    return React__default["default"].createElement(FormControl, { data: props.data });
+    return React__default["default"].createElement(FormControlBase, { data: props.data });
 };
 
 var FormControlAdvancedPassword = function (props) {
-    return React__default["default"].createElement(FormControl, { data: props.data });
+    return React__default["default"].createElement(FormControlBase, { data: props.data });
 };
 
 var FormControlStaticText = function (props) {
-    return React__default["default"].createElement(FormControl, { data: props.data });
+    return React__default["default"].createElement(FormControlBase, { data: props.data });
+};
+
+var FormControlSingleSelect = function (props) {
+    return React__default["default"].createElement(FormControlSelectBase, { data: __assign(__assign({}, props.data), { multiple: false }) });
 };
 
 var ElementType;
@@ -689,13 +697,13 @@ var FormElement = function (props) {
     var content;
     switch (element.type) {
         case ElementType.textarea:
-            content = React__default["default"].createElement(Textarea, { data: element });
+            content = React__default["default"].createElement(FormControlTextarea, { data: element });
             break;
         case ElementType.fieldset:
             content = React__default["default"].createElement(Fieldset, { data: element });
             break;
         case ElementType.select:
-            content = React__default["default"].createElement(SingleSelect, { data: element });
+            content = React__default["default"].createElement(FormControlSingleSelect, { data: element });
             break;
         case ElementType.honeypot:
             content = React__default["default"].createElement(Honeypot, { data: element });

@@ -4,8 +4,8 @@ import {TYPO3ContentElementBaseInterface} from "../../../../Interfaces";
 import FormControlBase from "./FormControlBase";
 import FormControlSelectBase from "./FormControlSelectBase";
 
-const FormControlMultiSelect:React.FC<TYPO3ContentElementBaseInterface> = props => {
-    return <FormControlSelectBase data={{...props.data, multiple: true}}/>
+const FormControlSingleSelect:React.FC<TYPO3ContentElementBaseInterface> = props => {
+    return <FormControlSelectBase data={{...props.data, multiple: false}}/>
 }
 
-export default FormControlMultiSelect
+export default FormControlSingleSelect

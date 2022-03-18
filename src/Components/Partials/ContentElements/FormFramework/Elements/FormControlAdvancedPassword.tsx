@@ -1,10 +1,10 @@
 import React from "react"
 import {TYPO3ContentElementBaseInterface} from "../../../../Interfaces";
-import FormControl from "./FormControl";
+import FormControlBase from "./FormControlBase";
 
 const FormControlAdvancedPassword:React.FC<TYPO3ContentElementBaseInterface> = props => {
 
-    return <FormControl data={props.data} />
+    return <FormControlBase data={props.data} />
 }
 
 export default FormControlAdvancedPassword
