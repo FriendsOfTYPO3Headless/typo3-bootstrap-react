@@ -4,7 +4,6 @@ import {Form} from "react-bootstrap"
 
 
 function CSSstring(string) {
-    console.log('JSON', string);
     const css_json = `{"${string
         .replace(/; /g, '", "')
         .replace(/: /g, '": "')

@@ -524,7 +524,6 @@ var Fieldset = function (props) {
 };
 
 function CSSstring(string) {
-    console.log('JSON', string);
     var css_json = "{\"".concat(string
         .replace(/; /g, '", "')
         .replace(/: /g, '": "')
@@ -541,11 +540,12 @@ var Honeypot = function (props) {
 };
 
 var FormControlBase = function (props) {
-    var _a = props.data, defaultValue = _a.defaultValue; _a.identifier; var label = _a.label, name = _a.name, properties = _a.properties, type = _a.type;
-    var fluidAdditionalAttributes = properties.fluidAdditionalAttributes, elementDescription = properties.elementDescription;
+    var _a = props.data, defaultValue = _a.defaultValue, identifier = _a.identifier, label = _a.label, name = _a.name, properties = _a.properties, type = _a.type;
+    var fluidAdditionalAttributes = properties.fluidAdditionalAttributes, elementDescription = properties.elementDescription, validationErrorMessages = properties.validationErrorMessages;
     return React__default["default"].createElement(React__default["default"].Fragment, null,
         label.length > 0 && React__default["default"].createElement(reactBootstrap.Form.Label, null, label),
         React__default["default"].createElement(reactBootstrap.Form.Control, __assign({}, fluidAdditionalAttributes, { type: type.toLowerCase(), name: name, defaultValue: defaultValue })),
+        validationErrorMessages && validationErrorMessages.map(function (messageObject, index) { return React__default["default"].createElement(reactBootstrap.Form.Control.Feedback, { key: "".concat(identifier, "-").concat(index), type: "invalid" }, messageObject.message); }),
         elementDescription && React__default["default"].createElement(reactBootstrap.Form.Text, { className: 'inline-muted' }, elementDescription));
 };
 
@@ -588,7 +588,7 @@ var FormControlDate = function (props) {
 
 var FormControlCheckBase = function (props) {
     var _a = props.data, defaultValue = _a.defaultValue, identifier = _a.identifier, label = _a.label, name = _a.name, properties = _a.properties, type = _a.type;
-    var fluidAdditionalAttributes = properties.fluidAdditionalAttributes, elementDescription = properties.elementDescription;
+    var fluidAdditionalAttributes = properties.fluidAdditionalAttributes, elementDescription = properties.elementDescription, validationErrorMessages = properties.validationErrorMessages;
     var options = [{
             value: "1",
             key: label
@@ -606,7 +606,8 @@ var FormControlCheckBase = function (props) {
             var selected = defaultValue !== null && defaultValue.includes(option.value) ? option.value : null;
             return React__default["default"].createElement(reactBootstrap.Form.Check, { key: "".concat(identifier, "-").concat(option.value, "-").concat(index) },
                 React__default["default"].createElement(reactBootstrap.Form.Check.Input, __assign({}, fluidAdditionalAttributes, { type: type.toLowerCase(), name: name, id: "".concat(name, "-").concat(option.key), defaultValue: option.value, defaultChecked: selected })),
-                React__default["default"].createElement(reactBootstrap.Form.Check.Label, { htmlFor: "".concat(name, "-").concat(option.key) }, option.key));
+                React__default["default"].createElement(reactBootstrap.Form.Check.Label, { htmlFor: "".concat(name, "-").concat(option.key) }, option.key),
+                validationErrorMessages && validationErrorMessages.map(function (messageObject, index) { return React__default["default"].createElement(reactBootstrap.Form.Control.Feedback, { key: "".concat(identifier, "-").concat(index), type: "invalid" }, messageObject.message); }));
         }),
         elementDescription && React__default["default"].createElement(reactBootstrap.Form.Text, { className: 'inline-muted' }, elementDescription));
 };
@@ -626,7 +627,7 @@ var FormControlMultiCheckbox = function (props) {
 var FormControlSelectBase = function (props) {
     console.log('SingleSelect data', props.data);
     var _a = props.data; _a.defaultValue; var identifier = _a.identifier; _a.label; var name = _a.name, properties = _a.properties, multiple = _a.multiple;
-    var options = properties.options; properties.fluidAdditionalAttributes; var prependOptionLabel = properties.prependOptionLabel;
+    var options = properties.options; properties.fluidAdditionalAttributes; var prependOptionLabel = properties.prependOptionLabel, validationErrorMessages = properties.validationErrorMessages;
     var optionTemplate = function () {
         var template = [];
         template.push(React__default["default"].createElement("option", { key: "".concat(identifier, "-0"), value: '' }, prependOptionLabel));
@@ -635,7 +636,9 @@ var FormControlSelectBase = function (props) {
         });
         return template;
     };
-    return React__default["default"].createElement(reactBootstrap.Form.Select, { name: name, multiple: multiple }, optionTemplate());
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(reactBootstrap.Form.Select, { name: name, multiple: multiple }, optionTemplate()),
+        validationErrorMessages && validationErrorMessages.map(function (messageObject, index) { return React__default["default"].createElement(reactBootstrap.Form.Control.Feedback, { key: "".concat(identifier, "-").concat(index), type: "invalid" }, messageObject.message); }));
 };
 
 var FormControlMultiSelect = function (props) {
@@ -647,11 +650,11 @@ var FormControlDatePicker = function (props) {
 };
 
 var FormControlFileUpload = function (props) {
-    return React__default["default"].createElement(FormControlBase, { data: props.data });
+    return React__default["default"].createElement(FormControlBase, { data: __assign(__assign({}, props.data), { type: 'file' }) });
 };
 
 var FormControlImageUpload = function (props) {
-    return React__default["default"].createElement(FormControlBase, { data: props.data });
+    return React__default["default"].createElement(FormControlFileUpload, { data: props.data });
 };
 
 var FormControlAdvancedPassword = function (props) {
@@ -779,13 +782,19 @@ var FormElement = function (props) {
 
 var FormFormFramework = function (props) {
     var _a = props.data, form = _a.form, link = _a.link;
+    var _b = React.useState(false), validated = _b[0], setValidated = _b[1];
     console.log('FORM', props.data);
-    var submitHandler = React.useCallback(function (e) {
-        // e.preventDefault();
-        // console.log(`send POST request to ${link.href}`)
+    var submitHandler = React.useCallback(function (event) {
+        var form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        setValidated(true);
+        console.log("send POST request to ".concat(link.href));
     }, [form, link]);
-    return React__default["default"].createElement("div", { className: "formFormFramework", onSubmit: submitHandler },
-        React__default["default"].createElement(reactBootstrap.Form, { id: form.id },
+    return React__default["default"].createElement("div", { className: "formFormFramework" },
+        React__default["default"].createElement(reactBootstrap.Form, { id: form.id, noValidate: true, validated: validated, onSubmit: submitHandler },
             form.elements.map(function (element, index) {
                 return React__default["default"].createElement(FormElement, { element: element, key: "".concat(form.id, "-").concat(index) });
             }),

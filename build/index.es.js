@@ -514,7 +514,6 @@ var Fieldset = function (props) {
 };
 
 function CSSstring(string) {
-    console.log('JSON', string);
     var css_json = "{\"".concat(string
         .replace(/; /g, '", "')
         .replace(/: /g, '": "')
@@ -531,11 +530,12 @@ var Honeypot = function (props) {
 };
 
 var FormControlBase = function (props) {
-    var _a = props.data, defaultValue = _a.defaultValue; _a.identifier; var label = _a.label, name = _a.name, properties = _a.properties, type = _a.type;
-    var fluidAdditionalAttributes = properties.fluidAdditionalAttributes, elementDescription = properties.elementDescription;
+    var _a = props.data, defaultValue = _a.defaultValue, identifier = _a.identifier, label = _a.label, name = _a.name, properties = _a.properties, type = _a.type;
+    var fluidAdditionalAttributes = properties.fluidAdditionalAttributes, elementDescription = properties.elementDescription, validationErrorMessages = properties.validationErrorMessages;
     return React.createElement(React.Fragment, null,
         label.length > 0 && React.createElement(Form.Label, null, label),
         React.createElement(Form.Control, __assign({}, fluidAdditionalAttributes, { type: type.toLowerCase(), name: name, defaultValue: defaultValue })),
+        validationErrorMessages && validationErrorMessages.map(function (messageObject, index) { return React.createElement(Form.Control.Feedback, { key: "".concat(identifier, "-").concat(index), type: "invalid" }, messageObject.message); }),
         elementDescription && React.createElement(Form.Text, { className: 'inline-muted' }, elementDescription));
 };
 
@@ -578,7 +578,7 @@ var FormControlDate = function (props) {
 
 var FormControlCheckBase = function (props) {
     var _a = props.data, defaultValue = _a.defaultValue, identifier = _a.identifier, label = _a.label, name = _a.name, properties = _a.properties, type = _a.type;
-    var fluidAdditionalAttributes = properties.fluidAdditionalAttributes, elementDescription = properties.elementDescription;
+    var fluidAdditionalAttributes = properties.fluidAdditionalAttributes, elementDescription = properties.elementDescription, validationErrorMessages = properties.validationErrorMessages;
     var options = [{
             value: "1",
             key: label
@@ -596,7 +596,8 @@ var FormControlCheckBase = function (props) {
             var selected = defaultValue !== null && defaultValue.includes(option.value) ? option.value : null;
             return React.createElement(Form.Check, { key: "".concat(identifier, "-").concat(option.value, "-").concat(index) },
                 React.createElement(Form.Check.Input, __assign({}, fluidAdditionalAttributes, { type: type.toLowerCase(), name: name, id: "".concat(name, "-").concat(option.key), defaultValue: option.value, defaultChecked: selected })),
-                React.createElement(Form.Check.Label, { htmlFor: "".concat(name, "-").concat(option.key) }, option.key));
+                React.createElement(Form.Check.Label, { htmlFor: "".concat(name, "-").concat(option.key) }, option.key),
+                validationErrorMessages && validationErrorMessages.map(function (messageObject, index) { return React.createElement(Form.Control.Feedback, { key: "".concat(identifier, "-").concat(index), type: "invalid" }, messageObject.message); }));
         }),
         elementDescription && React.createElement(Form.Text, { className: 'inline-muted' }, elementDescription));
 };
@@ -616,7 +617,7 @@ var FormControlMultiCheckbox = function (props) {
 var FormControlSelectBase = function (props) {
     console.log('SingleSelect data', props.data);
     var _a = props.data; _a.defaultValue; var identifier = _a.identifier; _a.label; var name = _a.name, properties = _a.properties, multiple = _a.multiple;
-    var options = properties.options; properties.fluidAdditionalAttributes; var prependOptionLabel = properties.prependOptionLabel;
+    var options = properties.options; properties.fluidAdditionalAttributes; var prependOptionLabel = properties.prependOptionLabel, validationErrorMessages = properties.validationErrorMessages;
     var optionTemplate = function () {
         var template = [];
         template.push(React.createElement("option", { key: "".concat(identifier, "-0"), value: '' }, prependOptionLabel));
@@ -625,7 +626,9 @@ var FormControlSelectBase = function (props) {
         });
         return template;
     };
-    return React.createElement(Form.Select, { name: name, multiple: multiple }, optionTemplate());
+    return React.createElement(React.Fragment, null,
+        React.createElement(Form.Select, { name: name, multiple: multiple }, optionTemplate()),
+        validationErrorMessages && validationErrorMessages.map(function (messageObject, index) { return React.createElement(Form.Control.Feedback, { key: "".concat(identifier, "-").concat(index), type: "invalid" }, messageObject.message); }));
 };
 
 var FormControlMultiSelect = function (props) {
@@ -637,11 +640,11 @@ var FormControlDatePicker = function (props) {
 };
 
 var FormControlFileUpload = function (props) {
-    return React.createElement(FormControlBase, { data: props.data });
+    return React.createElement(FormControlBase, { data: __assign(__assign({}, props.data), { type: 'file' }) });
 };
 
 var FormControlImageUpload = function (props) {
-    return React.createElement(FormControlBase, { data: props.data });
+    return React.createElement(FormControlFileUpload, { data: props.data });
 };
 
 var FormControlAdvancedPassword = function (props) {
@@ -769,13 +772,19 @@ var FormElement = function (props) {
 
 var FormFormFramework = function (props) {
     var _a = props.data, form = _a.form, link = _a.link;
+    var _b = useState(false), validated = _b[0], setValidated = _b[1];
     console.log('FORM', props.data);
-    var submitHandler = useCallback(function (e) {
-        // e.preventDefault();
-        // console.log(`send POST request to ${link.href}`)
+    var submitHandler = useCallback(function (event) {
+        var form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        setValidated(true);
+        console.log("send POST request to ".concat(link.href));
     }, [form, link]);
-    return React.createElement("div", { className: "formFormFramework", onSubmit: submitHandler },
-        React.createElement(Form, { id: form.id },
+    return React.createElement("div", { className: "formFormFramework" },
+        React.createElement(Form, { id: form.id, noValidate: true, validated: validated, onSubmit: submitHandler },
             form.elements.map(function (element, index) {
                 return React.createElement(FormElement, { element: element, key: "".concat(form.id, "-").concat(index) });
             }),
