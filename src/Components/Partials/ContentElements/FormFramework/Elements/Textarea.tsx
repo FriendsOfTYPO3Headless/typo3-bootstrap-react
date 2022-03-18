@@ -3,14 +3,15 @@ import {Form} from "react-bootstrap"
 import {TYPO3ContentElementBaseInterface} from "../../../../Interfaces"
 
 const Textarea: React.FC<TYPO3ContentElementBaseInterface> = props => {
-    const {type, name, defaultValue} = props.data
-    const [value, SetValue] = useState(defaultValue ?? '')
-    return <Form.Control
-        as={type.toLowerCase()}
-        name={name}
-        value={value}
-        onChange={(e) => SetValue(e.target.value)}
-    />;
+    const {type, name, defaultValue, label} = props.data
+    return <>
+        {label.length > 0 && <Form.Label>{label}</Form.Label>}
+        <Form.Control
+            as={type.toLowerCase()}
+            name={name}
+            defaultValue={defaultValue}
+        />
+    </>;
 
 }
 

@@ -30,15 +30,14 @@ const Honeypot: React.FC<TYPO3ContentElementBaseInterface> = props => {
         renderAsHiddenField,
         styleAttribute
     } = properties
-    const [value, SetValue] = useState(defaultValue ?? '')
     return <div className={containerClassAttribute}>
+        {label.length > 0 && <Form.Label>{label}</Form.Label>}
         <Form.Control
             type={renderAsHiddenField.length > 0 ? 'hidden' : 'text'}
             name={name}
-            value={value}
             className={elementClassAttribute}
+            defaultValue={defaultValue}
             style={CSSstring(styleAttribute)}
-            onChange={(e) => SetValue(e.target.value)}
         />
     </div>
 }

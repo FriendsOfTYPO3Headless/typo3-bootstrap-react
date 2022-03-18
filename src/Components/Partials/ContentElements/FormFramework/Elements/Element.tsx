@@ -1,31 +1,30 @@
-import React from "react";
-import {Alert, Form} from "react-bootstrap";
-import Textarea from "./Textarea";
-import Fieldset from "../Fieldset";
-import SingleSelect from "./SingleSelect";
-import Honeypot from "./Honeypot";
-import FormControl from "./FormControl";
-import FormControlHidden from "./FormControlHidden";
-import FormControlInput from "./FormControlInput";
-import FormControlText from "./FormControlText";
-import FormControlPassword from "./FormControlPassword";
-import FormControlEmail from "./FormControlEmail";
-import FormControlTelephone from "./FormControlTelephone";
-import FormControlUrl from "./FormControlUrl";
-import FormControlNumber from "./FormControlNumber";
-import FormControlDate from "./FormControlDate";
-import FormControlCheckbox from "./FormControlCheckbox";
-import FormControlRadioButton from "./FormControlRadioButton";
-import FormControlMultiCheckbox from "./FormControlMultiCheckbox";
-import FormControlMultiSelect from "./FormControlMultiSelect";
-import FormControlDatePicker from "./FormControlDatePicker";
-import FormControlFileUpload from "./FormControlfileUpload";
-import FormControlImageUpload from "./FormControlImageUpload";
-import FormControlAdvancedPassword from "./FormControlAdvancedPassword";
-import FormControlStaticText from "./FormControlStaticText";
+import React from "react"
+import {Alert, Form} from "react-bootstrap"
+import Textarea from "./Textarea"
+import Fieldset from "../Fieldset"
+import SingleSelect from "./SingleSelect"
+import Honeypot from "./Honeypot"
+import FormControlHidden from "./FormControlHidden"
+import FormControlInput from "./FormControlInput"
+import FormControlText from "./FormControlText"
+import FormControlPassword from "./FormControlPassword"
+import FormControlEmail from "./FormControlEmail"
+import FormControlTelephone from "./FormControlTelephone"
+import FormControlUrl from "./FormControlUrl"
+import FormControlNumber from "./FormControlNumber"
+import FormControlDate from "./FormControlDate"
+import FormControlCheckbox from "./FormControlCheckbox"
+import FormControlRadioButton from "./FormControlRadioButton"
+import FormControlMultiCheckbox from "./FormControlMultiCheckbox"
+import FormControlMultiSelect from "./FormControlMultiSelect"
+import FormControlDatePicker from "./FormControlDatePicker"
+import FormControlFileUpload from "./FormControlfileUpload"
+import FormControlImageUpload from "./FormControlImageUpload"
+import FormControlAdvancedPassword from "./FormControlAdvancedPassword"
+import FormControlStaticText from "./FormControlStaticText"
 
 enum ElementType {
-    select= 'SingleSelect',
+    select = 'SingleSelect',
     textarea = 'Textarea',
     input = 'input',
     fieldset = 'Fieldset',
@@ -53,14 +52,13 @@ enum ElementType {
 const FormElement: React.FC<{ element: { defaultValue: string, type: string, identifier: string, label: string, property: any, validators: any, name: string } }> = props => {
 
     const {element} = props;
-
     let content;
     switch (element.type) {
         case ElementType.textarea:
-            content = <Textarea data={element} />
+            content = <Textarea data={element}/>
             break
         case ElementType.fieldset:
-            content = <Fieldset data={element} />
+            content = <Fieldset data={element}/>
             break
         case ElementType.select:
             content = <SingleSelect data={element}/>
@@ -69,66 +67,64 @@ const FormElement: React.FC<{ element: { defaultValue: string, type: string, ide
             content = <Honeypot data={element}/>
             break
         case ElementType.hidden:
-            content = <FormControlHidden data={element} />
+            content = <FormControlHidden data={element}/>
             break;
         case ElementType.input:
-            content = <FormControlInput data={element} />
+            content = <FormControlInput data={element}/>
             break;
         case ElementType.text:
-            content = <FormControlText data={element} />
+            content = <FormControlText data={element}/>
             break;
         case ElementType.password:
-            content = <FormControlPassword data={element} />
+            content = <FormControlPassword data={element}/>
             break;
         case ElementType.email:
-            content = <FormControlEmail data={element} />
+            content = <FormControlEmail data={element}/>
             break;
         case ElementType.telephone:
-            content = <FormControlTelephone data={element} />
+            content = <FormControlTelephone data={element}/>
             break;
         case ElementType.url:
-            content = <FormControlUrl data={element} />
+            content = <FormControlUrl data={element}/>
             break;
         case ElementType.number:
-            content = <FormControlNumber data={element} />
+            content = <FormControlNumber data={element}/>
             break;
         case ElementType.date:
-            content = <FormControlDate data={element} />
+            content = <FormControlDate data={element}/>
             break;
         case ElementType.checkbox:
-            content = <FormControlCheckbox data={element} />
+            content = <FormControlCheckbox data={element}/>
             break;
         case ElementType.radioButton:
-            element.type = 'radio'
-            content = <FormControlRadioButton data={element} />
+            content = <FormControlRadioButton data={element}/>
             break;
         case ElementType.radio:
-            element.type = 'radio'
-            content = <FormControlRadioButton data={element} />
+            content = <FormControlRadioButton data={{...element, type: 'radio'}}/>
             break;
         case ElementType.multiCheckbox:
-            content = <FormControlMultiCheckbox data={element} />
+            content = <FormControlMultiCheckbox data={element}/>
             break;
         case ElementType.multiSelect:
-            content = <FormControlMultiSelect data={element} />
+            content = <FormControlMultiSelect data={element}/>
             break;
         case ElementType.datePicker:
-            content = <FormControlDatePicker data={element} />
+            content = <FormControlDatePicker data={element}/>
             break;
         case ElementType.fileUpload:
-            content = <FormControlFileUpload data={element} />
+            content = <FormControlFileUpload data={element}/>
             break;
         case ElementType.imageUpload:
-            content = <FormControlImageUpload data={element} />
+            content = <FormControlImageUpload data={element}/>
             break;
         case ElementType.advancedPassword:
-            content = <FormControlAdvancedPassword data={element} />
+            content = <FormControlAdvancedPassword data={element}/>
             break;
         case ElementType.staticText:
-            content = <FormControlStaticText data={element} />
+            content = <FormControlStaticText data={element}/>
             break;
         default:
-            console.log('element', element.type)
+            console.log('element', element)
             content = <Alert variant={"danger"}>
                 <Alert.Heading>Contentelement type unknown</Alert.Heading>
                 <p>{element.type} type not defined</p>

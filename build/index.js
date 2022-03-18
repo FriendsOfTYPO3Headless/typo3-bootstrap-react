@@ -504,9 +504,10 @@ var Header$1 = function (props) {
 };
 
 var Textarea = function (props) {
-    var _a = props.data, type = _a.type, name = _a.name, defaultValue = _a.defaultValue;
-    var _b = React.useState(defaultValue !== null && defaultValue !== void 0 ? defaultValue : ''), value = _b[0], SetValue = _b[1];
-    return React__default["default"].createElement(reactBootstrap.Form.Control, { as: type.toLowerCase(), name: name, value: value, onChange: function (e) { return SetValue(e.target.value); } });
+    var _a = props.data, type = _a.type, name = _a.name, defaultValue = _a.defaultValue, label = _a.label;
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        label.length > 0 && React__default["default"].createElement(reactBootstrap.Form.Label, null, label),
+        React__default["default"].createElement(reactBootstrap.Form.Control, { as: type.toLowerCase(), name: name, defaultValue: defaultValue }));
 };
 
 var Fieldset = function (props) {
@@ -545,19 +546,18 @@ function CSSstring(string) {
     return {};
 }
 var Honeypot = function (props) {
-    var _a = props.data, defaultValue = _a.defaultValue; _a.identifier; _a.label; var name = _a.name, properties = _a.properties;
+    var _a = props.data, defaultValue = _a.defaultValue; _a.identifier; var label = _a.label, name = _a.name, properties = _a.properties;
     var containerClassAttribute = properties.containerClassAttribute, elementClassAttribute = properties.elementClassAttribute; properties.elementErrorClassAttribute; var renderAsHiddenField = properties.renderAsHiddenField, styleAttribute = properties.styleAttribute;
-    var _b = React.useState(defaultValue !== null && defaultValue !== void 0 ? defaultValue : ''), value = _b[0], SetValue = _b[1];
     return React__default["default"].createElement("div", { className: containerClassAttribute },
-        React__default["default"].createElement(reactBootstrap.Form.Control, { type: renderAsHiddenField.length > 0 ? 'hidden' : 'text', name: name, value: value, className: elementClassAttribute, style: CSSstring(styleAttribute), onChange: function (e) { return SetValue(e.target.value); } }));
+        label.length > 0 && React__default["default"].createElement(reactBootstrap.Form.Label, null, label),
+        React__default["default"].createElement(reactBootstrap.Form.Control, { type: renderAsHiddenField.length > 0 ? 'hidden' : 'text', name: name, className: elementClassAttribute, defaultValue: defaultValue, style: CSSstring(styleAttribute) }));
 };
 
 var FormControl = function (props) {
-    var _a = props.data, defaultValue = _a.defaultValue; _a.identifier; var label = _a.label, name = _a.name; _a.properties; var type = _a.type;
-    var _b = React.useState(defaultValue !== null && defaultValue !== void 0 ? defaultValue : ''), value = _b[0], SetValue = _b[1];
+    var _a = props.data, defaultValue = _a.defaultValue; _a.identifier; var label = _a.label, name = _a.name, properties = _a.properties, type = _a.type;
     return React__default["default"].createElement(React__default["default"].Fragment, null,
         label.length > 0 && React__default["default"].createElement(reactBootstrap.Form.Label, null, label),
-        React__default["default"].createElement(reactBootstrap.Form.Control, { type: type.toLowerCase(), name: name, value: value, defaultValue: defaultValue, onChange: function (e) { return SetValue(e.target.value); } }));
+        React__default["default"].createElement(reactBootstrap.Form.Control, __assign({}, properties.fluidAdditionalAttributes, { type: type.toLowerCase(), name: name, defaultValue: defaultValue })));
 };
 
 var FormControlHidden = function (props) {
@@ -597,16 +597,41 @@ var FormControlDate = function (props) {
     return React__default["default"].createElement(FormControl, { data: props.data });
 };
 
+var FormControlCheckBase = function (props) {
+    var _a = props.data, defaultValue = _a.defaultValue, identifier = _a.identifier, label = _a.label, name = _a.name, properties = _a.properties, type = _a.type;
+    var fluidAdditionalAttributes = properties.fluidAdditionalAttributes, elementDescription = properties.elementDescription;
+    var options = [{
+            value: "1",
+            key: label
+        }];
+    if (properties.options) {
+        options = Object.keys(properties.options).map(function (value, index) {
+            return {
+                value: value,
+                key: properties.options[value]
+            };
+        });
+    }
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        options.map(function (option, index) {
+            var selected = defaultValue !== null && defaultValue.includes(option.value) ? option.value : null;
+            return React__default["default"].createElement(reactBootstrap.Form.Check, { key: "".concat(identifier, "-").concat(option.value, "-").concat(index) },
+                React__default["default"].createElement(reactBootstrap.Form.Check.Input, __assign({}, fluidAdditionalAttributes, { type: type.toLowerCase(), name: name, id: "".concat(name, "-").concat(option.key), defaultValue: option.value, defaultChecked: selected })),
+                React__default["default"].createElement(reactBootstrap.Form.Check.Label, { htmlFor: "".concat(name, "-").concat(option.key) }, option.key));
+        }),
+        elementDescription && React__default["default"].createElement(reactBootstrap.Form.Text, { className: 'inline-muted' }, elementDescription));
+};
+
 var FormControlCheckbox = function (props) {
-    return React__default["default"].createElement(FormControl, { data: props.data });
+    return React__default["default"].createElement(FormControlCheckBase, { data: props.data });
 };
 
 var FormControlRadioButton = function (props) {
-    return React__default["default"].createElement(FormControl, { data: props.data });
+    return React__default["default"].createElement(FormControlCheckBase, { data: __assign(__assign({}, props.data), { type: 'radio' }) });
 };
 
 var FormControlMultiCheckbox = function (props) {
-    return React__default["default"].createElement(FormControl, { data: props.data });
+    return React__default["default"].createElement(FormControlCheckBase, { data: __assign(__assign({}, props.data), { type: 'checkbox' }) });
 };
 
 var FormControlMultiSelect = function (props) {
@@ -706,12 +731,10 @@ var FormElement = function (props) {
             content = React__default["default"].createElement(FormControlCheckbox, { data: element });
             break;
         case ElementType.radioButton:
-            element.type = 'radio';
             content = React__default["default"].createElement(FormControlRadioButton, { data: element });
             break;
         case ElementType.radio:
-            element.type = 'radio';
-            content = React__default["default"].createElement(FormControlRadioButton, { data: element });
+            content = React__default["default"].createElement(FormControlRadioButton, { data: __assign(__assign({}, element), { type: 'radio' }) });
             break;
         case ElementType.multiCheckbox:
             content = React__default["default"].createElement(FormControlMultiCheckbox, { data: element });
@@ -735,7 +758,7 @@ var FormElement = function (props) {
             content = React__default["default"].createElement(FormControlStaticText, { data: element });
             break;
         default:
-            console.log('element', element.type);
+            console.log('element', element);
             content = React__default["default"].createElement(reactBootstrap.Alert, { variant: "danger" },
                 React__default["default"].createElement(reactBootstrap.Alert.Heading, null, "Contentelement type unknown"),
                 React__default["default"].createElement("p", null,
