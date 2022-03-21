@@ -632,6 +632,25 @@ var Header = function (props) {
         props.children);
 };
 
+var ContentElements = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    Text: Text,
+    Html: Html,
+    Textpic: Textpic,
+    Image: Image,
+    ImageLightbox: Image,
+    Div: Div,
+    Shortcut: Shortcut,
+    Textmedia: Textmedia,
+    Uploads: Uploads,
+    Accordion: Accordion,
+    Gallery: Gallery,
+    CardGroup: CardGroup,
+    TextColumns: TextColumns,
+    Quote: Quote,
+    Header: Header
+});
+
 var BackgroundImage = function (props) {
     if (props.data.appearance.backgroundImage.length < 1) {
         return null;
@@ -991,5 +1010,5 @@ TYPO3Page.defaultProps = {
 };
 var TYPO3Page$1 = React.memo(TYPO3Page);
 
-export { Content, Page, section as Section, TYPO3Page$1 as TYPO3Page, TYPO3PageContext };
+export { Content, ContentElements, Page, section as Section, TYPO3Page$1 as TYPO3Page, TYPO3PageContext };
 //# sourceMappingURL=index.es.js.map
