@@ -403,7 +403,7 @@
 }
 .navbar-inverse {
     @extend .navbar-dark;
-    @extend .bg-dark;
+    @extend .bg-dark !optional;
 }
 
 //

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
+import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
 
-const MenuSection: React.FC<{ data: any }> = props => {
+const MenuSection: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
 
     return <div className="menuSection">
         <div condition="{menu}">

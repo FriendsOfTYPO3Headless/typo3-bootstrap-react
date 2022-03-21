@@ -1,5 +1,4 @@
 import React from 'react';
-declare const FormFormFramework: React.FC<{
-    data: any;
-}>;
+import { TYPO3BootstrapContentElementBaseInterface } from "../../Interfaces";
+declare const FormFormFramework: React.FC<TYPO3BootstrapContentElementBaseInterface>;
 export default FormFormFramework;

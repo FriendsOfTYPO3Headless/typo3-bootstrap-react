@@ -1,6 +1,4 @@
 import React from "react";
-interface IGalleryProperties {
-    data: any;
-}
-declare const Gallery: React.FC<IGalleryProperties>;
+import { TYPO3BootstrapContentElementBaseInterface } from "../../Interfaces";
+declare const Gallery: React.FC<TYPO3BootstrapContentElementBaseInterface>;
 export default Gallery;

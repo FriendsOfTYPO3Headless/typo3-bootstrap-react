@@ -1,6 +1,7 @@
 import React from 'react';
+import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
 
-const Login: React.FC<{ data: any }> = props => {
+const Login: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
 
     return <div className="login">
 

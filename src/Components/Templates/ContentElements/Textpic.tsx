@@ -1,33 +1,38 @@
-import React from 'react';
-import {Col, Row} from "react-bootstrap";
-import ImageCols from "../../Partials/ContentElements/ImageCols";
+import React from 'react'
+import {Col, Row} from "react-bootstrap"
+import ImageCols from "../../Partials/ContentElements/ImageCols"
+import AllHeader from "../../Partials/ContentElements/Header/All"
+import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces"
 
-const Textpic: React.FC<{ data: any }> = props => {
+const Textpic: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
     let textpicClassName = '';
 
-    if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
-        textpicClassName = props.data.gallery.position.horizontal;
-    }
+    if (props.data.content.gallery.position.horizontal === 'left' || props.data.content.gallery.position.horizontal === 'right') {
+        textpicClassName = props.data.content.gallery.position.horizontal;
 
-    if (props.data.gallery.position.horizontal === 'center') {
-        textpicClassName = props.data.gallery.position.vertical;
     }
-
-    return <div className="textpic">
-        <div className="gallery-row">
-            <Row className={"textpic textpic-" + textpicClassName}>
-                <Col className="textpic-item textpic-gallery"
-                     md={textpicClassName === props.data.gallery.position.vertical ? "auto" : "6"}>
-                    <Row>
-                        <ImageCols data={props.data}/>
-                    </Row>
-                </Col>
-                <Col className="textpic-item textpic-text" md="6"
-                     dangerouslySetInnerHTML={{__html: props.data.bodytext}}>
-                </Col>
-            </Row>
+    if (props.data.content.gallery.position.horizontal === 'center') {
+        textpicClassName = props.data.content.gallery.position.vertical;
+    }
+    return <>
+        <div className="textpic">
+            <div className="gallery-row">
+                <Row className={"textpic textpic-" + textpicClassName}>
+                    <Col className="textpic-item textpic-gallery"
+                         md={textpicClassName === props.data.content.gallery.position.vertical ? "auto" : "6"}>
+                        <Row>
+                            <ImageCols data={props.data.content}/>
+                        </Row>
+                    </Col>
+                    <Col className="textpic-item textpic-text" md="6">
+                        <AllHeader data={props.data}/>
+                        <div dangerouslySetInnerHTML={{__html: props.data.content.bodytext}}/>
+                        {props.children}
+                    </Col>
+                </Row>
+            </div>
         </div>
-    </div>
+    </>
 }
 export default Textpic;
 

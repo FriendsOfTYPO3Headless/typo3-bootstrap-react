@@ -1,3 +1,5 @@
+import React from "react";
+
 interface TYPO3ContentElementBaseInterface {
     data: any,
     form?: any
@@ -25,4 +27,8 @@ interface TYPO3PagePropsInterface {
     additionalParams?: any | null;
 }
 
-export {TYPO3PageHeadlessDataInterface, TYPO3PagePropsInterface, TYPO3ContentElementBaseInterface};
+interface TYPO3BootstrapContentElementBaseInterface {
+    data: any
+}
+
+export {TYPO3PageHeadlessDataInterface, TYPO3PagePropsInterface, TYPO3BootstrapContentElementBaseInterface, TYPO3ContentElementBaseInterface};
