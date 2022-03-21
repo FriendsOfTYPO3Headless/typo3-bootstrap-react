@@ -1,4 +1,5 @@
 import React from 'react';
-import { TYPO3BootstrapContentElementBaseInterface } from "../../Interfaces";
-declare const Header: React.FC<TYPO3BootstrapContentElementBaseInterface>;
+declare const Header: React.FC<{
+    data: any;
+}>;
 export default Header;

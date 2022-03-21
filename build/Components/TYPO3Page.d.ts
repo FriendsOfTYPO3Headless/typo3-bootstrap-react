@@ -56,7 +56,6 @@ declare const contentElementLayouts: {
 declare const contentElementTemplates: {
     __generic: (headlessContentData: any) => JSX.Element;
     text: (headlessContentData: any) => JSX.Element;
-    header: (headlessContentData: any) => JSX.Element;
     html: (headlessContentData: any) => JSX.Element;
     textpic: (headlessContentData: any) => JSX.Element;
     image: (headlessContentData: any) => JSX.Element;
@@ -69,6 +68,7 @@ declare const contentElementTemplates: {
     card_group: (headlessContentData: any) => JSX.Element;
     textcolumn: (headlessContentData: any) => JSX.Element;
     quote: (headlessContentData: any) => JSX.Element;
+    header: (headlessContentData: any) => JSX.Element;
     form_formframework: (headlessContentData: any) => JSX.Element;
 };
 declare const _default: React.NamedExoticComponent<TYPO3PagePropsInterface>;

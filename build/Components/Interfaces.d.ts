@@ -22,4 +22,7 @@ interface TYPO3PagePropsInterface {
     contentElementTemplates?: any | null;
     additionalParams?: any | null;
 }
-export { TYPO3PageHeadlessDataInterface, TYPO3PagePropsInterface, TYPO3ContentElementBaseInterface };
+interface TYPO3BootstrapContentElementBaseInterface {
+    data: any;
+}
+export { TYPO3PageHeadlessDataInterface, TYPO3PagePropsInterface, TYPO3BootstrapContentElementBaseInterface, TYPO3ContentElementBaseInterface };
