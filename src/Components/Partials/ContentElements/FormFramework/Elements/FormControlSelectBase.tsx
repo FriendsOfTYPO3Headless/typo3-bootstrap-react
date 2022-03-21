@@ -3,7 +3,6 @@ import {TYPO3ContentElementBaseInterface} from "../../../../Interfaces"
 import {Form} from "react-bootstrap"
 
 const FormControlSelectBase: React.FC<TYPO3ContentElementBaseInterface> = props => {
-    console.log('SingleSelect data', props.data)
     const {defaultValue, identifier, label, name, properties, multiple} = props.data
     const {options, fluidAdditionalAttributes, prependOptionLabel, validationErrorMessages} = properties
 

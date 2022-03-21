@@ -365,6 +365,16 @@ var __assign = function() {
     return __assign.apply(this, arguments);
 };
 
+function __spreadArray(to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+}
+
 var Type = function (props) {
     var file = props.file, data = props.data;
     var fileType = file.properties.type;
@@ -524,12 +534,22 @@ var Fieldset = function (props) {
 };
 
 function CSSstring(string) {
-    var css_json = "{\"".concat(string
-        .replace(/; /g, '", "')
-        .replace(/: /g, '": "')
-        .replace(";", ""), "\"}");
-    console.log('JSON', css_json);
-    return {};
+    var css_json = "{".concat(string
+        .replace(/(\w*:)/g, '$1"') //create json format
+        .replace(/[;]/g, '";')
+        .replace(/(\'{2,})/g, '"')
+        .replace(/;/g, ',')
+        .replace(/(['"])?([a-zA-Z0-9_-]+)(['"])?:/g, '"$2": ')
+        .replace(/,\s*\}/, '}')
+        .replace(/,\s*$/, "")
+        .trim(), "}");
+    var obj = JSON.parse(css_json);
+    var keyValues = Object.keys(obj).map(function (key) {
+        var _a;
+        var camelCased = key.replace(/-[a-z]/g, function (g) { return g[1].toUpperCase(); });
+        return _a = {}, _a[camelCased] = obj[key], _a;
+    });
+    return Object.assign.apply(Object, __spreadArray([{}], keyValues, false));
 }
 var Honeypot = function (props) {
     var _a = props.data, defaultValue = _a.defaultValue; _a.identifier; var label = _a.label, name = _a.name, properties = _a.properties;
@@ -625,7 +645,6 @@ var FormControlMultiCheckbox = function (props) {
 };
 
 var FormControlSelectBase = function (props) {
-    console.log('SingleSelect data', props.data);
     var _a = props.data, defaultValue = _a.defaultValue, identifier = _a.identifier, label = _a.label, name = _a.name, properties = _a.properties, multiple = _a.multiple;
     var options = properties.options, fluidAdditionalAttributes = properties.fluidAdditionalAttributes, prependOptionLabel = properties.prependOptionLabel, validationErrorMessages = properties.validationErrorMessages;
     var optionTemplate = function () {

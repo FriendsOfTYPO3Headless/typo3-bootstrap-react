@@ -1,19 +1,21 @@
-import React, {useState} from "react"
+import React from "react"
 import {TYPO3ContentElementBaseInterface} from "../../../../Interfaces"
 import {Form} from "react-bootstrap"
 
 
 function CSSstring(string) {
-    const css_json = `{"${string
-        .replace(/; /g, '", "')
-        .replace(/: /g, '": "')
-        .replace(";", "")}"}`;
-    console.log('JSON', css_json);
-    return {}
+    const css_json = `{${string
+        .replace(/(\w*:)/g, '$1"')  //create json format
+        .replace(/[;]/g, '";')
+        .replace(/(\'{2,})/g, '"')
+        .replace(/;/g, ',')
+        .replace(/(['"])?([a-zA-Z0-9_-]+)(['"])?:/g, '"$2": ')
+        .replace(/,\s*\}/, '}')
+        .replace(/,\s*$/, "")
+        .trim()}}`;
     const obj = JSON.parse(css_json);
-
     const keyValues = Object.keys(obj).map((key) => {
-        var camelCased = key.replace(/-[a-z]/g, (g) => g[1].toUpperCase());
+        const camelCased = key.replace(/-[a-z]/g, (g) => g[1].toUpperCase());
         return {[camelCased]: obj[key]};
     });
     return Object.assign({}, ...keyValues);
@@ -21,11 +23,10 @@ function CSSstring(string) {
 
 
 const Honeypot: React.FC<TYPO3ContentElementBaseInterface> = props => {
-    const {defaultValue, identifier, label, name, properties} = props.data
+    const {defaultValue, label, name, properties} = props.data
     const {
         containerClassAttribute,
         elementClassAttribute,
-        elementErrorClassAttribute,
         renderAsHiddenField,
         styleAttribute
     } = properties
