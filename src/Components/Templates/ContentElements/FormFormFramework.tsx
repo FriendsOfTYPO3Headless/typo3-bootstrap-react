@@ -6,7 +6,6 @@ const FormFormFramework: React.FC<{ data: any }> = props => {
 
     const {form, link} = props.data;
     const [validated, setValidated] = useState(false);
-    console.log('FORM',props.data)
 
     const submitHandler = useCallback(
         (event) => {
@@ -23,7 +22,7 @@ const FormFormFramework: React.FC<{ data: any }> = props => {
 
 
     return <div className="formFormFramework" >
-        <Form id={form.id} noValidate={true} validated={validated} onSubmit={submitHandler}>
+        <Form id={form.id} noValidate={false} validated={validated} onSubmit={submitHandler}>
             {form.elements.map((element, index) => {
                 return <FormElement element={element} key={`${form.id}-${index}`}/>
             })}

@@ -542,8 +542,8 @@ function CSSstring(string) {
     return Object.assign.apply(Object, __spreadArray([{}], keyValues, false));
 }
 var Honeypot = function (props) {
-    var _a = props.data, defaultValue = _a.defaultValue; _a.identifier; var label = _a.label, name = _a.name, properties = _a.properties;
-    var containerClassAttribute = properties.containerClassAttribute, elementClassAttribute = properties.elementClassAttribute; properties.elementErrorClassAttribute; var renderAsHiddenField = properties.renderAsHiddenField, styleAttribute = properties.styleAttribute;
+    var _a = props.data, defaultValue = _a.defaultValue, label = _a.label, name = _a.name, properties = _a.properties;
+    var containerClassAttribute = properties.containerClassAttribute, elementClassAttribute = properties.elementClassAttribute, renderAsHiddenField = properties.renderAsHiddenField, styleAttribute = properties.styleAttribute;
     return React.createElement("div", { className: containerClassAttribute },
         label.length > 0 && React.createElement(Form.Label, null, label),
         React.createElement(Form.Control, { type: renderAsHiddenField.length > 0 ? 'hidden' : 'text', name: name, className: elementClassAttribute, defaultValue: defaultValue, style: CSSstring(styleAttribute) }));
@@ -552,10 +552,14 @@ var Honeypot = function (props) {
 var FormControlBase = function (props) {
     var _a = props.data, defaultValue = _a.defaultValue, identifier = _a.identifier, label = _a.label, name = _a.name, properties = _a.properties, type = _a.type;
     var fluidAdditionalAttributes = properties.fluidAdditionalAttributes, elementDescription = properties.elementDescription, validationErrorMessages = properties.validationErrorMessages;
+    console.log('ERROR MESSSAGE', validationErrorMessages);
     return React.createElement(React.Fragment, null,
         label.length > 0 && React.createElement(Form.Label, null, label),
         React.createElement(Form.Control, __assign({}, fluidAdditionalAttributes, { type: type.toLowerCase(), name: name, defaultValue: defaultValue })),
-        validationErrorMessages && validationErrorMessages.map(function (messageObject, index) { return React.createElement(Form.Control.Feedback, { key: "".concat(identifier, "-").concat(index), type: "invalid" }, messageObject.message); }),
+        validationErrorMessages && validationErrorMessages.map(function (messageObject, index) {
+            console.log('ERROR MESSSAGE', messageObject);
+            return React.createElement(Form.Control.Feedback, { key: "".concat(identifier, "-").concat(index), type: "invalid", tooltip: true }, messageObject.message);
+        }),
         elementDescription && React.createElement(Form.Text, { className: 'inline-muted' }, elementDescription));
 };
 
@@ -795,7 +799,6 @@ var FormElement = function (props) {
 var FormFormFramework = function (props) {
     var _a = props.data, form = _a.form, link = _a.link;
     var _b = useState(false), validated = _b[0], setValidated = _b[1];
-    console.log('FORM', props.data);
     var submitHandler = useCallback(function (event) {
         var form = event.currentTarget;
         if (form.checkValidity() === false) {
@@ -806,7 +809,7 @@ var FormFormFramework = function (props) {
         console.log("send POST request to ".concat(link.href));
     }, [form, link]);
     return React.createElement("div", { className: "formFormFramework" },
-        React.createElement(Form, { id: form.id, noValidate: true, validated: validated, onSubmit: submitHandler },
+        React.createElement(Form, { id: form.id, noValidate: false, validated: validated, onSubmit: submitHandler },
             form.elements.map(function (element, index) {
                 return React.createElement(FormElement, { element: element, key: "".concat(form.id, "-").concat(index) });
             }),
