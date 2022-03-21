@@ -626,8 +626,8 @@ var FormControlMultiCheckbox = function (props) {
 
 var FormControlSelectBase = function (props) {
     console.log('SingleSelect data', props.data);
-    var _a = props.data; _a.defaultValue; var identifier = _a.identifier; _a.label; var name = _a.name, properties = _a.properties, multiple = _a.multiple;
-    var options = properties.options; properties.fluidAdditionalAttributes; var prependOptionLabel = properties.prependOptionLabel, validationErrorMessages = properties.validationErrorMessages;
+    var _a = props.data, defaultValue = _a.defaultValue, identifier = _a.identifier, label = _a.label, name = _a.name, properties = _a.properties, multiple = _a.multiple;
+    var options = properties.options, fluidAdditionalAttributes = properties.fluidAdditionalAttributes, prependOptionLabel = properties.prependOptionLabel, validationErrorMessages = properties.validationErrorMessages;
     var optionTemplate = function () {
         var template = [];
         template.push(React__default["default"].createElement("option", { key: "".concat(identifier, "-0"), value: '' }, prependOptionLabel));
@@ -637,8 +637,11 @@ var FormControlSelectBase = function (props) {
         return template;
     };
     return React__default["default"].createElement(React__default["default"].Fragment, null,
-        React__default["default"].createElement(reactBootstrap.Form.Select, { name: name, multiple: multiple }, optionTemplate()),
-        validationErrorMessages && validationErrorMessages.map(function (messageObject, index) { return React__default["default"].createElement(reactBootstrap.Form.Control.Feedback, { key: "".concat(identifier, "-").concat(index), type: "invalid" }, messageObject.message); }));
+        label.length > 0 && React__default["default"].createElement(reactBootstrap.Form.Label, null, label),
+        React__default["default"].createElement(reactBootstrap.Form.Select, __assign({}, fluidAdditionalAttributes, { name: name, multiple: multiple, defaultValue: defaultValue }), optionTemplate()),
+        validationErrorMessages && validationErrorMessages.map(function (messageObject, index) {
+            return React__default["default"].createElement(reactBootstrap.Form.Control.Feedback, { key: "".concat(identifier, "-").concat(index), type: "invalid" }, messageObject.message);
+        }));
 };
 
 var FormControlMultiSelect = function (props) {
