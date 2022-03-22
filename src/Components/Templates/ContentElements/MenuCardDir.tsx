@@ -8,9 +8,9 @@ const MenuCardDir: React.FC<TYPO3BootstrapContentElementBaseInterface> = props =
 
     const itemsTemplate = items.map((item, index) => {
         const {title, subtitle, abstract, link, target, active, current, spacer, hasSubpages, media, nav_icon} = item
-        return <div className="card-menu-item">
+        return <div key={link} className="card-menu-item">
             <Card>
-                {media && media.length > 0 && <Card.Img></Card.Img>}
+                {media && media.length > 0 && <Card.Img  variant={"top"} src={media[0].publicUrl}/>}
                 <Card.Body>
                     {title && title.length > 0 &&
                         <Card.Title as={'h3'}>
