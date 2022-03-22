@@ -728,6 +728,27 @@ var MenuCardList = function (props) {
     return React__default["default"].createElement("div", { className: "card-menu card-menu card-menu-align-".concat(flexform.align, " card-menu-columns-").concat(flexform.columns) }, itemsTemplate);
 };
 
+var MenuCardDir = function (props) {
+    var _a = props.data, flexform = _a.flexform, content = _a.content;
+    var items = content.items, readmoreLabel = content.readmoreLabel;
+    var itemsTemplate = items.map(function (item, index) {
+        var title = item.title, subtitle = item.subtitle, abstract = item.abstract, link = item.link, target = item.target; item.active; item.current; item.spacer; item.hasSubpages; var media = item.media; item.nav_icon;
+        return React__default["default"].createElement("div", { className: "card-menu-item" },
+            React__default["default"].createElement(RBT.Card, null,
+                media && media.length > 0 && React__default["default"].createElement(RBT.Card.Img, null),
+                React__default["default"].createElement(RBT.Card.Body, null,
+                    title && title.length > 0 &&
+                        React__default["default"].createElement(RBT.Card.Title, { as: 'h3' },
+                            React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, title)),
+                    subtitle && subtitle.length > 0 &&
+                        React__default["default"].createElement(RBT.Card.Subtitle, { as: 'h4' }, subtitle),
+                    React__default["default"].createElement(RBT.Card.Text, { as: "p" }, abstract)),
+                React__default["default"].createElement(RBT.Card.Footer, null,
+                    React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, (readmoreLabel && readmoreLabel.length > 0) ? readmoreLabel : title))));
+    });
+    return React__default["default"].createElement("div", { className: "card-menu card-menu card-menu-align-".concat(flexform.align, " card-menu-columns-").concat(flexform.columns) }, itemsTemplate);
+};
+
 var ContentElements = /*#__PURE__*/Object.freeze({
     __proto__: null,
     Text: Text,
@@ -746,7 +767,8 @@ var ContentElements = /*#__PURE__*/Object.freeze({
     Quote: Quote,
     Header: Header,
     Carousel: Carousel,
-    MenuCardList: MenuCardList
+    MenuCardList: MenuCardList,
+    MenuCardDir: MenuCardDir
 });
 
 var BackgroundImage = function (props) {
@@ -1080,6 +1102,7 @@ var contentElementTemplates = {
     header: function (headlessContentData) { return React__default["default"].createElement(Header, { data: headlessContentData }); },
     carousel: function (headlessContentData) { return React__default["default"].createElement(Carousel, { data: headlessContentData }); },
     menu_card_list: function (headlessContentData) { return React__default["default"].createElement(MenuCardList, { data: headlessContentData }); },
+    menu_card_dir: function (headlessContentData) { return React__default["default"].createElement(MenuCardDir, { data: headlessContentData }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
