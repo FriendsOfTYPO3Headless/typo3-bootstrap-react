@@ -2,14 +2,14 @@ import React, {useState} from "react"
 import * as RBT from "react-bootstrap"
 import {Alert} from "react-bootstrap"
 import Image from "../../Partials/ContentElements/Media/Type/Image"
-// import AllHeader from "../../Partials/ContentElements/Header/All"
+import AllHeader from "../../Partials/ContentElements/Header/All"
 
-const carouselItem = (itemHeadless: any, isFirst= false): JSX.Element => {
+const carouselItem = (itemHeadless: any, isFirst = false): JSX.Element => {
     const {itemType, layout, image} = itemHeadless
     let item = <></>
     let itemClass = 'item carousel-item'
 
-    if(isFirst){
+    if (isFirst) {
         itemClass += ` active`
     }
 
@@ -24,13 +24,17 @@ const carouselItem = (itemHeadless: any, isFirst= false): JSX.Element => {
 
     switch (itemType) {
         case 'image':
-            item = <div className="carousel-image"><Image file={image[0]} className={''}/></div>
+            item = <div className="carousel-image">
+                <Image file={image[0]} className={''}/>
+            </div>
             break;
         default:
-            item = <Alert variant={"danger"}>
-                <Alert.Heading>Templatetype unknown</Alert.Heading>
-                <p>{itemType} has no Template</p>
-            </Alert>
+            item = <div className={'carousel-text-inner'}>
+                <Alert variant={"danger"}>
+                    <Alert.Heading>Templatetype unknown</Alert.Heading>
+                    <p>{itemType} has no Template</p>
+                </Alert>
+            </div>
     }
 
 
@@ -59,7 +63,7 @@ const Carousel: React.FC<{ data: any }> = props => {
 
 
     return <>
-        {/*<AllHeader data={props.data}/>*/}
+        <AllHeader data={props.data}/>
         <RBT.Carousel fade={flexform.transition === 'fade'} interval={flexform.interval} wrap={flexform.wrap}>
             {itemsTemplate}
         </RBT.Carousel>
