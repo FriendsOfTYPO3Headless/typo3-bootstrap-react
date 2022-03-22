@@ -945,7 +945,7 @@ var FormFormFramework = function (props) {
         console.log("send POST request to ".concat(link.href));
     }, [form, link]);
     return React.createElement("div", { className: "formFormFramework" },
-        React.createElement(Form, { id: form.id, noValidate: false, validated: validated, onSubmit: submitHandler },
+        React.createElement(Form, { id: form.id, noValidate: true, validated: validated, onSubmit: submitHandler },
             form.elements.map(function (element, index) {
                 return React.createElement(FormElement, { element: element, key: "".concat(form.id, "-").concat(index) });
             }),
