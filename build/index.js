@@ -526,6 +526,69 @@ var Header$1 = function (props) {
     return React__default["default"].createElement("div", { className: "header" });
 };
 
+// import AllHeader from "../../Partials/ContentElements/Header/All"
+var carouselItem = function (itemHeadless, isFirst) {
+    if (isFirst === void 0) { isFirst = false; }
+    var itemType = itemHeadless.itemType, layout = itemHeadless.layout, image = itemHeadless.image;
+    var item = React__default["default"].createElement(React__default["default"].Fragment, null);
+    var itemClass = 'item carousel-item';
+    if (isFirst) {
+        itemClass += " active";
+    }
+    if (layout) {
+        itemClass += " carousel-item-layout-".concat(layout);
+    }
+    if (itemType) {
+        itemClass += " carousel-item-type-".concat(itemType);
+    }
+    switch (itemType) {
+        case 'image':
+            item = React__default["default"].createElement("div", { className: "carousel-image" },
+                React__default["default"].createElement(Image$1, { file: image[0], className: '' }));
+            break;
+        default:
+            item = React__default["default"].createElement(RBT.Alert, { variant: "danger" },
+                React__default["default"].createElement(RBT.Alert.Heading, null, "Templatetype unknown"),
+                React__default["default"].createElement("p", null,
+                    itemType,
+                    " has no Template"));
+    }
+    return React__default["default"].createElement(RBT__namespace.Carousel.Item, { key: image[0].publicUrl, className: itemClass },
+        React__default["default"].createElement("div", { className: 'carousel-content' },
+            React__default["default"].createElement("div", { className: 'carousel-content-inner' }, item)));
+};
+var Carousel = function (props) {
+    var _a = props.data, content = _a.content; _a.type; var flexform = _a.flexform;
+    content.header; content.subheader; var items = content.items;
+    var _b = React.useState(0); _b[0]; _b[1];
+    var itemsTemplate = items.map(function (itemHeadless, index) {
+        return carouselItem(itemHeadless, index === 0);
+    });
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(RBT__namespace.Carousel, { fade: flexform.transition === 'fade', interval: flexform.interval, wrap: flexform.wrap }, itemsTemplate));
+};
+
+var BackgroundImage = function (props) {
+    if (props.data.appearance.backgroundImage.length < 1) {
+        return null;
+    }
+    var backgroundImageObject = props.data.appearance.backgroundImage[0];
+    var backgroundImageIdentifier = 'frame-backgroundimage-' + props.data.id;
+    var backgroundImageClasses = 'frame-backgroundimage';
+    if (props.data.appearance.backgroundImageOptions.parallax === '1') {
+        backgroundImageClasses += ' frame-backgroundimage-parallax';
+    }
+    if (props.data.appearance.backgroundImageOptions.fade === '1') {
+        backgroundImageClasses += ' frame-backgroundimage-fade';
+    }
+    if (props.data.appearance.backgroundImageOptions.filter !== '') {
+        backgroundImageClasses += ' frame-backgroundimage-' + props.data.appearance.backgroundImageOptions.filter;
+    }
+    //TODO: Implement crop sizes
+    return React__default["default"].createElement("div", { className: "frame-backgroundimage-container" },
+        React__default["default"].createElement("div", { id: backgroundImageIdentifier, className: backgroundImageClasses, style: { backgroundImage: 'url("' + backgroundImageObject.publicUrl + '")' } }));
+};
+
 var HeaderLink = function (props) {
     if (props.headerLink === null || typeof props.headerLink === 'string') {
         return React__default["default"].createElement(React__default["default"].Fragment, null, props.children);
@@ -620,60 +683,6 @@ var AllHeader = function (props) {
         }
     }
     return content;
-};
-
-var CarouselItem = function (props) {
-    var item = React__default["default"].createElement(React__default["default"].Fragment, null);
-    switch (props.data.itemType) {
-        case 'image':
-            // item = <Image file={props.data.image[0]}  className={'d-block w-100'}/>
-            // item = <img src={props.data.image[0].publicUrl}  className={'d-block w-100'}/>
-            item = React__default["default"].createElement("img", { src: props.data.image[0].publicUrl, className: 'd-block w-100' });
-            break;
-        default:
-            item = React__default["default"].createElement(RBT.Alert, { variant: "danger" },
-                React__default["default"].createElement(RBT.Alert.Heading, null, "Templatetype unknown"),
-                React__default["default"].createElement("p", null,
-                    props.data.itemType,
-                    " has no Template"));
-    }
-    return React__default["default"].createElement(RBT.Carousel.Item, null, item);
-};
-
-var Carousel = function (props) {
-    var _a = props.data, content = _a.content; _a.type; var flexform = _a.flexform;
-    content.header; content.subheader; var items = content.items;
-    var _b = React.useState(0); _b[0]; _b[1];
-    var itemsTemplate = [];
-    React__default["default"].createElement(React__default["default"].Fragment, null);
-    items.forEach(function (itemHeadless, index) {
-        var item = React__default["default"].createElement(CarouselItem, { key: itemHeadless.image[0].publicUrl, data: itemHeadless });
-        itemsTemplate.push(item);
-    });
-    return React__default["default"].createElement(React__default["default"].Fragment, null,
-        React__default["default"].createElement(AllHeader, { data: props.data }),
-        React__default["default"].createElement(RBT__namespace.Carousel, { fade: flexform.transition === 'fade', interval: flexform.interval, wrap: flexform.wrap }, itemsTemplate));
-};
-
-var BackgroundImage = function (props) {
-    if (props.data.appearance.backgroundImage.length < 1) {
-        return null;
-    }
-    var backgroundImageObject = props.data.appearance.backgroundImage[0];
-    var backgroundImageIdentifier = 'frame-backgroundimage-' + props.data.id;
-    var backgroundImageClasses = 'frame-backgroundimage';
-    if (props.data.appearance.backgroundImageOptions.parallax === '1') {
-        backgroundImageClasses += ' frame-backgroundimage-parallax';
-    }
-    if (props.data.appearance.backgroundImageOptions.fade === '1') {
-        backgroundImageClasses += ' frame-backgroundimage-fade';
-    }
-    if (props.data.appearance.backgroundImageOptions.filter !== '') {
-        backgroundImageClasses += ' frame-backgroundimage-' + props.data.appearance.backgroundImageOptions.filter;
-    }
-    //TODO: Implement crop sizes
-    return React__default["default"].createElement("div", { className: "frame-backgroundimage-container" },
-        React__default["default"].createElement("div", { id: backgroundImageIdentifier, className: backgroundImageClasses, style: { backgroundImage: 'url("' + backgroundImageObject.publicUrl + '")' } }));
 };
 
 //Data is ContentData
