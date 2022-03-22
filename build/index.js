@@ -693,7 +693,7 @@ var Layout0 = function (props) {
     var content;
     if (props.data.appearance.frameClass !== 'none') {
         var backgroundImageClass = (props.data.appearance.backgroundImage.length > 0 ? 'frame-has-backgroundimage' : 'frame-no-backgroundimage');
-        content = React__default["default"].createElement("div", { id: "c" + props.data.id, className: "frame " +
+        content = React__default["default"].createElement("div", { id: "c" + props.data.id, className: "frame frame-size-default " +
                 frameClass + " " +
                 typeClass + " " +
                 layoutClass + " " +
