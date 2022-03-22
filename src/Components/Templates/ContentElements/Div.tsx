@@ -1,9 +1,15 @@
-import React from 'react';
+import React from 'react'
+import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces"
+import AllHeader from "../../Partials/ContentElements/Header/All"
 
-const Div: React.FC<{ data: any }> = props => {
-    return <div className="div">
-        <hr/>
-    </div>
+const Div: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
+    return <>
+        <AllHeader data={props.data}/>
+        <div className="div">
+            <hr/>
+        </div>
+        {props.children}
+    </>
 }
 
 export default Div;

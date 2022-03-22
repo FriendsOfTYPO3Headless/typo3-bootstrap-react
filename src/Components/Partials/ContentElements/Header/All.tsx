@@ -1,42 +1,39 @@
-import React from 'react';
-import Header from "./Header";
-import Subheader from "./Subheader";
-import HeaderDate from "./HeaderDate";
+import React from 'react'
+import Header from "./Header"
+import Subheader from "./Subheader"
+import HeaderDate from "./HeaderDate"
 
 const AllHeader: React.FC<{ data: any }> = props => {
+    const {header, subheader, date, headerPosition, headerLink, headerLayout} = props.data.content
     let content = <></>
-    if (props.data.content.hasOwnProperty('headerLayout') && props.data.content.headerLayout !== 100) {
-        if (props.data.content.header !== '' || props.data.content.subheader !== '' || props.data.content.date !== '') {
+    if (props.data.content.hasOwnProperty('headerLayout') && headerLayout !== 100) {
+        if (header !== '' || subheader !== '' || date !== '') {
             content = <div className="frame-header">
-                {props.data.content.header !== '' ?
-                    <Header layout={props.data.content.headerLayout}
-                            positionClass={props.data.content.headerPosition ? 'text-' + props.data.content.headerPosition : ''}
-                            header={props.data.content.header}
-                            headerLink={props.data.content.headerLink !== '' ? props.data.content.headerLink : null}
+                {header.length > 0 &&
+                    <Header layout={headerLayout}
+                            positionClass={headerPosition ? 'text-' + headerPosition : ''}
+                            header={header}
+                            headerLink={headerLink !== '' ? headerLink : null}
                     />
-                    :
-                    null}
+                }
 
-                {props.data.content.subheader !== '' ?
-                    <Subheader layout={props.data.content.headerLayout}
-                               positionClass={props.data.content.headerPosition ? 'text-' + props.data.content.headerPosition : ''}
-                               header={props.data.content.subheader}
-                               headerLink={props.data.content.headerLink !== '' ? props.data.content.headerLink : null}
+                {subheader.length > 0 &&
+                    <Subheader layout={headerLayout}
+                               positionClass={headerPosition ? 'text-' + headerPosition : ''}
+                               header={subheader}
+                               headerLink={headerLink !== '' ? headerLink : null}
                     />
-                    :
-                    null}
+                }
 
-                {props.data.content.date !== '' ?
+                {date.length > 0 &&
                     <HeaderDate
-                        date={props.data.content.date}
-                        positionClass={props.data.content.headerPosition ? 'text-' + props.data.content.headerPosition : ''}
+                        date={date}
+                        positionClass={headerPosition ? 'text-' + headerPosition : ''}
                     />
-                    :
-                    null}
+                }
             </div>
         }
     }
-
 
     return content;
 }

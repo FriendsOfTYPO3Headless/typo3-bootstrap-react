@@ -1,5 +1,4 @@
 import React from 'react';
-declare const Table: React.FC<{
-    data: any;
-}>;
+import { TYPO3BootstrapContentElementBaseInterface } from "../../Interfaces";
+declare const Table: React.FC<TYPO3BootstrapContentElementBaseInterface>;
 export default Table;
