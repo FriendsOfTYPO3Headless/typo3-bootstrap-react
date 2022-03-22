@@ -1,6 +1,8 @@
 import React from "react"
+import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
+import AllHeader from "../../Partials/ContentElements/Header/All";
 
-interface IQuoteData {
+interface IQuoteData extends TYPO3BootstrapContentElementBaseInterface {
     bodytext: string,
     quoteLink: {
         href: string,
@@ -13,8 +15,8 @@ interface IQuoteData {
     quoteSource: string
 }
 
-const Quote: React.FC<{ data: IQuoteData }> = (props) => {
-    const {bodytext, quoteSource, quoteLink} = props.data
+const Quote: React.FC<TYPO3BootstrapContentElementBaseInterface> = (props) => {
+    const {bodytext, quoteSource, quoteLink} = props.data.content
 
     let sourceLink = () => {
         if (typeof quoteLink === 'object' && quoteLink !== null) {
@@ -28,11 +30,12 @@ const Quote: React.FC<{ data: IQuoteData }> = (props) => {
     }
 
     const bodyTemplate = () => {
-        return (bodytext.length > 0) ? <blockquote className={'blockquote'} dangerouslySetInnerHTML={{__html: bodytext}} /> : <></>
+        return (bodytext.length > 0) ?
+            <blockquote className={'blockquote'} dangerouslySetInnerHTML={{__html: bodytext}}/> : <></>
     }
 
     const figcaptionTemplate = () => {
-        if(quoteSource.length > 0){
+        if (quoteSource.length > 0) {
             return <figcaption className="blockquote-footer">
                 <cite title={quoteSource}>{quoteSource}{sourceLink()}</cite>
             </figcaption>
@@ -41,10 +44,14 @@ const Quote: React.FC<{ data: IQuoteData }> = (props) => {
         return <></>
     }
 
-    return <figure>
-        {bodyTemplate()}
-        {figcaptionTemplate()}
-    </figure>
+    return <>
+        <AllHeader data={props.data}/>
+        <figure>
+            {bodyTemplate()}
+            {figcaptionTemplate()}
+        </figure>
+        {props.children}
+    </>
 }
 
 export default Quote

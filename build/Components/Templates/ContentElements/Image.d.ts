@@ -1,5 +1,4 @@
 import React from 'react';
-declare const Image: React.FC<{
-    data: any;
-}>;
+import { TYPO3BootstrapContentElementBaseInterface } from "../../Interfaces";
+declare const Image: React.FC<TYPO3BootstrapContentElementBaseInterface>;
 export default Image;

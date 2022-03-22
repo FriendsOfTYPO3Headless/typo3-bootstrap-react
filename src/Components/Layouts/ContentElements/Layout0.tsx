@@ -30,7 +30,6 @@ const Layout0: React.FC<{ data: any }> = props => {
             <div className="frame-container">
                 <div className="frame-inner">
                     {props.data._localizedUid ? <a id={"c" + props.data._localizedUid}/> : null}
-                    <AllHeader data={props.data} />
                     {props.children}
                 </div>
             </div>
@@ -40,7 +39,6 @@ const Layout0: React.FC<{ data: any }> = props => {
             <a id={"c" + props.data.id}/>
             {props.data._localizedUid ? <a id={"c" + props.data._localizedUid}/> : null}
             {props.data.appearance.spaceBefore ? <div className={spaceBeforeClass} /> : null}
-            <AllHeader data={props.data} />
             {props.children}
             {props.data.appearance.spaceAfter ? <div className={spaceAfterClass} /> : null}
         </>

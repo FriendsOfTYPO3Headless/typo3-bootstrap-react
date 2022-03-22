@@ -1,6 +1,7 @@
 import React from 'react';
+import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
 
-const MenuSitemapPages: React.FC<{ data: any }> = props => {
+const MenuSitemapPages: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
 return <div className="menuSitemapPage">
     <div condition="{menu}">
         {/*<f:render partial="Menu/SkipNavigation" arguments="{_all}" /> */}

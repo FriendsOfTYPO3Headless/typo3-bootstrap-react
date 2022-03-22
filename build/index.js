@@ -102,8 +102,103 @@ var Content = function (props) {
     return content;
 };
 
+var HeaderLink = function (props) {
+    if (props.headerLink === null || typeof props.headerLink === 'string') {
+        return React__default["default"].createElement(React__default["default"].Fragment, null, props.children);
+    }
+    return React__default["default"].createElement("a", { href: props.headerLink.url }, props.children);
+};
+
+var Header$1 = function (props) {
+    switch (props.layout) {
+        case 1:
+            return React__default["default"].createElement("h1", { className: props.class + ' ' + props.positionClass },
+                React__default["default"].createElement(HeaderLink, { headerLink: props.headerLink },
+                    React__default["default"].createElement("span", null, props.header)));
+        case 3:
+            return React__default["default"].createElement("h3", { className: props.class + ' ' + props.positionClass },
+                React__default["default"].createElement(HeaderLink, { headerLink: props.headerLink },
+                    React__default["default"].createElement("span", null, props.header)));
+        case 4:
+            return React__default["default"].createElement("h4", { className: props.class + ' ' + props.positionClass },
+                React__default["default"].createElement(HeaderLink, { headerLink: props.headerLink },
+                    React__default["default"].createElement("span", null, props.header)));
+        case 5:
+            return React__default["default"].createElement("h5", { className: props.class + ' ' + props.positionClass },
+                React__default["default"].createElement(HeaderLink, { headerLink: props.headerLink },
+                    React__default["default"].createElement("span", null, props.header)));
+        case 100:
+            return React__default["default"].createElement(React__default["default"].Fragment, null);
+        default:
+            return React__default["default"].createElement("h2", { className: props.class + ' ' + props.positionClass },
+                React__default["default"].createElement(HeaderLink, { headerLink: props.headerLink },
+                    React__default["default"].createElement("span", null, props.header)));
+    }
+};
+Header$1.defaultProps = {
+    class: 'element-header',
+    headerLink: null
+};
+
+var Subheader = function (props) {
+    switch (props.layout) {
+        case 1:
+            return React__default["default"].createElement("h2", { className: props.class + ' ' + props.positionClass },
+                React__default["default"].createElement(HeaderLink, { headerLink: props.headerLink },
+                    React__default["default"].createElement("span", null, props.header)));
+        case 3:
+            return React__default["default"].createElement("h4", { className: props.class + ' ' + props.positionClass },
+                React__default["default"].createElement(HeaderLink, { headerLink: props.headerLink },
+                    React__default["default"].createElement("span", null, props.header)));
+        case 4:
+            return React__default["default"].createElement("h5", { className: props.class + ' ' + props.positionClass },
+                React__default["default"].createElement(HeaderLink, { headerLink: props.headerLink },
+                    React__default["default"].createElement("span", null, props.header)));
+        case 5:
+            return React__default["default"].createElement("h6", { className: props.class + ' ' + props.positionClass },
+                React__default["default"].createElement(HeaderLink, { headerLink: props.headerLink },
+                    React__default["default"].createElement("span", null, props.header)));
+        case 100:
+            return React__default["default"].createElement(React__default["default"].Fragment, null);
+        default:
+            return React__default["default"].createElement("h3", { className: props.class + ' ' + props.positionClass },
+                React__default["default"].createElement(HeaderLink, { headerLink: props.headerLink },
+                    React__default["default"].createElement("span", null, props.header)));
+    }
+};
+Subheader.defaultProps = {
+    class: 'element-subheader',
+    headerLink: null
+};
+
+var HeaderDate = function (props) {
+    //TODO: Date initialisieren, toLocaleDateString...
+    return React__default["default"].createElement("p", { className: props.positionClass }, props.date);
+};
+
+var AllHeader = function (props) {
+    var _a = props.data.content, header = _a.header, subheader = _a.subheader, date = _a.date, headerPosition = _a.headerPosition, headerLink = _a.headerLink, headerLayout = _a.headerLayout;
+    var content = React__default["default"].createElement(React__default["default"].Fragment, null);
+    if (props.data.content.hasOwnProperty('headerLayout') && headerLayout !== 100) {
+        if (header !== '' || subheader !== '' || date !== '') {
+            content = React__default["default"].createElement("div", { className: "frame-header" },
+                header.length > 0 &&
+                    React__default["default"].createElement(Header$1, { layout: headerLayout, positionClass: headerPosition ? 'text-' + headerPosition : '', header: header, headerLink: headerLink !== '' ? headerLink : null }),
+                subheader.length > 0 &&
+                    React__default["default"].createElement(Subheader, { layout: headerLayout, positionClass: headerPosition ? 'text-' + headerPosition : '', header: subheader, headerLink: headerLink !== '' ? headerLink : null }),
+                date.length > 0 &&
+                    React__default["default"].createElement(HeaderDate, { date: date, positionClass: headerPosition ? 'text-' + headerPosition : '' }));
+        }
+    }
+    return content;
+};
+
 var Text = function (props) {
-    return React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
+    var bodytext = props.data.content.bodytext;
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(AllHeader, { data: props.data }),
+        React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: bodytext } }),
+        props.children);
 };
 
 var ImageLightbox = function (props) {
@@ -198,145 +293,170 @@ var ImageCols = function (props) {
 
 var Textpic = function (props) {
     var textpicClassName = '';
-    if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
-        textpicClassName = props.data.gallery.position.horizontal;
+    if (props.data.content.gallery.position.horizontal === 'left' || props.data.content.gallery.position.horizontal === 'right') {
+        textpicClassName = props.data.content.gallery.position.horizontal;
     }
-    if (props.data.gallery.position.horizontal === 'center') {
-        textpicClassName = props.data.gallery.position.vertical;
+    if (props.data.content.gallery.position.horizontal === 'center') {
+        textpicClassName = props.data.content.gallery.position.vertical;
     }
-    return React__default["default"].createElement("div", { className: "textpic" },
-        React__default["default"].createElement("div", { className: "gallery-row" },
-            React__default["default"].createElement(reactBootstrap.Row, { className: "textpic textpic-" + textpicClassName },
-                React__default["default"].createElement(reactBootstrap.Col, { className: "textpic-item textpic-gallery", md: textpicClassName === props.data.gallery.position.vertical ? "auto" : "6" },
-                    React__default["default"].createElement(reactBootstrap.Row, null,
-                        React__default["default"].createElement(ImageCols, { data: props.data }))),
-                React__default["default"].createElement(reactBootstrap.Col, { className: "textpic-item textpic-text", md: "6", dangerouslySetInnerHTML: { __html: props.data.bodytext } }))));
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement("div", { className: "textpic" },
+            React__default["default"].createElement("div", { className: "gallery-row" },
+                React__default["default"].createElement(reactBootstrap.Row, { className: "textpic textpic-" + textpicClassName },
+                    React__default["default"].createElement(reactBootstrap.Col, { className: "textpic-item textpic-gallery", md: textpicClassName === props.data.content.gallery.position.vertical ? "auto" : "6" },
+                        React__default["default"].createElement(reactBootstrap.Row, null,
+                            React__default["default"].createElement(ImageCols, { data: props.data.content }))),
+                    React__default["default"].createElement(reactBootstrap.Col, { className: "textpic-item textpic-text", md: "6" },
+                        React__default["default"].createElement(AllHeader, { data: props.data }),
+                        React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } }),
+                        props.children)))));
 };
 
 var Image = function (props) {
-    return React__default["default"].createElement("div", { className: "image" },
-        React__default["default"].createElement("div", { className: "gallery-row" },
-            React__default["default"].createElement(reactBootstrap.Row, null,
-                React__default["default"].createElement(ImageCols, { data: props.data }))));
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement("div", { className: "image" },
+            React__default["default"].createElement(AllHeader, { data: props.data }),
+            React__default["default"].createElement("div", { className: "gallery-row" },
+                React__default["default"].createElement(reactBootstrap.Row, null,
+                    React__default["default"].createElement(ImageCols, { data: props.data.content })))),
+        props.children);
 };
 
 var Div = function (props) {
-    return React__default["default"].createElement("div", { className: "div" },
-        React__default["default"].createElement("hr", null));
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(AllHeader, { data: props.data }),
+        React__default["default"].createElement("div", { className: "div" },
+            React__default["default"].createElement("hr", null)),
+        props.children);
 };
 
 var Textmedia = function (props) {
     var textmediaClassName;
-    if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
-        textmediaClassName = props.data.gallery.position.horizontal;
+    if (props.data.content.gallery.position.horizontal === 'left' || props.data.content.gallery.position.horizontal === 'right') {
+        textmediaClassName = props.data.content.gallery.position.horizontal;
     }
-    if (props.data.gallery.position.horizontal === 'center') {
-        textmediaClassName = props.data.gallery.position.vertical;
+    if (props.data.content.gallery.position.horizontal === 'center') {
+        textmediaClassName = props.data.content.gallery.position.vertical;
     }
-    return React__default["default"].createElement("div", { className: "textmedia" },
-        React__default["default"].createElement("div", { className: "gallery-row" },
-            React__default["default"].createElement(reactBootstrap.Row, { className: "textmedia textmedia-" + textmediaClassName },
-                React__default["default"].createElement(reactBootstrap.Col, { className: "textmedia-item textmedia-gallery", md: textmediaClassName === props.data.gallery.position.vertical ? "auto" : "6" },
-                    React__default["default"].createElement(reactBootstrap.Row, null, Object.keys(props.data.gallery.rows).map(function (rowKey) {
-                        return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
-                            switch (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType) {
-                                case 'video/youtube':
-                                    return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React__default["default"].createElement("iframe", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                case 'image/jpeg':
-                                    return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React__default["default"].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                case 'image/svg+xml':
-                                    return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React__default["default"].createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                case 'video/mp4':
-                                    return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React__default["default"].createElement("video", { controls: true },
-                                            React__default["default"].createElement("source", { type: "video/mp4", src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                case 'video/vimeo':
-                                    return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React__default["default"].createElement("video", { controls: true },
-                                            React__default["default"].createElement("source", { type: "video/mp4", src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                default:
-                                    return React__default["default"].createElement(React__default["default"].Fragment, null);
-                            }
-                        });
-                    }))),
-                React__default["default"].createElement(reactBootstrap.Col, { className: "textmedia-item textmedia-text" },
-                    React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } })))));
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement("div", { className: "textmedia" },
+            React__default["default"].createElement("div", { className: "gallery-row" },
+                React__default["default"].createElement(reactBootstrap.Row, { className: "textmedia textmedia-" + textmediaClassName },
+                    React__default["default"].createElement(reactBootstrap.Col, { className: "textmedia-item textmedia-gallery", md: textmediaClassName === props.data.content.gallery.position.vertical ? "auto" : "6" },
+                        React__default["default"].createElement(reactBootstrap.Row, null, Object.keys(props.data.content.gallery.rows).map(function (rowKey) {
+                            return Object.keys(props.data.content.gallery.rows[rowKey].columns).map(function (columnKey) {
+                                switch (props.data.content.gallery.rows[rowKey].columns[columnKey].properties.mimeType) {
+                                    case 'video/youtube':
+                                        return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                            React__default["default"].createElement("iframe", { src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
+                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                    case 'image/jpeg':
+                                        return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                            React__default["default"].createElement("img", { src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item", alt: props.data.content.gallery.rows[rowKey].columns[columnKey].properties.title }),
+                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                    case 'image/svg+xml':
+                                        return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                            React__default["default"].createElement("img", { src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item", alt: props.data.content.gallery.rows[rowKey].columns[columnKey].properties.title }),
+                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                    case 'video/mp4':
+                                        return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                            React__default["default"].createElement("video", { controls: true },
+                                                React__default["default"].createElement("source", { type: "video/mp4", src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                    case 'video/vimeo':
+                                        return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                            React__default["default"].createElement("video", { controls: true },
+                                                React__default["default"].createElement("source", { type: "video/mp4", src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                    default:
+                                        return React__default["default"].createElement(React__default["default"].Fragment, null);
+                                }
+                            });
+                        }))),
+                    React__default["default"].createElement(reactBootstrap.Col, { className: "textmedia-item textmedia-text" },
+                        React__default["default"].createElement(AllHeader, { data: props.data }),
+                        React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } }),
+                        props.children)))));
 };
 
 var Shortcut = function (props) {
-    return React__default["default"].createElement("div", { className: "shortcut" }, props.data.shortcut.map(function (cObject) {
-        return RenderContent(cObject);
-    }));
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(AllHeader, { data: props.data }),
+        React__default["default"].createElement("div", { className: "shortcut" }, props.data.content.shortcut.map(function (cObject) {
+            return RenderContent(cObject);
+        })),
+        props.children);
 };
 
 var Html = function (props) {
-    return React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(AllHeader, { data: props.data }),
+        React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } }),
+        props.children);
 };
 
 var Uploads = function (props) {
-    return React__default["default"].createElement("div", { className: "uploads" },
-        React__default["default"].createElement("ul", { className: "media-list filelink-list" }, Object.keys(props.data.media).map(function (key) {
-            var description = props.data.displayDescription === '1' ?
-                React__default["default"].createElement("p", { className: 'filelink-filedescription' }, props.data.media[key].properties.description) : null;
-            var filesize = props.data.displayFileSizeInformation === '1' ?
-                React__default["default"].createElement("span", { className: 'filelink-filesize ms-2 small' }, props.data.media[key].properties.size) : null;
-            var title = props.data.media[key].properties.title;
-            if (title === null || title === '') {
-                title = props.data.media[key].properties.filename;
-            }
-            var heading = function (contentBefore) {
-                if (contentBefore === void 0) { contentBefore = null; }
-                return React__default["default"].createElement("span", { className: 'title' },
-                    React__default["default"].createElement("h5", { className: 'filelink-heading ' },
-                        React__default["default"].createElement("a", { href: props.data.media[key].publicUrl },
-                            contentBefore,
-                            title),
-                        filesize));
-            };
-            var content;
-            switch (props.data.displayInformation) {
-                case "1":
-                    content = React__default["default"].createElement(React__default["default"].Fragment, null,
-                        heading(props.data.media[key].properties.type === 'video' ?
-                            React__default["default"].createElement("i", { className: "bi bi-camera-video-fill me-2" }) : React__default["default"].createElement("i", { className: "bi bi-file-image me-2" })),
-                        description);
-                    break;
-                case "2":
-                    var media = null;
-                    switch (props.data.media[key].properties.type) {
-                        case 'video':
-                            media = React__default["default"].createElement("iframe", { src: props.data.media[key].publicUrl, className: 'mw-100' });
-                            break;
-                        //TODO: add preview for application/*
-                        case 'application':
-                            if (props.data.media[key].properties.mimeType === 'application/pdf') {
-                                media = React__default["default"].createElement("iframe", { src: props.data.media[key].publicUrl, className: 'mw-100' });
-                            }
-                            break;
-                        default:
-                            media = React__default["default"].createElement("img", { src: props.data.media[key].publicUrl, alt: title, className: 'img-fluid' });
-                    }
-                    content = React__default["default"].createElement(reactBootstrap.Row, null,
-                        React__default["default"].createElement(reactBootstrap.Col, { className: 'filelink-media', xs: 3, sm: 3, md: 3, lg: 2, xl: 2, xxl: 2 }, media),
-                        React__default["default"].createElement(reactBootstrap.Col, { className: 'filelink-body' },
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(AllHeader, { data: props.data }),
+        React__default["default"].createElement("div", { className: "uploads" },
+            React__default["default"].createElement("ul", { className: "media-list filelink-list" }, Object.keys(props.data.content.media).map(function (key) {
+                var description = props.data.content.displayDescription === '1' ?
+                    React__default["default"].createElement("p", { className: 'filelink-filedescription' }, props.data.content.media[key].properties.description) : null;
+                var filesize = props.data.content.displayFileSizeInformation === '1' ?
+                    React__default["default"].createElement("span", { className: 'filelink-filesize ms-2 small' }, props.data.content.media[key].properties.size) : null;
+                var title = props.data.content.media[key].properties.title;
+                if (title === null || title === '') {
+                    title = props.data.content.media[key].properties.filename;
+                }
+                var heading = function (contentBefore) {
+                    if (contentBefore === void 0) { contentBefore = null; }
+                    return React__default["default"].createElement("span", { className: 'title' },
+                        React__default["default"].createElement("h5", { className: 'filelink-heading ' },
+                            React__default["default"].createElement("a", { href: props.data.content.media[key].publicUrl },
+                                contentBefore,
+                                title),
+                            filesize));
+                };
+                var content;
+                switch (props.data.content.displayInformation) {
+                    case "1":
+                        content = React__default["default"].createElement(React__default["default"].Fragment, null,
+                            heading(props.data.content.media[key].properties.type === 'video' ?
+                                React__default["default"].createElement("i", { className: "bi bi-camera-video-fill me-2" }) :
+                                React__default["default"].createElement("i", { className: "bi bi-file-image me-2" })),
+                            description);
+                        break;
+                    case "2":
+                        var media = null;
+                        switch (props.data.content.media[key].properties.type) {
+                            case 'video':
+                                media = React__default["default"].createElement("iframe", { src: props.data.content.media[key].publicUrl, className: 'mw-100' });
+                                break;
+                            //TODO: add preview for application/*
+                            case 'application':
+                                if (props.data.content.media[key].properties.mimeType === 'application/pdf') {
+                                    media =
+                                        React__default["default"].createElement("iframe", { src: props.data.content.media[key].publicUrl, className: 'mw-100' });
+                                }
+                                break;
+                            default:
+                                media =
+                                    React__default["default"].createElement("img", { src: props.data.content.media[key].publicUrl, alt: title, className: 'img-fluid' });
+                        }
+                        content = React__default["default"].createElement(reactBootstrap.Row, null,
+                            React__default["default"].createElement(reactBootstrap.Col, { className: 'filelink-media', xs: 3, sm: 3, md: 3, lg: 2, xl: 2, xxl: 2 }, media),
+                            React__default["default"].createElement(reactBootstrap.Col, { className: 'filelink-body' },
+                                heading(),
+                                description));
+                        break;
+                    default:
+                        content = React__default["default"].createElement(React__default["default"].Fragment, null,
                             heading(),
-                            description));
-                    break;
-                default:
-                    content = React__default["default"].createElement(React__default["default"].Fragment, null,
-                        heading(),
-                        description);
-            }
-            return React__default["default"].createElement("li", { className: 'filelink-item mb-2', key: key }, content);
-        })));
+                            description);
+                }
+                return React__default["default"].createElement("li", { className: 'filelink-item mb-2', key: key }, content);
+            }))),
+        props.children);
 };
 
 /*! *****************************************************************************
@@ -385,12 +505,15 @@ var Type = function (props) {
 };
 
 var Gallery = function (props) {
-    var _a = props.data, items = _a.items, imagecols = _a.imagecols;
+    var _a = props.data.content, items = _a.items, imagecols = _a.imagecols;
     var galleryItems = items.map(function (image, index) {
-        return React__default["default"].createElement(reactBootstrap.Col, { className: "gallery-item gallery-item-size-".concat(imagecols), md: imagecols },
+        return React__default["default"].createElement(reactBootstrap.Col, { key: "".concat(index), className: "gallery-item gallery-item-size-".concat(imagecols), md: imagecols },
             React__default["default"].createElement(Type, { data: props.data, file: image }));
     });
-    return React__default["default"].createElement("div", { className: 'gallery-row' }, galleryItems);
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(AllHeader, { data: props.data }),
+        React__default["default"].createElement("div", { className: 'gallery-row' }, galleryItems),
+        props.children);
 };
 
 var Accordion = function (props) {
@@ -403,7 +526,7 @@ var Accordion = function (props) {
     var accorditionItemsTemplate = accordionItems.map(function (accordionItem, index) {
         var galleryTemplate = React__default["default"].createElement(React__default["default"].Fragment, null);
         if (accordionItem.media.length > 0) {
-            galleryTemplate = React__default["default"].createElement(Gallery, { data: __assign({ items: accordionItem.media }, accordionItem) });
+            galleryTemplate = React__default["default"].createElement(Gallery, { data: { content: __assign({ items: accordionItem.media }, accordionItem) } });
         }
         return React__default["default"].createElement(reactBootstrap.Accordion.Item, { key: accordionItem.id, eventKey: accordionItem.id.toString() },
             React__default["default"].createElement(reactBootstrap.Accordion.Header, { as: "h4", id: "accordion-heading-".concat(accordionItem.id) },
@@ -413,7 +536,10 @@ var Accordion = function (props) {
                     galleryTemplate,
                     React__default["default"].createElement("div", { className: 'accordion-content-item accordion-content-text', dangerouslySetInnerHTML: { __html: accordionItem.bodytext } }))));
     });
-    return React__default["default"].createElement(reactBootstrap.Accordion, { defaultActiveKey: activeElement }, accorditionItemsTemplate);
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(AllHeader, { data: props.data }),
+        React__default["default"].createElement(reactBootstrap.Accordion, { defaultActiveKey: activeElement }, accorditionItemsTemplate),
+        props.children);
 };
 
 var defaultProperties = {
@@ -460,17 +586,23 @@ var CardGroup = function (props) {
     if (flexform.align.length > 0) {
         alignment = "justify-content-".concat(flexform.align);
     }
-    return React__default["default"].createElement(reactBootstrap.Row, { xs: 1, md: flexform.columns, className: "card-group ".concat(alignment) }, cards);
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(AllHeader, { data: props.data }),
+        React__default["default"].createElement(reactBootstrap.Row, { xs: 1, md: flexform.columns, className: "card-group ".concat(alignment) }, cards),
+        props.children);
 };
 
 var TextColumns = function (props) {
-    var bodytext = props.data.bodytext;
-    return React__default["default"].createElement("div", { className: "text-column" },
-        React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: bodytext } }));
+    var bodytext = props.data.content.bodytext;
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(AllHeader, { data: props.data }),
+        React__default["default"].createElement("div", { className: "text-column" },
+            React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: bodytext } })),
+        props.children);
 };
 
 var Quote = function (props) {
-    var _a = props.data, bodytext = _a.bodytext, quoteSource = _a.quoteSource, quoteLink = _a.quoteLink;
+    var _a = props.data.content, bodytext = _a.bodytext, quoteSource = _a.quoteSource, quoteLink = _a.quoteLink;
     var sourceLink = function () {
         if (typeof quoteLink === 'object' && quoteLink !== null) {
             var href = quoteLink.href, target = quoteLink.target, title = quoteLink.title, linkText = quoteLink.linkText;
@@ -483,7 +615,8 @@ var Quote = function (props) {
         return React__default["default"].createElement(React__default["default"].Fragment, null);
     };
     var bodyTemplate = function () {
-        return (bodytext.length > 0) ? React__default["default"].createElement("blockquote", { className: 'blockquote', dangerouslySetInnerHTML: { __html: bodytext } }) : React__default["default"].createElement(React__default["default"].Fragment, null);
+        return (bodytext.length > 0) ?
+            React__default["default"].createElement("blockquote", { className: 'blockquote', dangerouslySetInnerHTML: { __html: bodytext } }) : React__default["default"].createElement(React__default["default"].Fragment, null);
     };
     var figcaptionTemplate = function () {
         if (quoteSource.length > 0) {
@@ -494,14 +627,39 @@ var Quote = function (props) {
         }
         return React__default["default"].createElement(React__default["default"].Fragment, null);
     };
-    return React__default["default"].createElement("figure", null,
-        bodyTemplate(),
-        figcaptionTemplate());
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(AllHeader, { data: props.data }),
+        React__default["default"].createElement("figure", null,
+            bodyTemplate(),
+            figcaptionTemplate()),
+        props.children);
 };
 
-var Header$1 = function (props) {
-    return React__default["default"].createElement("div", { className: "header" });
+var Header = function (props) {
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(AllHeader, { data: props.data }),
+        React__default["default"].createElement("div", { className: "header" }),
+        props.children);
 };
+
+var ContentElements = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    Text: Text,
+    Html: Html,
+    Textpic: Textpic,
+    Image: Image,
+    ImageLightbox: Image,
+    Div: Div,
+    Shortcut: Shortcut,
+    Textmedia: Textmedia,
+    Uploads: Uploads,
+    Accordion: Accordion,
+    Gallery: Gallery,
+    CardGroup: CardGroup,
+    TextColumns: TextColumns,
+    Quote: Quote,
+    Header: Header
+});
 
 var BackgroundImage = function (props) {
     if (props.data.appearance.backgroundImage.length < 1) {
@@ -522,102 +680,6 @@ var BackgroundImage = function (props) {
     //TODO: Implement crop sizes
     return React__default["default"].createElement("div", { className: "frame-backgroundimage-container" },
         React__default["default"].createElement("div", { id: backgroundImageIdentifier, className: backgroundImageClasses, style: { backgroundImage: 'url("' + backgroundImageObject.publicUrl + '")' } }));
-};
-
-var HeaderLink = function (props) {
-    if (props.headerLink === null || typeof props.headerLink === 'string') {
-        return React__default["default"].createElement(React__default["default"].Fragment, null, props.children);
-    }
-    return React__default["default"].createElement("a", { href: props.headerLink.url }, props.children);
-};
-
-var Header = function (props) {
-    switch (props.layout) {
-        case 1:
-            return React__default["default"].createElement("h1", { className: props.class + ' ' + props.positionClass },
-                React__default["default"].createElement(HeaderLink, { headerLink: props.headerLink },
-                    React__default["default"].createElement("span", null, props.header)));
-        case 3:
-            return React__default["default"].createElement("h3", { className: props.class + ' ' + props.positionClass },
-                React__default["default"].createElement(HeaderLink, { headerLink: props.headerLink },
-                    React__default["default"].createElement("span", null, props.header)));
-        case 4:
-            return React__default["default"].createElement("h4", { className: props.class + ' ' + props.positionClass },
-                React__default["default"].createElement(HeaderLink, { headerLink: props.headerLink },
-                    React__default["default"].createElement("span", null, props.header)));
-        case 5:
-            return React__default["default"].createElement("h5", { className: props.class + ' ' + props.positionClass },
-                React__default["default"].createElement(HeaderLink, { headerLink: props.headerLink },
-                    React__default["default"].createElement("span", null, props.header)));
-        case 100:
-            return React__default["default"].createElement(React__default["default"].Fragment, null);
-        default:
-            return React__default["default"].createElement("h2", { className: props.class + ' ' + props.positionClass },
-                React__default["default"].createElement(HeaderLink, { headerLink: props.headerLink },
-                    React__default["default"].createElement("span", null, props.header)));
-    }
-};
-Header.defaultProps = {
-    class: 'element-header',
-    headerLink: null
-};
-
-var Subheader = function (props) {
-    switch (props.layout) {
-        case 1:
-            return React__default["default"].createElement("h2", { className: props.class + ' ' + props.positionClass },
-                React__default["default"].createElement(HeaderLink, { headerLink: props.headerLink },
-                    React__default["default"].createElement("span", null, props.header)));
-        case 3:
-            return React__default["default"].createElement("h4", { className: props.class + ' ' + props.positionClass },
-                React__default["default"].createElement(HeaderLink, { headerLink: props.headerLink },
-                    React__default["default"].createElement("span", null, props.header)));
-        case 4:
-            return React__default["default"].createElement("h5", { className: props.class + ' ' + props.positionClass },
-                React__default["default"].createElement(HeaderLink, { headerLink: props.headerLink },
-                    React__default["default"].createElement("span", null, props.header)));
-        case 5:
-            return React__default["default"].createElement("h6", { className: props.class + ' ' + props.positionClass },
-                React__default["default"].createElement(HeaderLink, { headerLink: props.headerLink },
-                    React__default["default"].createElement("span", null, props.header)));
-        case 100:
-            return React__default["default"].createElement(React__default["default"].Fragment, null);
-        default:
-            return React__default["default"].createElement("h3", { className: props.class + ' ' + props.positionClass },
-                React__default["default"].createElement(HeaderLink, { headerLink: props.headerLink },
-                    React__default["default"].createElement("span", null, props.header)));
-    }
-};
-Subheader.defaultProps = {
-    class: 'element-subheader',
-    headerLink: null
-};
-
-var HeaderDate = function (props) {
-    //TODO: Date initialisieren, toLocaleDateString...
-    return React__default["default"].createElement("p", { className: props.positionClass }, props.date);
-};
-
-var AllHeader = function (props) {
-    var content = React__default["default"].createElement(React__default["default"].Fragment, null);
-    if (props.data.content.hasOwnProperty('headerLayout') && props.data.content.headerLayout !== 100) {
-        if (props.data.content.header !== '' || props.data.content.subheader !== '' || props.data.content.date !== '') {
-            content = React__default["default"].createElement("div", { className: "frame-header" },
-                props.data.content.header !== '' ?
-                    React__default["default"].createElement(Header, { layout: props.data.content.headerLayout, positionClass: props.data.content.headerPosition ? 'text-' + props.data.content.headerPosition : '', header: props.data.content.header, headerLink: props.data.content.headerLink !== '' ? props.data.content.headerLink : null })
-                    :
-                        null,
-                props.data.content.subheader !== '' ?
-                    React__default["default"].createElement(Subheader, { layout: props.data.content.headerLayout, positionClass: props.data.content.headerPosition ? 'text-' + props.data.content.headerPosition : '', header: props.data.content.subheader, headerLink: props.data.content.headerLink !== '' ? props.data.content.headerLink : null })
-                    :
-                        null,
-                props.data.content.date !== '' ?
-                    React__default["default"].createElement(HeaderDate, { date: props.data.content.date, positionClass: props.data.content.headerPosition ? 'text-' + props.data.content.headerPosition : '' })
-                    :
-                        null);
-        }
-    }
-    return content;
 };
 
 //Data is ContentData
@@ -643,7 +705,6 @@ var Layout0 = function (props) {
             React__default["default"].createElement("div", { className: "frame-container" },
                 React__default["default"].createElement("div", { className: "frame-inner" },
                     props.data._localizedUid ? React__default["default"].createElement("a", { id: "c" + props.data._localizedUid }) : null,
-                    React__default["default"].createElement(AllHeader, { data: props.data }),
                     props.children)));
     }
     else {
@@ -651,7 +712,6 @@ var Layout0 = function (props) {
             React__default["default"].createElement("a", { id: "c" + props.data.id }),
             props.data._localizedUid ? React__default["default"].createElement("a", { id: "c" + props.data._localizedUid }) : null,
             props.data.appearance.spaceBefore ? React__default["default"].createElement("div", { className: spaceBeforeClass }) : null,
-            React__default["default"].createElement(AllHeader, { data: props.data }),
             props.children,
             props.data.appearance.spaceAfter ? React__default["default"].createElement("div", { className: spaceAfterClass }) : null);
     }
@@ -916,20 +976,20 @@ var contentElementTemplates = {
             headlessContentData.type,
             " has no Template");
     },
-    text: function (headlessContentData) { return React__default["default"].createElement(Text, { data: headlessContentData.content }); },
-    html: function (headlessContentData) { return React__default["default"].createElement(Html, { data: headlessContentData.content }); },
-    textpic: function (headlessContentData) { return React__default["default"].createElement(Textpic, { data: headlessContentData.content }); },
-    image: function (headlessContentData) { return React__default["default"].createElement(Image, { data: headlessContentData.content }); },
-    shortcut: function (headlessContentData) { return React__default["default"].createElement(Shortcut, { data: headlessContentData.content }); },
-    div: function (headlessContentData) { return React__default["default"].createElement(Div, { data: headlessContentData.content }); },
-    uploads: function (headlessContentData) { return React__default["default"].createElement(Uploads, { data: headlessContentData.content }); },
+    text: function (headlessContentData) { return React__default["default"].createElement(Text, { data: headlessContentData }); },
+    html: function (headlessContentData) { return React__default["default"].createElement(Html, { data: headlessContentData }); },
+    textpic: function (headlessContentData) { return React__default["default"].createElement(Textpic, { data: headlessContentData }); },
+    image: function (headlessContentData) { return React__default["default"].createElement(Image, { data: headlessContentData }); },
+    shortcut: function (headlessContentData) { return React__default["default"].createElement(Shortcut, { data: headlessContentData }); },
+    div: function (headlessContentData) { return React__default["default"].createElement(Div, { data: headlessContentData }); },
+    uploads: function (headlessContentData) { return React__default["default"].createElement(Uploads, { data: headlessContentData }); },
     accordion: function (headlessContentData) { return React__default["default"].createElement(Accordion, { data: headlessContentData }); },
-    gallery: function (headlessContentData) { return React__default["default"].createElement(Gallery, { data: headlessContentData.content }); },
-    textmedia: function (headlessContentData) { return React__default["default"].createElement(Textmedia, { data: headlessContentData.content }); },
+    gallery: function (headlessContentData) { return React__default["default"].createElement(Gallery, { data: headlessContentData }); },
+    textmedia: function (headlessContentData) { return React__default["default"].createElement(Textmedia, { data: headlessContentData }); },
     card_group: function (headlessContentData) { return React__default["default"].createElement(CardGroup, { data: headlessContentData }); },
-    textcolumn: function (headlessContentData) { return React__default["default"].createElement(TextColumns, { data: headlessContentData.content }); },
-    quote: function (headlessContentData) { return React__default["default"].createElement(Quote, { data: headlessContentData.content }); },
-    header: function (headlessContentData) { return React__default["default"].createElement(Header$1, { data: headlessContentData.content }); },
+    textcolumn: function (headlessContentData) { return React__default["default"].createElement(TextColumns, { data: headlessContentData }); },
+    quote: function (headlessContentData) { return React__default["default"].createElement(Quote, { data: headlessContentData }); },
+    header: function (headlessContentData) { return React__default["default"].createElement(Header, { data: headlessContentData }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
@@ -961,6 +1021,7 @@ TYPO3Page.defaultProps = {
 var TYPO3Page$1 = React__default["default"].memo(TYPO3Page);
 
 exports.Content = Content;
+exports.ContentElements = ContentElements;
 exports.Page = Page;
 exports.Section = section;
 exports.TYPO3Page = TYPO3Page$1;
