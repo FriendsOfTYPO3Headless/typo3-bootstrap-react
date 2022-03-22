@@ -637,7 +637,6 @@ var Header = function (props) {
         props.children);
 };
 
-// import AllHeader from "../../Partials/ContentElements/Header/All"
 var carouselItem = function (itemHeadless, isFirst) {
     if (isFirst === void 0) { isFirst = false; }
     var itemType = itemHeadless.itemType, layout = itemHeadless.layout, image = itemHeadless.image;
@@ -658,11 +657,12 @@ var carouselItem = function (itemHeadless, isFirst) {
                 React.createElement(Image$1, { file: image[0], className: '' }));
             break;
         default:
-            item = React.createElement(Alert, { variant: "danger" },
-                React.createElement(Alert.Heading, null, "Templatetype unknown"),
-                React.createElement("p", null,
-                    itemType,
-                    " has no Template"));
+            item = React.createElement("div", { className: 'carousel-text-inner' },
+                React.createElement(Alert, { variant: "danger" },
+                    React.createElement(Alert.Heading, null, "Templatetype unknown"),
+                    React.createElement("p", null,
+                        itemType,
+                        " has no Template")));
     }
     return React.createElement(RBT.Carousel.Item, { key: image[0].publicUrl, className: itemClass },
         React.createElement("div", { className: 'carousel-content' },
@@ -676,6 +676,7 @@ var Carousel = function (props) {
         return carouselItem(itemHeadless, index === 0);
     });
     return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
         React.createElement(RBT.Carousel, { fade: flexform.transition === 'fade', interval: flexform.interval, wrap: flexform.wrap }, itemsTemplate));
 };
 
