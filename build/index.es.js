@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import * as RBT from 'react-bootstrap';
 import { Figure, Col, Row, Alert, Accordion as Accordion$1, Card, Container } from 'react-bootstrap';
 import Lightbox from 'react-image-lightbox';
 import FigureImage from 'react-bootstrap/FigureImage';
@@ -208,7 +209,7 @@ var ImageLightbox = function (props) {
 };
 
 var Image$2 = function (props) {
-    var file = props.file;
+    var file = props.file, className = props.className;
     var crops = Object.keys(file.properties.crop);
     var sources = crops.map(function (cropIdentifier, index) {
         var src;
@@ -237,17 +238,21 @@ var Image$2 = function (props) {
         }
         return React.createElement("source", { key: index, srcSet: src, media: media });
     });
+    var cssClasses = 'img-fluid';
+    if (className) {
+        cssClasses += ' ' + className;
+    }
     return React.createElement("picture", null,
         sources,
-        React.createElement(FigureImage, { loading: "lazy", className: 'img-fluid', src: file.publicUrl, title: file.properties.title, alt: file.properties.alternative }));
+        React.createElement(FigureImage, { loading: "lazy", className: cssClasses, src: file.publicUrl, title: file.properties.title, alt: file.properties.alternative }));
 };
 
 var Image$1 = function (props) {
-    var file = props.file, data = props.data;
+    var file = props.file, className = props.className;
     var caption = file.properties.description ?
         React.createElement(Figure.Caption, { className: "caption" }, file.properties.description) : React.createElement(React.Fragment, null);
     return React.createElement(Figure, { className: 'image' },
-        React.createElement(Image$2, { data: data, file: file }),
+        React.createElement(Image$2, { file: file, className: className }),
         caption);
 };
 
@@ -269,7 +274,7 @@ var ImageCols = function (props) {
         Object.keys(props.data.gallery.rows).map(function (rowKey) {
             return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
                 var file = props.data.gallery.rows[rowKey].columns[columnKey];
-                var image = React.createElement(Image$1, { data: props.data, file: file });
+                var image = React.createElement(Image$1, { file: file });
                 return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns, key: rowKey + '-' + columnKey }, props.data.enlargeImageOnClick ?
                     React.createElement("a", { onClick: function (e) {
                             e.preventDefault();
@@ -476,7 +481,7 @@ var __assign = function() {
 };
 
 var Type = function (props) {
-    var file = props.file, data = props.data;
+    var file = props.file; props.data;
     var fileType = file.properties.type;
     if (!isNaN(+file.properties.type)) {
         var fileExtension_1 = file.properties.filename.split('.').pop();
@@ -486,7 +491,7 @@ var Type = function (props) {
     }
     switch (fileType) {
         case 'image':
-            return React.createElement(Image$1, { file: file, data: data });
+            return React.createElement(Image$1, { file: file });
         default:
             return React.createElement(Alert, { variant: "info" },
                 "Filetype unknown ",
@@ -632,6 +637,48 @@ var Header = function (props) {
         props.children);
 };
 
+// import AllHeader from "../../Partials/ContentElements/Header/All"
+var carouselItem = function (itemHeadless, isFirst) {
+    if (isFirst === void 0) { isFirst = false; }
+    var itemType = itemHeadless.itemType, layout = itemHeadless.layout, image = itemHeadless.image;
+    var item = React.createElement(React.Fragment, null);
+    var itemClass = 'item carousel-item';
+    if (isFirst) {
+        itemClass += " active";
+    }
+    if (layout) {
+        itemClass += " carousel-item-layout-".concat(layout);
+    }
+    if (itemType) {
+        itemClass += " carousel-item-type-".concat(itemType);
+    }
+    switch (itemType) {
+        case 'image':
+            item = React.createElement("div", { className: "carousel-image" },
+                React.createElement(Image$1, { file: image[0], className: '' }));
+            break;
+        default:
+            item = React.createElement(Alert, { variant: "danger" },
+                React.createElement(Alert.Heading, null, "Templatetype unknown"),
+                React.createElement("p", null,
+                    itemType,
+                    " has no Template"));
+    }
+    return React.createElement(RBT.Carousel.Item, { key: image[0].publicUrl, className: itemClass },
+        React.createElement("div", { className: 'carousel-content' },
+            React.createElement("div", { className: 'carousel-content-inner' }, item)));
+};
+var Carousel = function (props) {
+    var _a = props.data, content = _a.content; _a.type; var flexform = _a.flexform;
+    content.header; content.subheader; var items = content.items;
+    var _b = useState(0); _b[0]; _b[1];
+    var itemsTemplate = items.map(function (itemHeadless, index) {
+        return carouselItem(itemHeadless, index === 0);
+    });
+    return React.createElement(React.Fragment, null,
+        React.createElement(RBT.Carousel, { fade: flexform.transition === 'fade', interval: flexform.interval, wrap: flexform.wrap }, itemsTemplate));
+};
+
 var ContentElements = /*#__PURE__*/Object.freeze({
     __proto__: null,
     Text: Text,
@@ -648,7 +695,8 @@ var ContentElements = /*#__PURE__*/Object.freeze({
     CardGroup: CardGroup,
     TextColumns: TextColumns,
     Quote: Quote,
-    Header: Header
+    Header: Header,
+    Carousel: Carousel
 });
 
 var BackgroundImage = function (props) {
@@ -980,6 +1028,7 @@ var contentElementTemplates = {
     textcolumn: function (headlessContentData) { return React.createElement(TextColumns, { data: headlessContentData }); },
     quote: function (headlessContentData) { return React.createElement(Quote, { data: headlessContentData }); },
     header: function (headlessContentData) { return React.createElement(Header, { data: headlessContentData }); },
+    carousel: function (headlessContentData) { return React.createElement(Carousel, { data: headlessContentData }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
