@@ -16,7 +16,7 @@ const Layout0: React.FC<{ data: any }> = props => {
         const backgroundImageClass = (props.data.appearance.backgroundImage.length > 0 ? 'frame-has-backgroundimage' : 'frame-no-backgroundimage');
         content = <div id={"c" + props.data.id}
                        className={
-                           "frame " +
+                           "frame frame-size-default " +
                            frameClass + " " +
                            typeClass + " " +
                            layoutClass + " " +
