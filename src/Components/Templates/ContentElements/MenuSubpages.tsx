@@ -1,6 +1,7 @@
 import React from 'react';
+import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
 
-const MenuSubpages: React.FC<{ data: any }> = props => {
+const MenuSubpages: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
 
     return <div className="menuSubpages">
         if (condition="{}") {

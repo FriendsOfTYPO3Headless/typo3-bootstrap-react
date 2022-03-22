@@ -1,8 +1,10 @@
 import React from 'react'
 import {Accordion as ReactAccordion} from "react-bootstrap"
 import Gallery from "./Gallery"
+import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces"
+import AllHeader from "../../Partials/ContentElements/Header/All";
 
-const Accordion: React.FC<{ data: any }> = (props) => {
+const Accordion: React.FC<TYPO3BootstrapContentElementBaseInterface> = (props) => {
     const accordionItems = props.data.content.items
     const activeElement = props.data.flexform.default_element ?? ''
 
@@ -13,7 +15,7 @@ const Accordion: React.FC<{ data: any }> = (props) => {
     const accorditionItemsTemplate = accordionItems.map((accordionItem, index: number) => {
         let galleryTemplate = <></>
         if (accordionItem.media.length > 0) {
-            galleryTemplate = <Gallery data={{items: accordionItem.media, ...accordionItem}}/>
+            galleryTemplate = <Gallery data={{content: {items: accordionItem.media, ...accordionItem}}}/>
         }
 
         return <ReactAccordion.Item key={accordionItem.id} eventKey={accordionItem.id.toString()}>
@@ -30,9 +32,13 @@ const Accordion: React.FC<{ data: any }> = (props) => {
         </ReactAccordion.Item>
     })
 
-    return <ReactAccordion defaultActiveKey={activeElement}>
-        {accorditionItemsTemplate}
-    </ReactAccordion>
+    return <>
+        <AllHeader data={props.data}/>
+        <ReactAccordion defaultActiveKey={activeElement}>
+            {accorditionItemsTemplate}
+        </ReactAccordion>
+        {props.children}
+    </>
 }
 
 export default Accordion
