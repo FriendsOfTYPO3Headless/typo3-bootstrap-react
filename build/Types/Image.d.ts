@@ -56,6 +56,6 @@ interface IImage {
     cropVariants: ICropVariants;
 }
 interface IImageCompomentProperties {
-    data: any;
     file: IImage;
+    className?: string;
 }

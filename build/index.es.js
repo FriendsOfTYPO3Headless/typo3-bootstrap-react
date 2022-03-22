@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Figure, Col, Row, Alert, Accordion as Accordion$1, Card, Container } from 'react-bootstrap';
+import * as RBT from 'react-bootstrap';
+import { Figure, Col, Row, Alert, Accordion as Accordion$1, Card, Carousel as Carousel$1, Container } from 'react-bootstrap';
 import Lightbox from 'react-image-lightbox';
 import FigureImage from 'react-bootstrap/FigureImage';
 
@@ -113,7 +114,7 @@ var ImageLightbox = function (props) {
 };
 
 var Image$2 = function (props) {
-    var file = props.file;
+    var file = props.file, className = props.className;
     var crops = Object.keys(file.properties.crop);
     var sources = crops.map(function (cropIdentifier, index) {
         var src;
@@ -142,17 +143,21 @@ var Image$2 = function (props) {
         }
         return React.createElement("source", { key: index, srcSet: src, media: media });
     });
+    var cssClasses = 'img-fluid';
+    if (className) {
+        cssClasses += ' ' + className;
+    }
     return React.createElement("picture", null,
         sources,
-        React.createElement(FigureImage, { loading: "lazy", className: 'img-fluid', src: file.publicUrl, title: file.properties.title, alt: file.properties.alternative }));
+        React.createElement(FigureImage, { loading: "lazy", className: cssClasses, src: file.publicUrl, title: file.properties.title, alt: file.properties.alternative }));
 };
 
 var Image$1 = function (props) {
-    var file = props.file, data = props.data;
+    var file = props.file, className = props.className;
     var caption = file.properties.description ?
         React.createElement(Figure.Caption, { className: "caption" }, file.properties.description) : React.createElement(React.Fragment, null);
     return React.createElement(Figure, { className: 'image' },
-        React.createElement(Image$2, { data: data, file: file }),
+        React.createElement(Image$2, { file: file, className: className }),
         caption);
 };
 
@@ -174,7 +179,7 @@ var ImageCols = function (props) {
         Object.keys(props.data.gallery.rows).map(function (rowKey) {
             return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
                 var file = props.data.gallery.rows[rowKey].columns[columnKey];
-                var image = React.createElement(Image$1, { data: props.data, file: file });
+                var image = React.createElement(Image$1, { file: file });
                 return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns, key: rowKey + '-' + columnKey }, props.data.enlargeImageOnClick ?
                     React.createElement("a", { onClick: function (e) {
                             e.preventDefault();
@@ -356,7 +361,7 @@ var __assign = function() {
 };
 
 var Type = function (props) {
-    var file = props.file, data = props.data;
+    var file = props.file; props.data;
     var fileType = file.properties.type;
     if (!isNaN(+file.properties.type)) {
         var fileExtension_1 = file.properties.filename.split('.').pop();
@@ -366,7 +371,7 @@ var Type = function (props) {
     }
     switch (fileType) {
         case 'image':
-            return React.createElement(Image$1, { file: file, data: data });
+            return React.createElement(Image$1, { file: file });
         default:
             return React.createElement(Alert, { variant: "info" },
                 "Filetype unknown ",
@@ -493,27 +498,6 @@ var Header$1 = function (props) {
     return React.createElement("div", { className: "header" });
 };
 
-var BackgroundImage = function (props) {
-    if (props.data.appearance.backgroundImage.length < 1) {
-        return null;
-    }
-    var backgroundImageObject = props.data.appearance.backgroundImage[0];
-    var backgroundImageIdentifier = 'frame-backgroundimage-' + props.data.id;
-    var backgroundImageClasses = 'frame-backgroundimage';
-    if (props.data.appearance.backgroundImageOptions.parallax === '1') {
-        backgroundImageClasses += ' frame-backgroundimage-parallax';
-    }
-    if (props.data.appearance.backgroundImageOptions.fade === '1') {
-        backgroundImageClasses += ' frame-backgroundimage-fade';
-    }
-    if (props.data.appearance.backgroundImageOptions.filter !== '') {
-        backgroundImageClasses += ' frame-backgroundimage-' + props.data.appearance.backgroundImageOptions.filter;
-    }
-    //TODO: Implement crop sizes
-    return React.createElement("div", { className: "frame-backgroundimage-container" },
-        React.createElement("div", { id: backgroundImageIdentifier, className: backgroundImageClasses, style: { backgroundImage: 'url("' + backgroundImageObject.publicUrl + '")' } }));
-};
-
 var HeaderLink = function (props) {
     if (props.headerLink === null || typeof props.headerLink === 'string') {
         return React.createElement(React.Fragment, null, props.children);
@@ -608,6 +592,60 @@ var AllHeader = function (props) {
         }
     }
     return content;
+};
+
+var CarouselItem = function (props) {
+    var item = React.createElement(React.Fragment, null);
+    switch (props.data.itemType) {
+        case 'image':
+            // item = <Image file={props.data.image[0]}  className={'d-block w-100'}/>
+            // item = <img src={props.data.image[0].publicUrl}  className={'d-block w-100'}/>
+            item = React.createElement("img", { src: props.data.image[0].publicUrl, className: 'd-block w-100' });
+            break;
+        default:
+            item = React.createElement(Alert, { variant: "danger" },
+                React.createElement(Alert.Heading, null, "Templatetype unknown"),
+                React.createElement("p", null,
+                    props.data.itemType,
+                    " has no Template"));
+    }
+    return React.createElement(Carousel$1.Item, null, item);
+};
+
+var Carousel = function (props) {
+    var _a = props.data, content = _a.content; _a.type; var flexform = _a.flexform;
+    content.header; content.subheader; var items = content.items;
+    var _b = useState(0); _b[0]; _b[1];
+    var itemsTemplate = [];
+    React.createElement(React.Fragment, null);
+    items.forEach(function (itemHeadless, index) {
+        var item = React.createElement(CarouselItem, { key: itemHeadless.image[0].publicUrl, data: itemHeadless });
+        itemsTemplate.push(item);
+    });
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement(RBT.Carousel, { fade: flexform.transition === 'fade', interval: flexform.interval, wrap: flexform.wrap }, itemsTemplate));
+};
+
+var BackgroundImage = function (props) {
+    if (props.data.appearance.backgroundImage.length < 1) {
+        return null;
+    }
+    var backgroundImageObject = props.data.appearance.backgroundImage[0];
+    var backgroundImageIdentifier = 'frame-backgroundimage-' + props.data.id;
+    var backgroundImageClasses = 'frame-backgroundimage';
+    if (props.data.appearance.backgroundImageOptions.parallax === '1') {
+        backgroundImageClasses += ' frame-backgroundimage-parallax';
+    }
+    if (props.data.appearance.backgroundImageOptions.fade === '1') {
+        backgroundImageClasses += ' frame-backgroundimage-fade';
+    }
+    if (props.data.appearance.backgroundImageOptions.filter !== '') {
+        backgroundImageClasses += ' frame-backgroundimage-' + props.data.appearance.backgroundImageOptions.filter;
+    }
+    //TODO: Implement crop sizes
+    return React.createElement("div", { className: "frame-backgroundimage-container" },
+        React.createElement("div", { id: backgroundImageIdentifier, className: backgroundImageClasses, style: { backgroundImage: 'url("' + backgroundImageObject.publicUrl + '")' } }));
 };
 
 //Data is ContentData
@@ -920,6 +958,7 @@ var contentElementTemplates = {
     textcolumn: function (headlessContentData) { return React.createElement(TextColumns, { data: headlessContentData.content }); },
     quote: function (headlessContentData) { return React.createElement(Quote, { data: headlessContentData.content }); },
     header: function (headlessContentData) { return React.createElement(Header$1, { data: headlessContentData.content }); },
+    carousel: function (headlessContentData) { return React.createElement(Carousel, { data: headlessContentData }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,

@@ -13,4 +13,5 @@ import CardGroup from "./ContentElements/CardGroup";
 import TextColumns from "./ContentElements/TextColumns";
 import Quote from "./ContentElements/Quote";
 import Header from "./ContentElements/Header";
-export { Text, Html, Textpic, Image, ImageLightbox, Div, Shortcut, Textmedia, Uploads, Accordion, Gallery, CardGroup, TextColumns, Quote, Header, };
+import Carousel from "./ContentElements/Carousel";
+export { Text, Html, Textpic, Image, ImageLightbox, Div, Shortcut, Textmedia, Uploads, Accordion, Gallery, CardGroup, TextColumns, Quote, Header, Carousel, };
