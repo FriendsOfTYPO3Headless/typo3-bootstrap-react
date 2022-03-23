@@ -63,6 +63,6 @@ interface IImage {
 }
 
 interface IImageCompomentProperties {
-    data: any,
-    file: IImage
+    file: IImage,
+    className?: string
 }

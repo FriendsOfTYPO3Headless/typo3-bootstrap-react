@@ -19,7 +19,7 @@ export const Type: React.FC<IType> = (props) => {
 
     switch (fileType) {
         case 'image':
-            return <Image file={file} data={data} />
+            return <Image file={file}/>
         default:
             return <Alert variant={"info"}>Filetype unknown {file.properties.filename}</Alert>
     }
