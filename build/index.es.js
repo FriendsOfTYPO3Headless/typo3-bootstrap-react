@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import * as RBT from 'react-bootstrap';
 import { Figure, Col, Row, Alert, Accordion as Accordion$1, Card, Container } from 'react-bootstrap';
 import Lightbox from 'react-image-lightbox';
 import FigureImage from 'react-bootstrap/FigureImage';
@@ -92,8 +93,103 @@ var Content = function (props) {
     return content;
 };
 
+var HeaderLink = function (props) {
+    if (props.headerLink === null || typeof props.headerLink === 'string') {
+        return React.createElement(React.Fragment, null, props.children);
+    }
+    return React.createElement("a", { href: props.headerLink.url }, props.children);
+};
+
+var Header$1 = function (props) {
+    switch (props.layout) {
+        case 1:
+            return React.createElement("h1", { className: props.class + ' ' + props.positionClass },
+                React.createElement(HeaderLink, { headerLink: props.headerLink },
+                    React.createElement("span", null, props.header)));
+        case 3:
+            return React.createElement("h3", { className: props.class + ' ' + props.positionClass },
+                React.createElement(HeaderLink, { headerLink: props.headerLink },
+                    React.createElement("span", null, props.header)));
+        case 4:
+            return React.createElement("h4", { className: props.class + ' ' + props.positionClass },
+                React.createElement(HeaderLink, { headerLink: props.headerLink },
+                    React.createElement("span", null, props.header)));
+        case 5:
+            return React.createElement("h5", { className: props.class + ' ' + props.positionClass },
+                React.createElement(HeaderLink, { headerLink: props.headerLink },
+                    React.createElement("span", null, props.header)));
+        case 100:
+            return React.createElement(React.Fragment, null);
+        default:
+            return React.createElement("h2", { className: props.class + ' ' + props.positionClass },
+                React.createElement(HeaderLink, { headerLink: props.headerLink },
+                    React.createElement("span", null, props.header)));
+    }
+};
+Header$1.defaultProps = {
+    class: 'element-header',
+    headerLink: null
+};
+
+var Subheader = function (props) {
+    switch (props.layout) {
+        case 1:
+            return React.createElement("h2", { className: props.class + ' ' + props.positionClass },
+                React.createElement(HeaderLink, { headerLink: props.headerLink },
+                    React.createElement("span", null, props.header)));
+        case 3:
+            return React.createElement("h4", { className: props.class + ' ' + props.positionClass },
+                React.createElement(HeaderLink, { headerLink: props.headerLink },
+                    React.createElement("span", null, props.header)));
+        case 4:
+            return React.createElement("h5", { className: props.class + ' ' + props.positionClass },
+                React.createElement(HeaderLink, { headerLink: props.headerLink },
+                    React.createElement("span", null, props.header)));
+        case 5:
+            return React.createElement("h6", { className: props.class + ' ' + props.positionClass },
+                React.createElement(HeaderLink, { headerLink: props.headerLink },
+                    React.createElement("span", null, props.header)));
+        case 100:
+            return React.createElement(React.Fragment, null);
+        default:
+            return React.createElement("h3", { className: props.class + ' ' + props.positionClass },
+                React.createElement(HeaderLink, { headerLink: props.headerLink },
+                    React.createElement("span", null, props.header)));
+    }
+};
+Subheader.defaultProps = {
+    class: 'element-subheader',
+    headerLink: null
+};
+
+var HeaderDate = function (props) {
+    //TODO: Date initialisieren, toLocaleDateString...
+    return React.createElement("p", { className: props.positionClass }, props.date);
+};
+
+var AllHeader = function (props) {
+    var _a = props.data.content, header = _a.header, subheader = _a.subheader, date = _a.date, headerPosition = _a.headerPosition, headerLink = _a.headerLink, headerLayout = _a.headerLayout;
+    var content = React.createElement(React.Fragment, null);
+    if (props.data.content.hasOwnProperty('headerLayout') && headerLayout !== 100) {
+        if (header !== '' || subheader !== '' || date !== '') {
+            content = React.createElement("div", { className: "frame-header" },
+                header.length > 0 &&
+                    React.createElement(Header$1, { layout: headerLayout, positionClass: headerPosition ? 'text-' + headerPosition : '', header: header, headerLink: headerLink !== '' ? headerLink : null }),
+                subheader.length > 0 &&
+                    React.createElement(Subheader, { layout: headerLayout, positionClass: headerPosition ? 'text-' + headerPosition : '', header: subheader, headerLink: headerLink !== '' ? headerLink : null }),
+                date.length > 0 &&
+                    React.createElement(HeaderDate, { date: date, positionClass: headerPosition ? 'text-' + headerPosition : '' }));
+        }
+    }
+    return content;
+};
+
 var Text = function (props) {
-    return React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
+    var bodytext = props.data.content.bodytext;
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement("div", { dangerouslySetInnerHTML: { __html: bodytext } }),
+        props.children);
 };
 
 var ImageLightbox = function (props) {
@@ -113,7 +209,7 @@ var ImageLightbox = function (props) {
 };
 
 var Image$2 = function (props) {
-    var file = props.file;
+    var file = props.file, className = props.className;
     var crops = Object.keys(file.properties.crop);
     var sources = crops.map(function (cropIdentifier, index) {
         var src;
@@ -142,17 +238,21 @@ var Image$2 = function (props) {
         }
         return React.createElement("source", { key: index, srcSet: src, media: media });
     });
+    var cssClasses = 'img-fluid';
+    if (className) {
+        cssClasses += ' ' + className;
+    }
     return React.createElement("picture", null,
         sources,
-        React.createElement(FigureImage, { loading: "lazy", className: 'img-fluid', src: file.publicUrl, title: file.properties.title, alt: file.properties.alternative }));
+        React.createElement(FigureImage, { loading: "lazy", className: cssClasses, src: file.publicUrl, title: file.properties.title, alt: file.properties.alternative }));
 };
 
 var Image$1 = function (props) {
-    var file = props.file, data = props.data;
+    var file = props.file, className = props.className;
     var caption = file.properties.description ?
         React.createElement(Figure.Caption, { className: "caption" }, file.properties.description) : React.createElement(React.Fragment, null);
     return React.createElement(Figure, { className: 'image' },
-        React.createElement(Image$2, { data: data, file: file }),
+        React.createElement(Image$2, { file: file, className: className }),
         caption);
 };
 
@@ -174,7 +274,7 @@ var ImageCols = function (props) {
         Object.keys(props.data.gallery.rows).map(function (rowKey) {
             return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
                 var file = props.data.gallery.rows[rowKey].columns[columnKey];
-                var image = React.createElement(Image$1, { data: props.data, file: file });
+                var image = React.createElement(Image$1, { file: file });
                 return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns, key: rowKey + '-' + columnKey }, props.data.enlargeImageOnClick ?
                     React.createElement("a", { onClick: function (e) {
                             e.preventDefault();
@@ -188,145 +288,170 @@ var ImageCols = function (props) {
 
 var Textpic = function (props) {
     var textpicClassName = '';
-    if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
-        textpicClassName = props.data.gallery.position.horizontal;
+    if (props.data.content.gallery.position.horizontal === 'left' || props.data.content.gallery.position.horizontal === 'right') {
+        textpicClassName = props.data.content.gallery.position.horizontal;
     }
-    if (props.data.gallery.position.horizontal === 'center') {
-        textpicClassName = props.data.gallery.position.vertical;
+    if (props.data.content.gallery.position.horizontal === 'center') {
+        textpicClassName = props.data.content.gallery.position.vertical;
     }
-    return React.createElement("div", { className: "textpic" },
-        React.createElement("div", { className: "gallery-row" },
-            React.createElement(Row, { className: "textpic textpic-" + textpicClassName },
-                React.createElement(Col, { className: "textpic-item textpic-gallery", md: textpicClassName === props.data.gallery.position.vertical ? "auto" : "6" },
-                    React.createElement(Row, null,
-                        React.createElement(ImageCols, { data: props.data }))),
-                React.createElement(Col, { className: "textpic-item textpic-text", md: "6", dangerouslySetInnerHTML: { __html: props.data.bodytext } }))));
+    return React.createElement(React.Fragment, null,
+        React.createElement("div", { className: "textpic" },
+            React.createElement("div", { className: "gallery-row" },
+                React.createElement(Row, { className: "textpic textpic-" + textpicClassName },
+                    React.createElement(Col, { className: "textpic-item textpic-gallery", md: textpicClassName === props.data.content.gallery.position.vertical ? "auto" : "6" },
+                        React.createElement(Row, null,
+                            React.createElement(ImageCols, { data: props.data.content }))),
+                    React.createElement(Col, { className: "textpic-item textpic-text", md: "6" },
+                        React.createElement(AllHeader, { data: props.data }),
+                        React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } }),
+                        props.children)))));
 };
 
 var Image = function (props) {
-    return React.createElement("div", { className: "image" },
-        React.createElement("div", { className: "gallery-row" },
-            React.createElement(Row, null,
-                React.createElement(ImageCols, { data: props.data }))));
+    return React.createElement(React.Fragment, null,
+        React.createElement("div", { className: "image" },
+            React.createElement(AllHeader, { data: props.data }),
+            React.createElement("div", { className: "gallery-row" },
+                React.createElement(Row, null,
+                    React.createElement(ImageCols, { data: props.data.content })))),
+        props.children);
 };
 
 var Div = function (props) {
-    return React.createElement("div", { className: "div" },
-        React.createElement("hr", null));
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement("div", { className: "div" },
+            React.createElement("hr", null)),
+        props.children);
 };
 
 var Textmedia = function (props) {
     var textmediaClassName;
-    if (props.data.gallery.position.horizontal === 'left' || props.data.gallery.position.horizontal === 'right') {
-        textmediaClassName = props.data.gallery.position.horizontal;
+    if (props.data.content.gallery.position.horizontal === 'left' || props.data.content.gallery.position.horizontal === 'right') {
+        textmediaClassName = props.data.content.gallery.position.horizontal;
     }
-    if (props.data.gallery.position.horizontal === 'center') {
-        textmediaClassName = props.data.gallery.position.vertical;
+    if (props.data.content.gallery.position.horizontal === 'center') {
+        textmediaClassName = props.data.content.gallery.position.vertical;
     }
-    return React.createElement("div", { className: "textmedia" },
-        React.createElement("div", { className: "gallery-row" },
-            React.createElement(Row, { className: "textmedia textmedia-" + textmediaClassName },
-                React.createElement(Col, { className: "textmedia-item textmedia-gallery", md: textmediaClassName === props.data.gallery.position.vertical ? "auto" : "6" },
-                    React.createElement(Row, null, Object.keys(props.data.gallery.rows).map(function (rowKey) {
-                        return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
-                            switch (props.data.gallery.rows[rowKey].columns[columnKey].properties.mimeType) {
-                                case 'video/youtube':
-                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React.createElement("iframe", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                case 'image/jpeg':
-                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React.createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                case 'image/svg+xml':
-                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React.createElement("img", { src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                case 'video/mp4':
-                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React.createElement("video", { controls: true },
-                                            React.createElement("source", { type: "video/mp4", src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                case 'video/vimeo':
-                                    return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns },
-                                        React.createElement("video", { controls: true },
-                                            React.createElement("source", { type: "video/mp4", src: props.data.gallery.rows[rowKey].columns[columnKey].publicUrl })),
-                                        props.data.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                default:
-                                    return React.createElement(React.Fragment, null);
-                            }
-                        });
-                    }))),
-                React.createElement(Col, { className: "textmedia-item textmedia-text" },
-                    React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } })))));
+    return React.createElement(React.Fragment, null,
+        React.createElement("div", { className: "textmedia" },
+            React.createElement("div", { className: "gallery-row" },
+                React.createElement(Row, { className: "textmedia textmedia-" + textmediaClassName },
+                    React.createElement(Col, { className: "textmedia-item textmedia-gallery", md: textmediaClassName === props.data.content.gallery.position.vertical ? "auto" : "6" },
+                        React.createElement(Row, null, Object.keys(props.data.content.gallery.rows).map(function (rowKey) {
+                            return Object.keys(props.data.content.gallery.rows[rowKey].columns).map(function (columnKey) {
+                                switch (props.data.content.gallery.rows[rowKey].columns[columnKey].properties.mimeType) {
+                                    case 'video/youtube':
+                                        return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                            React.createElement("iframe", { src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
+                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                    case 'image/jpeg':
+                                        return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                            React.createElement("img", { src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item", alt: props.data.content.gallery.rows[rowKey].columns[columnKey].properties.title }),
+                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                    case 'image/svg+xml':
+                                        return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                            React.createElement("img", { src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item", alt: props.data.content.gallery.rows[rowKey].columns[columnKey].properties.title }),
+                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                    case 'video/mp4':
+                                        return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                            React.createElement("video", { controls: true },
+                                                React.createElement("source", { type: "video/mp4", src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                    case 'video/vimeo':
+                                        return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                            React.createElement("video", { controls: true },
+                                                React.createElement("source", { type: "video/mp4", src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                                    default:
+                                        return React.createElement(React.Fragment, null);
+                                }
+                            });
+                        }))),
+                    React.createElement(Col, { className: "textmedia-item textmedia-text" },
+                        React.createElement(AllHeader, { data: props.data }),
+                        React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } }),
+                        props.children)))));
 };
 
 var Shortcut = function (props) {
-    return React.createElement("div", { className: "shortcut" }, props.data.shortcut.map(function (cObject) {
-        return RenderContent(cObject);
-    }));
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement("div", { className: "shortcut" }, props.data.content.shortcut.map(function (cObject) {
+            return RenderContent(cObject);
+        })),
+        props.children);
 };
 
 var Html = function (props) {
-    return React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.bodytext } });
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } }),
+        props.children);
 };
 
 var Uploads = function (props) {
-    return React.createElement("div", { className: "uploads" },
-        React.createElement("ul", { className: "media-list filelink-list" }, Object.keys(props.data.media).map(function (key) {
-            var description = props.data.displayDescription === '1' ?
-                React.createElement("p", { className: 'filelink-filedescription' }, props.data.media[key].properties.description) : null;
-            var filesize = props.data.displayFileSizeInformation === '1' ?
-                React.createElement("span", { className: 'filelink-filesize ms-2 small' }, props.data.media[key].properties.size) : null;
-            var title = props.data.media[key].properties.title;
-            if (title === null || title === '') {
-                title = props.data.media[key].properties.filename;
-            }
-            var heading = function (contentBefore) {
-                if (contentBefore === void 0) { contentBefore = null; }
-                return React.createElement("span", { className: 'title' },
-                    React.createElement("h5", { className: 'filelink-heading ' },
-                        React.createElement("a", { href: props.data.media[key].publicUrl },
-                            contentBefore,
-                            title),
-                        filesize));
-            };
-            var content;
-            switch (props.data.displayInformation) {
-                case "1":
-                    content = React.createElement(React.Fragment, null,
-                        heading(props.data.media[key].properties.type === 'video' ?
-                            React.createElement("i", { className: "bi bi-camera-video-fill me-2" }) : React.createElement("i", { className: "bi bi-file-image me-2" })),
-                        description);
-                    break;
-                case "2":
-                    var media = null;
-                    switch (props.data.media[key].properties.type) {
-                        case 'video':
-                            media = React.createElement("iframe", { src: props.data.media[key].publicUrl, className: 'mw-100' });
-                            break;
-                        //TODO: add preview for application/*
-                        case 'application':
-                            if (props.data.media[key].properties.mimeType === 'application/pdf') {
-                                media = React.createElement("iframe", { src: props.data.media[key].publicUrl, className: 'mw-100' });
-                            }
-                            break;
-                        default:
-                            media = React.createElement("img", { src: props.data.media[key].publicUrl, alt: title, className: 'img-fluid' });
-                    }
-                    content = React.createElement(Row, null,
-                        React.createElement(Col, { className: 'filelink-media', xs: 3, sm: 3, md: 3, lg: 2, xl: 2, xxl: 2 }, media),
-                        React.createElement(Col, { className: 'filelink-body' },
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement("div", { className: "uploads" },
+            React.createElement("ul", { className: "media-list filelink-list" }, Object.keys(props.data.content.media).map(function (key) {
+                var description = props.data.content.displayDescription === '1' ?
+                    React.createElement("p", { className: 'filelink-filedescription' }, props.data.content.media[key].properties.description) : null;
+                var filesize = props.data.content.displayFileSizeInformation === '1' ?
+                    React.createElement("span", { className: 'filelink-filesize ms-2 small' }, props.data.content.media[key].properties.size) : null;
+                var title = props.data.content.media[key].properties.title;
+                if (title === null || title === '') {
+                    title = props.data.content.media[key].properties.filename;
+                }
+                var heading = function (contentBefore) {
+                    if (contentBefore === void 0) { contentBefore = null; }
+                    return React.createElement("span", { className: 'title' },
+                        React.createElement("h5", { className: 'filelink-heading ' },
+                            React.createElement("a", { href: props.data.content.media[key].publicUrl },
+                                contentBefore,
+                                title),
+                            filesize));
+                };
+                var content;
+                switch (props.data.content.displayInformation) {
+                    case "1":
+                        content = React.createElement(React.Fragment, null,
+                            heading(props.data.content.media[key].properties.type === 'video' ?
+                                React.createElement("i", { className: "bi bi-camera-video-fill me-2" }) :
+                                React.createElement("i", { className: "bi bi-file-image me-2" })),
+                            description);
+                        break;
+                    case "2":
+                        var media = null;
+                        switch (props.data.content.media[key].properties.type) {
+                            case 'video':
+                                media = React.createElement("iframe", { src: props.data.content.media[key].publicUrl, className: 'mw-100' });
+                                break;
+                            //TODO: add preview for application/*
+                            case 'application':
+                                if (props.data.content.media[key].properties.mimeType === 'application/pdf') {
+                                    media =
+                                        React.createElement("iframe", { src: props.data.content.media[key].publicUrl, className: 'mw-100' });
+                                }
+                                break;
+                            default:
+                                media =
+                                    React.createElement("img", { src: props.data.content.media[key].publicUrl, alt: title, className: 'img-fluid' });
+                        }
+                        content = React.createElement(Row, null,
+                            React.createElement(Col, { className: 'filelink-media', xs: 3, sm: 3, md: 3, lg: 2, xl: 2, xxl: 2 }, media),
+                            React.createElement(Col, { className: 'filelink-body' },
+                                heading(),
+                                description));
+                        break;
+                    default:
+                        content = React.createElement(React.Fragment, null,
                             heading(),
-                            description));
-                    break;
-                default:
-                    content = React.createElement(React.Fragment, null,
-                        heading(),
-                        description);
-            }
-            return React.createElement("li", { className: 'filelink-item mb-2', key: key }, content);
-        })));
+                            description);
+                }
+                return React.createElement("li", { className: 'filelink-item mb-2', key: key }, content);
+            }))),
+        props.children);
 };
 
 /*! *****************************************************************************
@@ -356,7 +481,7 @@ var __assign = function() {
 };
 
 var Type = function (props) {
-    var file = props.file, data = props.data;
+    var file = props.file; props.data;
     var fileType = file.properties.type;
     if (!isNaN(+file.properties.type)) {
         var fileExtension_1 = file.properties.filename.split('.').pop();
@@ -366,7 +491,7 @@ var Type = function (props) {
     }
     switch (fileType) {
         case 'image':
-            return React.createElement(Image$1, { file: file, data: data });
+            return React.createElement(Image$1, { file: file });
         default:
             return React.createElement(Alert, { variant: "info" },
                 "Filetype unknown ",
@@ -375,12 +500,15 @@ var Type = function (props) {
 };
 
 var Gallery = function (props) {
-    var _a = props.data, items = _a.items, imagecols = _a.imagecols;
+    var _a = props.data.content, items = _a.items, imagecols = _a.imagecols;
     var galleryItems = items.map(function (image, index) {
-        return React.createElement(Col, { className: "gallery-item gallery-item-size-".concat(imagecols), md: imagecols },
+        return React.createElement(Col, { key: "".concat(index), className: "gallery-item gallery-item-size-".concat(imagecols), md: imagecols },
             React.createElement(Type, { data: props.data, file: image }));
     });
-    return React.createElement("div", { className: 'gallery-row' }, galleryItems);
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement("div", { className: 'gallery-row' }, galleryItems),
+        props.children);
 };
 
 var Accordion = function (props) {
@@ -393,7 +521,7 @@ var Accordion = function (props) {
     var accorditionItemsTemplate = accordionItems.map(function (accordionItem, index) {
         var galleryTemplate = React.createElement(React.Fragment, null);
         if (accordionItem.media.length > 0) {
-            galleryTemplate = React.createElement(Gallery, { data: __assign({ items: accordionItem.media }, accordionItem) });
+            galleryTemplate = React.createElement(Gallery, { data: { content: __assign({ items: accordionItem.media }, accordionItem) } });
         }
         return React.createElement(Accordion$1.Item, { key: accordionItem.id, eventKey: accordionItem.id.toString() },
             React.createElement(Accordion$1.Header, { as: "h4", id: "accordion-heading-".concat(accordionItem.id) },
@@ -403,7 +531,10 @@ var Accordion = function (props) {
                     galleryTemplate,
                     React.createElement("div", { className: 'accordion-content-item accordion-content-text', dangerouslySetInnerHTML: { __html: accordionItem.bodytext } }))));
     });
-    return React.createElement(Accordion$1, { defaultActiveKey: activeElement }, accorditionItemsTemplate);
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement(Accordion$1, { defaultActiveKey: activeElement }, accorditionItemsTemplate),
+        props.children);
 };
 
 var defaultProperties = {
@@ -450,17 +581,23 @@ var CardGroup = function (props) {
     if (flexform.align.length > 0) {
         alignment = "justify-content-".concat(flexform.align);
     }
-    return React.createElement(Row, { xs: 1, md: flexform.columns, className: "card-group ".concat(alignment) }, cards);
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement(Row, { xs: 1, md: flexform.columns, className: "card-group ".concat(alignment) }, cards),
+        props.children);
 };
 
 var TextColumns = function (props) {
-    var bodytext = props.data.bodytext;
-    return React.createElement("div", { className: "text-column" },
-        React.createElement("div", { dangerouslySetInnerHTML: { __html: bodytext } }));
+    var bodytext = props.data.content.bodytext;
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement("div", { className: "text-column" },
+            React.createElement("div", { dangerouslySetInnerHTML: { __html: bodytext } })),
+        props.children);
 };
 
 var Quote = function (props) {
-    var _a = props.data, bodytext = _a.bodytext, quoteSource = _a.quoteSource, quoteLink = _a.quoteLink;
+    var _a = props.data.content, bodytext = _a.bodytext, quoteSource = _a.quoteSource, quoteLink = _a.quoteLink;
     var sourceLink = function () {
         if (typeof quoteLink === 'object' && quoteLink !== null) {
             var href = quoteLink.href, target = quoteLink.target, title = quoteLink.title, linkText = quoteLink.linkText;
@@ -473,7 +610,8 @@ var Quote = function (props) {
         return React.createElement(React.Fragment, null);
     };
     var bodyTemplate = function () {
-        return (bodytext.length > 0) ? React.createElement("blockquote", { className: 'blockquote', dangerouslySetInnerHTML: { __html: bodytext } }) : React.createElement(React.Fragment, null);
+        return (bodytext.length > 0) ?
+            React.createElement("blockquote", { className: 'blockquote', dangerouslySetInnerHTML: { __html: bodytext } }) : React.createElement(React.Fragment, null);
     };
     var figcaptionTemplate = function () {
         if (quoteSource.length > 0) {
@@ -484,14 +622,130 @@ var Quote = function (props) {
         }
         return React.createElement(React.Fragment, null);
     };
-    return React.createElement("figure", null,
-        bodyTemplate(),
-        figcaptionTemplate());
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement("figure", null,
+            bodyTemplate(),
+            figcaptionTemplate()),
+        props.children);
 };
 
-var Header$1 = function (props) {
-    return React.createElement("div", { className: "header" });
+var Header = function (props) {
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement("div", { className: "header" }),
+        props.children);
 };
+
+// import AllHeader from "../../Partials/ContentElements/Header/All"
+var carouselItem = function (itemHeadless, isFirst) {
+    if (isFirst === void 0) { isFirst = false; }
+    var itemType = itemHeadless.itemType, layout = itemHeadless.layout, image = itemHeadless.image;
+    var item = React.createElement(React.Fragment, null);
+    var itemClass = 'item carousel-item';
+    if (isFirst) {
+        itemClass += " active";
+    }
+    if (layout) {
+        itemClass += " carousel-item-layout-".concat(layout);
+    }
+    if (itemType) {
+        itemClass += " carousel-item-type-".concat(itemType);
+    }
+    switch (itemType) {
+        case 'image':
+            item = React.createElement("div", { className: "carousel-image" },
+                React.createElement(Image$1, { file: image[0], className: '' }));
+            break;
+        default:
+            item = React.createElement(Alert, { variant: "danger" },
+                React.createElement(Alert.Heading, null, "Templatetype unknown"),
+                React.createElement("p", null,
+                    itemType,
+                    " has no Template"));
+    }
+    return React.createElement(RBT.Carousel.Item, { key: image[0].publicUrl, className: itemClass },
+        React.createElement("div", { className: 'carousel-content' },
+            React.createElement("div", { className: 'carousel-content-inner' }, item)));
+};
+var Carousel = function (props) {
+    var _a = props.data, content = _a.content; _a.type; var flexform = _a.flexform;
+    content.header; content.subheader; var items = content.items;
+    var _b = useState(0); _b[0]; _b[1];
+    var itemsTemplate = items.map(function (itemHeadless, index) {
+        return carouselItem(itemHeadless, index === 0);
+    });
+    return React.createElement(React.Fragment, null,
+        React.createElement(RBT.Carousel, { fade: flexform.transition === 'fade', interval: flexform.interval, wrap: flexform.wrap }, itemsTemplate));
+};
+
+var MenuCardList = function (props) {
+    var _a = props.data, flexform = _a.flexform, content = _a.content;
+    var items = content.items, readmoreLabel = content.readmoreLabel;
+    var itemsTemplate = items.map(function (item, index) {
+        var title = item.title, subtitle = item.subtitle, abstract = item.abstract, link = item.link, target = item.target; item.active; item.current; item.spacer; item.hasSubpages; var thumbnail = item.thumbnail; item.nav_icon;
+        return React.createElement("div", { key: link, className: "card-menu-item" },
+            React.createElement(Card, null,
+                thumbnail && thumbnail.length > 0 &&
+                    React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" },
+                        React.createElement(Card.Img, { variant: "top", src: thumbnail[0].publicUrl })),
+                React.createElement(Card.Body, null,
+                    title && title.length > 0 &&
+                        React.createElement(Card.Title, { as: 'h3' },
+                            React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, title)),
+                    subtitle && subtitle.length > 0 &&
+                        React.createElement(Card.Subtitle, { as: 'h4' }, subtitle),
+                    React.createElement(Card.Text, { as: "p" }, abstract)),
+                React.createElement(Card.Footer, null,
+                    React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, (readmoreLabel && readmoreLabel.length > 0) ? readmoreLabel : title))));
+    });
+    return React.createElement("div", { className: "card-menu card-menu card-menu-align-".concat(flexform.align, " card-menu-columns-").concat(flexform.columns) }, itemsTemplate);
+};
+
+var MenuCardDir = function (props) {
+    var _a = props.data, flexform = _a.flexform, content = _a.content;
+    var items = content.items, readmoreLabel = content.readmoreLabel;
+    var itemsTemplate = items.map(function (item, index) {
+        var title = item.title, subtitle = item.subtitle, abstract = item.abstract, link = item.link, target = item.target; item.active; item.current; item.spacer; item.hasSubpages; var media = item.media; item.nav_icon;
+        return React.createElement("div", { key: link, className: "card-menu-item" },
+            React.createElement(Card, null,
+                media && media.length > 0 &&
+                    React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" },
+                        React.createElement(Card.Img, { variant: "top", src: media[0].publicUrl })),
+                React.createElement(Card.Body, null,
+                    title && title.length > 0 &&
+                        React.createElement(Card.Title, { as: 'h3' },
+                            React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, title)),
+                    subtitle && subtitle.length > 0 &&
+                        React.createElement(Card.Subtitle, { as: 'h4' }, subtitle),
+                    React.createElement(Card.Text, { as: "p" }, abstract)),
+                React.createElement(Card.Footer, null,
+                    React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, (readmoreLabel && readmoreLabel.length > 0) ? readmoreLabel : title))));
+    });
+    return React.createElement("div", { className: "card-menu card-menu card-menu-align-".concat(flexform.align, " card-menu-columns-").concat(flexform.columns) }, itemsTemplate);
+};
+
+var ContentElements = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    Text: Text,
+    Html: Html,
+    Textpic: Textpic,
+    Image: Image,
+    ImageLightbox: Image,
+    Div: Div,
+    Shortcut: Shortcut,
+    Textmedia: Textmedia,
+    Uploads: Uploads,
+    Accordion: Accordion,
+    Gallery: Gallery,
+    CardGroup: CardGroup,
+    TextColumns: TextColumns,
+    Quote: Quote,
+    Header: Header,
+    Carousel: Carousel,
+    MenuCardList: MenuCardList,
+    MenuCardDir: MenuCardDir
+});
 
 var BackgroundImage = function (props) {
     if (props.data.appearance.backgroundImage.length < 1) {
@@ -514,102 +768,6 @@ var BackgroundImage = function (props) {
         React.createElement("div", { id: backgroundImageIdentifier, className: backgroundImageClasses, style: { backgroundImage: 'url("' + backgroundImageObject.publicUrl + '")' } }));
 };
 
-var HeaderLink = function (props) {
-    if (props.headerLink === null || typeof props.headerLink === 'string') {
-        return React.createElement(React.Fragment, null, props.children);
-    }
-    return React.createElement("a", { href: props.headerLink.url }, props.children);
-};
-
-var Header = function (props) {
-    switch (props.layout) {
-        case 1:
-            return React.createElement("h1", { className: props.class + ' ' + props.positionClass },
-                React.createElement(HeaderLink, { headerLink: props.headerLink },
-                    React.createElement("span", null, props.header)));
-        case 3:
-            return React.createElement("h3", { className: props.class + ' ' + props.positionClass },
-                React.createElement(HeaderLink, { headerLink: props.headerLink },
-                    React.createElement("span", null, props.header)));
-        case 4:
-            return React.createElement("h4", { className: props.class + ' ' + props.positionClass },
-                React.createElement(HeaderLink, { headerLink: props.headerLink },
-                    React.createElement("span", null, props.header)));
-        case 5:
-            return React.createElement("h5", { className: props.class + ' ' + props.positionClass },
-                React.createElement(HeaderLink, { headerLink: props.headerLink },
-                    React.createElement("span", null, props.header)));
-        case 100:
-            return React.createElement(React.Fragment, null);
-        default:
-            return React.createElement("h2", { className: props.class + ' ' + props.positionClass },
-                React.createElement(HeaderLink, { headerLink: props.headerLink },
-                    React.createElement("span", null, props.header)));
-    }
-};
-Header.defaultProps = {
-    class: 'element-header',
-    headerLink: null
-};
-
-var Subheader = function (props) {
-    switch (props.layout) {
-        case 1:
-            return React.createElement("h2", { className: props.class + ' ' + props.positionClass },
-                React.createElement(HeaderLink, { headerLink: props.headerLink },
-                    React.createElement("span", null, props.header)));
-        case 3:
-            return React.createElement("h4", { className: props.class + ' ' + props.positionClass },
-                React.createElement(HeaderLink, { headerLink: props.headerLink },
-                    React.createElement("span", null, props.header)));
-        case 4:
-            return React.createElement("h5", { className: props.class + ' ' + props.positionClass },
-                React.createElement(HeaderLink, { headerLink: props.headerLink },
-                    React.createElement("span", null, props.header)));
-        case 5:
-            return React.createElement("h6", { className: props.class + ' ' + props.positionClass },
-                React.createElement(HeaderLink, { headerLink: props.headerLink },
-                    React.createElement("span", null, props.header)));
-        case 100:
-            return React.createElement(React.Fragment, null);
-        default:
-            return React.createElement("h3", { className: props.class + ' ' + props.positionClass },
-                React.createElement(HeaderLink, { headerLink: props.headerLink },
-                    React.createElement("span", null, props.header)));
-    }
-};
-Subheader.defaultProps = {
-    class: 'element-subheader',
-    headerLink: null
-};
-
-var HeaderDate = function (props) {
-    //TODO: Date initialisieren, toLocaleDateString...
-    return React.createElement("p", { className: props.positionClass }, props.date);
-};
-
-var AllHeader = function (props) {
-    var content = React.createElement(React.Fragment, null);
-    if (props.data.content.hasOwnProperty('headerLayout') && props.data.content.headerLayout !== 100) {
-        if (props.data.content.header !== '' || props.data.content.subheader !== '' || props.data.content.date !== '') {
-            content = React.createElement("div", { className: "frame-header" },
-                props.data.content.header !== '' ?
-                    React.createElement(Header, { layout: props.data.content.headerLayout, positionClass: props.data.content.headerPosition ? 'text-' + props.data.content.headerPosition : '', header: props.data.content.header, headerLink: props.data.content.headerLink !== '' ? props.data.content.headerLink : null })
-                    :
-                        null,
-                props.data.content.subheader !== '' ?
-                    React.createElement(Subheader, { layout: props.data.content.headerLayout, positionClass: props.data.content.headerPosition ? 'text-' + props.data.content.headerPosition : '', header: props.data.content.subheader, headerLink: props.data.content.headerLink !== '' ? props.data.content.headerLink : null })
-                    :
-                        null,
-                props.data.content.date !== '' ?
-                    React.createElement(HeaderDate, { date: props.data.content.date, positionClass: props.data.content.headerPosition ? 'text-' + props.data.content.headerPosition : '' })
-                    :
-                        null);
-        }
-    }
-    return content;
-};
-
 //Data is ContentData
 var Layout0 = function (props) {
     var frameClass = 'frame-' + props.data.appearance.frameClass;
@@ -621,7 +779,7 @@ var Layout0 = function (props) {
     var content;
     if (props.data.appearance.frameClass !== 'none') {
         var backgroundImageClass = (props.data.appearance.backgroundImage.length > 0 ? 'frame-has-backgroundimage' : 'frame-no-backgroundimage');
-        content = React.createElement("div", { id: "c" + props.data.id, className: "frame " +
+        content = React.createElement("div", { id: "c" + props.data.id, className: "frame frame-size-default " +
                 frameClass + " " +
                 typeClass + " " +
                 layoutClass + " " +
@@ -633,7 +791,6 @@ var Layout0 = function (props) {
             React.createElement("div", { className: "frame-container" },
                 React.createElement("div", { className: "frame-inner" },
                     props.data._localizedUid ? React.createElement("a", { id: "c" + props.data._localizedUid }) : null,
-                    React.createElement(AllHeader, { data: props.data }),
                     props.children)));
     }
     else {
@@ -641,7 +798,6 @@ var Layout0 = function (props) {
             React.createElement("a", { id: "c" + props.data.id }),
             props.data._localizedUid ? React.createElement("a", { id: "c" + props.data._localizedUid }) : null,
             props.data.appearance.spaceBefore ? React.createElement("div", { className: spaceBeforeClass }) : null,
-            React.createElement(AllHeader, { data: props.data }),
             props.children,
             props.data.appearance.spaceAfter ? React.createElement("div", { className: spaceAfterClass }) : null);
     }
@@ -906,20 +1062,23 @@ var contentElementTemplates = {
             headlessContentData.type,
             " has no Template");
     },
-    text: function (headlessContentData) { return React.createElement(Text, { data: headlessContentData.content }); },
-    html: function (headlessContentData) { return React.createElement(Html, { data: headlessContentData.content }); },
-    textpic: function (headlessContentData) { return React.createElement(Textpic, { data: headlessContentData.content }); },
-    image: function (headlessContentData) { return React.createElement(Image, { data: headlessContentData.content }); },
-    shortcut: function (headlessContentData) { return React.createElement(Shortcut, { data: headlessContentData.content }); },
-    div: function (headlessContentData) { return React.createElement(Div, { data: headlessContentData.content }); },
-    uploads: function (headlessContentData) { return React.createElement(Uploads, { data: headlessContentData.content }); },
+    text: function (headlessContentData) { return React.createElement(Text, { data: headlessContentData }); },
+    html: function (headlessContentData) { return React.createElement(Html, { data: headlessContentData }); },
+    textpic: function (headlessContentData) { return React.createElement(Textpic, { data: headlessContentData }); },
+    image: function (headlessContentData) { return React.createElement(Image, { data: headlessContentData }); },
+    shortcut: function (headlessContentData) { return React.createElement(Shortcut, { data: headlessContentData }); },
+    div: function (headlessContentData) { return React.createElement(Div, { data: headlessContentData }); },
+    uploads: function (headlessContentData) { return React.createElement(Uploads, { data: headlessContentData }); },
     accordion: function (headlessContentData) { return React.createElement(Accordion, { data: headlessContentData }); },
-    gallery: function (headlessContentData) { return React.createElement(Gallery, { data: headlessContentData.content }); },
-    textmedia: function (headlessContentData) { return React.createElement(Textmedia, { data: headlessContentData.content }); },
+    gallery: function (headlessContentData) { return React.createElement(Gallery, { data: headlessContentData }); },
+    textmedia: function (headlessContentData) { return React.createElement(Textmedia, { data: headlessContentData }); },
     card_group: function (headlessContentData) { return React.createElement(CardGroup, { data: headlessContentData }); },
-    textcolumn: function (headlessContentData) { return React.createElement(TextColumns, { data: headlessContentData.content }); },
-    quote: function (headlessContentData) { return React.createElement(Quote, { data: headlessContentData.content }); },
-    header: function (headlessContentData) { return React.createElement(Header$1, { data: headlessContentData.content }); },
+    textcolumn: function (headlessContentData) { return React.createElement(TextColumns, { data: headlessContentData }); },
+    quote: function (headlessContentData) { return React.createElement(Quote, { data: headlessContentData }); },
+    header: function (headlessContentData) { return React.createElement(Header, { data: headlessContentData }); },
+    carousel: function (headlessContentData) { return React.createElement(Carousel, { data: headlessContentData }); },
+    menu_card_list: function (headlessContentData) { return React.createElement(MenuCardList, { data: headlessContentData }); },
+    menu_card_dir: function (headlessContentData) { return React.createElement(MenuCardDir, { data: headlessContentData }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
@@ -950,5 +1109,5 @@ TYPO3Page.defaultProps = {
 };
 var TYPO3Page$1 = React.memo(TYPO3Page);
 
-export { Content, Page, section as Section, TYPO3Page$1 as TYPO3Page, TYPO3PageContext };
+export { Content, ContentElements, Page, section as Section, TYPO3Page$1 as TYPO3Page, TYPO3PageContext };
 //# sourceMappingURL=index.es.js.map

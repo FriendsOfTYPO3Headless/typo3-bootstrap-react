@@ -24,7 +24,7 @@ const ImageCols: React.FC<{ data: any }> = (props) => {
         {Object.keys(props.data.gallery.rows).map((rowKey) => {
             return Object.keys(props.data.gallery.rows[rowKey].columns).map((columnKey) => {
                 const file = props.data.gallery.rows[rowKey].columns[columnKey]
-                const image = <Image data={props.data} file={file} />
+                const image = <Image file={file} />
                 return <Col className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}
                             key={rowKey + '-' + columnKey}>
                     {props.data.enlargeImageOnClick ?

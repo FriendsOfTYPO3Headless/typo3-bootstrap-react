@@ -13,6 +13,9 @@ import CardGroup from "./ContentElements/CardGroup";
 import TextColumns from "./ContentElements/TextColumns";
 import Quote from "./ContentElements/Quote";
 import Header from "./ContentElements/Header";
+import Carousel from "./ContentElements/Carousel";
+import MenuCardList from "./ContentElements/MenuCardList";
+import MenuCardDir from './ContentElements/MenuCardDir'
 //import ImageModal from './ContentElements/ImageModal'
 //import MenuSitemap from './ContentElements/MenuSitemap'
 
@@ -74,4 +77,7 @@ export {
     TextColumns,
     Quote,
     Header,
+    Carousel,
+    MenuCardList,
+    MenuCardDir
 }

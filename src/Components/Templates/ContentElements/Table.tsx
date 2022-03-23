@@ -1,6 +1,7 @@
 import React from 'react';
+import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
 
-const Table: React.FC<{ data: any }> = props => {
+const Table: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
 
 let tableCaption =    props.data.tableCaption;
     return <div className="table">
