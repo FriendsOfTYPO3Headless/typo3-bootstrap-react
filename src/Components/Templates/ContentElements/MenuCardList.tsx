@@ -38,6 +38,7 @@ const MenuCardList: React.FC<TYPO3BootstrapContentElementBaseInterface> = props 
                         <Card.Subtitle as={'h4'}>{subtitle}</Card.Subtitle>
                     }
                     <Card.Text as={"p"}>{abstract}</Card.Text>
+                    {props.children}
                 </Card.Body>
                 <Card.Footer>
                     <Card.Link href={link} target={target} title={title} data-toggle={"tooltip"}>
