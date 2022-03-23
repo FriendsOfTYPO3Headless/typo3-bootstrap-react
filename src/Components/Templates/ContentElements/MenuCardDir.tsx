@@ -10,11 +10,16 @@ const MenuCardDir: React.FC<TYPO3BootstrapContentElementBaseInterface> = props =
         const {title, subtitle, abstract, link, target, active, current, spacer, hasSubpages, media, nav_icon} = item
         return <div key={link} className="card-menu-item">
             <Card>
-                {media && media.length > 0 && <Card.Img  variant={"top"} src={media[0].publicUrl}/>}
+                {media && media.length > 0 &&
+                    <Card.Link href={link} target={target} title={title} data-toggle={"tooltip"}>
+                        <Card.Img variant={"top"} src={media[0].publicUrl}/>
+                    </Card.Link>
+                }
                 <Card.Body>
                     {title && title.length > 0 &&
                         <Card.Title as={'h3'}>
-                            <Card.Link href={link} target={target} title={title} data-toggle={"tooltip"}>{title}</Card.Link>
+                            <Card.Link href={link} target={target} title={title}
+                                       data-toggle={"tooltip"}>{title}</Card.Link>
                         </Card.Title>
                     }
                     {subtitle && subtitle.length > 0 &&
@@ -24,7 +29,7 @@ const MenuCardDir: React.FC<TYPO3BootstrapContentElementBaseInterface> = props =
                 </Card.Body>
                 <Card.Footer>
                     <Card.Link href={link} target={target} title={title} data-toggle={"tooltip"}>
-                        {(readmoreLabel && readmoreLabel.length > 0)? readmoreLabel: title}
+                        {(readmoreLabel && readmoreLabel.length > 0) ? readmoreLabel : title}
                     </Card.Link>
                 </Card.Footer>
             </Card>

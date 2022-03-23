@@ -714,7 +714,9 @@ var MenuCardList = function (props) {
         var title = item.title, subtitle = item.subtitle, abstract = item.abstract, link = item.link, target = item.target; item.active; item.current; item.spacer; item.hasSubpages; var thumbnail = item.thumbnail; item.nav_icon;
         return React__default["default"].createElement("div", { key: link, className: "card-menu-item" },
             React__default["default"].createElement(RBT.Card, null,
-                thumbnail && thumbnail.length > 0 && React__default["default"].createElement(RBT.Card.Img, { variant: "top", src: thumbnail[0].publicUrl }),
+                thumbnail && thumbnail.length > 0 &&
+                    React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" },
+                        React__default["default"].createElement(RBT.Card.Img, { variant: "top", src: thumbnail[0].publicUrl })),
                 React__default["default"].createElement(RBT.Card.Body, null,
                     title && title.length > 0 &&
                         React__default["default"].createElement(RBT.Card.Title, { as: 'h3' },
@@ -735,7 +737,9 @@ var MenuCardDir = function (props) {
         var title = item.title, subtitle = item.subtitle, abstract = item.abstract, link = item.link, target = item.target; item.active; item.current; item.spacer; item.hasSubpages; var media = item.media; item.nav_icon;
         return React__default["default"].createElement("div", { key: link, className: "card-menu-item" },
             React__default["default"].createElement(RBT.Card, null,
-                media && media.length > 0 && React__default["default"].createElement(RBT.Card.Img, { variant: "top", src: media[0].publicUrl }),
+                media && media.length > 0 &&
+                    React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" },
+                        React__default["default"].createElement(RBT.Card.Img, { variant: "top", src: media[0].publicUrl })),
                 React__default["default"].createElement(RBT.Card.Body, null,
                     title && title.length > 0 &&
                         React__default["default"].createElement(RBT.Card.Title, { as: 'h3' },

@@ -686,7 +686,9 @@ var MenuCardList = function (props) {
         var title = item.title, subtitle = item.subtitle, abstract = item.abstract, link = item.link, target = item.target; item.active; item.current; item.spacer; item.hasSubpages; var thumbnail = item.thumbnail; item.nav_icon;
         return React.createElement("div", { key: link, className: "card-menu-item" },
             React.createElement(Card, null,
-                thumbnail && thumbnail.length > 0 && React.createElement(Card.Img, { variant: "top", src: thumbnail[0].publicUrl }),
+                thumbnail && thumbnail.length > 0 &&
+                    React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" },
+                        React.createElement(Card.Img, { variant: "top", src: thumbnail[0].publicUrl })),
                 React.createElement(Card.Body, null,
                     title && title.length > 0 &&
                         React.createElement(Card.Title, { as: 'h3' },
@@ -707,7 +709,9 @@ var MenuCardDir = function (props) {
         var title = item.title, subtitle = item.subtitle, abstract = item.abstract, link = item.link, target = item.target; item.active; item.current; item.spacer; item.hasSubpages; var media = item.media; item.nav_icon;
         return React.createElement("div", { key: link, className: "card-menu-item" },
             React.createElement(Card, null,
-                media && media.length > 0 && React.createElement(Card.Img, { variant: "top", src: media[0].publicUrl }),
+                media && media.length > 0 &&
+                    React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" },
+                        React.createElement(Card.Img, { variant: "top", src: media[0].publicUrl })),
                 React.createElement(Card.Body, null,
                     title && title.length > 0 &&
                         React.createElement(Card.Title, { as: 'h3' },
