@@ -416,6 +416,9 @@ const contentElementTemplates = {
     textcolumn: (headlessContentData) => <CE.TextColumns data={headlessContentData}/>,
     quote: (headlessContentData) => <CE.Quote data={headlessContentData}/>,
     header: (headlessContentData) => <CE.Header data={headlessContentData}/>,
+    carousel: (headlessContentData) => <CE.Carousel data={headlessContentData}/>,
+    menu_card_list: (headlessContentData) => <CE.MenuCardList data={headlessContentData}/>,
+    menu_card_dir: (headlessContentData) => <CE.MenuCardDir data={headlessContentData}/>,
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
