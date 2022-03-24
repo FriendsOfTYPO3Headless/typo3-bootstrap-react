@@ -757,30 +757,28 @@ var MenuCardDir = function (props) {
 
 var MenuThumbnailBase = function (props) {
     var _a = props.data, flexform = _a.flexform, content = _a.content;
-    var items = content.items; content.readmoreLabel;
-    var itemsTemplate = items.map(function (item, index) {
-        var title = item.title, subtitle = item.subtitle; item.abstract; var link = item.link, target = item.target; item.active; item.current; item.spacer; item.hasSubpages; var media = item.media; item.nav_icon;
+    var items = content.items;
+    var itemsTemplate = items.map(function (item) {
+        var title = item.title, subtitle = item.subtitle, link = item.link, target = item.target, media = item.media;
         if (!media || media.length <= 0) {
             return React__default["default"].createElement(React__default["default"].Fragment, null);
         }
         return React__default["default"].createElement("div", { key: link, className: "thumbnail-menu-item" },
-            React__default["default"].createElement("div", { className: 'thumbnail-menu-link' },
+            React__default["default"].createElement("a", { href: link, target: target, title: title, "data-toggle": "tooltip", className: 'thumbnail-menu-link' },
                 media && media.length > 0 &&
-                    React__default["default"].createElement("a", { href: link, target: target, title: title, "data-toggle": "tooltip", className: 'thumbnail-menu-link' },
-                        React__default["default"].createElement("div", { className: 'thumbnail-menu-image' },
-                            React__default["default"].createElement(Image$1, { file: media[0] }))),
-                React__default["default"].createElement("div", { className: 'thumbnail-menu-caption' },
-                    React__default["default"].createElement("div", { className: 'thumbnail-menu-caption-inner' },
+                    React__default["default"].createElement("span", { className: 'thumbnail-menu-image' },
+                        React__default["default"].createElement(Image$1, { file: media[0] })),
+                React__default["default"].createElement("span", { className: 'thumbnail-menu-caption' },
+                    React__default["default"].createElement("span", { className: 'thumbnail-menu-caption-inner' },
                         title && title.length > 0 &&
-                            React__default["default"].createElement("h3", { className: 'thumbnail-menu-caption-title' },
-                                React__default["default"].createElement("a", { href: link, target: target, title: title, "data-toggle": "tooltip" }, title)),
+                            React__default["default"].createElement("span", { className: 'h3 thumbnail-menu-caption-title' }, title),
                         subtitle && subtitle.length > 0 &&
-                            React__default["default"].createElement("p", { className: 'thumbnail-menu-caption-subtitle' }, subtitle),
-                        props.children))));
+                            React__default["default"].createElement("p", { className: 'thumbnail-menu-caption-subtitle' }, subtitle)))),
+            props.children);
     });
-    return React__default["default"].createElement("div", { className: "thumbnail-menu thumbnail-menu-align-".concat(flexform.align, " thumbnail-menu-columns-").concat(flexform.columns) },
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
         React__default["default"].createElement(AllHeader, { data: props.data }),
-        itemsTemplate);
+        React__default["default"].createElement("div", { className: "thumbnail-menu thumbnail-menu-align-".concat(flexform.align, " thumbnail-menu-columns-").concat(flexform.columns) }, itemsTemplate));
 };
 
 var ContentElements = /*#__PURE__*/Object.freeze({
