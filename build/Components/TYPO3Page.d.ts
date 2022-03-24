@@ -72,6 +72,8 @@ declare const contentElementTemplates: {
     carousel: (headlessContentData: any) => JSX.Element;
     menu_card_list: (headlessContentData: any) => JSX.Element;
     menu_card_dir: (headlessContentData: any) => JSX.Element;
+    menu_thumbnail_dir: (headlessContentData: any) => JSX.Element;
+    menu_thumbnail_list: (headlessContentData: any) => JSX.Element;
 };
 declare const _default: React.NamedExoticComponent<TYPO3PagePropsInterface>;
 export default _default;
