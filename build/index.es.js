@@ -695,7 +695,8 @@ var MenuCardList = function (props) {
                             React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, title)),
                     subtitle && subtitle.length > 0 &&
                         React.createElement(Card.Subtitle, { as: 'h4' }, subtitle),
-                    React.createElement(Card.Text, { as: "p" }, abstract)),
+                    React.createElement(Card.Text, { as: "p" }, abstract),
+                    props.children),
                 React.createElement(Card.Footer, null,
                     React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, (readmoreLabel && readmoreLabel.length > 0) ? readmoreLabel : title))));
     });
@@ -718,7 +719,8 @@ var MenuCardDir = function (props) {
                             React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, title)),
                     subtitle && subtitle.length > 0 &&
                         React.createElement(Card.Subtitle, { as: 'h4' }, subtitle),
-                    React.createElement(Card.Text, { as: "p" }, abstract)),
+                    React.createElement(Card.Text, { as: "p" }, abstract),
+                    props.children),
                 React.createElement(Card.Footer, null,
                     React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, (readmoreLabel && readmoreLabel.length > 0) ? readmoreLabel : title))));
     });

@@ -4,13 +4,14 @@ import Section from './Components/Partials/Page/Section';
 import Content from './Components/Templates/Content';
 import * as ContentElements from './Components/Templates/ContentElements';
 
-import {TYPO3PagePropsInterface, TYPO3PageHeadlessDataInterface} from "./Components/Interfaces";
+import {TYPO3PagePropsInterface, TYPO3PageHeadlessDataInterface, TYPO3BootstrapContentElementBaseInterface} from "./Components/Interfaces";
 
 export {
     TYPO3Page,
     TYPO3PageContext,
     TYPO3PageHeadlessDataInterface,
     TYPO3PagePropsInterface,
+    TYPO3BootstrapContentElementBaseInterface,
     Page,
     Section,
     Content,

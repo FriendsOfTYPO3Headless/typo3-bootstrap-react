@@ -723,7 +723,8 @@ var MenuCardList = function (props) {
                             React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, title)),
                     subtitle && subtitle.length > 0 &&
                         React__default["default"].createElement(RBT.Card.Subtitle, { as: 'h4' }, subtitle),
-                    React__default["default"].createElement(RBT.Card.Text, { as: "p" }, abstract)),
+                    React__default["default"].createElement(RBT.Card.Text, { as: "p" }, abstract),
+                    props.children),
                 React__default["default"].createElement(RBT.Card.Footer, null,
                     React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, (readmoreLabel && readmoreLabel.length > 0) ? readmoreLabel : title))));
     });
@@ -746,7 +747,8 @@ var MenuCardDir = function (props) {
                             React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, title)),
                     subtitle && subtitle.length > 0 &&
                         React__default["default"].createElement(RBT.Card.Subtitle, { as: 'h4' }, subtitle),
-                    React__default["default"].createElement(RBT.Card.Text, { as: "p" }, abstract)),
+                    React__default["default"].createElement(RBT.Card.Text, { as: "p" }, abstract),
+                    props.children),
                 React__default["default"].createElement(RBT.Card.Footer, null,
                     React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, (readmoreLabel && readmoreLabel.length > 0) ? readmoreLabel : title))));
     });
