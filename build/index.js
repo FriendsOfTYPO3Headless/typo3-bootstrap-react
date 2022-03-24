@@ -747,10 +747,10 @@ var MenuCardDir = function (props) {
 var MenuThumbnailBase = function (props) {
     var _a = props.data, flexform = _a.flexform, content = _a.content;
     var items = content.items;
-    var itemsTemplate = items.map(function (item) {
+    var itemsTemplate = items.map(function (item, index) {
         var title = item.title, subtitle = item.subtitle, link = item.link, target = item.target, media = item.media;
         if (!media || media.length <= 0) {
-            return React__default["default"].createElement(React__default["default"].Fragment, null);
+            return React__default["default"].createElement(React__default["default"].Fragment, { key: "".concat(title, "-").concat(index) });
         }
         return React__default["default"].createElement("div", { key: link, className: "thumbnail-menu-item" },
             React__default["default"].createElement("a", { href: link, target: target, title: title, "data-toggle": "tooltip", className: 'thumbnail-menu-link' },

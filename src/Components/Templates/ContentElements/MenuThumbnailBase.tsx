@@ -6,10 +6,10 @@ import Image from "../../Partials/ContentElements/Media/Type/Image"
 const MenuThumbnailBase: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
     const {flexform, content} = props.data
     const {items} = content
-    const itemsTemplate = items.map((item) => {
+    const itemsTemplate = items.map((item,index) => {
         const {title, subtitle, link, target, media} = item
         if (!media || media.length <= 0) {
-            return <></>
+            return <React.Fragment key={`${title}-${index}`}/>
         }
         return <div key={link} className="thumbnail-menu-item">
             <a href={link} target={target} title={title}
