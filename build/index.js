@@ -707,11 +707,11 @@ var Carousel = function (props) {
         React__default["default"].createElement(RBT__namespace.Carousel, { fade: flexform.transition === 'fade', interval: flexform.interval, wrap: flexform.wrap }, itemsTemplate));
 };
 
-var MenuCardList = function (props) {
+var MenuCardDir$1 = function (props) {
     var _a = props.data, flexform = _a.flexform, content = _a.content;
     var items = content.items, readmoreLabel = content.readmoreLabel;
-    var itemsTemplate = items.map(function (item, index) {
-        var title = item.title, subtitle = item.subtitle, abstract = item.abstract, link = item.link, target = item.target; item.active; item.current; item.spacer; item.hasSubpages; var thumbnail = item.thumbnail; item.nav_icon;
+    var itemsTemplate = items.map(function (item) {
+        var title = item.title, subtitle = item.subtitle, abstract = item.abstract, link = item.link, target = item.target, thumbnail = item.thumbnail;
         return React__default["default"].createElement("div", { key: link, className: "card-menu-item" },
             React__default["default"].createElement(RBT.Card, null,
                 thumbnail && thumbnail.length > 0 &&
@@ -728,31 +728,20 @@ var MenuCardList = function (props) {
                 React__default["default"].createElement(RBT.Card.Footer, null,
                     React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, (readmoreLabel && readmoreLabel.length > 0) ? readmoreLabel : title))));
     });
-    return React__default["default"].createElement("div", { className: "card-menu card-menu card-menu-align-".concat(flexform.align, " card-menu-columns-").concat(flexform.columns) }, itemsTemplate);
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(AllHeader, { data: props.data }),
+        React__default["default"].createElement("div", { className: "card-menu card-menu card-menu-align-".concat(flexform.align, " card-menu-columns-").concat(flexform.columns) }, itemsTemplate));
+};
+
+var MenuCardList = function (props) {
+    return React__default["default"].createElement(MenuCardDir$1, __assign({}, props));
 };
 
 var MenuCardDir = function (props) {
-    var _a = props.data, flexform = _a.flexform, content = _a.content;
-    var items = content.items, readmoreLabel = content.readmoreLabel;
-    var itemsTemplate = items.map(function (item, index) {
-        var title = item.title, subtitle = item.subtitle, abstract = item.abstract, link = item.link, target = item.target; item.active; item.current; item.spacer; item.hasSubpages; var media = item.media; item.nav_icon;
-        return React__default["default"].createElement("div", { key: link, className: "card-menu-item" },
-            React__default["default"].createElement(RBT.Card, null,
-                media && media.length > 0 &&
-                    React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" },
-                        React__default["default"].createElement(RBT.Card.Img, { variant: "top", src: media[0].publicUrl })),
-                React__default["default"].createElement(RBT.Card.Body, null,
-                    title && title.length > 0 &&
-                        React__default["default"].createElement(RBT.Card.Title, { as: 'h3' },
-                            React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, title)),
-                    subtitle && subtitle.length > 0 &&
-                        React__default["default"].createElement(RBT.Card.Subtitle, { as: 'h4' }, subtitle),
-                    React__default["default"].createElement(RBT.Card.Text, { as: "p" }, abstract),
-                    props.children),
-                React__default["default"].createElement(RBT.Card.Footer, null,
-                    React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, (readmoreLabel && readmoreLabel.length > 0) ? readmoreLabel : title))));
+    props.data.content.items = props.data.content.items.map(function (item) {
+        return __assign(__assign({}, item), { thumbnail: item.media });
     });
-    return React__default["default"].createElement("div", { className: "card-menu card-menu card-menu-align-".concat(flexform.align, " card-menu-columns-").concat(flexform.columns) }, itemsTemplate);
+    return React__default["default"].createElement(MenuCardDir$1, __assign({}, props));
 };
 
 var MenuThumbnailBase = function (props) {
