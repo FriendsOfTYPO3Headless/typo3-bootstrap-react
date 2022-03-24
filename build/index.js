@@ -757,24 +757,26 @@ var MenuCardDir = function (props) {
 
 var MenuThumbnailBase = function (props) {
     var _a = props.data, flexform = _a.flexform, content = _a.content;
-    var items = content.items, readmoreLabel = content.readmoreLabel;
+    var items = content.items; content.readmoreLabel;
     var itemsTemplate = items.map(function (item, index) {
-        var title = item.title, subtitle = item.subtitle, abstract = item.abstract, link = item.link, target = item.target; item.active; item.current; item.spacer; item.hasSubpages; var media = item.media; item.nav_icon;
-        return React__default["default"].createElement(RBT.Card, { key: link, className: "thumbnail-menu-item" },
-            media && media.length > 0 &&
-                React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip", className: 'thumbnail-menu-link' },
-                    React__default["default"].createElement(RBT.Card.Img, { variant: "top", className: 'thumbnail-menu-image', src: media[0].publicUrl })),
-            React__default["default"].createElement(RBT.Card.ImgOverlay, { className: 'thumbnail-menu-caption' },
-                React__default["default"].createElement(RBT.Card.Body, { className: 'thumbnail-menu-caption-inner' },
-                    title && title.length > 0 &&
-                        React__default["default"].createElement(RBT.Card.Title, { as: 'h3', className: 'thumbnail-menu-caption-title' },
-                            React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, title)),
-                    subtitle && subtitle.length > 0 &&
-                        React__default["default"].createElement(RBT.Card.Subtitle, { as: 'h4', className: 'thumbnail-menu-caption-subtitle' }, subtitle),
-                    abstract && React__default["default"].createElement(RBT.Card.Text, { as: "p" }, abstract),
-                    props.children),
-                React__default["default"].createElement(RBT.Card.Footer, null,
-                    React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, (readmoreLabel && readmoreLabel.length > 0) ? readmoreLabel : title))));
+        var title = item.title, subtitle = item.subtitle; item.abstract; var link = item.link, target = item.target; item.active; item.current; item.spacer; item.hasSubpages; var media = item.media; item.nav_icon;
+        if (!media || media.length <= 0) {
+            return React__default["default"].createElement(React__default["default"].Fragment, null);
+        }
+        return React__default["default"].createElement("div", { key: link, className: "thumbnail-menu-item" },
+            React__default["default"].createElement("div", { className: 'thumbnail-menu-link' },
+                media && media.length > 0 &&
+                    React__default["default"].createElement("a", { href: link, target: target, title: title, "data-toggle": "tooltip", className: 'thumbnail-menu-link' },
+                        React__default["default"].createElement("div", { className: 'thumbnail-menu-image' },
+                            React__default["default"].createElement(Image$1, { file: media[0] }))),
+                React__default["default"].createElement("div", { className: 'thumbnail-menu-caption' },
+                    React__default["default"].createElement("div", { className: 'thumbnail-menu-caption-inner' },
+                        title && title.length > 0 &&
+                            React__default["default"].createElement("h3", { className: 'thumbnail-menu-caption-title' },
+                                React__default["default"].createElement("a", { href: link, target: target, title: title, "data-toggle": "tooltip" }, title)),
+                        subtitle && subtitle.length > 0 &&
+                            React__default["default"].createElement("p", { className: 'thumbnail-menu-caption-subtitle' }, subtitle),
+                        props.children))));
     });
     return React__default["default"].createElement("div", { className: "thumbnail-menu thumbnail-menu-align-".concat(flexform.align, " thumbnail-menu-columns-").concat(flexform.columns) },
         React__default["default"].createElement(AllHeader, { data: props.data }),
