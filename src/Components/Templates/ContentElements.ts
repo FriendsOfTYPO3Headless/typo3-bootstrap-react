@@ -7,12 +7,16 @@ import Textmedia from './ContentElements/Textmedia'
 import Shortcut from './ContentElements/Shortcut'
 import Html from './ContentElements/Html'
 import Uploads from './ContentElements/Uploads'
-import Accordion from "./ContentElements/Accordion";
-import Gallery from "./ContentElements/Gallery";
-import CardGroup from "./ContentElements/CardGroup";
-import TextColumns from "./ContentElements/TextColumns";
-import Quote from "./ContentElements/Quote";
-import Header from "./ContentElements/Header";
+import Accordion from "./ContentElements/Accordion"
+import Gallery from "./ContentElements/Gallery"
+import CardGroup from "./ContentElements/CardGroup"
+import TextColumns from "./ContentElements/TextColumns"
+import Quote from "./ContentElements/Quote"
+import Header from "./ContentElements/Header"
+import Carousel from "./ContentElements/Carousel"
+import MenuCardList from "./ContentElements/MenuCardList"
+import MenuCardDir from './ContentElements/MenuCardDir'
+import MenuThumbnailBase from "./ContentElements/MenuThumbnailBase"
 //import ImageModal from './ContentElements/ImageModal'
 import MenuSitemap from './ContentElements/MenuSitemap'
 
@@ -42,7 +46,7 @@ import MenuSection from './ContentElements/MenuSection'*/
 
 
 export {
-  //  ImageModal,
+    //  ImageModal,
     Text,
     Html,
     Textpic,
@@ -69,7 +73,7 @@ export {
     //MenuSitemap,
     //  Table,
     Shortcut,
-   Textmedia,
+    Textmedia,
     Uploads,
     Accordion,
     Gallery,
@@ -77,4 +81,8 @@ export {
     TextColumns,
     Quote,
     Header,
+    Carousel,
+    MenuCardList,
+    MenuCardDir,
+    MenuThumbnailBase,
 }

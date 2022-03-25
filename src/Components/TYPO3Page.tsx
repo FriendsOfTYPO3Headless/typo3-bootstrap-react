@@ -59,13 +59,13 @@ const pageTemplates = {
                     <Content colPos={'8'}/>
                 </Col>
             </Row>
-            <section className="section section-default">
+            <div className="section section-default">
                 <Row>
                     <Col>
                         <Content colPos={'0'}/>
                     </Col>
                 </Row>
-            </section>
+            </div>
             <Row>
                 <Col>
                     <Content colPos={'9'}/>
@@ -90,13 +90,13 @@ const pageTemplates = {
                     <Content colPos={'8'}/>
                 </Col>
             </Row>
-            <section className="section section-default">
+            <div className="section section-default">
                 <Row>
                     <Col>
                         <Content colPos={'0'}/>
                     </Col>
                 </Row>
-            </section>
+            </div>
             <Row>
                 <Col>
                     <Content colPos={'9'}/>
@@ -119,7 +119,7 @@ const pageTemplates = {
                 </Col>
             </Row>
 
-            <section className="section section-default">
+            <div className="section section-default">
                 <Container>
                     <Row>
                         <Col md="8" as="main" className=" maincontent-wrap" role="main">
@@ -130,7 +130,7 @@ const pageTemplates = {
                         </Col>
                     </Row>
                 </Container>
-            </section>
+            </div>
             <Row>
                 <Col>
                     <Content colPos={'9'}/>
@@ -154,7 +154,7 @@ const pageTemplates = {
                     <Content colPos={'8'}/>
                 </Col>
             </Row>
-            <section className="section section-default">
+            <div className="section section-default">
                 <Container>
                     <Row>
                         <Col md="8" as="main" className=" maincontent-wrap" role="main">
@@ -165,7 +165,7 @@ const pageTemplates = {
                         </Col>
                     </Row>
                 </Container>
-            </section>
+            </div>
 
             <Row>
                 <Col>
@@ -189,7 +189,7 @@ const pageTemplates = {
                     <Content colPos={'8'}/>
                 </Col>
             </Row>
-            <section className="section section-default">
+            <div className="section section-default">
                 <Container>
                     <Row>
                         <Col md="6" as="main" className=" maincontent-wrap" role="main">
@@ -200,7 +200,7 @@ const pageTemplates = {
                         </Col>
                     </Row>
                 </Container>
-            </section>
+            </div>
 
             <Row>
                 <Col>
@@ -222,7 +222,7 @@ const pageTemplates = {
                     <Content colPos={'8'}/>
                 </Col>
             </Row>
-            <section className="section section-default">
+            <div className="section section-default">
                 <Container>
                     <Row>
                         <Col lg="6" as="main" className=" maincontent-wrap " role="main">
@@ -236,7 +236,7 @@ const pageTemplates = {
                         </Col>
                     </Row>
                 </Container>
-            </section>
+            </div>
 
             <Row>
                 <Col>
@@ -262,15 +262,15 @@ const pageTemplates = {
                 </Col>
             </Row>
 
-            <section className="section section-default">
+            <div className="section section-default">
                 <Row>
                     <Col>
                         <Content colPos={'0'}/>
                     </Col>
                 </Row>
-            </section>
+            </div>
 
-            <section className="section section-primary">
+            <div className="section section-primary">
                 <Container>
                     <Row>
                         <Col className="section-column-half " md="6">
@@ -283,8 +283,8 @@ const pageTemplates = {
                         </Col>
                     </Row>
                 </Container>
-            </section>
-            <section className="section section-primary">
+            </div>
+            <div className="section section-primary">
                 <Container>
                     <Row>
                         <Col className="section-column-half " md="6">
@@ -297,15 +297,15 @@ const pageTemplates = {
                         </Col>
                     </Row>
                 </Container>
-            </section>
-            <section className="section section-default">
+            </div>
+            <div className="section section-default">
                 <Row>
                     <Col>
                         <Content colPos={'4'}/>
                     </Col>
                 </Row>
-            </section>
-            <section className="section section-light">
+            </div>
+            <div className="section section-light">
                 <Container>
                     <Row>
                         <Col className="section-column-half " md="6">
@@ -318,8 +318,8 @@ const pageTemplates = {
                         </Col>
                     </Row>
                 </Container>
-            </section>
-            <section className="section section-light">
+            </div>
+            <div className="section section-light">
                 <Container>
                     <Row>
                         <Col className="section-column-half " md="6">
@@ -332,7 +332,7 @@ const pageTemplates = {
                         </Col>
                     </Row>
                 </Container>
-            </section>
+            </div>
             <Row>
                 <Col>
                     <Content colPos={'9'}/>
@@ -355,7 +355,7 @@ const pageTemplates = {
                     <Content colPos={'8'}/>
                 </Col>
             </Row>
-            <section className="section section-default">
+            <div className="section section-default">
                 <Container>
                     <Row>
                         <Col className="section-column-third " md="4">
@@ -369,14 +369,14 @@ const pageTemplates = {
                         </Col>
                     </Row>
                 </Container>
-            </section>
-            <section className="section section-light">
+            </div>
+            <div className="section section-light">
                 <Row>
                     <Col>
                         <Content colPos={'0'}/>
                     </Col>
                 </Row>
-            </section>
+            </div>
             <Row>
                 <Col>
                     <Content colPos={'9'}/>
@@ -415,6 +415,11 @@ const contentElementTemplates = {
     textcolumn: (headlessContentData) => <CE.TextColumns data={headlessContentData}/>,
     quote: (headlessContentData) => <CE.Quote data={headlessContentData}/>,
     header: (headlessContentData) => <CE.Header data={headlessContentData}/>,
+    carousel: (headlessContentData) => <CE.Carousel data={headlessContentData}/>,
+    menu_card_list: (headlessContentData) => <CE.MenuCardList data={headlessContentData}/>,
+    menu_card_dir: (headlessContentData) => <CE.MenuCardDir data={headlessContentData}/>,
+    menu_thumbnail_dir: (headlessContentData) => <CE.MenuThumbnailBase data={headlessContentData}/>,
+    menu_thumbnail_list: (headlessContentData) => <CE.MenuThumbnailBase data={headlessContentData}/>,
     form_formframework: (headlessContentData) => <CE.FormFormFramework data={headlessContentData.content}/>
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>

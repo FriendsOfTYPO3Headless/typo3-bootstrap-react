@@ -2,7 +2,7 @@ import React from "react"
 import FigureImage from "react-bootstrap/FigureImage";
 
 export const Image: React.FC<IImageCompomentProperties> = (props) => {
-    const {file} = props
+    const {file, className} = props
     const crops = Object.keys(file.properties.crop)
     const sources = crops.map((cropIdentifier: string, index: number) => {
         let src: string
@@ -32,10 +32,15 @@ export const Image: React.FC<IImageCompomentProperties> = (props) => {
         return <source key={index} srcSet={src} media={media}/>
     })
 
+    let cssClasses= 'img-fluid'
+    if(className) {
+        cssClasses += ' ' + className
+    }
+
     return <picture>
         {sources}
         <FigureImage loading="lazy"
-                     className={'img-fluid'}
+                     className={cssClasses}
                      src={file.publicUrl} title={file.properties.title}
                      alt={file.properties.alternative}
         />
