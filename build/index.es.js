@@ -485,7 +485,7 @@ var Type = function (props) {
     var fileType = file.properties.type;
     if (!isNaN(+file.properties.type)) {
         var fileExtension_1 = file.properties.filename.split('.').pop();
-        if (['jpg', 'png'].some(function (type) { return type === fileExtension_1; })) {
+        if (['jpg', 'png', 'svg'].some(function (type) { return type === fileExtension_1; })) {
             fileType = 'image';
         }
     }
@@ -1129,5 +1129,5 @@ TYPO3Page.defaultProps = {
 };
 var TYPO3Page$1 = React.memo(TYPO3Page);
 
-export { Content, ContentElements, Page, section as Section, TYPO3Page$1 as TYPO3Page, TYPO3PageContext };
+export { Content, ContentElements, Type as MediaType, Page, section as Section, TYPO3Page$1 as TYPO3Page, TYPO3PageContext };
 //# sourceMappingURL=index.es.js.map

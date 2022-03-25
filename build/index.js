@@ -513,7 +513,7 @@ var Type = function (props) {
     var fileType = file.properties.type;
     if (!isNaN(+file.properties.type)) {
         var fileExtension_1 = file.properties.filename.split('.').pop();
-        if (['jpg', 'png'].some(function (type) { return type === fileExtension_1; })) {
+        if (['jpg', 'png', 'svg'].some(function (type) { return type === fileExtension_1; })) {
             fileType = 'image';
         }
     }
@@ -1159,6 +1159,7 @@ var TYPO3Page$1 = React__default["default"].memo(TYPO3Page);
 
 exports.Content = Content;
 exports.ContentElements = ContentElements;
+exports.MediaType = Type;
 exports.Page = Page;
 exports.Section = section;
 exports.TYPO3Page = TYPO3Page$1;
