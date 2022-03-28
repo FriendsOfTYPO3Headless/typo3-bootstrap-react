@@ -1,6 +1,6 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import * as RBT from 'react-bootstrap';
-import { Figure, Col, Row, Alert, Accordion as Accordion$1, Card, Form, Button, Container } from 'react-bootstrap';
+import { Figure, Col, Row, Alert, Accordion as Accordion$1, Card, Container } from 'react-bootstrap';
 import Lightbox from 'react-image-lightbox';
 import FigureImage from 'react-bootstrap/FigureImage';
 
@@ -480,60 +480,12 @@ var __assign = function() {
     return __assign.apply(this, arguments);
 };
 
-function __awaiter(thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-}
-
-function __generator(thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-}
-
-function __spreadArray(to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-}
-
 var Type = function (props) {
     var file = props.file; props.data;
     var fileType = file.properties.type;
     if (!isNaN(+file.properties.type)) {
         var fileExtension_1 = file.properties.filename.split('.').pop();
-        if (['jpg', 'png', 'svg'].some(function (type) { return type === fileExtension_1; })) {
+        if (['jpg', 'png'].some(function (type) { return type === fileExtension_1; })) {
             fileType = 'image';
         }
     }
@@ -679,7 +631,10 @@ var Quote = function (props) {
 };
 
 var Header = function (props) {
-    return React.createElement("div", { className: "header" });
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement("div", { className: "header" }),
+        props.children);
 };
 
 // import AllHeader from "../../Partials/ContentElements/Header/All"
@@ -724,11 +679,11 @@ var Carousel = function (props) {
         React.createElement(RBT.Carousel, { fade: flexform.transition === 'fade', interval: flexform.interval, wrap: flexform.wrap }, itemsTemplate));
 };
 
-var MenuCardDir$1 = function (props) {
+var MenuCardList = function (props) {
     var _a = props.data, flexform = _a.flexform, content = _a.content;
     var items = content.items, readmoreLabel = content.readmoreLabel;
-    var itemsTemplate = items.map(function (item) {
-        var title = item.title, subtitle = item.subtitle, abstract = item.abstract, link = item.link, target = item.target, thumbnail = item.thumbnail;
+    var itemsTemplate = items.map(function (item, index) {
+        var title = item.title, subtitle = item.subtitle, abstract = item.abstract, link = item.link, target = item.target; item.active; item.current; item.spacer; item.hasSubpages; var thumbnail = item.thumbnail; item.nav_icon;
         return React.createElement("div", { key: link, className: "card-menu-item" },
             React.createElement(Card, null,
                 thumbnail && thumbnail.length > 0 &&
@@ -745,390 +700,31 @@ var MenuCardDir$1 = function (props) {
                 React.createElement(Card.Footer, null,
                     React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, (readmoreLabel && readmoreLabel.length > 0) ? readmoreLabel : title))));
     });
-    return React.createElement(React.Fragment, null,
-        React.createElement(AllHeader, { data: props.data }),
-        React.createElement("div", { className: "card-menu card-menu card-menu-align-".concat(flexform.align, " card-menu-columns-").concat(flexform.columns) }, itemsTemplate));
-};
-
-var MenuCardList = function (props) {
-    return React.createElement(MenuCardDir$1, __assign({}, props));
+    return React.createElement("div", { className: "card-menu card-menu card-menu-align-".concat(flexform.align, " card-menu-columns-").concat(flexform.columns) }, itemsTemplate);
 };
 
 var MenuCardDir = function (props) {
-    props.data.content.items = props.data.content.items.map(function (item) {
-        return __assign(__assign({}, item), { thumbnail: item.media });
-    });
-    return React.createElement(MenuCardDir$1, __assign({}, props));
-};
-
-var MenuThumbnailBase = function (props) {
     var _a = props.data, flexform = _a.flexform, content = _a.content;
-    var items = content.items;
+    var items = content.items, readmoreLabel = content.readmoreLabel;
     var itemsTemplate = items.map(function (item, index) {
-        var title = item.title, subtitle = item.subtitle, link = item.link, target = item.target, media = item.media;
-        if (!media || media.length <= 0) {
-            return React.createElement(React.Fragment, { key: "".concat(title, "-").concat(index) });
-        }
-        return React.createElement("div", { key: link, className: "thumbnail-menu-item" },
-            React.createElement("a", { href: link, target: target, title: title, "data-toggle": "tooltip", className: 'thumbnail-menu-link' },
+        var title = item.title, subtitle = item.subtitle, abstract = item.abstract, link = item.link, target = item.target; item.active; item.current; item.spacer; item.hasSubpages; var media = item.media; item.nav_icon;
+        return React.createElement("div", { key: link, className: "card-menu-item" },
+            React.createElement(Card, null,
                 media && media.length > 0 &&
-                    React.createElement("span", { className: 'thumbnail-menu-image' },
-                        React.createElement(Image$1, { file: media[0] })),
-                React.createElement("span", { className: 'thumbnail-menu-caption' },
-                    React.createElement("span", { className: 'thumbnail-menu-caption-inner' },
-                        title && title.length > 0 &&
-                            React.createElement("span", { className: 'h3 thumbnail-menu-caption-title' }, title),
-                        subtitle && subtitle.length > 0 &&
-                            React.createElement("p", { className: 'thumbnail-menu-caption-subtitle' }, subtitle)))),
-            props.children);
+                    React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" },
+                        React.createElement(Card.Img, { variant: "top", src: media[0].publicUrl })),
+                React.createElement(Card.Body, null,
+                    title && title.length > 0 &&
+                        React.createElement(Card.Title, { as: 'h3' },
+                            React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, title)),
+                    subtitle && subtitle.length > 0 &&
+                        React.createElement(Card.Subtitle, { as: 'h4' }, subtitle),
+                    React.createElement(Card.Text, { as: "p" }, abstract),
+                    props.children),
+                React.createElement(Card.Footer, null,
+                    React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, (readmoreLabel && readmoreLabel.length > 0) ? readmoreLabel : title))));
     });
-    return React.createElement(React.Fragment, null,
-        React.createElement(AllHeader, { data: props.data }),
-        React.createElement("div", { className: "thumbnail-menu thumbnail-menu-align-".concat(flexform.align, " thumbnail-menu-columns-").concat(flexform.columns) }, itemsTemplate));
-};
-
-var FormControlTextarea = function (props) {
-    var _a = props.data, type = _a.type, name = _a.name, defaultValue = _a.defaultValue, label = _a.label, properties = _a.properties;
-    var fluidAdditionalAttributes = properties.fluidAdditionalAttributes, elementDescription = properties.elementDescription;
-    return React.createElement(React.Fragment, null,
-        label.length > 0 && React.createElement(Form.Label, null, label),
-        React.createElement(Form.Control, __assign({}, fluidAdditionalAttributes, { as: type.toLowerCase(), name: name, defaultValue: defaultValue })),
-        elementDescription && React.createElement(Form.Text, { className: 'inline-muted' }, elementDescription));
-};
-
-var Fieldset = function (props) {
-    var _a = props.data, elements = _a.elements, identifier = _a.identifier, label = _a.label;
-    console.log('elements', elements);
-    var fieldSetElements = elements.map(function (element, index) {
-        return React.createElement(FormElement, { element: element, key: "".concat(identifier, "-").concat(element.name, "-").concat(index) });
-    });
-    return React.createElement("fieldset", { name: identifier },
-        label && label.length > 0 && React.createElement("legend", null, label),
-        fieldSetElements);
-};
-
-function CSSstring(string) {
-    var css_json = "{".concat(string
-        .replace(/(\w*:)/g, '$1"') //create json format
-        .replace(/[;]/g, '";')
-        .replace(/(\'{2,})/g, '"')
-        .replace(/;/g, ',')
-        .replace(/(['"])?([a-zA-Z0-9_-]+)(['"])?:/g, '"$2": ')
-        .replace(/,\s*\}/, '}')
-        .replace(/,\s*$/, "")
-        .trim(), "}");
-    var obj = JSON.parse(css_json);
-    var keyValues = Object.keys(obj).map(function (key) {
-        var _a;
-        var camelCased = key.replace(/-[a-z]/g, function (g) { return g[1].toUpperCase(); });
-        return _a = {}, _a[camelCased] = obj[key], _a;
-    });
-    return Object.assign.apply(Object, __spreadArray([{}], keyValues, false));
-}
-var Honeypot = function (props) {
-    var _a = props.data, defaultValue = _a.defaultValue, label = _a.label, name = _a.name, properties = _a.properties;
-    var containerClassAttribute = properties.containerClassAttribute, elementClassAttribute = properties.elementClassAttribute, renderAsHiddenField = properties.renderAsHiddenField, styleAttribute = properties.styleAttribute;
-    return React.createElement("div", { className: containerClassAttribute },
-        label.length > 0 && React.createElement(Form.Label, null, label),
-        React.createElement(Form.Control, { type: renderAsHiddenField.length > 0 ? 'hidden' : 'text', name: name, className: elementClassAttribute, defaultValue: defaultValue, style: CSSstring(styleAttribute) }));
-};
-
-var FormControlBase = function (props) {
-    var _a = props.data, defaultValue = _a.defaultValue, identifier = _a.identifier, label = _a.label, name = _a.name, properties = _a.properties, type = _a.type;
-    var fluidAdditionalAttributes = properties.fluidAdditionalAttributes, elementDescription = properties.elementDescription, validationErrorMessages = properties.validationErrorMessages;
-    console.log('ERROR MESSSAGE', validationErrorMessages);
-    return React.createElement(React.Fragment, null,
-        label.length > 0 && React.createElement(Form.Label, null, label),
-        React.createElement(Form.Control, __assign({}, fluidAdditionalAttributes, { type: type.toLowerCase(), name: name, defaultValue: defaultValue })),
-        validationErrorMessages && validationErrorMessages.map(function (messageObject, index) {
-            console.log('ERROR MESSSAGE', messageObject);
-            return React.createElement(Form.Control.Feedback, { key: "".concat(identifier, "-").concat(index), type: "invalid", tooltip: true }, messageObject.message);
-        }),
-        elementDescription && React.createElement(Form.Text, { className: 'inline-muted' }, elementDescription));
-};
-
-var FormControlHidden = function (props) {
-    props.data.label = '';
-    return React.createElement(FormControlBase, { data: props.data });
-};
-
-var FormControlInput = function (props) {
-    return React.createElement(FormControlBase, { data: props.data });
-};
-
-var FormControlText = function (props) {
-    return React.createElement(FormControlBase, { data: props.data });
-};
-
-var FormControlPassword = function (props) {
-    return React.createElement(FormControlBase, { data: props.data });
-};
-
-var FormControlEmail = function (props) {
-    return React.createElement(FormControlBase, { data: props.data });
-};
-
-var FormControlTelephone = function (props) {
-    return React.createElement(FormControlBase, { data: props.data });
-};
-
-var FormControlUrl = function (props) {
-    return React.createElement(FormControlBase, { data: props.data });
-};
-
-var FormControlNumber = function (props) {
-    return React.createElement(FormControlBase, { data: props.data });
-};
-
-var FormControlDate = function (props) {
-    return React.createElement(FormControlBase, { data: props.data });
-};
-
-var FormControlCheckBase = function (props) {
-    var _a = props.data, defaultValue = _a.defaultValue, identifier = _a.identifier, label = _a.label, name = _a.name, properties = _a.properties, type = _a.type;
-    var fluidAdditionalAttributes = properties.fluidAdditionalAttributes, elementDescription = properties.elementDescription, validationErrorMessages = properties.validationErrorMessages;
-    var options = [{
-            value: "1",
-            key: label
-        }];
-    if (properties.options) {
-        options = Object.keys(properties.options).map(function (value, index) {
-            return {
-                value: value,
-                key: properties.options[value]
-            };
-        });
-    }
-    return React.createElement(React.Fragment, null,
-        options.map(function (option, index) {
-            var selected = defaultValue !== null && defaultValue.includes(option.value) ? option.value : null;
-            return React.createElement(Form.Check, { key: "".concat(identifier, "-").concat(option.value, "-").concat(index) },
-                React.createElement(Form.Check.Input, __assign({}, fluidAdditionalAttributes, { type: type.toLowerCase(), name: name, id: "".concat(name, "-").concat(option.key), defaultValue: option.value, defaultChecked: selected })),
-                React.createElement(Form.Check.Label, { htmlFor: "".concat(name, "-").concat(option.key) }, option.key),
-                validationErrorMessages && validationErrorMessages.map(function (messageObject, index) { return React.createElement(Form.Control.Feedback, { key: "".concat(identifier, "-").concat(index), type: "invalid" }, messageObject.message); }));
-        }),
-        elementDescription && React.createElement(Form.Text, { className: 'inline-muted' }, elementDescription));
-};
-
-var FormControlCheckbox = function (props) {
-    return React.createElement(FormControlCheckBase, { data: props.data });
-};
-
-var FormControlRadioButton = function (props) {
-    return React.createElement(FormControlCheckBase, { data: __assign(__assign({}, props.data), { type: 'radio' }) });
-};
-
-var FormControlMultiCheckbox = function (props) {
-    return React.createElement(FormControlCheckBase, { data: __assign(__assign({}, props.data), { type: 'checkbox' }) });
-};
-
-var FormControlSelectBase = function (props) {
-    var _a = props.data, defaultValue = _a.defaultValue, identifier = _a.identifier, label = _a.label, name = _a.name, properties = _a.properties, multiple = _a.multiple;
-    var options = properties.options, fluidAdditionalAttributes = properties.fluidAdditionalAttributes, prependOptionLabel = properties.prependOptionLabel, validationErrorMessages = properties.validationErrorMessages;
-    var optionTemplate = function () {
-        var template = [];
-        template.push(React.createElement("option", { key: "".concat(identifier, "-0"), value: '' }, prependOptionLabel));
-        Object.keys(options).map(function (optionValue, index) {
-            template.push(React.createElement("option", { key: "".concat(identifier, "-").concat(index + 1), value: optionValue }, options[optionValue]));
-        });
-        return template;
-    };
-    return React.createElement(React.Fragment, null,
-        label.length > 0 && React.createElement(Form.Label, null, label),
-        React.createElement(Form.Select, __assign({}, fluidAdditionalAttributes, { name: name, multiple: multiple, defaultValue: defaultValue }), optionTemplate()),
-        validationErrorMessages && validationErrorMessages.map(function (messageObject, index) {
-            return React.createElement(Form.Control.Feedback, { key: "".concat(identifier, "-").concat(index), type: "invalid" }, messageObject.message);
-        }));
-};
-
-var FormControlMultiSelect = function (props) {
-    return React.createElement(FormControlSelectBase, { data: __assign(__assign({}, props.data), { multiple: true }) });
-};
-
-var FormControlDatePicker = function (props) {
-    return React.createElement(FormControlBase, { data: props.data });
-};
-
-var FormControlFileUpload = function (props) {
-    return React.createElement(FormControlBase, { data: __assign(__assign({}, props.data), { type: 'file' }) });
-};
-
-var FormControlImageUpload = function (props) {
-    return React.createElement(FormControlFileUpload, { data: props.data });
-};
-
-var FormControlAdvancedPassword = function (props) {
-    return React.createElement(FormControlBase, { data: props.data });
-};
-
-var FormControlStaticText = function (props) {
-    return React.createElement(FormControlBase, { data: props.data });
-};
-
-var FormControlSingleSelect = function (props) {
-    return React.createElement(FormControlSelectBase, { data: __assign(__assign({}, props.data), { multiple: false }) });
-};
-
-var ElementType;
-(function (ElementType) {
-    ElementType["select"] = "SingleSelect";
-    ElementType["textarea"] = "Textarea";
-    ElementType["input"] = "input";
-    ElementType["fieldset"] = "Fieldset";
-    ElementType["honeypot"] = "Honeypot";
-    ElementType["hidden"] = "Hidden";
-    ElementType["text"] = "Text";
-    ElementType["password"] = "Password";
-    ElementType["email"] = "Email";
-    ElementType["telephone"] = "Telephone";
-    ElementType["url"] = "Url";
-    ElementType["number"] = "Number";
-    ElementType["date"] = "Date";
-    ElementType["checkbox"] = "Checkbox";
-    ElementType["radioButton"] = "RadioButton";
-    ElementType["radio"] = "radio";
-    ElementType["multiCheckbox"] = "MultiCheckbox";
-    ElementType["multiSelect"] = "MultiSelect";
-    ElementType["datePicker"] = "DatePicker";
-    ElementType["fileUpload"] = "FileUpload";
-    ElementType["imageUpload"] = "ImageUpload";
-    ElementType["advancedPassword"] = "AdvancedPassword";
-    ElementType["staticText"] = "StaticText";
-})(ElementType || (ElementType = {}));
-var FormElement = function (props) {
-    var element = props.element;
-    var content;
-    switch (element.type) {
-        case ElementType.textarea:
-            content = React.createElement(FormControlTextarea, { data: element });
-            break;
-        case ElementType.fieldset:
-            content = React.createElement(Fieldset, { data: element });
-            break;
-        case ElementType.select:
-            content = React.createElement(FormControlSingleSelect, { data: element });
-            break;
-        case ElementType.honeypot:
-            content = React.createElement(Honeypot, { data: element });
-            break;
-        case ElementType.hidden:
-            content = React.createElement(FormControlHidden, { data: element });
-            break;
-        case ElementType.input:
-            content = React.createElement(FormControlInput, { data: element });
-            break;
-        case ElementType.text:
-            content = React.createElement(FormControlText, { data: element });
-            break;
-        case ElementType.password:
-            content = React.createElement(FormControlPassword, { data: element });
-            break;
-        case ElementType.email:
-            content = React.createElement(FormControlEmail, { data: element });
-            break;
-        case ElementType.telephone:
-            content = React.createElement(FormControlTelephone, { data: element });
-            break;
-        case ElementType.url:
-            content = React.createElement(FormControlUrl, { data: element });
-            break;
-        case ElementType.number:
-            content = React.createElement(FormControlNumber, { data: element });
-            break;
-        case ElementType.date:
-            content = React.createElement(FormControlDate, { data: element });
-            break;
-        case ElementType.checkbox:
-            content = React.createElement(FormControlCheckbox, { data: element });
-            break;
-        case ElementType.radioButton:
-            content = React.createElement(FormControlRadioButton, { data: element });
-            break;
-        case ElementType.radio:
-            content = React.createElement(FormControlRadioButton, { data: __assign(__assign({}, element), { type: 'radio' }) });
-            break;
-        case ElementType.multiCheckbox:
-            content = React.createElement(FormControlMultiCheckbox, { data: element });
-            break;
-        case ElementType.multiSelect:
-            content = React.createElement(FormControlMultiSelect, { data: element });
-            break;
-        case ElementType.datePicker:
-            content = React.createElement(FormControlDatePicker, { data: element });
-            break;
-        case ElementType.fileUpload:
-            content = React.createElement(FormControlFileUpload, { data: element });
-            break;
-        case ElementType.imageUpload:
-            content = React.createElement(FormControlImageUpload, { data: element });
-            break;
-        case ElementType.advancedPassword:
-            content = React.createElement(FormControlAdvancedPassword, { data: element });
-            break;
-        case ElementType.staticText:
-            content = React.createElement(FormControlStaticText, { data: element });
-            break;
-        default:
-            console.log('element', element);
-            content = React.createElement(Alert, { variant: "danger" },
-                React.createElement(Alert.Heading, null, "Contentelement type unknown"),
-                React.createElement("p", null,
-                    element.type,
-                    " type not defined"));
-            break;
-    }
-    return React.createElement(Form.Group, { className: "mb-3", controlId: element.identifier }, content);
-};
-
-var FormFormFramework = function (props) {
-    console.log('properties', props);
-    var _a = props.data, form = _a.form, link = _a.link;
-    var _b = useState(false), validated = _b[0], setValidated = _b[1];
-    console.log(props.data);
-    var responseElementId = form.id;
-    var submitHandler = useCallback(function (event) { return __awaiter(void 0, void 0, void 0, function () {
-        var form, formData, response, result;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    event.preventDefault();
-                    form = event.currentTarget;
-                    console.log('FORM', form);
-                    console.log('FORM Target', event.target);
-                    formData = new FormData(form);
-                    console.log('FORM DATA', formData);
-                    formData.append('responseElementId', responseElementId);
-                    // formData.forEach(((value, key1) => {
-                    //     console.log(key1, value);
-                    // }))
-                    if (form.checkValidity() === false) {
-                        // event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    setValidated(true);
-                    return [4 /*yield*/, fetch('https://cms.trixie.localhost' + link.href, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: formData,
-                        })];
-                case 1:
-                    response = _a.sent();
-                    return [4 /*yield*/, response.json()];
-                case 2:
-                    result = _a.sent();
-                    console.log('RESULT', result);
-                    return [2 /*return*/];
-            }
-        });
-    }); }, [form, link]);
-    return React.createElement("div", { className: "formFormFramework" },
-        React.createElement(Form, { id: form.id, noValidate: true, validated: validated, onSubmit: submitHandler, method: 'POST', action: link.href },
-            form.elements.map(function (element, index) {
-                return React.createElement(FormElement, { element: element, key: "".concat(form.id, "-").concat(index) });
-            }),
-            React.createElement(Button, { type: "submit" }, "Submit")));
+    return React.createElement("div", { className: "card-menu card-menu card-menu-align-".concat(flexform.align, " card-menu-columns-").concat(flexform.columns) }, itemsTemplate);
 };
 
 var ContentElements = /*#__PURE__*/Object.freeze({
@@ -1139,7 +735,6 @@ var ContentElements = /*#__PURE__*/Object.freeze({
     Image: Image,
     ImageLightbox: Image,
     Div: Div,
-    FormFormFramework: FormFormFramework,
     Shortcut: Shortcut,
     Textmedia: Textmedia,
     Uploads: Uploads,
@@ -1151,8 +746,7 @@ var ContentElements = /*#__PURE__*/Object.freeze({
     Header: Header,
     Carousel: Carousel,
     MenuCardList: MenuCardList,
-    MenuCardDir: MenuCardDir,
-    MenuThumbnailBase: MenuThumbnailBase
+    MenuCardDir: MenuCardDir
 });
 
 var BackgroundImage = function (props) {
@@ -1487,9 +1081,6 @@ var contentElementTemplates = {
     carousel: function (headlessContentData) { return React.createElement(Carousel, { data: headlessContentData }); },
     menu_card_list: function (headlessContentData) { return React.createElement(MenuCardList, { data: headlessContentData }); },
     menu_card_dir: function (headlessContentData) { return React.createElement(MenuCardDir, { data: headlessContentData }); },
-    menu_thumbnail_dir: function (headlessContentData) { return React.createElement(MenuThumbnailBase, { data: headlessContentData }); },
-    menu_thumbnail_list: function (headlessContentData) { return React.createElement(MenuThumbnailBase, { data: headlessContentData }); },
-    form_formframework: function (headlessContentData) { return React.createElement(FormFormFramework, { data: headlessContentData.content }); }
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
@@ -1520,5 +1111,5 @@ TYPO3Page.defaultProps = {
 };
 var TYPO3Page$1 = React.memo(TYPO3Page);
 
-export { Content, ContentElements, Type as MediaType, Page, section as Section, TYPO3Page$1 as TYPO3Page, TYPO3PageContext };
+export { AllHeader, Content, ContentElements, Page, section as Section, TYPO3Page$1 as TYPO3Page, TYPO3PageContext };
 //# sourceMappingURL=index.es.js.map

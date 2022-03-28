@@ -1548,6 +1548,7 @@ TYPO3Page.defaultProps = {
 };
 var TYPO3Page$1 = React__default["default"].memo(TYPO3Page);
 
+exports.AllHeader = AllHeader;
 exports.Content = Content;
 exports.ContentElements = ContentElements;
 exports.MediaType = Type;
