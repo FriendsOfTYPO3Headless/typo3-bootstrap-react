@@ -69,6 +69,11 @@ declare const contentElementTemplates: {
     textcolumn: (headlessContentData: any) => JSX.Element;
     quote: (headlessContentData: any) => JSX.Element;
     header: (headlessContentData: any) => JSX.Element;
+    carousel: (headlessContentData: any) => JSX.Element;
+    menu_card_list: (headlessContentData: any) => JSX.Element;
+    menu_card_dir: (headlessContentData: any) => JSX.Element;
+    menu_thumbnail_dir: (headlessContentData: any) => JSX.Element;
+    menu_thumbnail_list: (headlessContentData: any) => JSX.Element;
     form_formframework: (headlessContentData: any) => JSX.Element;
 };
 declare const _default: React.NamedExoticComponent<TYPO3PagePropsInterface>;

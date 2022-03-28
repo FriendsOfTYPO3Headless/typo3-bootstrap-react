@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import * as RBT from 'react-bootstrap';
 import { Figure, Col, Row, Alert, Accordion as Accordion$1, Card, Form, Button, Container } from 'react-bootstrap';
 import Lightbox from 'react-image-lightbox';
 import FigureImage from 'react-bootstrap/FigureImage';
@@ -208,7 +209,7 @@ var ImageLightbox = function (props) {
 };
 
 var Image$2 = function (props) {
-    var file = props.file;
+    var file = props.file, className = props.className;
     var crops = Object.keys(file.properties.crop);
     var sources = crops.map(function (cropIdentifier, index) {
         var src;
@@ -237,17 +238,21 @@ var Image$2 = function (props) {
         }
         return React.createElement("source", { key: index, srcSet: src, media: media });
     });
+    var cssClasses = 'img-fluid';
+    if (className) {
+        cssClasses += ' ' + className;
+    }
     return React.createElement("picture", null,
         sources,
-        React.createElement(FigureImage, { loading: "lazy", className: 'img-fluid', src: file.publicUrl, title: file.properties.title, alt: file.properties.alternative }));
+        React.createElement(FigureImage, { loading: "lazy", className: cssClasses, src: file.publicUrl, title: file.properties.title, alt: file.properties.alternative }));
 };
 
 var Image$1 = function (props) {
-    var file = props.file, data = props.data;
+    var file = props.file, className = props.className;
     var caption = file.properties.description ?
         React.createElement(Figure.Caption, { className: "caption" }, file.properties.description) : React.createElement(React.Fragment, null);
     return React.createElement(Figure, { className: 'image' },
-        React.createElement(Image$2, { data: data, file: file }),
+        React.createElement(Image$2, { file: file, className: className }),
         caption);
 };
 
@@ -269,7 +274,7 @@ var ImageCols = function (props) {
         Object.keys(props.data.gallery.rows).map(function (rowKey) {
             return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
                 var file = props.data.gallery.rows[rowKey].columns[columnKey];
-                var image = React.createElement(Image$1, { data: props.data, file: file });
+                var image = React.createElement(Image$1, { file: file });
                 return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns, key: rowKey + '-' + columnKey }, props.data.enlargeImageOnClick ?
                     React.createElement("a", { onClick: function (e) {
                             e.preventDefault();
@@ -475,6 +480,44 @@ var __assign = function() {
     return __assign.apply(this, arguments);
 };
 
+function __awaiter(thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+
+function __generator(thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+}
+
 function __spreadArray(to, from, pack) {
     if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
         if (ar || !(i in from)) {
@@ -486,17 +529,17 @@ function __spreadArray(to, from, pack) {
 }
 
 var Type = function (props) {
-    var file = props.file, data = props.data;
+    var file = props.file; props.data;
     var fileType = file.properties.type;
     if (!isNaN(+file.properties.type)) {
         var fileExtension_1 = file.properties.filename.split('.').pop();
-        if (['jpg', 'png'].some(function (type) { return type === fileExtension_1; })) {
+        if (['jpg', 'png', 'svg'].some(function (type) { return type === fileExtension_1; })) {
             fileType = 'image';
         }
     }
     switch (fileType) {
         case 'image':
-            return React.createElement(Image$1, { file: file, data: data });
+            return React.createElement(Image$1, { file: file });
         default:
             return React.createElement(Alert, { variant: "info" },
                 "Filetype unknown ",
@@ -637,6 +680,111 @@ var Quote = function (props) {
 
 var Header = function (props) {
     return React.createElement("div", { className: "header" });
+};
+
+// import AllHeader from "../../Partials/ContentElements/Header/All"
+var carouselItem = function (itemHeadless, isFirst) {
+    if (isFirst === void 0) { isFirst = false; }
+    var itemType = itemHeadless.itemType, layout = itemHeadless.layout, image = itemHeadless.image;
+    var item = React.createElement(React.Fragment, null);
+    var itemClass = 'item carousel-item';
+    if (isFirst) {
+        itemClass += " active";
+    }
+    if (layout) {
+        itemClass += " carousel-item-layout-".concat(layout);
+    }
+    if (itemType) {
+        itemClass += " carousel-item-type-".concat(itemType);
+    }
+    switch (itemType) {
+        case 'image':
+            item = React.createElement("div", { className: "carousel-image" },
+                React.createElement(Image$1, { file: image[0], className: '' }));
+            break;
+        default:
+            item = React.createElement(Alert, { variant: "danger" },
+                React.createElement(Alert.Heading, null, "Templatetype unknown"),
+                React.createElement("p", null,
+                    itemType,
+                    " has no Template"));
+    }
+    return React.createElement(RBT.Carousel.Item, { key: image[0].publicUrl, className: itemClass },
+        React.createElement("div", { className: 'carousel-content' },
+            React.createElement("div", { className: 'carousel-content-inner' }, item)));
+};
+var Carousel = function (props) {
+    var _a = props.data, content = _a.content; _a.type; var flexform = _a.flexform;
+    content.header; content.subheader; var items = content.items;
+    var _b = useState(0); _b[0]; _b[1];
+    var itemsTemplate = items.map(function (itemHeadless, index) {
+        return carouselItem(itemHeadless, index === 0);
+    });
+    return React.createElement(React.Fragment, null,
+        React.createElement(RBT.Carousel, { fade: flexform.transition === 'fade', interval: flexform.interval, wrap: flexform.wrap }, itemsTemplate));
+};
+
+var MenuCardDir$1 = function (props) {
+    var _a = props.data, flexform = _a.flexform, content = _a.content;
+    var items = content.items, readmoreLabel = content.readmoreLabel;
+    var itemsTemplate = items.map(function (item) {
+        var title = item.title, subtitle = item.subtitle, abstract = item.abstract, link = item.link, target = item.target, thumbnail = item.thumbnail;
+        return React.createElement("div", { key: link, className: "card-menu-item" },
+            React.createElement(Card, null,
+                thumbnail && thumbnail.length > 0 &&
+                    React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" },
+                        React.createElement(Card.Img, { variant: "top", src: thumbnail[0].publicUrl })),
+                React.createElement(Card.Body, null,
+                    title && title.length > 0 &&
+                        React.createElement(Card.Title, { as: 'h3' },
+                            React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, title)),
+                    subtitle && subtitle.length > 0 &&
+                        React.createElement(Card.Subtitle, { as: 'h4' }, subtitle),
+                    React.createElement(Card.Text, { as: "p" }, abstract),
+                    props.children),
+                React.createElement(Card.Footer, null,
+                    React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, (readmoreLabel && readmoreLabel.length > 0) ? readmoreLabel : title))));
+    });
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement("div", { className: "card-menu card-menu card-menu-align-".concat(flexform.align, " card-menu-columns-").concat(flexform.columns) }, itemsTemplate));
+};
+
+var MenuCardList = function (props) {
+    return React.createElement(MenuCardDir$1, __assign({}, props));
+};
+
+var MenuCardDir = function (props) {
+    props.data.content.items = props.data.content.items.map(function (item) {
+        return __assign(__assign({}, item), { thumbnail: item.media });
+    });
+    return React.createElement(MenuCardDir$1, __assign({}, props));
+};
+
+var MenuThumbnailBase = function (props) {
+    var _a = props.data, flexform = _a.flexform, content = _a.content;
+    var items = content.items;
+    var itemsTemplate = items.map(function (item, index) {
+        var title = item.title, subtitle = item.subtitle, link = item.link, target = item.target, media = item.media;
+        if (!media || media.length <= 0) {
+            return React.createElement(React.Fragment, { key: "".concat(title, "-").concat(index) });
+        }
+        return React.createElement("div", { key: link, className: "thumbnail-menu-item" },
+            React.createElement("a", { href: link, target: target, title: title, "data-toggle": "tooltip", className: 'thumbnail-menu-link' },
+                media && media.length > 0 &&
+                    React.createElement("span", { className: 'thumbnail-menu-image' },
+                        React.createElement(Image$1, { file: media[0] })),
+                React.createElement("span", { className: 'thumbnail-menu-caption' },
+                    React.createElement("span", { className: 'thumbnail-menu-caption-inner' },
+                        title && title.length > 0 &&
+                            React.createElement("span", { className: 'h3 thumbnail-menu-caption-title' }, title),
+                        subtitle && subtitle.length > 0 &&
+                            React.createElement("p", { className: 'thumbnail-menu-caption-subtitle' }, subtitle)))),
+            props.children);
+    });
+    return React.createElement(React.Fragment, null,
+        React.createElement(AllHeader, { data: props.data }),
+        React.createElement("div", { className: "thumbnail-menu thumbnail-menu-align-".concat(flexform.align, " thumbnail-menu-columns-").concat(flexform.columns) }, itemsTemplate));
 };
 
 var FormControlTextarea = function (props) {
@@ -933,19 +1081,50 @@ var FormElement = function (props) {
 };
 
 var FormFormFramework = function (props) {
+    console.log('properties', props);
     var _a = props.data, form = _a.form, link = _a.link;
     var _b = useState(false), validated = _b[0], setValidated = _b[1];
-    var submitHandler = useCallback(function (event) {
-        var form = event.currentTarget;
-        if (form.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
-        setValidated(true);
-        console.log("send POST request to ".concat(link.href));
-    }, [form, link]);
+    console.log(props.data);
+    var responseElementId = form.id;
+    var submitHandler = useCallback(function (event) { return __awaiter(void 0, void 0, void 0, function () {
+        var form, formData, response, result;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    event.preventDefault();
+                    form = event.currentTarget;
+                    console.log('FORM', form);
+                    console.log('FORM Target', event.target);
+                    formData = new FormData(form);
+                    console.log('FORM DATA', formData);
+                    formData.append('responseElementId', responseElementId);
+                    // formData.forEach(((value, key1) => {
+                    //     console.log(key1, value);
+                    // }))
+                    if (form.checkValidity() === false) {
+                        // event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    setValidated(true);
+                    return [4 /*yield*/, fetch('https://cms.trixie.localhost' + link.href, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: formData,
+                        })];
+                case 1:
+                    response = _a.sent();
+                    return [4 /*yield*/, response.json()];
+                case 2:
+                    result = _a.sent();
+                    console.log('RESULT', result);
+                    return [2 /*return*/];
+            }
+        });
+    }); }, [form, link]);
     return React.createElement("div", { className: "formFormFramework" },
-        React.createElement(Form, { id: form.id, noValidate: true, validated: validated, onSubmit: submitHandler },
+        React.createElement(Form, { id: form.id, noValidate: true, validated: validated, onSubmit: submitHandler, method: 'POST', action: link.href },
             form.elements.map(function (element, index) {
                 return React.createElement(FormElement, { element: element, key: "".concat(form.id, "-").concat(index) });
             }),
@@ -969,7 +1148,11 @@ var ContentElements = /*#__PURE__*/Object.freeze({
     CardGroup: CardGroup,
     TextColumns: TextColumns,
     Quote: Quote,
-    Header: Header
+    Header: Header,
+    Carousel: Carousel,
+    MenuCardList: MenuCardList,
+    MenuCardDir: MenuCardDir,
+    MenuThumbnailBase: MenuThumbnailBase
 });
 
 var BackgroundImage = function (props) {
@@ -1004,7 +1187,7 @@ var Layout0 = function (props) {
     var content;
     if (props.data.appearance.frameClass !== 'none') {
         var backgroundImageClass = (props.data.appearance.backgroundImage.length > 0 ? 'frame-has-backgroundimage' : 'frame-no-backgroundimage');
-        content = React.createElement("div", { id: "c" + props.data.id, className: "frame " +
+        content = React.createElement("div", { id: "c" + props.data.id, className: "frame frame-size-default " +
                 frameClass + " " +
                 typeClass + " " +
                 layoutClass + " " +
@@ -1092,7 +1275,7 @@ var pageTemplates = {
             React.createElement(Row, null,
                 React.createElement(Col, null,
                     React.createElement(Content, { colPos: '8' }))),
-            React.createElement("section", { className: "section section-default" },
+            React.createElement("div", { className: "section section-default" },
                 React.createElement(Row, null,
                     React.createElement(Col, null,
                         React.createElement(Content, { colPos: '0' })))),
@@ -1109,7 +1292,7 @@ var pageTemplates = {
             React.createElement(Row, null,
                 React.createElement(Col, null,
                     React.createElement(Content, { colPos: '8' }))),
-            React.createElement("section", { className: "section section-default" },
+            React.createElement("div", { className: "section section-default" },
                 React.createElement(Row, null,
                     React.createElement(Col, null,
                         React.createElement(Content, { colPos: '0' })))),
@@ -1125,7 +1308,7 @@ var pageTemplates = {
             React.createElement(Row, null,
                 React.createElement(Col, null,
                     React.createElement(Content, { colPos: '8' }))),
-            React.createElement("section", { className: "section section-default" },
+            React.createElement("div", { className: "section section-default" },
                 React.createElement(Container, null,
                     React.createElement(Row, null,
                         React.createElement(Col, { md: "8", as: "main", className: " maincontent-wrap", role: "main" },
@@ -1145,7 +1328,7 @@ var pageTemplates = {
             React.createElement(Row, null,
                 React.createElement(Col, null,
                     React.createElement(Content, { colPos: '8' }))),
-            React.createElement("section", { className: "section section-default" },
+            React.createElement("div", { className: "section section-default" },
                 React.createElement(Container, null,
                     React.createElement(Row, null,
                         React.createElement(Col, { md: "8", as: "main", className: " maincontent-wrap", role: "main" },
@@ -1165,7 +1348,7 @@ var pageTemplates = {
             React.createElement(Row, null,
                 React.createElement(Col, null,
                     React.createElement(Content, { colPos: '8' }))),
-            React.createElement("section", { className: "section section-default" },
+            React.createElement("div", { className: "section section-default" },
                 React.createElement(Container, null,
                     React.createElement(Row, null,
                         React.createElement(Col, { md: "6", as: "main", className: " maincontent-wrap", role: "main" },
@@ -1185,7 +1368,7 @@ var pageTemplates = {
             React.createElement(Row, null,
                 React.createElement(Col, null,
                     React.createElement(Content, { colPos: '8' }))),
-            React.createElement("section", { className: "section section-default" },
+            React.createElement("div", { className: "section section-default" },
                 React.createElement(Container, null,
                     React.createElement(Row, null,
                         React.createElement(Col, { lg: "6", as: "main", className: " maincontent-wrap ", role: "main" },
@@ -1207,36 +1390,36 @@ var pageTemplates = {
             React.createElement(Row, null,
                 React.createElement(Col, null,
                     React.createElement(Content, { colPos: '8' }))),
-            React.createElement("section", { className: "section section-default" },
+            React.createElement("div", { className: "section section-default" },
                 React.createElement(Row, null,
                     React.createElement(Col, null,
                         React.createElement(Content, { colPos: '0' })))),
-            React.createElement("section", { className: "section section-primary" },
+            React.createElement("div", { className: "section section-primary" },
                 React.createElement(Container, null,
                     React.createElement(Row, null,
                         React.createElement(Col, { className: "section-column-half ", md: "6" },
                             React.createElement(Content, { colPos: '30' })),
                         React.createElement(Col, { className: "section-column-half ", md: "6" },
                             React.createElement(Content, { colPos: '31' }))))),
-            React.createElement("section", { className: "section section-primary" },
+            React.createElement("div", { className: "section section-primary" },
                 React.createElement(Container, null,
                     React.createElement(Row, null,
                         React.createElement(Col, { className: "section-column-half ", md: "6" },
                             React.createElement(Content, { colPos: '32' })),
                         React.createElement(Col, { className: "section-column-half ", md: "6" },
                             React.createElement(Content, { colPos: '33' }))))),
-            React.createElement("section", { className: "section section-default" },
+            React.createElement("div", { className: "section section-default" },
                 React.createElement(Row, null,
                     React.createElement(Col, null,
                         React.createElement(Content, { colPos: '4' })))),
-            React.createElement("section", { className: "section section-light" },
+            React.createElement("div", { className: "section section-light" },
                 React.createElement(Container, null,
                     React.createElement(Row, null,
                         React.createElement(Col, { className: "section-column-half ", md: "6" },
                             React.createElement(Content, { colPos: '34' })),
                         React.createElement(Col, { className: "section-column-half ", md: "6" },
                             React.createElement(Content, { colPos: '35' }))))),
-            React.createElement("section", { className: "section section-light" },
+            React.createElement("div", { className: "section section-light" },
                 React.createElement(Container, null,
                     React.createElement(Row, null,
                         React.createElement(Col, { className: "section-column-half ", md: "6" },
@@ -1256,7 +1439,7 @@ var pageTemplates = {
             React.createElement(Row, null,
                 React.createElement(Col, null,
                     React.createElement(Content, { colPos: '8' }))),
-            React.createElement("section", { className: "section section-default" },
+            React.createElement("div", { className: "section section-default" },
                 React.createElement(Container, null,
                     React.createElement(Row, null,
                         React.createElement(Col, { className: "section-column-third ", md: "4" },
@@ -1265,7 +1448,7 @@ var pageTemplates = {
                             React.createElement(Content, { colPos: '21' })),
                         React.createElement(Col, { className: "section-column-third ", md: "4" },
                             React.createElement(Content, { colPos: '22' }))))),
-            React.createElement("section", { className: "section section-light" },
+            React.createElement("div", { className: "section section-light" },
                 React.createElement(Row, null,
                     React.createElement(Col, null,
                         React.createElement(Content, { colPos: '0' })))),
@@ -1301,6 +1484,11 @@ var contentElementTemplates = {
     textcolumn: function (headlessContentData) { return React.createElement(TextColumns, { data: headlessContentData }); },
     quote: function (headlessContentData) { return React.createElement(Quote, { data: headlessContentData }); },
     header: function (headlessContentData) { return React.createElement(Header, { data: headlessContentData }); },
+    carousel: function (headlessContentData) { return React.createElement(Carousel, { data: headlessContentData }); },
+    menu_card_list: function (headlessContentData) { return React.createElement(MenuCardList, { data: headlessContentData }); },
+    menu_card_dir: function (headlessContentData) { return React.createElement(MenuCardDir, { data: headlessContentData }); },
+    menu_thumbnail_dir: function (headlessContentData) { return React.createElement(MenuThumbnailBase, { data: headlessContentData }); },
+    menu_thumbnail_list: function (headlessContentData) { return React.createElement(MenuThumbnailBase, { data: headlessContentData }); },
     form_formframework: function (headlessContentData) { return React.createElement(FormFormFramework, { data: headlessContentData.content }); }
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
@@ -1332,5 +1520,5 @@ TYPO3Page.defaultProps = {
 };
 var TYPO3Page$1 = React.memo(TYPO3Page);
 
-export { Content, ContentElements, Page, section as Section, TYPO3Page$1 as TYPO3Page, TYPO3PageContext };
+export { Content, ContentElements, Type as MediaType, Page, section as Section, TYPO3Page$1 as TYPO3Page, TYPO3PageContext };
 //# sourceMappingURL=index.es.js.map
