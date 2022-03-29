@@ -1,6 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import {Button, Form} from "react-bootstrap";
 import FormElement from "../../Partials/ContentElements/FormFramework/Elements/Element";
+import AllHeader from "../../Partials/ContentElements/Header/All";
 
 const FormFormFramework: React.FC<{ data: any }> = props => {
     console.log('properties', props)
@@ -12,16 +13,9 @@ const FormFormFramework: React.FC<{ data: any }> = props => {
         async (event) => {
             event.preventDefault();
             const form = event.currentTarget
-            console.log('FORM', form)
-            console.log('FORM Target', event.target)
             const formData = new FormData(form)
-            console.log('FORM DATA', formData)
             formData.append('responseElementId', responseElementId)
-            // formData.forEach(((value, key1) => {
-            //     console.log(key1, value);
-            // }))
             if (form.checkValidity() === false) {
-                // event.preventDefault();
                 event.stopPropagation();
             }
             setValidated(true)
@@ -62,7 +56,8 @@ const FormFormFramework: React.FC<{ data: any }> = props => {
 
 
     return <div className="formFormFramework" >
-        <Form id={form.id} noValidate={true} validated={validated} onSubmit={submitHandler} method={'POST'} action={link.href}>
+        {/*<AllHeader data={props.data}/>*/}
+        <Form id={form.id} noValidate={false} validated={validated} onSubmit={submitHandler} method={'POST'} action={link.href}>
             {form.elements.map((element, index) => {
                 return <FormElement element={element} key={`${form.id}-${index}`}/>
             })}

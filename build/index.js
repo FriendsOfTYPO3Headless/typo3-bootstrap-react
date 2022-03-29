@@ -1121,16 +1121,9 @@ var FormFormFramework = function (props) {
                 case 0:
                     event.preventDefault();
                     form = event.currentTarget;
-                    console.log('FORM', form);
-                    console.log('FORM Target', event.target);
                     formData = new FormData(form);
-                    console.log('FORM DATA', formData);
                     formData.append('responseElementId', responseElementId);
-                    // formData.forEach(((value, key1) => {
-                    //     console.log(key1, value);
-                    // }))
                     if (form.checkValidity() === false) {
-                        // event.preventDefault();
                         event.stopPropagation();
                     }
                     setValidated(true);
@@ -1152,7 +1145,7 @@ var FormFormFramework = function (props) {
         });
     }); }, [form, link]);
     return React__default["default"].createElement("div", { className: "formFormFramework" },
-        React__default["default"].createElement(RBT.Form, { id: form.id, noValidate: true, validated: validated, onSubmit: submitHandler, method: 'POST', action: link.href },
+        React__default["default"].createElement(RBT.Form, { id: form.id, noValidate: false, validated: validated, onSubmit: submitHandler, method: 'POST', action: link.href },
             form.elements.map(function (element, index) {
                 return React__default["default"].createElement(FormElement, { element: element, key: "".concat(form.id, "-").concat(index) });
             }),
@@ -1551,6 +1544,7 @@ var TYPO3Page$1 = React__default["default"].memo(TYPO3Page);
 exports.AllHeader = AllHeader;
 exports.Content = Content;
 exports.ContentElements = ContentElements;
+exports.MediaType = Type;
 exports.Page = Page;
 exports.Section = section;
 exports.TYPO3Page = TYPO3Page$1;
