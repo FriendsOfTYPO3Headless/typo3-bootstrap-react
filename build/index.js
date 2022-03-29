@@ -1160,7 +1160,6 @@ var TYPO3Page$1 = React__default["default"].memo(TYPO3Page);
 exports.AllHeader = AllHeader;
 exports.Content = Content;
 exports.ContentElements = ContentElements;
-exports.MediaType = Type;
 exports.Page = Page;
 exports.Section = section;
 exports.TYPO3Page = TYPO3Page$1;
