@@ -696,7 +696,8 @@ var MenuCardDir$1 = function (props) {
                             React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, title)),
                     subtitle && subtitle.length > 0 &&
                         React.createElement(Card.Subtitle, { as: 'h4' }, subtitle),
-                    React.createElement(Card.Text, { as: "p" }, abstract),
+                    abstract &&
+                        React.createElement(Card.Text, { as: "p" }, abstract),
                     props.children),
                 React.createElement(Card.Footer, null,
                     React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, (readmoreLabel && readmoreLabel.length > 0) ? readmoreLabel : title))));
@@ -1130,5 +1131,5 @@ TYPO3Page.defaultProps = {
 };
 var TYPO3Page$1 = React.memo(TYPO3Page);
 
-export { AllHeader, Content, ContentElements, Page, section as Section, TYPO3Page$1 as TYPO3Page, TYPO3PageContext };
+export { AllHeader, Content, ContentElements, Type as MediaType, Page, section as Section, TYPO3Page$1 as TYPO3Page, TYPO3PageContext };
 //# sourceMappingURL=index.es.js.map

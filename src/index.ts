@@ -4,6 +4,7 @@ import Section from './Components/Partials/Page/Section';
 import Content from './Components/Templates/Content';
 import * as ContentElements from './Components/Templates/ContentElements';
 import AllHeader from "./Components/Partials/ContentElements/Header/All";
+import MediaType from './Components/Partials/ContentElements/Media/Type'
 
 import {TYPO3PagePropsInterface, TYPO3PageHeadlessDataInterface, TYPO3BootstrapContentElementBaseInterface} from "./Components/Interfaces";
 
@@ -17,5 +18,6 @@ export {
     Section,
     Content,
     ContentElements,
-    AllHeader
+    AllHeader,
+    MediaType
 };

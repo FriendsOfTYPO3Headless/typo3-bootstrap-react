@@ -724,7 +724,8 @@ var MenuCardDir$1 = function (props) {
                             React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, title)),
                     subtitle && subtitle.length > 0 &&
                         React__default["default"].createElement(RBT.Card.Subtitle, { as: 'h4' }, subtitle),
-                    React__default["default"].createElement(RBT.Card.Text, { as: "p" }, abstract),
+                    abstract &&
+                        React__default["default"].createElement(RBT.Card.Text, { as: "p" }, abstract),
                     props.children),
                 React__default["default"].createElement(RBT.Card.Footer, null,
                     React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, (readmoreLabel && readmoreLabel.length > 0) ? readmoreLabel : title))));
@@ -1161,6 +1162,7 @@ var TYPO3Page$1 = React__default["default"].memo(TYPO3Page);
 exports.AllHeader = AllHeader;
 exports.Content = Content;
 exports.ContentElements = ContentElements;
+exports.MediaType = Type;
 exports.Page = Page;
 exports.Section = section;
 exports.TYPO3Page = TYPO3Page$1;
