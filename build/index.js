@@ -665,7 +665,6 @@ var Header = function (props) {
         props.children);
 };
 
-// import AllHeader from "../../Partials/ContentElements/Header/All"
 var carouselItem = function (itemHeadless, isFirst) {
     if (isFirst === void 0) { isFirst = false; }
     var itemType = itemHeadless.itemType, layout = itemHeadless.layout, image = itemHeadless.image;
@@ -686,11 +685,12 @@ var carouselItem = function (itemHeadless, isFirst) {
                 React__default["default"].createElement(Image$1, { file: image[0], className: '' }));
             break;
         default:
-            item = React__default["default"].createElement(RBT.Alert, { variant: "danger" },
-                React__default["default"].createElement(RBT.Alert.Heading, null, "Templatetype unknown"),
-                React__default["default"].createElement("p", null,
-                    itemType,
-                    " has no Template"));
+            item = React__default["default"].createElement("div", { className: 'carousel-text-inner' },
+                React__default["default"].createElement(RBT.Alert, { variant: "danger" },
+                    React__default["default"].createElement(RBT.Alert.Heading, null, "Templatetype unknown"),
+                    React__default["default"].createElement("p", null,
+                        itemType,
+                        " has no Template")));
     }
     return React__default["default"].createElement(RBT__namespace.Carousel.Item, { key: image[0].publicUrl, className: itemClass },
         React__default["default"].createElement("div", { className: 'carousel-content' },
@@ -704,6 +704,7 @@ var Carousel = function (props) {
         return carouselItem(itemHeadless, index === 0);
     });
     return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(AllHeader, { data: props.data }),
         React__default["default"].createElement(RBT__namespace.Carousel, { fade: flexform.transition === 'fade', interval: flexform.interval, wrap: flexform.wrap }, itemsTemplate));
 };
 
