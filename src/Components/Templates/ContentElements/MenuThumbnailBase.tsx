@@ -7,14 +7,16 @@ const MenuThumbnailBase: React.FC<TYPO3BootstrapContentElementBaseInterface> = p
     const {flexform, content} = props.data
     const {items} = content
     const itemsTemplate = items.map((item, index) => {
-        const {title, link, target, thumbnail} = item //subtitle
+        const {title, link, target, thumbnail, subtitle} = item
 
         return <div key={link} className="thumbnail-menu-item">
             <a href={link} target={target} title={title}
                data-toggle={"tooltip"} className={'thumbnail-menu-link'}>
                     <span className={'thumbnail-menu-image'}>
-                {thumbnail && thumbnail.length > 0 &&
+                {thumbnail && thumbnail.length > 0 ?
                     <Image file={thumbnail[0]}/>
+                    :
+                    <span className={'no-image'} />
                 }
                     </span>
                 <span className={'thumbnail-menu-caption'}>
@@ -22,9 +24,9 @@ const MenuThumbnailBase: React.FC<TYPO3BootstrapContentElementBaseInterface> = p
                         {title && title.length > 0 &&
                             <span className={'h3 thumbnail-menu-caption-title'}>{title}</span>
                         }
-                        {/*{subtitle && subtitle.length > 0 &&*/}
-                        {/*    <p className={'thumbnail-menu-caption-subtitle'}>{subtitle}</p>*/}
-                        {/*}*/}
+                        {subtitle && subtitle.length > 0 &&
+                            <p className={'thumbnail-menu-caption-subtitle'}>{subtitle}</p>
+                        }
                     </span>
                 </span>
             </a>

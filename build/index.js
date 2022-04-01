@@ -748,14 +748,19 @@ var MenuThumbnailBase = function (props) {
     var _a = props.data, flexform = _a.flexform, content = _a.content;
     var items = content.items;
     var itemsTemplate = items.map(function (item, index) {
-        var title = item.title, link = item.link, target = item.target, thumbnail = item.thumbnail; //subtitle
+        var title = item.title, link = item.link, target = item.target, thumbnail = item.thumbnail, subtitle = item.subtitle;
         return React__default["default"].createElement("div", { key: link, className: "thumbnail-menu-item" },
             React__default["default"].createElement("a", { href: link, target: target, title: title, "data-toggle": "tooltip", className: 'thumbnail-menu-link' },
-                React__default["default"].createElement("span", { className: 'thumbnail-menu-image' }, thumbnail && thumbnail.length > 0 &&
-                    React__default["default"].createElement(Image$1, { file: thumbnail[0] })),
+                React__default["default"].createElement("span", { className: 'thumbnail-menu-image' }, thumbnail && thumbnail.length > 0 ?
+                    React__default["default"].createElement(Image$1, { file: thumbnail[0] })
+                    :
+                        React__default["default"].createElement("span", { className: 'no-image' })),
                 React__default["default"].createElement("span", { className: 'thumbnail-menu-caption' },
-                    React__default["default"].createElement("span", { className: 'thumbnail-menu-caption-inner' }, title && title.length > 0 &&
-                        React__default["default"].createElement("span", { className: 'h3 thumbnail-menu-caption-title' }, title)))),
+                    React__default["default"].createElement("span", { className: 'thumbnail-menu-caption-inner' },
+                        title && title.length > 0 &&
+                            React__default["default"].createElement("span", { className: 'h3 thumbnail-menu-caption-title' }, title),
+                        subtitle && subtitle.length > 0 &&
+                            React__default["default"].createElement("p", { className: 'thumbnail-menu-caption-subtitle' }, subtitle)))),
             props.children);
     });
     return React__default["default"].createElement(React__default["default"].Fragment, null,
