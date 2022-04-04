@@ -294,17 +294,14 @@ var Textpic = function (props) {
     if (props.data.content.gallery.position.horizontal === 'center') {
         textpicClassName = props.data.content.gallery.position.vertical;
     }
-    return React.createElement(React.Fragment, null,
-        React.createElement("div", { className: "textpic" },
-            React.createElement("div", { className: "gallery-row" },
-                React.createElement(Row, { className: "textpic textpic-" + textpicClassName },
-                    React.createElement(Col, { className: "textpic-item textpic-gallery", md: textpicClassName === props.data.content.gallery.position.vertical ? "auto" : "6" },
-                        React.createElement(Row, null,
-                            React.createElement(ImageCols, { data: props.data.content }))),
-                    React.createElement(Col, { className: "textpic-item textpic-text", md: "6" },
-                        React.createElement(AllHeader, { data: props.data }),
-                        React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } }),
-                        props.children)))));
+    return React.createElement(Row, { className: "textpic textpic-" + textpicClassName },
+        React.createElement(Col, { className: "textpic-item textpic-gallery", md: textpicClassName === props.data.content.gallery.position.vertical ? "auto" : "6" },
+            React.createElement(Row, null,
+                React.createElement(ImageCols, { data: props.data.content }))),
+        React.createElement(Col, { className: "textpic-item textpic-text", md: "6" },
+            React.createElement(AllHeader, { data: props.data }),
+            React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } }),
+            props.children));
 };
 
 var Image = function (props) {
@@ -333,45 +330,42 @@ var Textmedia = function (props) {
     if (props.data.content.gallery.position.horizontal === 'center') {
         textmediaClassName = props.data.content.gallery.position.vertical;
     }
-    return React.createElement(React.Fragment, null,
-        React.createElement("div", { className: "textmedia" },
-            React.createElement("div", { className: "gallery-row" },
-                React.createElement(Row, { className: "textmedia textmedia-" + textmediaClassName },
-                    React.createElement(Col, { className: "textmedia-item textmedia-gallery", md: textmediaClassName === props.data.content.gallery.position.vertical ? "auto" : "6" },
-                        React.createElement(Row, null, Object.keys(props.data.content.gallery.rows).map(function (rowKey) {
-                            return Object.keys(props.data.content.gallery.rows[rowKey].columns).map(function (columnKey) {
-                                switch (props.data.content.gallery.rows[rowKey].columns[columnKey].properties.mimeType) {
-                                    case 'video/youtube':
-                                        return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
-                                            React.createElement("iframe", { src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
-                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                    case 'image/jpeg':
-                                        return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
-                                            React.createElement("img", { src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item", alt: props.data.content.gallery.rows[rowKey].columns[columnKey].properties.title }),
-                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                    case 'image/svg+xml':
-                                        return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
-                                            React.createElement("img", { src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item", alt: props.data.content.gallery.rows[rowKey].columns[columnKey].properties.title }),
-                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                    case 'video/mp4':
-                                        return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
-                                            React.createElement("video", { controls: true },
-                                                React.createElement("source", { type: "video/mp4", src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl })),
-                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                    case 'video/vimeo':
-                                        return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
-                                            React.createElement("video", { controls: true },
-                                                React.createElement("source", { type: "video/mp4", src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl })),
-                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                    default:
-                                        return React.createElement(React.Fragment, null);
-                                }
-                            });
-                        }))),
-                    React.createElement(Col, { className: "textmedia-item textmedia-text" },
-                        React.createElement(AllHeader, { data: props.data }),
-                        React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } }),
-                        props.children)))));
+    return React.createElement(Row, { className: "textmedia textmedia-" + textmediaClassName },
+        React.createElement(Col, { className: "textmedia-item textmedia-gallery", md: textmediaClassName === props.data.content.gallery.position.vertical ? "auto" : "6" },
+            React.createElement(Row, null, Object.keys(props.data.content.gallery.rows).map(function (rowKey) {
+                return Object.keys(props.data.content.gallery.rows[rowKey].columns).map(function (columnKey) {
+                    switch (props.data.content.gallery.rows[rowKey].columns[columnKey].properties.mimeType) {
+                        case 'video/youtube':
+                            return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                React.createElement("iframe", { src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item w-100" }),
+                                props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                        case 'image/jpeg':
+                            return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                React.createElement("img", { src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item", alt: props.data.content.gallery.rows[rowKey].columns[columnKey].properties.title }),
+                                props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                        case 'image/svg+xml':
+                            return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                React.createElement("img", { src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item", alt: props.data.content.gallery.rows[rowKey].columns[columnKey].properties.title }),
+                                props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                        case 'video/mp4':
+                            return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                React.createElement("video", { controls: true },
+                                    React.createElement("source", { type: "video/mp4", src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                        case 'video/vimeo':
+                            return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                React.createElement("video", { controls: true },
+                                    React.createElement("source", { type: "video/mp4", src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                        default:
+                            return React.createElement(React.Fragment, null);
+                    }
+                });
+            }))),
+        React.createElement(Col, { className: "textmedia-item textmedia-text" },
+            React.createElement(AllHeader, { data: props.data }),
+            React.createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } }),
+            props.children));
 };
 
 var Shortcut = function (props) {
