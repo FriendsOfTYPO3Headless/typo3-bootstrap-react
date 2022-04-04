@@ -4,7 +4,7 @@ import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
 const MenuCategorizedContent: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
 
     return <div className="menuCategorizedContent">
-       if ( condition="{content}") {
+       {/*if ( condition="{content}") {*/}
         {/*
             <f:render partial="Menu/SkipNavigation" arguments="{_all}" />
             <ul>
@@ -14,7 +14,7 @@ const MenuCategorizedContent: React.FC<TYPO3BootstrapContentElementBaseInterface
                     </li>
                 </f:for>
             </ul>   */}
-       }
+       {/*}*/}
     </div>
 }
 

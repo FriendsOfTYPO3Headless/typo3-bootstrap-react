@@ -706,7 +706,9 @@ var MenuCardDir$1 = function (props) {
     var _a = props.data, flexform = _a.flexform, content = _a.content;
     var items = content.items, readmoreLabel = content.readmoreLabel;
     var itemsTemplate = items.map(function (item) {
-        var title = item.title, subtitle = item.subtitle, abstract = item.abstract, link = item.link, target = item.target, thumbnail = item.thumbnail;
+        var title = item.title, 
+        // abstract,
+        link = item.link, target = item.target, thumbnail = item.thumbnail;
         return React__default["default"].createElement("div", { key: link, className: "card-menu-item" },
             React__default["default"].createElement(RBT.Card, null,
                 thumbnail && thumbnail.length > 0 &&
@@ -716,10 +718,6 @@ var MenuCardDir$1 = function (props) {
                     title && title.length > 0 &&
                         React__default["default"].createElement(RBT.Card.Title, { as: 'h3' },
                             React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, title)),
-                    subtitle && subtitle.length > 0 &&
-                        React__default["default"].createElement(RBT.Card.Subtitle, { as: 'h4' }, subtitle),
-                    abstract &&
-                        React__default["default"].createElement(RBT.Card.Text, { as: "p" }, abstract),
                     props.children),
                 React__default["default"].createElement(RBT.Card.Footer, null,
                     React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, (readmoreLabel && readmoreLabel.length > 0) ? readmoreLabel : title))));
@@ -744,15 +742,13 @@ var MenuThumbnailBase = function (props) {
     var _a = props.data, flexform = _a.flexform, content = _a.content;
     var items = content.items;
     var itemsTemplate = items.map(function (item, index) {
-        var title = item.title, subtitle = item.subtitle, link = item.link, target = item.target, media = item.media;
-        if (!media || media.length <= 0) {
-            return React__default["default"].createElement(React__default["default"].Fragment, { key: "".concat(title, "-").concat(index) });
-        }
+        var title = item.title, link = item.link, target = item.target, thumbnail = item.thumbnail, subtitle = item.subtitle;
         return React__default["default"].createElement("div", { key: link, className: "thumbnail-menu-item" },
             React__default["default"].createElement("a", { href: link, target: target, title: title, "data-toggle": "tooltip", className: 'thumbnail-menu-link' },
-                media && media.length > 0 &&
-                    React__default["default"].createElement("span", { className: 'thumbnail-menu-image' },
-                        React__default["default"].createElement(Image$1, { file: media[0] })),
+                React__default["default"].createElement("span", { className: 'thumbnail-menu-image' }, thumbnail && thumbnail.length > 0 ?
+                    React__default["default"].createElement(Image$1, { file: thumbnail[0] })
+                    :
+                        React__default["default"].createElement("span", { className: 'no-image' })),
                 React__default["default"].createElement("span", { className: 'thumbnail-menu-caption' },
                     React__default["default"].createElement("span", { className: 'thumbnail-menu-caption-inner' },
                         title && title.length > 0 &&

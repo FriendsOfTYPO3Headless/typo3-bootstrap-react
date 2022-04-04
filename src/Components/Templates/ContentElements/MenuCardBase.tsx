@@ -10,8 +10,7 @@ const MenuCardDir: React.FC<TYPO3BootstrapContentElementBaseInterface> = props =
     const itemsTemplate = items.map((item) => {
         const {
             title,
-            subtitle,
-            abstract,
+            // abstract,
             link,
             target,
             thumbnail
@@ -30,11 +29,8 @@ const MenuCardDir: React.FC<TYPO3BootstrapContentElementBaseInterface> = props =
                                        data-toggle={"tooltip"}>{title}</Card.Link>
                         </Card.Title>
                     }
-                    {subtitle && subtitle.length > 0 &&
-                        <Card.Subtitle as={'h4'}>{subtitle}</Card.Subtitle>
-                    }
-                    {abstract &&
-                        <Card.Text as={"p"}>{abstract}</Card.Text> }
+                    {/*{abstract &&*/}
+                    {/*    <Card.Text as={"p"}>{abstract}</Card.Text> }*/}
                     {props.children}
                 </Card.Body>
                 <Card.Footer>
