@@ -678,10 +678,9 @@ var MenuCardDir$1 = function (props) {
     var _a = props.data, flexform = _a.flexform, content = _a.content;
     var items = content.items, readmoreLabel = content.readmoreLabel;
     var itemsTemplate = items.map(function (item) {
-        var title = item.title, 
-        // abstract,
-        link = item.link, target = item.target, thumbnail = item.thumbnail;
-        return React.createElement("div", { key: link, className: "card-menu-item" },
+        var _a;
+        var title = item.title, description = item.description, link = item.link, target = item.target, thumbnail = item.thumbnail;
+        return React.createElement("div", { key: link, className: "card-menu-item ".concat((((_a = thumbnail[0]) === null || _a === void 0 ? void 0 : _a.publicUrl) ? 'hasImage' : 'noImage')) },
             React.createElement(Card, null,
                 thumbnail && thumbnail.length > 0 &&
                     React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" },
@@ -690,9 +689,11 @@ var MenuCardDir$1 = function (props) {
                     title && title.length > 0 &&
                         React.createElement(Card.Title, { as: 'h3' },
                             React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, title)),
+                    description &&
+                        React.createElement(Card.Text, { as: "p" }, description),
                     props.children),
-                React.createElement(Card.Footer, null,
-                    React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, (readmoreLabel && readmoreLabel.length > 0) ? readmoreLabel : title))));
+                (readmoreLabel && readmoreLabel.length > 0) && React.createElement(Card.Footer, null,
+                    React.createElement(Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, readmoreLabel))));
     });
     return React.createElement(React.Fragment, null,
         React.createElement(AllHeader, { data: props.data }),
