@@ -6,16 +6,15 @@ import AllHeader from "../../Partials/ContentElements/Header/All";
 const MenuCardDir: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
     const {flexform, content} = props.data
     const {items, readmoreLabel} = content
-
     const itemsTemplate = items.map((item) => {
         const {
             title,
-            // abstract,
+            description,
             link,
             target,
             thumbnail
         } = item
-        return <div key={link} className="card-menu-item">
+        return <div key={link} className={`card-menu-item ${(thumbnail[0]?.publicUrl ? 'hasImage': 'noImage')}`}>
             <Card>
                 {thumbnail && thumbnail.length > 0 &&
                     <Card.Link href={link} target={target} title={title} data-toggle={"tooltip"}>
@@ -29,15 +28,15 @@ const MenuCardDir: React.FC<TYPO3BootstrapContentElementBaseInterface> = props =
                                        data-toggle={"tooltip"}>{title}</Card.Link>
                         </Card.Title>
                     }
-                    {/*{abstract &&*/}
-                    {/*    <Card.Text as={"p"}>{abstract}</Card.Text> }*/}
+                    {description &&
+                        <Card.Text as={"p"}>{description}</Card.Text> }
                     {props.children}
                 </Card.Body>
-                <Card.Footer>
-                    <Card.Link href={link} target={target} title={title} data-toggle={"tooltip"}>
-                        {(readmoreLabel && readmoreLabel.length > 0) ? readmoreLabel : title}
+                {(readmoreLabel && readmoreLabel.length > 0) && <Card.Footer>
+                     <Card.Link href={link} target={target} title={title} data-toggle={"tooltip"}>
+                         {readmoreLabel}
                     </Card.Link>
-                </Card.Footer>
+                </Card.Footer>}
             </Card>
         </div>
     })
