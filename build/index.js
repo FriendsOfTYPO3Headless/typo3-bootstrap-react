@@ -322,17 +322,14 @@ var Textpic = function (props) {
     if (props.data.content.gallery.position.horizontal === 'center') {
         textpicClassName = props.data.content.gallery.position.vertical;
     }
-    return React__default["default"].createElement(React__default["default"].Fragment, null,
-        React__default["default"].createElement("div", { className: "textpic" },
-            React__default["default"].createElement("div", { className: "gallery-row" },
-                React__default["default"].createElement(RBT.Row, { className: "textpic textpic-" + textpicClassName },
-                    React__default["default"].createElement(RBT.Col, { className: "textpic-item textpic-gallery", md: textpicClassName === props.data.content.gallery.position.vertical ? "auto" : "6" },
-                        React__default["default"].createElement(RBT.Row, null,
-                            React__default["default"].createElement(ImageCols, { data: props.data.content }))),
-                    React__default["default"].createElement(RBT.Col, { className: "textpic-item textpic-text", md: "6" },
-                        React__default["default"].createElement(AllHeader, { data: props.data }),
-                        React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } }),
-                        props.children)))));
+    return React__default["default"].createElement(RBT.Row, { className: "textpic textpic-" + textpicClassName },
+        React__default["default"].createElement(RBT.Col, { className: "textpic-item textpic-gallery", md: textpicClassName === props.data.content.gallery.position.vertical ? "auto" : "6" },
+            React__default["default"].createElement(RBT.Row, null,
+                React__default["default"].createElement(ImageCols, { data: props.data.content }))),
+        React__default["default"].createElement(RBT.Col, { className: "textpic-item textpic-text", md: "6" },
+            React__default["default"].createElement(AllHeader, { data: props.data }),
+            React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } }),
+            props.children));
 };
 
 var Image = function (props) {
@@ -361,45 +358,42 @@ var Textmedia = function (props) {
     if (props.data.content.gallery.position.horizontal === 'center') {
         textmediaClassName = props.data.content.gallery.position.vertical;
     }
-    return React__default["default"].createElement(React__default["default"].Fragment, null,
-        React__default["default"].createElement("div", { className: "textmedia" },
-            React__default["default"].createElement("div", { className: "gallery-row" },
-                React__default["default"].createElement(RBT.Row, { className: "textmedia textmedia-" + textmediaClassName },
-                    React__default["default"].createElement(RBT.Col, { className: "textmedia-item textmedia-gallery", md: textmediaClassName === props.data.content.gallery.position.vertical ? "auto" : "6" },
-                        React__default["default"].createElement(RBT.Row, null, Object.keys(props.data.content.gallery.rows).map(function (rowKey) {
-                            return Object.keys(props.data.content.gallery.rows[rowKey].columns).map(function (columnKey) {
-                                switch (props.data.content.gallery.rows[rowKey].columns[columnKey].properties.mimeType) {
-                                    case 'video/youtube':
-                                        return React__default["default"].createElement(RBT.Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
-                                            React__default["default"].createElement("iframe", { src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item" }),
-                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                    case 'image/jpeg':
-                                        return React__default["default"].createElement(RBT.Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
-                                            React__default["default"].createElement("img", { src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item", alt: props.data.content.gallery.rows[rowKey].columns[columnKey].properties.title }),
-                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                    case 'image/svg+xml':
-                                        return React__default["default"].createElement(RBT.Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
-                                            React__default["default"].createElement("img", { src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item", alt: props.data.content.gallery.rows[rowKey].columns[columnKey].properties.title }),
-                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                    case 'video/mp4':
-                                        return React__default["default"].createElement(RBT.Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
-                                            React__default["default"].createElement("video", { controls: true },
-                                                React__default["default"].createElement("source", { type: "video/mp4", src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl })),
-                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                    case 'video/vimeo':
-                                        return React__default["default"].createElement(RBT.Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
-                                            React__default["default"].createElement("video", { controls: true },
-                                                React__default["default"].createElement("source", { type: "video/mp4", src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl })),
-                                            props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
-                                    default:
-                                        return React__default["default"].createElement(React__default["default"].Fragment, null);
-                                }
-                            });
-                        }))),
-                    React__default["default"].createElement(RBT.Col, { className: "textmedia-item textmedia-text" },
-                        React__default["default"].createElement(AllHeader, { data: props.data }),
-                        React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } }),
-                        props.children)))));
+    return React__default["default"].createElement(RBT.Row, { className: "textmedia textmedia-" + textmediaClassName },
+        React__default["default"].createElement(RBT.Col, { className: "textmedia-item textmedia-gallery", md: textmediaClassName === props.data.content.gallery.position.vertical ? "auto" : "6" },
+            React__default["default"].createElement(RBT.Row, null, Object.keys(props.data.content.gallery.rows).map(function (rowKey) {
+                return Object.keys(props.data.content.gallery.rows[rowKey].columns).map(function (columnKey) {
+                    switch (props.data.content.gallery.rows[rowKey].columns[columnKey].properties.mimeType) {
+                        case 'video/youtube':
+                            return React__default["default"].createElement(RBT.Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                React__default["default"].createElement("iframe", { src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item w-100" }),
+                                props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                        case 'image/jpeg':
+                            return React__default["default"].createElement(RBT.Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                React__default["default"].createElement("img", { src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item", alt: props.data.content.gallery.rows[rowKey].columns[columnKey].properties.title }),
+                                props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                        case 'image/svg+xml':
+                            return React__default["default"].createElement(RBT.Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                React__default["default"].createElement("img", { src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl, className: "embed-responsive-item", alt: props.data.content.gallery.rows[rowKey].columns[columnKey].properties.title }),
+                                props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                        case 'video/mp4':
+                            return React__default["default"].createElement(RBT.Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                React__default["default"].createElement("video", { controls: true },
+                                    React__default["default"].createElement("source", { type: "video/mp4", src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                        case 'video/vimeo':
+                            return React__default["default"].createElement(RBT.Col, { className: "gallery-item  gallery-item-size-" + props.data.content.gallery.count.columns },
+                                React__default["default"].createElement("video", { controls: true },
+                                    React__default["default"].createElement("source", { type: "video/mp4", src: props.data.content.gallery.rows[rowKey].columns[columnKey].publicUrl })),
+                                props.data.content.gallery.rows[rowKey].columns[columnKey].properties.description);
+                        default:
+                            return React__default["default"].createElement(React__default["default"].Fragment, null);
+                    }
+                });
+            }))),
+        React__default["default"].createElement(RBT.Col, { className: "textmedia-item textmedia-text" },
+            React__default["default"].createElement(AllHeader, { data: props.data }),
+            React__default["default"].createElement("div", { dangerouslySetInnerHTML: { __html: props.data.content.bodytext } }),
+            props.children));
 };
 
 var Shortcut = function (props) {
@@ -513,7 +507,7 @@ var Type = function (props) {
     var fileType = file.properties.type;
     if (!isNaN(+file.properties.type)) {
         var fileExtension_1 = file.properties.filename.split('.').pop();
-        if (['jpg', 'png'].some(function (type) { return type === fileExtension_1; })) {
+        if (['jpg', 'png', 'svg'].some(function (type) { return type === fileExtension_1; })) {
             fileType = 'image';
         }
     }
@@ -665,7 +659,6 @@ var Header = function (props) {
         props.children);
 };
 
-// import AllHeader from "../../Partials/ContentElements/Header/All"
 var carouselItem = function (itemHeadless, isFirst) {
     if (isFirst === void 0) { isFirst = false; }
     var itemType = itemHeadless.itemType, layout = itemHeadless.layout, image = itemHeadless.image;
@@ -686,11 +679,12 @@ var carouselItem = function (itemHeadless, isFirst) {
                 React__default["default"].createElement(Image$1, { file: image[0], className: '' }));
             break;
         default:
-            item = React__default["default"].createElement(RBT.Alert, { variant: "danger" },
-                React__default["default"].createElement(RBT.Alert.Heading, null, "Templatetype unknown"),
-                React__default["default"].createElement("p", null,
-                    itemType,
-                    " has no Template"));
+            item = React__default["default"].createElement("div", { className: 'carousel-text-inner' },
+                React__default["default"].createElement(RBT.Alert, { variant: "danger" },
+                    React__default["default"].createElement(RBT.Alert.Heading, null, "Templatetype unknown"),
+                    React__default["default"].createElement("p", null,
+                        itemType,
+                        " has no Template")));
     }
     return React__default["default"].createElement(RBT__namespace.Carousel.Item, { key: image[0].publicUrl, className: itemClass },
         React__default["default"].createElement("div", { className: 'carousel-content' },
@@ -704,15 +698,17 @@ var Carousel = function (props) {
         return carouselItem(itemHeadless, index === 0);
     });
     return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(AllHeader, { data: props.data }),
         React__default["default"].createElement(RBT__namespace.Carousel, { fade: flexform.transition === 'fade', interval: flexform.interval, wrap: flexform.wrap }, itemsTemplate));
 };
 
-var MenuCardList = function (props) {
+var MenuCardDir$1 = function (props) {
     var _a = props.data, flexform = _a.flexform, content = _a.content;
     var items = content.items, readmoreLabel = content.readmoreLabel;
-    var itemsTemplate = items.map(function (item, index) {
-        var title = item.title, subtitle = item.subtitle, abstract = item.abstract, link = item.link, target = item.target; item.active; item.current; item.spacer; item.hasSubpages; var thumbnail = item.thumbnail; item.nav_icon;
-        return React__default["default"].createElement("div", { key: link, className: "card-menu-item" },
+    var itemsTemplate = items.map(function (item) {
+        var _a;
+        var title = item.title, description = item.description, link = item.link, target = item.target, thumbnail = item.thumbnail;
+        return React__default["default"].createElement("div", { key: link, className: "card-menu-item ".concat((((_a = thumbnail[0]) === null || _a === void 0 ? void 0 : _a.publicUrl) ? 'hasImage' : 'noImage')) },
             React__default["default"].createElement(RBT.Card, null,
                 thumbnail && thumbnail.length > 0 &&
                     React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" },
@@ -721,38 +717,50 @@ var MenuCardList = function (props) {
                     title && title.length > 0 &&
                         React__default["default"].createElement(RBT.Card.Title, { as: 'h3' },
                             React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, title)),
-                    subtitle && subtitle.length > 0 &&
-                        React__default["default"].createElement(RBT.Card.Subtitle, { as: 'h4' }, subtitle),
-                    React__default["default"].createElement(RBT.Card.Text, { as: "p" }, abstract),
+                    description &&
+                        React__default["default"].createElement(RBT.Card.Text, { as: "p" }, description),
                     props.children),
-                React__default["default"].createElement(RBT.Card.Footer, null,
-                    React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, (readmoreLabel && readmoreLabel.length > 0) ? readmoreLabel : title))));
+                (readmoreLabel && readmoreLabel.length > 0) && React__default["default"].createElement(RBT.Card.Footer, null,
+                    React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, readmoreLabel))));
     });
-    return React__default["default"].createElement("div", { className: "card-menu card-menu card-menu-align-".concat(flexform.align, " card-menu-columns-").concat(flexform.columns) }, itemsTemplate);
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(AllHeader, { data: props.data }),
+        React__default["default"].createElement("div", { className: "card-menu card-menu card-menu-align-".concat(flexform.align, " card-menu-columns-").concat(flexform.columns) }, itemsTemplate));
+};
+
+var MenuCardList = function (props) {
+    return React__default["default"].createElement(MenuCardDir$1, __assign({}, props));
 };
 
 var MenuCardDir = function (props) {
-    var _a = props.data, flexform = _a.flexform, content = _a.content;
-    var items = content.items, readmoreLabel = content.readmoreLabel;
-    var itemsTemplate = items.map(function (item, index) {
-        var title = item.title, subtitle = item.subtitle, abstract = item.abstract, link = item.link, target = item.target; item.active; item.current; item.spacer; item.hasSubpages; var media = item.media; item.nav_icon;
-        return React__default["default"].createElement("div", { key: link, className: "card-menu-item" },
-            React__default["default"].createElement(RBT.Card, null,
-                media && media.length > 0 &&
-                    React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" },
-                        React__default["default"].createElement(RBT.Card.Img, { variant: "top", src: media[0].publicUrl })),
-                React__default["default"].createElement(RBT.Card.Body, null,
-                    title && title.length > 0 &&
-                        React__default["default"].createElement(RBT.Card.Title, { as: 'h3' },
-                            React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, title)),
-                    subtitle && subtitle.length > 0 &&
-                        React__default["default"].createElement(RBT.Card.Subtitle, { as: 'h4' }, subtitle),
-                    React__default["default"].createElement(RBT.Card.Text, { as: "p" }, abstract),
-                    props.children),
-                React__default["default"].createElement(RBT.Card.Footer, null,
-                    React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" }, (readmoreLabel && readmoreLabel.length > 0) ? readmoreLabel : title))));
+    props.data.content.items = props.data.content.items.map(function (item) {
+        return __assign(__assign({}, item), { thumbnail: item.media });
     });
-    return React__default["default"].createElement("div", { className: "card-menu card-menu card-menu-align-".concat(flexform.align, " card-menu-columns-").concat(flexform.columns) }, itemsTemplate);
+    return React__default["default"].createElement(MenuCardDir$1, __assign({}, props));
+};
+
+var MenuThumbnailBase = function (props) {
+    var _a = props.data, flexform = _a.flexform, content = _a.content;
+    var items = content.items;
+    var itemsTemplate = items.map(function (item, index) {
+        var title = item.title, link = item.link, target = item.target, thumbnail = item.thumbnail, subtitle = item.subtitle;
+        return React__default["default"].createElement("div", { key: link, className: "thumbnail-menu-item" },
+            React__default["default"].createElement("a", { href: link, target: target, title: title, "data-toggle": "tooltip", className: 'thumbnail-menu-link' },
+                React__default["default"].createElement("span", { className: 'thumbnail-menu-image' }, thumbnail && thumbnail.length > 0 ?
+                    React__default["default"].createElement(Image$1, { file: thumbnail[0] })
+                    :
+                        React__default["default"].createElement("span", { className: 'no-image' })),
+                React__default["default"].createElement("span", { className: 'thumbnail-menu-caption' },
+                    React__default["default"].createElement("span", { className: 'thumbnail-menu-caption-inner' },
+                        title && title.length > 0 &&
+                            React__default["default"].createElement("span", { className: 'h3 thumbnail-menu-caption-title' }, title),
+                        subtitle && subtitle.length > 0 &&
+                            React__default["default"].createElement("p", { className: 'thumbnail-menu-caption-subtitle' }, subtitle)))),
+            props.children);
+    });
+    return React__default["default"].createElement(React__default["default"].Fragment, null,
+        React__default["default"].createElement(AllHeader, { data: props.data }),
+        React__default["default"].createElement("div", { className: "thumbnail-menu thumbnail-menu-align-".concat(flexform.align, " thumbnail-menu-columns-").concat(flexform.columns) }, itemsTemplate));
 };
 
 var ContentElements = /*#__PURE__*/Object.freeze({
@@ -774,7 +782,8 @@ var ContentElements = /*#__PURE__*/Object.freeze({
     Header: Header,
     Carousel: Carousel,
     MenuCardList: MenuCardList,
-    MenuCardDir: MenuCardDir
+    MenuCardDir: MenuCardDir,
+    MenuThumbnailBase: MenuThumbnailBase
 });
 
 var BackgroundImage = function (props) {
@@ -1109,6 +1118,8 @@ var contentElementTemplates = {
     carousel: function (headlessContentData) { return React__default["default"].createElement(Carousel, { data: headlessContentData }); },
     menu_card_list: function (headlessContentData) { return React__default["default"].createElement(MenuCardList, { data: headlessContentData }); },
     menu_card_dir: function (headlessContentData) { return React__default["default"].createElement(MenuCardDir, { data: headlessContentData }); },
+    menu_thumbnail_dir: function (headlessContentData) { return React__default["default"].createElement(MenuThumbnailBase, { data: headlessContentData }); },
+    menu_thumbnail_list: function (headlessContentData) { return React__default["default"].createElement(MenuThumbnailBase, { data: headlessContentData }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
@@ -1142,6 +1153,7 @@ var TYPO3Page$1 = React__default["default"].memo(TYPO3Page);
 exports.AllHeader = AllHeader;
 exports.Content = Content;
 exports.ContentElements = ContentElements;
+exports.MediaType = Type;
 exports.Page = Page;
 exports.Section = section;
 exports.TYPO3Page = TYPO3Page$1;
