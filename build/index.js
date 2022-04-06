@@ -708,7 +708,7 @@ var MenuCardDir$1 = function (props) {
     var itemsTemplate = items.map(function (item) {
         var _a;
         var title = item.title, description = item.description, link = item.link, target = item.target, thumbnail = item.thumbnail;
-        return React__default["default"].createElement("div", { key: link, className: "card-menu-item ".concat((((_a = thumbnail[0]) === null || _a === void 0 ? void 0 : _a.publicUrl) ? 'hasImage' : 'noImage')) },
+        return React__default["default"].createElement("div", { key: link, className: "card-menu-item ".concat((thumbnail && ((_a = thumbnail[0]) === null || _a === void 0 ? void 0 : _a.publicUrl) ? 'hasImage' : 'noImage')) },
             React__default["default"].createElement(RBT.Card, null,
                 thumbnail && thumbnail.length > 0 &&
                     React__default["default"].createElement(RBT.Card.Link, { href: link, target: target, title: title, "data-toggle": "tooltip" },
