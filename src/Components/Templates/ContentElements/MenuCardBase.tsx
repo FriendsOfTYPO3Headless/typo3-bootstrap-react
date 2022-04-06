@@ -14,7 +14,7 @@ const MenuCardDir: React.FC<TYPO3BootstrapContentElementBaseInterface> = props =
             target,
             thumbnail
         } = item
-        return <div key={link} className={`card-menu-item ${(thumbnail[0]?.publicUrl ? 'hasImage': 'noImage')}`}>
+        return <div key={link} className={`card-menu-item ${( thumbnail && thumbnail[0]?.publicUrl ? 'hasImage': 'noImage')}`}>
             <Card>
                 {thumbnail && thumbnail.length > 0 &&
                     <Card.Link href={link} target={target} title={title} data-toggle={"tooltip"}>
