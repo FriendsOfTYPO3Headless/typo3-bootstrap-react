@@ -164,7 +164,9 @@ Subheader.defaultProps = {
 
 var HeaderDate = function (props) {
     //TODO: Date initialisieren, toLocaleDateString...
-    return React.createElement("p", { className: props.positionClass }, props.date);
+    var timestamp = props.timestamp, positionClass = props.positionClass;
+    var date = new Date(timestamp);
+    return React.createElement("p", { className: positionClass }, date.toLocaleDateString('de-DE'));
 };
 
 var AllHeader = function (props) {
@@ -178,7 +180,7 @@ var AllHeader = function (props) {
                 subheader.length > 0 &&
                     React.createElement(Subheader, { layout: headerLayout, positionClass: headerPosition ? 'text-' + headerPosition : '', header: subheader, headerLink: headerLink !== '' ? headerLink : null }),
                 date.length > 0 &&
-                    React.createElement(HeaderDate, { date: date, positionClass: headerPosition ? 'text-' + headerPosition : '' }));
+                    React.createElement(HeaderDate, { timestamp: date, positionClass: headerPosition ? 'text-' + headerPosition : '' }));
         }
     }
     return content;

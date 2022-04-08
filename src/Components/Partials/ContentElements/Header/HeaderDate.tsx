@@ -1,14 +1,15 @@
-import React from 'react';
+import React from 'react'
 
 const HeaderDate: React.FC<{
-    date: string;
+    timestamp: string;
     positionClass: string | null,
 }> = props => {
 //TODO: Date initialisieren, toLocaleDateString...
+    const {timestamp, positionClass} = props
 
-
-    return <p className={props.positionClass}>
-        {props.date}
+    const date = new Date(timestamp)
+    return <p className={positionClass}>
+        {date.toLocaleDateString('de-DE')}
     </p>
 
 }
