@@ -15,21 +15,23 @@ const FormFormFramework: React.FC<{ data: any }> = props => {
             const form = event.currentTarget
             const formData = new FormData(form)
             formData.append('responseElementId', responseElementId)
+            formData.append('form valid', form.checkValidity())
             if (form.checkValidity() === false) {
                 event.stopPropagation();
+            } else {
+                const response = await fetch(`https://cms.trixie.localhost${link.href}&${responseElementId}`, {
+                    method: 'POST', // or 'PUT'
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: formData,
+                })
+
+                const result = await response.json()
+                console.log('RESULT', result)
             }
+
             setValidated(true)
-
-            const response = await fetch('https://cms.trixie.localhost' + link.href, {
-                method: 'POST', // or 'PUT'
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: formData,
-            })
-
-            const result = await response.json()
-            console.log('RESULT', result)
 
 
             // fetch(link.href, {
@@ -57,7 +59,7 @@ const FormFormFramework: React.FC<{ data: any }> = props => {
 
     return <div className="formFormFramework" >
         {/*<AllHeader data={props.data}/>*/}
-        <Form id={form.id} noValidate={false} validated={validated} onSubmit={submitHandler} method={'POST'} action={link.href}>
+        <Form id={form.id} noValidate={true} validated={validated} onSubmit={submitHandler} method={'POST'} action={link.href}>
             {form.elements.map((element, index) => {
                 return <FormElement element={element} key={`${form.id}-${index}`}/>
             })}

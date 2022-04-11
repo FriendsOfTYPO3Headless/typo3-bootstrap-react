@@ -864,12 +864,10 @@ var Honeypot = function (props) {
 var FormControlBase = function (props) {
     var _a = props.data, defaultValue = _a.defaultValue, identifier = _a.identifier, label = _a.label, name = _a.name, properties = _a.properties, type = _a.type;
     var fluidAdditionalAttributes = properties.fluidAdditionalAttributes, elementDescription = properties.elementDescription, validationErrorMessages = properties.validationErrorMessages;
-    console.log('ERROR MESSSAGE', validationErrorMessages);
     return React__default["default"].createElement(React__default["default"].Fragment, null,
         label.length > 0 && React__default["default"].createElement(RBT.Form.Label, null, label),
         React__default["default"].createElement(RBT.Form.Control, __assign({}, fluidAdditionalAttributes, { type: type.toLowerCase(), name: name, defaultValue: defaultValue })),
         validationErrorMessages && validationErrorMessages.map(function (messageObject, index) {
-            console.log('ERROR MESSSAGE', messageObject);
             return React__default["default"].createElement(RBT.Form.Control.Feedback, { key: "".concat(identifier, "-").concat(index), type: "invalid", tooltip: true }, messageObject.message);
         }),
         elementDescription && React__default["default"].createElement(RBT.Form.Text, { className: 'inline-muted' }, elementDescription));
@@ -1123,29 +1121,32 @@ var FormFormFramework = function (props) {
                     form = event.currentTarget;
                     formData = new FormData(form);
                     formData.append('responseElementId', responseElementId);
-                    if (form.checkValidity() === false) {
-                        event.stopPropagation();
-                    }
-                    setValidated(true);
-                    return [4 /*yield*/, fetch('https://cms.trixie.localhost' + link.href, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: formData,
-                        })];
-                case 1:
+                    formData.append('form valid', form.checkValidity());
+                    if (!(form.checkValidity() === false)) return [3 /*break*/, 1];
+                    event.stopPropagation();
+                    return [3 /*break*/, 4];
+                case 1: return [4 /*yield*/, fetch("https://cms.trixie.localhost".concat(link.href, "&").concat(responseElementId), {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: formData,
+                    })];
+                case 2:
                     response = _a.sent();
                     return [4 /*yield*/, response.json()];
-                case 2:
+                case 3:
                     result = _a.sent();
                     console.log('RESULT', result);
+                    _a.label = 4;
+                case 4:
+                    setValidated(true);
                     return [2 /*return*/];
             }
         });
     }); }, [form, link]);
     return React__default["default"].createElement("div", { className: "formFormFramework" },
-        React__default["default"].createElement(RBT.Form, { id: form.id, noValidate: false, validated: validated, onSubmit: submitHandler, method: 'POST', action: link.href },
+        React__default["default"].createElement(RBT.Form, { id: form.id, noValidate: true, validated: validated, onSubmit: submitHandler, method: 'POST', action: link.href },
             form.elements.map(function (element, index) {
                 return React__default["default"].createElement(FormElement, { element: element, key: "".concat(form.id, "-").concat(index) });
             }),
