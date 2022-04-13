@@ -68,7 +68,7 @@ const FormElement: React.FC<{ element: { defaultValue: string, type: string, ide
             content = <Honeypot data={element}/>
             break
         case ElementType.hidden:
-            content = <FormControlHidden data={element}/>
+            return <FormControlHidden data={element}/>
             break;
         case ElementType.input:
             content = <FormControlInput data={element}/>
@@ -132,7 +132,6 @@ const FormElement: React.FC<{ element: { defaultValue: string, type: string, ide
             </Alert>
             break;
     }
-
 
     return <Form.Group className="mb-3" controlId={element.identifier}>
         {content}

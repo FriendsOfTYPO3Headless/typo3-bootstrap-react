@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import * as RBT from 'react-bootstrap';
 import { Figure, Col, Row, Alert, Accordion as Accordion$1, Card, Form, Button, Container } from 'react-bootstrap';
 import Lightbox from 'react-image-lightbox';
@@ -1010,8 +1010,7 @@ var FormElement = function (props) {
             content = React.createElement(Honeypot, { data: element });
             break;
         case ElementType.hidden:
-            content = React.createElement(FormControlHidden, { data: element });
-            break;
+            return React.createElement(FormControlHidden, { data: element });
         case ElementType.input:
             content = React.createElement(FormControlInput, { data: element });
             break;
@@ -1079,49 +1078,49 @@ var FormElement = function (props) {
 };
 
 var FormFormFramework = function (props) {
-    console.log('properties', props);
     var _a = props.data, form = _a.form, link = _a.link;
     var _b = useState(false), validated = _b[0], setValidated = _b[1];
-    console.log(props.data);
-    var responseElementId = form.id;
+    var formRef = useRef();
+    form.id;
     var submitHandler = useCallback(function (event) { return __awaiter(void 0, void 0, void 0, function () {
-        var form, formData, response, result;
+        var formElement, formData;
         return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    event.preventDefault();
-                    form = event.currentTarget;
-                    formData = new FormData(form);
-                    formData.append('responseElementId', responseElementId);
-                    formData.append('form valid', form.checkValidity());
-                    if (!(form.checkValidity() === false)) return [3 /*break*/, 1];
-                    event.stopPropagation();
-                    return [3 /*break*/, 4];
-                case 1: return [4 /*yield*/, fetch("https://cms.trixie.localhost".concat(link.href, "&").concat(responseElementId), {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: formData,
-                    })];
-                case 2:
-                    response = _a.sent();
-                    return [4 /*yield*/, response.json()];
-                case 3:
-                    result = _a.sent();
-                    console.log('RESULT', result);
-                    _a.label = 4;
-                case 4:
+            event.preventDefault();
+            if (formRef) {
+                formElement = formRef.current;
+                if (formElement) {
+                    formData = new FormData(formElement);
+                    // formData.append('responseElementId', responseElementId)
+                    // formData.append('responseElementRecursive', "1")
+                    // formData.append('form valid', (formElement.checkValidity()? '1' : '0'))
+                    if (formElement.checkValidity() === false) {
+                        event.stopPropagation();
+                    }
+                    else {
+                        fetch("https://cms.trixie.localhost".concat(link.href), {
+                            method: 'POST',
+                            // headers: {'Content-Type': 'multipart/form-data'},
+                            body: formData,
+                        }).then(function (response) { return response.json(); })
+                            .then(function (data) {
+                            console.log(data);
+                            console.log(data.content.colPos0['0'].content.form.api.actionAfterSuccess);
+                        });
+                        // const result = await response.json()
+                        // console.log('RESULT', result)
+                    }
                     setValidated(true);
-                    return [2 /*return*/];
+                }
             }
+            return [2 /*return*/];
         });
     }); }, [form, link]);
     return React.createElement("div", { className: "formFormFramework" },
-        React.createElement(Form, { id: form.id, noValidate: true, validated: validated, onSubmit: submitHandler, method: 'POST', action: link.href },
+        React.createElement(Form, { id: form.id, noValidate: true, validated: validated, onSubmit: submitHandler, method: 'POST', action: link.href, ref: formRef },
             form.elements.map(function (element, index) {
                 return React.createElement(FormElement, { element: element, key: "".concat(form.id, "-").concat(index) });
             }),
+            React.createElement(Form.Control, { type: 'hidden', name: 'responseElementId', defaultValue: form.id }),
             React.createElement(Button, { type: "submit" }, "Submit")));
 };
 

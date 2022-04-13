@@ -1,38 +1,47 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 import {Button, Form} from "react-bootstrap";
 import FormElement from "../../Partials/ContentElements/FormFramework/Elements/Element";
 import AllHeader from "../../Partials/ContentElements/Header/All";
 
 const FormFormFramework: React.FC<{ data: any }> = props => {
-    console.log('properties', props)
     const {form, link} = props.data;
     const [validated, setValidated] = useState(false);
-    console.log(props.data)
+    const formRef = useRef<HTMLFormElement>();
     const responseElementId = form.id
     const submitHandler = useCallback(
         async (event) => {
             event.preventDefault();
-            const form = event.currentTarget
-            const formData = new FormData(form)
-            formData.append('responseElementId', responseElementId)
-            formData.append('form valid', form.checkValidity())
-            if (form.checkValidity() === false) {
-                event.stopPropagation();
-            } else {
-                const response = await fetch(`https://cms.trixie.localhost${link.href}&${responseElementId}`, {
-                    method: 'POST', // or 'PUT'
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: formData,
-                })
+            if (formRef) {
 
-                const result = await response.json()
-                console.log('RESULT', result)
+                const formElement = formRef.current;
+                if (formElement) {
+                    const formData = new FormData(formElement)
+
+                    // formData.append('responseElementId', responseElementId)
+                    // formData.append('responseElementRecursive', "1")
+                    // formData.append('form valid', (formElement.checkValidity()? '1' : '0'))
+                    if (formElement.checkValidity() === false) {
+                        event.stopPropagation();
+                    } else {
+
+                        fetch(`https://cms.trixie.localhost${link.href}`, {
+                            method: 'POST', // or 'PUT'
+                           // headers: {'Content-Type': 'multipart/form-data'},
+                            body: formData,
+                        }).then(response => response.json())
+                          .then(data => {
+                              console.log(data)
+                              console.log(data.content.colPos0['0'].content.form.api.actionAfterSuccess)
+                          });
+
+                        // const result = await response.json()
+                        // console.log('RESULT', result)
+                    }
+
+                    setValidated(true)
+                }
+
             }
-
-            setValidated(true)
-
 
             // fetch(link.href, {
             //     method: 'POST', // or 'PUT'
@@ -57,12 +66,18 @@ const FormFormFramework: React.FC<{ data: any }> = props => {
     );
 
 
-    return <div className="formFormFramework" >
+    return <div className="formFormFramework">
         {/*<AllHeader data={props.data}/>*/}
-        <Form id={form.id} noValidate={true} validated={validated} onSubmit={submitHandler} method={'POST'} action={link.href}>
+        <Form id={form.id} noValidate={true} validated={validated} onSubmit={submitHandler} method={'POST'}
+              action={link.href} ref={formRef}>
             {form.elements.map((element, index) => {
                 return <FormElement element={element} key={`${form.id}-${index}`}/>
             })}
+            <Form.Control
+                type={'hidden'}
+                name={'responseElementId'}
+                defaultValue={form.id}
+            />
             <Button type={"submit"}>Submit</Button>
         </Form>
     </div>
