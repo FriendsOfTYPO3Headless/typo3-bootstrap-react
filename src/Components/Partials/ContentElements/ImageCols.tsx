@@ -25,17 +25,20 @@ const ImageCols: React.FC<{ data: any }> = (props) => {
             return Object.keys(props.data.gallery.rows[rowKey].columns).map((columnKey) => {
                 const file = props.data.gallery.rows[rowKey].columns[columnKey]
                 const image = <Image file={file} />
+                let colContent = image
+                if(props.data.enlargeImageOnClick) {
+                    colContent = <a onClick={(e) => {
+                        e.preventDefault();
+                        setPhotoIndex(images.indexOf(file.publicUrl));
+                        setShowlightbox(true);
+                        return true;
+                    }} href={file.publicUrl}>
+                        {image}
+                    </a>
+                }
                 return <Col className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}
                             key={rowKey + '-' + columnKey}>
-                    {props.data.enlargeImageOnClick ?
-                        <a onClick={(e) => {
-                            e.preventDefault();
-                            setPhotoIndex(images.indexOf(file.publicUrl));
-                            setShowlightbox(true);
-                            return true;
-                        }} href={file.publicUrl}>
-                            {image}
-                        </a> : image}
+                    {colContent}
                 </Col>
             })
         })

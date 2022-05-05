@@ -3,30 +3,32 @@ import FigureImage from "react-bootstrap/FigureImage";
 
 export const Image: React.FC<IImageCompomentProperties> = (props) => {
     const {file, className} = props
-    const crops = Object.keys(file.properties.crop)
+    const {properties, cropVariants, publicUrl} = file
+    const {link, linkData,} = properties
+    const crops = Object.keys(properties.crop)
     const sources = crops.map((cropIdentifier: string, index: number) => {
         let src: string
         let media: string
         switch (cropIdentifier) {
             case 'extrasmall':
                 media = '(max-width: 575px)'
-                src = file.cropVariants ? file.cropVariants.extrasmall.publicUrl : file.publicUrl
+                src = cropVariants ? cropVariants.extrasmall.publicUrl : publicUrl
                 break;
             case 'small':
                 media = '(min-width: 576px)'
-                src = file.cropVariants ? file.cropVariants.small.publicUrl : file.publicUrl
+                src = cropVariants ? cropVariants.small.publicUrl : publicUrl
                 break
             case 'medium':
                 media = '(min-width: 768px)'
-                src = file.cropVariants ? file.cropVariants.medium.publicUrl : file.publicUrl
+                src = cropVariants ? cropVariants.medium.publicUrl : publicUrl
                 break
             case 'large':
                 media = '(min-width: 992px)'
-                src = file.cropVariants ? file.cropVariants.large.publicUrl : file.publicUrl
+                src = cropVariants ? cropVariants.large.publicUrl : publicUrl
                 break
             default:
                 media = '(min-width: 1200px)'
-                src = file.cropVariants ? file.cropVariants.default.publicUrl : file.publicUrl
+                src = cropVariants ? cropVariants.default.publicUrl : publicUrl
                 break;
         }
         return <source key={index} srcSet={src} media={media}/>
@@ -37,14 +39,39 @@ export const Image: React.FC<IImageCompomentProperties> = (props) => {
         cssClasses += ' ' + className
     }
 
-    return <picture>
+    let imageContent = <picture>
         {sources}
         <FigureImage loading="lazy"
                      className={cssClasses}
-                     src={file.publicUrl} title={file.properties.title}
-                     alt={file.properties.alternative}
+                     src={publicUrl} title={properties.title}
+                     alt={properties.alternative}
         />
     </picture>
+
+    if(link !== null || linkData !== null){
+        let linkProperties = {
+            className: '',
+            href: link,
+            target: null,
+            title: null
+        }
+
+        if(linkData !== null){
+           linkProperties = {
+               ...linkProperties,
+               className: linkData['class'],
+               href: linkData.href,
+               target: linkData.target,
+               title: linkData.title,
+               ...linkData.additionalAttributes
+           }
+        }
+        imageContent = <a {...linkProperties}>
+            {imageContent}
+        </a>
+    }
+
+    return imageContent
 }
 
 export default Image
