@@ -751,9 +751,6 @@ var MenuCardList = function (props) {
 };
 
 var MenuCardDir = function (props) {
-    props.data.content.items = props.data.content.items.map(function (item) {
-        return __assign(__assign({}, item), { thumbnail: item.media });
-    });
     return React__default["default"].createElement(MenuCardDir$1, __assign({}, props));
 };
 
