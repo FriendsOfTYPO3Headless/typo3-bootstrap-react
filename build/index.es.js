@@ -208,32 +208,60 @@ var ImageLightbox = function (props) {
     return React.createElement(React.Fragment, null);
 };
 
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
 var Image$2 = function (props) {
     var file = props.file, className = props.className;
-    var crops = Object.keys(file.properties.crop);
+    var properties = file.properties, cropVariants = file.cropVariants, publicUrl = file.publicUrl;
+    var link = properties.link, linkData = properties.linkData;
+    var crops = Object.keys(properties.crop);
     var sources = crops.map(function (cropIdentifier, index) {
         var src;
         var media;
         switch (cropIdentifier) {
             case 'extrasmall':
                 media = '(max-width: 575px)';
-                src = file.cropVariants ? file.cropVariants.extrasmall.publicUrl : file.publicUrl;
+                src = cropVariants ? cropVariants.extrasmall.publicUrl : publicUrl;
                 break;
             case 'small':
                 media = '(min-width: 576px)';
-                src = file.cropVariants ? file.cropVariants.small.publicUrl : file.publicUrl;
+                src = cropVariants ? cropVariants.small.publicUrl : publicUrl;
                 break;
             case 'medium':
                 media = '(min-width: 768px)';
-                src = file.cropVariants ? file.cropVariants.medium.publicUrl : file.publicUrl;
+                src = cropVariants ? cropVariants.medium.publicUrl : publicUrl;
                 break;
             case 'large':
                 media = '(min-width: 992px)';
-                src = file.cropVariants ? file.cropVariants.large.publicUrl : file.publicUrl;
+                src = cropVariants ? cropVariants.large.publicUrl : publicUrl;
                 break;
             default:
                 media = '(min-width: 1200px)';
-                src = file.cropVariants ? file.cropVariants.default.publicUrl : file.publicUrl;
+                src = cropVariants ? cropVariants.default.publicUrl : publicUrl;
                 break;
         }
         return React.createElement("source", { key: index, srcSet: src, media: media });
@@ -242,9 +270,22 @@ var Image$2 = function (props) {
     if (className) {
         cssClasses += ' ' + className;
     }
-    return React.createElement("picture", null,
+    var imageContent = React.createElement("picture", null,
         sources,
-        React.createElement(FigureImage, { loading: "lazy", className: cssClasses, src: file.publicUrl, title: file.properties.title, alt: file.properties.alternative }));
+        React.createElement(FigureImage, { loading: "lazy", className: cssClasses, src: publicUrl, title: properties.title, alt: properties.alternative }));
+    if (link !== null || linkData !== null) {
+        var linkProperties = {
+            className: '',
+            href: link,
+            target: null,
+            title: null
+        };
+        if (linkData !== null) {
+            linkProperties = __assign(__assign(__assign({}, linkProperties), { className: linkData['class'], href: linkData.href, target: linkData.target, title: linkData.title }), linkData.additionalAttributes);
+        }
+        imageContent = React.createElement("a", __assign({}, linkProperties), imageContent);
+    }
+    return imageContent;
 };
 
 var Image$1 = function (props) {
@@ -275,13 +316,16 @@ var ImageCols = function (props) {
             return Object.keys(props.data.gallery.rows[rowKey].columns).map(function (columnKey) {
                 var file = props.data.gallery.rows[rowKey].columns[columnKey];
                 var image = React.createElement(Image$1, { file: file });
-                return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns, key: rowKey + '-' + columnKey }, props.data.enlargeImageOnClick ?
-                    React.createElement("a", { onClick: function (e) {
+                var colContent = image;
+                if (props.data.enlargeImageOnClick) {
+                    colContent = React.createElement("a", { onClick: function (e) {
                             e.preventDefault();
                             setPhotoIndex(images.indexOf(file.publicUrl));
                             setShowlightbox(true);
                             return true;
-                        }, href: file.publicUrl }, image) : image);
+                        }, href: file.publicUrl }, image);
+                }
+                return React.createElement(Col, { className: "gallery-item  gallery-item-size-" + props.data.gallery.count.columns, key: rowKey + '-' + columnKey }, colContent);
             });
         }));
 };
@@ -446,32 +490,6 @@ var Uploads = function (props) {
                 return React.createElement("li", { className: 'filelink-item mb-2', key: key }, content);
             }))),
         props.children);
-};
-
-/*! *****************************************************************************
-Copyright (c) Microsoft Corporation.
-
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
-***************************************************************************** */
-
-var __assign = function() {
-    __assign = Object.assign || function __assign(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
 };
 
 var Type = function (props) {
