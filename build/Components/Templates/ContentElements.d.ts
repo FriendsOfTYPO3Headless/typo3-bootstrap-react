@@ -17,4 +17,5 @@ import Carousel from "./ContentElements/Carousel";
 import MenuCardList from "./ContentElements/MenuCardList";
 import MenuCardDir from './ContentElements/MenuCardDir';
 import MenuThumbnailBase from "./ContentElements/MenuThumbnailBase";
-export { Text, Html, Textpic, Image, ImageLightbox, Div, Shortcut, Textmedia, Uploads, Accordion, Gallery, CardGroup, TextColumns, Quote, Header, Carousel, MenuCardList, MenuCardDir, MenuThumbnailBase, };
+import Type from "../Partials/ContentElements/Media/Type";
+export { Text, Html, Textpic, Image, ImageLightbox, Div, Shortcut, Textmedia, Uploads, Accordion, Gallery, CardGroup, TextColumns, Quote, Header, Carousel, MenuCardList, MenuCardDir, MenuThumbnailBase, Type as MediaType };

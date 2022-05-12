@@ -4,7 +4,7 @@ import {Alert} from "react-bootstrap";
 
 interface IType {
     file: any
-    data: any
+    data?: any
 }
 
 const Type: React.FC<IType> = (props) => {
