@@ -770,7 +770,8 @@ var ContentElements = /*#__PURE__*/Object.freeze({
     Carousel: Carousel,
     MenuCardList: MenuCardList,
     MenuCardDir: MenuCardDir,
-    MenuThumbnailBase: MenuThumbnailBase
+    MenuThumbnailBase: MenuThumbnailBase,
+    MediaType: Type
 });
 
 var BackgroundImage = function (props) {

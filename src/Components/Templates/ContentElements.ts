@@ -17,6 +17,7 @@ import Carousel from "./ContentElements/Carousel"
 import MenuCardList from "./ContentElements/MenuCardList"
 import MenuCardDir from './ContentElements/MenuCardDir'
 import MenuThumbnailBase from "./ContentElements/MenuThumbnailBase"
+import Type from "../Partials/ContentElements/Media/Type"
 //import ImageModal from './ContentElements/ImageModal'
 //import MenuSitemap from './ContentElements/MenuSitemap'
 
@@ -82,4 +83,5 @@ export {
     MenuCardList,
     MenuCardDir,
     MenuThumbnailBase,
+    Type as MediaType
 }
