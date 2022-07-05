@@ -1,11 +1,12 @@
 import React from "react"
-import FigureImage from "react-bootstrap/FigureImage";
+import FigureImage from "react-bootstrap/FigureImage"
 
 export const Image: React.FC<IImageCompomentProperties> = (props) => {
     const {file, className} = props
     const {properties, cropVariants, publicUrl} = file
-    const {link, linkData,} = properties
+    const {link, linkData} = properties
     const crops = Object.keys(properties.crop)
+
     const sources = crops.map((cropIdentifier: string, index: number) => {
         let src: string
         let media: string
@@ -34,21 +35,21 @@ export const Image: React.FC<IImageCompomentProperties> = (props) => {
         return <source key={index} srcSet={src} media={media}/>
     })
 
-    let cssClasses= 'img-fluid'
-    if(className) {
+    let cssClasses = 'img-fluid'
+    if (className) {
         cssClasses += ' ' + className
     }
 
     let imageContent = <picture>
         {sources}
-        <FigureImage loading="lazy"
-                     className={cssClasses}
-                     src={publicUrl} title={properties.title}
-                     alt={properties.alternative}
+        <FigureImage
+            loading={"lazy"}
+            className={cssClasses}
+            src={publicUrl} title={properties.title}
+            alt={properties.alternative}
         />
     </picture>
-
-    if(link !== null || linkData !== null){
+    if ((link !== null && link.length > 0) || (linkData !== undefined && linkData !== null)) {
         let linkProperties = {
             className: '',
             href: link,
@@ -56,15 +57,15 @@ export const Image: React.FC<IImageCompomentProperties> = (props) => {
             title: null
         }
 
-        if(linkData !== null){
-           linkProperties = {
-               ...linkProperties,
-               className: linkData['class'],
-               href: linkData.href,
-               target: linkData.target,
-               title: linkData.title,
-               ...linkData.additionalAttributes
-           }
+        if (linkData !== undefined && linkData !== null) {
+            linkProperties = {
+                ...linkProperties,
+                className: linkData['class'],
+                href: linkData.href,
+                target: linkData.target,
+                title: linkData.title,
+                ...linkData.additionalAttributes
+            }
         }
         imageContent = <a {...linkProperties}>
             {imageContent}
