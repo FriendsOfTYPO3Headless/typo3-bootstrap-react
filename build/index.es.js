@@ -273,14 +273,14 @@ var Image$2 = function (props) {
     var imageContent = React.createElement("picture", null,
         sources,
         React.createElement(FigureImage, { loading: "lazy", className: cssClasses, src: publicUrl, title: properties.title, alt: properties.alternative }));
-    if (link !== null || linkData !== null) {
+    if ((link !== null && link.length > 0) || (linkData !== undefined && linkData !== null)) {
         var linkProperties = {
             className: '',
             href: link,
             target: null,
             title: null
         };
-        if (linkData !== null) {
+        if (linkData !== undefined && linkData !== null) {
             linkProperties = __assign(__assign(__assign({}, linkProperties), { className: linkData['class'], href: linkData.href, target: linkData.target, title: linkData.title }), linkData.additionalAttributes);
         }
         imageContent = React.createElement("a", __assign({}, linkProperties), imageContent);
