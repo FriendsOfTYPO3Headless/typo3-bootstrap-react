@@ -42,13 +42,16 @@ export const Image: React.FC<IImageCompomentProperties> = (props) => {
 
     let imageContent = <picture>
         {sources}
+
         <FigureImage
             loading={"lazy"}
             className={cssClasses}
-            src={publicUrl} title={properties.title}
+            src={publicUrl} title={properties.title?.replace(/&quot;/gi , '"')}
             alt={properties.alternative}
         />
     </picture>
+
+
     if ((link !== null && link.length > 0) || (linkData !== undefined && linkData !== null)) {
         let linkProperties = {
             className: '',
@@ -63,7 +66,7 @@ export const Image: React.FC<IImageCompomentProperties> = (props) => {
                 className: linkData['class'],
                 href: linkData.href,
                 target: linkData.target,
-                title: linkData.title,
+                title: linkData.title?.replace(/&quot;/gi , '"'),
                 ...linkData.additionalAttributes
             }
         }

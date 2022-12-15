@@ -263,6 +263,7 @@ var __assign = function() {
 };
 
 var Image$2 = function (props) {
+    var _a, _b;
     var file = props.file, className = props.className;
     var properties = file.properties, cropVariants = file.cropVariants, publicUrl = file.publicUrl;
     var link = properties.link, linkData = properties.linkData;
@@ -300,7 +301,7 @@ var Image$2 = function (props) {
     }
     var imageContent = React__default["default"].createElement("picture", null,
         sources,
-        React__default["default"].createElement(FigureImage__default["default"], { loading: "lazy", className: cssClasses, src: publicUrl, title: properties.title, alt: properties.alternative }));
+        React__default["default"].createElement(FigureImage__default["default"], { loading: "lazy", className: cssClasses, src: publicUrl, title: (_a = properties.title) === null || _a === void 0 ? void 0 : _a.replace(/&quot;/gi, '"'), alt: properties.alternative }));
     if ((link !== null && link.length > 0) || (linkData !== undefined && linkData !== null)) {
         var linkProperties = {
             className: '',
@@ -309,7 +310,7 @@ var Image$2 = function (props) {
             title: null
         };
         if (linkData !== undefined && linkData !== null) {
-            linkProperties = __assign(__assign(__assign({}, linkProperties), { className: linkData['class'], href: linkData.href, target: linkData.target, title: linkData.title }), linkData.additionalAttributes);
+            linkProperties = __assign(__assign(__assign({}, linkProperties), { className: linkData['class'], href: linkData.href, target: linkData.target, title: (_b = linkData.title) === null || _b === void 0 ? void 0 : _b.replace(/&quot;/gi, '"') }), linkData.additionalAttributes);
         }
         imageContent = React__default["default"].createElement("a", __assign({}, linkProperties), imageContent);
     }
