@@ -9,6 +9,7 @@ const Image: React.FC<IImageCompomentProperties> = (props) => {
         <Figure.Caption className="caption">{file.properties.description}</Figure.Caption> : <></>
     return <Figure className={'image'}>
         <Rendering.Image file={file} className={className}/>
+
         {caption}
     </Figure>
 }
