@@ -11,6 +11,7 @@ interface TYPO3PageHeadlessDataInterface {
     content: any;
     navigations: any;
     error?: any | null;
+    children?: React.ReactNode
 }
 
 interface TYPO3PagePropsInterface {
@@ -20,9 +21,11 @@ interface TYPO3PagePropsInterface {
     contentElementLayouts?: any | null;
     contentElementTemplates?: any | null;
     additionalParams?: any | null;
+    children?: React.ReactNode
 }
 
 interface TYPO3BootstrapContentElementBaseInterface {
+    children?: any
     data: any
 }
 
