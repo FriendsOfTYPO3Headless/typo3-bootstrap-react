@@ -47,7 +47,7 @@ const carouselItem = (itemHeadless: any, isFirst = false): JSX.Element => {
     </RBT.Carousel.Item>
 }
 
-const Carousel: React.FC<{ data: any }> = props => {
+const Carousel: React.FC<{ children: any, data: any }> = props => {
     const {content, type, flexform} = props.data
     const {header, subheader, items} = content
     const [index, setIndex] = useState(0);

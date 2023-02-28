@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import * as RBT from 'react-bootstrap';
-import {Accordion as Accordion$1, Alert, Card, Col, Container, Figure, Row} from 'react-bootstrap';
+import { Figure, Col, Row, Alert, Accordion as Accordion$1, Card, Container } from 'react-bootstrap';
 import Lightbox from 'react-image-lightbox';
 import FigureImage from 'react-bootstrap/FigureImage';
 

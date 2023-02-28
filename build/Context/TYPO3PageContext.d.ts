@@ -1,6 +1,5 @@
-import {TYPO3PageHeadlessDataInterface} from "../Components/Interfaces";
+import { TYPO3PageHeadlessDataInterface } from "../Components/Interfaces";
 import React from "react";
-
 interface ITYPO3PageContext {
     headlessData: TYPO3PageHeadlessDataInterface;
     pageLayouts: any;

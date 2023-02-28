@@ -1,6 +1,5 @@
 import React from "react";
-import {TYPO3PageHeadlessDataInterface} from "../../Interfaces";
-
+import { TYPO3PageHeadlessDataInterface } from "../../Interfaces";
 declare const __GenericLayout: React.FC<{
     headlessData: TYPO3PageHeadlessDataInterface;
     pageTemplate: any;

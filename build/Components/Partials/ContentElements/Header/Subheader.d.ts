@@ -1,6 +1,5 @@
 import React from 'react';
-import {HeaderLinkType} from "./HeaderLink";
-
+import { HeaderLinkType } from "./HeaderLink";
 declare const Subheader: React.FC<{
     header: string;
     layout: number;

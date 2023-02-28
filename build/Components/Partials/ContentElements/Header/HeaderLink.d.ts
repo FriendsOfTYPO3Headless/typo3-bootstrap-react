@@ -1,5 +1,4 @@
 import React from 'react';
-
 type HeaderLinkType = {
     type: string;
     url: string;
