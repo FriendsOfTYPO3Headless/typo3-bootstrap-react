@@ -236,7 +236,7 @@ var ImageLightbox = function (props) {
     return React__default["default"].createElement(React__default["default"].Fragment, null);
 };
 
-/*! *****************************************************************************
+/******************************************************************************
 Copyright (c) Microsoft Corporation.
 
 Permission to use, copy, modify, and/or distribute this software for any
@@ -562,7 +562,7 @@ var Accordion = function (props) {
     var accorditionItemsTemplate = accordionItems.map(function (accordionItem, index) {
         var galleryTemplate = React__default["default"].createElement(React__default["default"].Fragment, null);
         if (accordionItem.media.length > 0) {
-            galleryTemplate = React__default["default"].createElement(Gallery, { data: { content: __assign({ items: accordionItem.media }, accordionItem) } });
+            galleryTemplate = React__default["default"].createElement(Gallery, { children: props.children, data: { content: __assign({ items: accordionItem.media }, accordionItem) } });
         }
         return React__default["default"].createElement(RBT.Accordion.Item, { key: accordionItem.id, eventKey: accordionItem.id.toString() },
             React__default["default"].createElement(RBT.Accordion.Header, { as: "h4", id: "accordion-heading-".concat(accordionItem.id) },
@@ -1118,25 +1118,25 @@ var contentElementTemplates = {
             headlessContentData.type,
             " has no Template");
     },
-    text: function (headlessContentData) { return React__default["default"].createElement(Text, { data: headlessContentData }); },
-    html: function (headlessContentData) { return React__default["default"].createElement(Html, { data: headlessContentData }); },
-    textpic: function (headlessContentData) { return React__default["default"].createElement(Textpic, { data: headlessContentData }); },
-    image: function (headlessContentData) { return React__default["default"].createElement(Image, { data: headlessContentData }); },
-    shortcut: function (headlessContentData) { return React__default["default"].createElement(Shortcut, { data: headlessContentData }); },
-    div: function (headlessContentData) { return React__default["default"].createElement(Div, { data: headlessContentData }); },
-    uploads: function (headlessContentData) { return React__default["default"].createElement(Uploads, { data: headlessContentData }); },
-    accordion: function (headlessContentData) { return React__default["default"].createElement(Accordion, { data: headlessContentData }); },
-    gallery: function (headlessContentData) { return React__default["default"].createElement(Gallery, { data: headlessContentData }); },
-    textmedia: function (headlessContentData) { return React__default["default"].createElement(Textmedia, { data: headlessContentData }); },
-    card_group: function (headlessContentData) { return React__default["default"].createElement(CardGroup, { data: headlessContentData }); },
-    textcolumn: function (headlessContentData) { return React__default["default"].createElement(TextColumns, { data: headlessContentData }); },
-    quote: function (headlessContentData) { return React__default["default"].createElement(Quote, { data: headlessContentData }); },
-    header: function (headlessContentData) { return React__default["default"].createElement(Header, { data: headlessContentData }); },
-    carousel: function (headlessContentData) { return React__default["default"].createElement(Carousel, { data: headlessContentData }); },
-    menu_card_list: function (headlessContentData) { return React__default["default"].createElement(MenuCardList, { data: headlessContentData }); },
-    menu_card_dir: function (headlessContentData) { return React__default["default"].createElement(MenuCardDir, { data: headlessContentData }); },
-    menu_thumbnail_dir: function (headlessContentData) { return React__default["default"].createElement(MenuThumbnailBase, { data: headlessContentData }); },
-    menu_thumbnail_list: function (headlessContentData) { return React__default["default"].createElement(MenuThumbnailBase, { data: headlessContentData }); },
+    text: function (headlessContentData) { return React__default["default"].createElement(Text, { data: headlessContentData, children: headlessContentData.children }); },
+    html: function (headlessContentData) { return React__default["default"].createElement(Html, { data: headlessContentData, children: headlessContentData.children }); },
+    textpic: function (headlessContentData) { return React__default["default"].createElement(Textpic, { data: headlessContentData, children: headlessContentData.children }); },
+    image: function (headlessContentData) { return React__default["default"].createElement(Image, { data: headlessContentData, children: headlessContentData.children }); },
+    shortcut: function (headlessContentData) { return React__default["default"].createElement(Shortcut, { data: headlessContentData, children: headlessContentData.children }); },
+    div: function (headlessContentData) { return React__default["default"].createElement(Div, { data: headlessContentData, children: headlessContentData.children }); },
+    uploads: function (headlessContentData) { return React__default["default"].createElement(Uploads, { data: headlessContentData, children: headlessContentData.children }); },
+    accordion: function (headlessContentData) { return React__default["default"].createElement(Accordion, { data: headlessContentData, children: headlessContentData.children }); },
+    gallery: function (headlessContentData) { return React__default["default"].createElement(Gallery, { data: headlessContentData, children: headlessContentData.children }); },
+    textmedia: function (headlessContentData) { return React__default["default"].createElement(Textmedia, { data: headlessContentData, children: headlessContentData.children }); },
+    card_group: function (headlessContentData) { return React__default["default"].createElement(CardGroup, { data: headlessContentData, children: headlessContentData.children }); },
+    textcolumn: function (headlessContentData) { return React__default["default"].createElement(TextColumns, { data: headlessContentData, children: headlessContentData.children }); },
+    quote: function (headlessContentData) { return React__default["default"].createElement(Quote, { data: headlessContentData, children: headlessContentData.children }); },
+    header: function (headlessContentData) { return React__default["default"].createElement(Header, { data: headlessContentData, children: headlessContentData.children }); },
+    carousel: function (headlessContentData) { return React__default["default"].createElement(Carousel, { data: headlessContentData, children: headlessContentData.children }); },
+    menu_card_list: function (headlessContentData) { return React__default["default"].createElement(MenuCardList, { data: headlessContentData, children: headlessContentData.children }); },
+    menu_card_dir: function (headlessContentData) { return React__default["default"].createElement(MenuCardDir, { data: headlessContentData, children: headlessContentData.children }); },
+    menu_thumbnail_dir: function (headlessContentData) { return React__default["default"].createElement(MenuThumbnailBase, { data: headlessContentData, children: headlessContentData.children }); },
+    menu_thumbnail_list: function (headlessContentData) { return React__default["default"].createElement(MenuThumbnailBase, { data: headlessContentData, children: headlessContentData.children }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,

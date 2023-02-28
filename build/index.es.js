@@ -208,7 +208,7 @@ var ImageLightbox = function (props) {
     return React.createElement(React.Fragment, null);
 };
 
-/*! *****************************************************************************
+/******************************************************************************
 Copyright (c) Microsoft Corporation.
 
 Permission to use, copy, modify, and/or distribute this software for any
@@ -534,7 +534,7 @@ var Accordion = function (props) {
     var accorditionItemsTemplate = accordionItems.map(function (accordionItem, index) {
         var galleryTemplate = React.createElement(React.Fragment, null);
         if (accordionItem.media.length > 0) {
-            galleryTemplate = React.createElement(Gallery, { data: { content: __assign({ items: accordionItem.media }, accordionItem) } });
+            galleryTemplate = React.createElement(Gallery, { children: props.children, data: { content: __assign({ items: accordionItem.media }, accordionItem) } });
         }
         return React.createElement(Accordion$1.Item, { key: accordionItem.id, eventKey: accordionItem.id.toString() },
             React.createElement(Accordion$1.Header, { as: "h4", id: "accordion-heading-".concat(accordionItem.id) },
@@ -1090,25 +1090,25 @@ var contentElementTemplates = {
             headlessContentData.type,
             " has no Template");
     },
-    text: function (headlessContentData) { return React.createElement(Text, { data: headlessContentData }); },
-    html: function (headlessContentData) { return React.createElement(Html, { data: headlessContentData }); },
-    textpic: function (headlessContentData) { return React.createElement(Textpic, { data: headlessContentData }); },
-    image: function (headlessContentData) { return React.createElement(Image, { data: headlessContentData }); },
-    shortcut: function (headlessContentData) { return React.createElement(Shortcut, { data: headlessContentData }); },
-    div: function (headlessContentData) { return React.createElement(Div, { data: headlessContentData }); },
-    uploads: function (headlessContentData) { return React.createElement(Uploads, { data: headlessContentData }); },
-    accordion: function (headlessContentData) { return React.createElement(Accordion, { data: headlessContentData }); },
-    gallery: function (headlessContentData) { return React.createElement(Gallery, { data: headlessContentData }); },
-    textmedia: function (headlessContentData) { return React.createElement(Textmedia, { data: headlessContentData }); },
-    card_group: function (headlessContentData) { return React.createElement(CardGroup, { data: headlessContentData }); },
-    textcolumn: function (headlessContentData) { return React.createElement(TextColumns, { data: headlessContentData }); },
-    quote: function (headlessContentData) { return React.createElement(Quote, { data: headlessContentData }); },
-    header: function (headlessContentData) { return React.createElement(Header, { data: headlessContentData }); },
-    carousel: function (headlessContentData) { return React.createElement(Carousel, { data: headlessContentData }); },
-    menu_card_list: function (headlessContentData) { return React.createElement(MenuCardList, { data: headlessContentData }); },
-    menu_card_dir: function (headlessContentData) { return React.createElement(MenuCardDir, { data: headlessContentData }); },
-    menu_thumbnail_dir: function (headlessContentData) { return React.createElement(MenuThumbnailBase, { data: headlessContentData }); },
-    menu_thumbnail_list: function (headlessContentData) { return React.createElement(MenuThumbnailBase, { data: headlessContentData }); },
+    text: function (headlessContentData) { return React.createElement(Text, { data: headlessContentData, children: headlessContentData.children }); },
+    html: function (headlessContentData) { return React.createElement(Html, { data: headlessContentData, children: headlessContentData.children }); },
+    textpic: function (headlessContentData) { return React.createElement(Textpic, { data: headlessContentData, children: headlessContentData.children }); },
+    image: function (headlessContentData) { return React.createElement(Image, { data: headlessContentData, children: headlessContentData.children }); },
+    shortcut: function (headlessContentData) { return React.createElement(Shortcut, { data: headlessContentData, children: headlessContentData.children }); },
+    div: function (headlessContentData) { return React.createElement(Div, { data: headlessContentData, children: headlessContentData.children }); },
+    uploads: function (headlessContentData) { return React.createElement(Uploads, { data: headlessContentData, children: headlessContentData.children }); },
+    accordion: function (headlessContentData) { return React.createElement(Accordion, { data: headlessContentData, children: headlessContentData.children }); },
+    gallery: function (headlessContentData) { return React.createElement(Gallery, { data: headlessContentData, children: headlessContentData.children }); },
+    textmedia: function (headlessContentData) { return React.createElement(Textmedia, { data: headlessContentData, children: headlessContentData.children }); },
+    card_group: function (headlessContentData) { return React.createElement(CardGroup, { data: headlessContentData, children: headlessContentData.children }); },
+    textcolumn: function (headlessContentData) { return React.createElement(TextColumns, { data: headlessContentData, children: headlessContentData.children }); },
+    quote: function (headlessContentData) { return React.createElement(Quote, { data: headlessContentData, children: headlessContentData.children }); },
+    header: function (headlessContentData) { return React.createElement(Header, { data: headlessContentData, children: headlessContentData.children }); },
+    carousel: function (headlessContentData) { return React.createElement(Carousel, { data: headlessContentData, children: headlessContentData.children }); },
+    menu_card_list: function (headlessContentData) { return React.createElement(MenuCardList, { data: headlessContentData, children: headlessContentData.children }); },
+    menu_card_dir: function (headlessContentData) { return React.createElement(MenuCardDir, { data: headlessContentData, children: headlessContentData.children }); },
+    menu_thumbnail_dir: function (headlessContentData) { return React.createElement(MenuThumbnailBase, { data: headlessContentData, children: headlessContentData.children }); },
+    menu_thumbnail_list: function (headlessContentData) { return React.createElement(MenuThumbnailBase, { data: headlessContentData, children: headlessContentData.children }); },
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
