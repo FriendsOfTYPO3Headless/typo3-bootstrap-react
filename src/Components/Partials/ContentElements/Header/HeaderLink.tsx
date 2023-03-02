@@ -8,7 +8,7 @@ type HeaderLinkType = {
     link: string,
 }
 
-const HeaderLink: React.FC<{ headerLink: HeaderLinkType | string | null}> = props => {
+const HeaderLink: React.FC<{ children: any , headerLink: HeaderLinkType | string | null}> = props => {
     if (props.headerLink === null || typeof props.headerLink === 'string') {
         return <>{props.children}</>
     }

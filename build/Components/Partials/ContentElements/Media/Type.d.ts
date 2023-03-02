@@ -1,5 +1,4 @@
 import React from "react";
-
 interface IType {
     file: any;
     data?: any;

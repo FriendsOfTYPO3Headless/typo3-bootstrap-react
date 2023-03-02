@@ -1,7 +1,6 @@
 import React from "react";
-import {TYPO3PagePropsInterface} from "./Interfaces";
+import { TYPO3PagePropsInterface } from "./Interfaces";
 import TYPO3PageContext from "../Context/TYPO3PageContext";
-
 declare const pageLayouts: {
     'layout-0': (headlessData: any, pageTemplate: any) => JSX.Element;
     __generic: (headlessData: any, pageTemplate: any) => JSX.Element;

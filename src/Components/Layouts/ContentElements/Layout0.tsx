@@ -1,9 +1,8 @@
 import React from 'react';
 import BackgroundImage from "../../Partials/ContentElements/Frame/General/BackgroundImage";
-import AllHeader from "../../Partials/ContentElements/Header/All";
 
 //Data is ContentData
-const Layout0: React.FC<{ data: any }> = props => {
+const Layout0: React.FC<{ children: any, data: any }> = props => {
     const frameClass = 'frame-' + props.data.appearance.frameClass;
     const typeClass = 'frame-type-' + props.data.type;
     const layoutClass = 'frame-layout-' + props.data.appearance.layout;

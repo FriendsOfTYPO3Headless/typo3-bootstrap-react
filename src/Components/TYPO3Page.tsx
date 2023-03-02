@@ -6,7 +6,7 @@ import {TYPO3PagePropsInterface} from "./Interfaces";
 import Section from './Partials/Page/Section';
 import * as CE from './Templates/ContentElements';
 import * as CELayouts from './Layouts/ContentElementsLayouts';
-import {Col, Row, Container} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
 import FooterContent from "./Partials/Page/Structure/FooterContent";
 import GenericPage from "./Templates/Page/GenericPage";
 import TYPO3PageContext from "../Context/TYPO3PageContext";
@@ -391,7 +391,7 @@ const pageTemplates = {
 
 const contentElementLayouts = {
     __generic: (props) => {
-        return <CELayouts.Layout0 data={props.content}>
+        return <CELayouts.Layout0  data={props.content}>
             {props.children}
         </CELayouts.Layout0>
     },
@@ -402,25 +402,25 @@ const contentElementTemplates = {
     __generic: (headlessContentData) => {
         return <>{headlessContentData.type} has no Template</>
     },
-    text: (headlessContentData) => <CE.Text data={headlessContentData}/>,
-    html: (headlessContentData) => <CE.Html data={headlessContentData}/>,
-    textpic: (headlessContentData) => <CE.Textpic data={headlessContentData}/>,
-    image: (headlessContentData) => <CE.Image data={headlessContentData}/>,
-    shortcut: (headlessContentData) => <CE.Shortcut data={headlessContentData} />,
-    div: (headlessContentData) => <CE.Div data={headlessContentData}/>,
-    uploads: (headlessContentData) => <CE.Uploads data={headlessContentData}/>,
-    accordion: (headlessContentData) => <CE.Accordion data={headlessContentData}/>,
-    gallery: (headlessContentData) => <CE.Gallery data={headlessContentData}/>,
-    textmedia: (headlessContentData) => <CE.Textmedia data={headlessContentData}/>,
-    card_group: (headlessContentData) => <CE.CardGroup data={headlessContentData} />,
-    textcolumn: (headlessContentData) => <CE.TextColumns data={headlessContentData}/>,
-    quote: (headlessContentData) => <CE.Quote data={headlessContentData}/>,
-    header: (headlessContentData) => <CE.Header data={headlessContentData}/>,
-    carousel: (headlessContentData) => <CE.Carousel data={headlessContentData}/>,
-    menu_card_list: (headlessContentData) => <CE.MenuCardList data={headlessContentData}/>,
-    menu_card_dir: (headlessContentData) => <CE.MenuCardDir data={headlessContentData}/>,
-    menu_thumbnail_dir: (headlessContentData) => <CE.MenuThumbnailBase data={headlessContentData}/>,
-    menu_thumbnail_list: (headlessContentData) => <CE.MenuThumbnailBase data={headlessContentData}/>,
+    text: (headlessContentData) => <CE.Text data={headlessContentData} children={headlessContentData.children}/>,
+    html: (headlessContentData) => <CE.Html data={headlessContentData} children={headlessContentData.children}/>,
+    textpic: (headlessContentData) => <CE.Textpic data={headlessContentData} children={headlessContentData.children}/>,
+    image: (headlessContentData) => <CE.Image data={headlessContentData} children={headlessContentData.children}/>,
+    shortcut: (headlessContentData) => <CE.Shortcut data={headlessContentData} children={headlessContentData.children} />,
+    div: (headlessContentData) => <CE.Div data={headlessContentData} children={headlessContentData.children}/>,
+    uploads: (headlessContentData) => <CE.Uploads data={headlessContentData} children={headlessContentData.children}/>,
+    accordion: (headlessContentData) => <CE.Accordion data={headlessContentData} children={headlessContentData.children}/>,
+    gallery: (headlessContentData) => <CE.Gallery data={headlessContentData} children={headlessContentData.children}/>,
+    textmedia: (headlessContentData) => <CE.Textmedia data={headlessContentData} children={headlessContentData.children}/>,
+    card_group: (headlessContentData) => <CE.CardGroup data={headlessContentData} children={headlessContentData.children}/>,
+    textcolumn: (headlessContentData) => <CE.TextColumns data={headlessContentData} children={headlessContentData.children}/>,
+    quote: (headlessContentData) => <CE.Quote data={headlessContentData} children={headlessContentData.children}/>,
+    header: (headlessContentData) => <CE.Header data={headlessContentData} children={headlessContentData.children}/>,
+    carousel: (headlessContentData) => <CE.Carousel data={headlessContentData} children={headlessContentData.children}/>,
+    menu_card_list: (headlessContentData) => <CE.MenuCardList data={headlessContentData} children={headlessContentData.children}/>,
+    menu_card_dir: (headlessContentData) => <CE.MenuCardDir data={headlessContentData} children={headlessContentData.children}/>,
+    menu_thumbnail_dir: (headlessContentData) => <CE.MenuThumbnailBase data={headlessContentData} children={headlessContentData.children}/>,
+    menu_thumbnail_list: (headlessContentData) => <CE.MenuThumbnailBase data={headlessContentData} children={headlessContentData.children}/>,
     // table: (headlessContentData, args = {}) => <CE.Table data={headlessContentData.content}/>,
     // menu_sitemap: (headlessContentData, args = {}) => <CE.MenuSitemap data={headlessContentData.content}/>
     //imageModal: (headlessContentData, args = {}) => <CE.ImageModal data={headlessContentData.content}/>,
