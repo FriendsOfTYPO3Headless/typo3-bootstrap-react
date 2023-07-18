@@ -5,8 +5,6 @@ const HeaderDate: React.FC<{
     positionClass: string | null,
 }> = props => {
 //TODO: Date initialisieren, toLocaleDateString...
-
-
     return <p className={props.positionClass}>
         {props.date}
     </p>

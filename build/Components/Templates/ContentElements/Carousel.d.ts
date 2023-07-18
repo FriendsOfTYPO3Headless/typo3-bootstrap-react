@@ -1,6 +1,4 @@
 import React from "react";
-declare const Carousel: React.FC<{
-    children: any;
-    data: any;
-}>;
+import { TYPO3BootstrapContentElementBaseInterface } from "../../Interfaces";
+declare const Carousel: React.FC<TYPO3BootstrapContentElementBaseInterface>;
 export default Carousel;

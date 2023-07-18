@@ -14,15 +14,16 @@ interface TYPO3PageHeadlessDataInterface {
 }
 interface TYPO3PagePropsInterface {
     headlessData: TYPO3PageHeadlessDataInterface;
-    pageLayouts?: any | null;
-    pageTemplates?: any | null;
-    contentElementLayouts?: any | null;
-    contentElementTemplates?: any | null;
-    additionalParams?: any | null;
+    pageLayouts: any | null;
+    pageTemplates: any | null;
+    contentElementLayouts: any | null;
+    contentElementTemplates: any | null;
+    additionalParams: any | null;
     children?: React.ReactNode;
 }
 interface TYPO3BootstrapContentElementBaseInterface {
     children?: any;
     data: any;
+    pageProps?: TYPO3PagePropsInterface;
 }
 export { TYPO3PageHeadlessDataInterface, TYPO3PagePropsInterface, TYPO3BootstrapContentElementBaseInterface };

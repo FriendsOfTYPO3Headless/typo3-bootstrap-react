@@ -8,7 +8,7 @@ const Shortcut: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
         <AllHeader data={props.data}/>
         <div className={"shortcut"}>
             {props.data.content.shortcut.map((cObject) => {
-                return RenderContent(cObject)
+                return RenderContent(cObject, props.pageProps)
             })}
         </div>
         {props.children}

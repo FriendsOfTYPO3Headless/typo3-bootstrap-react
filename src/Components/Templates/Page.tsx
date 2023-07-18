@@ -1,28 +1,27 @@
 import React from "react";
-import TYPO3PageContext from "../../Context/TYPO3PageContext";
+import {TYPO3PagePropsInterface} from "../Interfaces";
 
+const Page: React.FC<{ pageProps: TYPO3PagePropsInterface }> = ({pageProps}) => {
 
-const Page: React.FC = props => {
-    const context = React.useContext(TYPO3PageContext);
     let pageLayout;
-    if (context.pageLayouts.hasOwnProperty(context.headlessData.appearance.layout)) {
-        pageLayout = context.pageLayouts[context.headlessData.appearance.layout];
-    } else if (context.pageLayouts.hasOwnProperty('__generic')) {
-        pageLayout = context.pageLayouts.__generic;
+    if (pageProps.pageLayouts.hasOwnProperty(pageProps.headlessData.appearance.layout)) {
+        pageLayout = pageProps.pageLayouts[pageProps.headlessData.appearance.layout];
+    } else if (pageProps.pageLayouts.hasOwnProperty('__generic')) {
+        pageLayout = pageProps.pageLayouts.__generic;
     } else {
-        return <>Page-layout not found: {context.headlessData.appearance.layout}</>
+        return <>Page-layout not found: {pageProps.headlessData.appearance.layout}</>
     }
 
     let pageTemplate;
-    if (context.pageTemplates.hasOwnProperty(context.headlessData.appearance.backendLayout)) {
-        pageTemplate = context.pageTemplates[context.headlessData.appearance.backendLayout];
-    } else if (context.pageTemplates.hasOwnProperty('__generic')) {
-        pageTemplate = context.pageTemplates.__generic;
+    if (pageProps.pageTemplates.hasOwnProperty(pageProps.headlessData.appearance.backendLayout)) {
+        pageTemplate = pageProps.pageTemplates[pageProps.headlessData.appearance.backendLayout];
+    } else if (pageProps.pageTemplates.hasOwnProperty('__generic')) {
+        pageTemplate = pageProps.pageTemplates.__generic;
     } else {
-        return <>Page-template not found: {context.headlessData.appearance.backendLayout} </>
+        return <>Page-template not found: {pageProps.headlessData.appearance.backendLayout} </>
     }
 
-    return pageLayout(context.headlessData, pageTemplate);
+    return pageLayout(pageProps, pageTemplate(pageProps));
 }
 
 

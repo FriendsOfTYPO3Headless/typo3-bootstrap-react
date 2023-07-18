@@ -3,6 +3,7 @@ import * as RBT from "react-bootstrap"
 import {Alert} from "react-bootstrap"
 import Image from "../../Partials/ContentElements/Media/Type/Image"
 import AllHeader from "../../Partials/ContentElements/Header/All"
+import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
 
 const carouselItem = (itemHeadless: any, isFirst = false): JSX.Element => {
     const {itemType, layout, image} = itemHeadless
@@ -47,13 +48,12 @@ const carouselItem = (itemHeadless: any, isFirst = false): JSX.Element => {
     </RBT.Carousel.Item>
 }
 
-const Carousel: React.FC<{ children: any, data: any }> = props => {
+const Carousel: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
     const {content, type, flexform} = props.data
     const {header, subheader, items} = content
     const [index, setIndex] = useState(0);
 
     const handleSelect = (selectedIndex, e) => {
-        console.log(selectedIndex);
         setIndex(selectedIndex);
     };
 

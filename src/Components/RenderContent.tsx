@@ -1,8 +1,7 @@
 import React from "react";
-import TYPO3PageContext from "../Context/TYPO3PageContext";
 
-export const RenderContent = (contentData) => {
-    const {contentElementLayouts, contentElementTemplates} = React.useContext(TYPO3PageContext);
+export const RenderContent = (contentData, pageProps) => {
+    const {contentElementLayouts, contentElementTemplates} = pageProps;
 
     let layout;
     if (contentElementLayouts.hasOwnProperty(contentData.appearance.layout)) {
@@ -23,6 +22,6 @@ export const RenderContent = (contentData) => {
     }
 
     return <React.Fragment key={contentData.id}>
-        {layout({children: template(contentData), content: contentData})}
+        {layout({children: template(contentData, pageProps), content: contentData})}
     </React.Fragment>
 }//, args: _args

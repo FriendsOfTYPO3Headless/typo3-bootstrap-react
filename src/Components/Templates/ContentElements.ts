@@ -36,7 +36,6 @@ import MenuPages from './ContentElements/MenuPages'
 import MenuRecentlyUpdated from './ContentElements/MenuRecentlyUpdated'
 import MenuRelatedPages from './ContentElements/MenuRelatedPages'
 //
-import MenuSectionPages from './ContentElements/MenuSectionPages'
 //import MenuSitemapPages from './ContentElements/MenuSitemapPages'
 import MenuSubpages from './ContentElements/MenuSubpages'
 import MenuSection from './ContentElements/MenuSection'*/
@@ -64,8 +63,6 @@ export {
    MenuRecentlyUpdated,
    MenuRelatedPages,
    MenuSection,
-   MenuSectionPages,
- //
  //  MenuSitemapPages,
    MenuSubpages,*/
     //MenuSitemap,

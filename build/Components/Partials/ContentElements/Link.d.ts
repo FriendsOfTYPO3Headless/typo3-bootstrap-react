@@ -1,5 +1,5 @@
 import React from "react";
-interface ILinkProperties {
+interface LinkProperties {
     href: string;
     target?: string;
     className?: string;
@@ -7,5 +7,5 @@ interface ILinkProperties {
     linkText?: string;
     additionalAttributes?: [];
 }
-declare const Link: React.FC<ILinkProperties>;
+declare const Link: React.FC<LinkProperties>;
 export default Link;

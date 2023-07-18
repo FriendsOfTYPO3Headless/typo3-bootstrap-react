@@ -1,7 +1,7 @@
 import React from "react";
 import {Col, Row} from "react-bootstrap";
 import Content from "../Content";
-import TYPO3PageContext from "../../../Context/TYPO3PageContext";
+import {TYPO3PagePropsInterface} from "../../Interfaces";
 
 interface gridElementInterface {
     tag?: string | any | null,
@@ -12,11 +12,14 @@ interface gridElementInterface {
     colspan: number,
 }
 
-const getGridElement = (element: gridElementInterface, content: any, contentElementLayouts: any, contentElementTemplates: any, index: number) => {
+const getGridElement = (element: gridElementInterface, pageProps: TYPO3PagePropsInterface, index: number) => {
+    const {headlessData, contentElementLayouts, contentElementTemplates} = pageProps
+    const {content} = headlessData
+
     switch (element.type) {
         case 'row':
             const children = element.children.map((child: gridElementInterface, index: number) => {
-                return getGridElement(child, content, contentElementLayouts, contentElementTemplates, index);
+                return getGridElement(child, pageProps, index);
             });
 
             return <Row as={element.tag ?? 'div'} key={index}>
@@ -31,7 +34,7 @@ const getGridElement = (element: gridElementInterface, content: any, contentElem
                 xl={element.colspan}
                 key={index}
             >
-                <Content colPos={element.colPos}/>
+                <Content colPos={element.colPos} pageProps={pageProps}/>
             </Col>
 
         default:
@@ -39,12 +42,11 @@ const getGridElement = (element: gridElementInterface, content: any, contentElem
     }
 }
 
-const GenericPage: React.FC = () => {
-    const context = React.useContext(TYPO3PageContext);
+const GenericPage: React.FC<{ pageProps: TYPO3PagePropsInterface }> = ({pageProps}) => {
     let content = <></>
-    if (context.headlessData.appearance.pageContentRows) {
-        content = context.headlessData.appearance.pageContentRows.map((gridElement: any, index: number) => {
-            return getGridElement(gridElement, context.headlessData.content, context.contentElementLayouts, context.contentElementTemplates, index);
+    if (pageProps.headlessData.appearance.pageContentRows) {
+        content = pageProps.headlessData.appearance.pageContentRows.map((gridElement: any, index: number) => {
+            return getGridElement(gridElement, pageProps, index);
         });
     }
 
