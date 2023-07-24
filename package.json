@@ -1,6 +1,6 @@
 {
   "name": "typo3-bootstrap-react",
-  "version": "2.0.0-alpha-2",
+  "version": "2.0.0-alpha-3",
   "repository": "https://github.com/FriendsOfTYPO3Headless/typo3-bootstrap-react.git",
   "author": "Niels Seelhöfer <dev@seeli.net>",
   "license": "MIT",
@@ -14,9 +14,6 @@
     "bootstrap": "^5.3.0",
     "fork-ts-checker-webpack-plugin": "^6.1.1",
     "prettier": "^2.5.1",
-    "react": "^18.2.0",
-    "react-bootstrap": "^2.8.0",
-    "react-dom": "^18.2.0",
     "rollup": "^2.67.1",
     "react-image-lightbox": "^5.1.4",
     "rollup-plugin-peer-deps-external": "^2.2.4",
@@ -27,6 +24,11 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w"
+  },
+  "dependencies" : {
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.8.0",
+    "react-dom": "^18.2.0"
   },
   "peerDependencies": {
     "react": "^18.2.0",
