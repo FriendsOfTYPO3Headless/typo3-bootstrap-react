@@ -1,6 +1,6 @@
 import React from "react";
 
-interface TYPO3PageHeadlessDataInterface {
+export interface TYPO3PageHeadlessDataInterface {
     id: number
     type: string,
     slug: string,
@@ -14,7 +14,7 @@ interface TYPO3PageHeadlessDataInterface {
     children?: React.ReactNode
 }
 
-interface TYPO3PagePropsInterface {
+export interface TYPO3PagePropsInterface {
     headlessData: TYPO3PageHeadlessDataInterface;
     pageLayouts: any | null;
     pageTemplates: any | null;
@@ -24,10 +24,8 @@ interface TYPO3PagePropsInterface {
     children?: React.ReactNode
 }
 
-interface TYPO3BootstrapContentElementBaseInterface {
+export interface TYPO3BootstrapContentElementBaseInterface {
     children?: any
     data: any,
     pageProps?: TYPO3PagePropsInterface
 }
-
-export {TYPO3PageHeadlessDataInterface, TYPO3PagePropsInterface, TYPO3BootstrapContentElementBaseInterface};
