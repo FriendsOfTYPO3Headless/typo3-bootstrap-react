@@ -8,7 +8,7 @@ interface IType {
 }
 
 const Type: React.FC<IType> = (props) => {
-    const {file, data} = props
+    const {file} = props
     let fileType = file.properties.type
     if(!isNaN(+file.properties.type)){
         const fileExtension = file.properties.filename.split('.').pop()

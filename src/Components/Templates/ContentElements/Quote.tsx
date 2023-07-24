@@ -2,19 +2,6 @@ import React from "react"
 import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
 import AllHeader from "../../Partials/ContentElements/Header/All";
 
-interface IQuoteData extends TYPO3BootstrapContentElementBaseInterface {
-    bodytext: string,
-    quoteLink: {
-        href: string,
-        target?: string,
-        class?: string,
-        title?: string,
-        linkText: string,
-        additionalAttributes: []
-    } | string,
-    quoteSource: string
-}
-
 const Quote: React.FC<TYPO3BootstrapContentElementBaseInterface> = (props) => {
     const {bodytext, quoteSource, quoteLink} = props.data.content
 

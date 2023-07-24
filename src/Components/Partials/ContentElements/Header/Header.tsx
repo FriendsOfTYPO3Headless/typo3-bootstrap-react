@@ -5,7 +5,7 @@ const Header: React.FC<{
     header: string;
     layout: number;
     positionClass: string | null,
-    headerLink?: HeaderLinkType | string | null,
+    headerLink?: HeaderLinkType | string | null | undefined,
 }> = props => {
 
     const cssClass = 'element-header'

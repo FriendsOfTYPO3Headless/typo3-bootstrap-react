@@ -2,6 +2,7 @@ import React from "react"
 
 import * as Rendering from '../Rendering/Image'
 import {Figure} from "react-bootstrap";
+import {IImageCompomentProperties} from "../../../../../Types/Image";
 
 const Image: React.FC<IImageCompomentProperties> = (props) => {
     const {file, className} = props

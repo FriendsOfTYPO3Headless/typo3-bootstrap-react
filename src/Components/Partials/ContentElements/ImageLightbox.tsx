@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import Lightbox from 'react-image-lightbox';
 
 const ImageLightbox: React.FC<{

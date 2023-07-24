@@ -10,9 +10,9 @@ import {TYPO3PagePropsInterface, TYPO3PageHeadlessDataInterface, TYPO3BootstrapC
 
 export {
     TYPO3Page,
-    TYPO3PageHeadlessDataInterface,
-    TYPO3PagePropsInterface,
-    TYPO3BootstrapContentElementBaseInterface,
+    type TYPO3PageHeadlessDataInterface,
+    type TYPO3PagePropsInterface,
+    type TYPO3BootstrapContentElementBaseInterface,
     Page,
     Section,
     Content,

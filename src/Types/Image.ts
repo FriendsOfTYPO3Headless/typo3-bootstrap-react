@@ -1,4 +1,4 @@
-interface ICropSize {
+export interface ICropSize {
     cropArea: {
         height: number,
         width: number,
@@ -9,7 +9,7 @@ interface ICropSize {
     focusArea?: null
 }
 
-interface IImageProperties {
+export interface IImageProperties {
     title?: string,
     alternative?: string,
     description?: string,
@@ -42,12 +42,12 @@ interface IImageProperties {
 }
 
 
-interface ICropVariant {
+export interface ICropVariant {
     publicUrl: string,
     properties: IImageProperties
 }
 
-interface ICropVariants {
+export interface ICropVariants {
     default: ICropVariant,
     large: ICropVariant,
     medium: ICropVariant,
@@ -55,14 +55,14 @@ interface ICropVariants {
     extrasmall: ICropVariant
 }
 
-interface IImage {
+export interface IImage {
     publicUrl: string,
     properties: IImageProperties,
     cropVariants: ICropVariants
 
 }
 
-interface IImageCompomentProperties {
+export interface IImageCompomentProperties {
     file: IImage,
     className?: string
 }

@@ -13,9 +13,6 @@ interface gridElementInterface {
 }
 
 const getGridElement = (element: gridElementInterface, pageProps: TYPO3PagePropsInterface, index: number) => {
-    const {headlessData, contentElementLayouts, contentElementTemplates} = pageProps
-    const {content} = headlessData
-
     switch (element.type) {
         case 'row':
             const children = element.children.map((child: gridElementInterface, index: number) => {

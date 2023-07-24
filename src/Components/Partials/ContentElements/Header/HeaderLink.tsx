@@ -8,8 +8,8 @@ type HeaderLinkType = {
     link: string,
 }
 
-const HeaderLink: React.FC<{ children: any , headerLink: HeaderLinkType | string | null}> = props => {
-    if (props.headerLink === null || typeof props.headerLink === 'string') {
+const HeaderLink: React.FC<{ children: any , headerLink: HeaderLinkType | string | null | undefined}> = props => {
+    if (props.headerLink === null || typeof props.headerLink === 'string'|| props.headerLink === undefined) {
         return <>{props.children}</>
     }
 
@@ -19,4 +19,4 @@ const HeaderLink: React.FC<{ children: any , headerLink: HeaderLinkType | string
 }
 
 export default HeaderLink;
-export {HeaderLinkType};
+export type {HeaderLinkType};

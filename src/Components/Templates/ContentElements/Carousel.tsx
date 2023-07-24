@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React from "react"
 import * as RBT from "react-bootstrap"
 import {Alert} from "react-bootstrap"
 import Image from "../../Partials/ContentElements/Media/Type/Image"
@@ -49,13 +49,8 @@ const carouselItem = (itemHeadless: any, isFirst = false): JSX.Element => {
 }
 
 const Carousel: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
-    const {content, type, flexform} = props.data
-    const {header, subheader, items} = content
-    const [index, setIndex] = useState(0);
-
-    const handleSelect = (selectedIndex, e) => {
-        setIndex(selectedIndex);
-    };
+    const {content, flexform} = props.data
+    const {items} = content
 
     const itemsTemplate: JSX.Element[] = items.map((itemHeadless: any, index) => {
         return carouselItem(itemHeadless, index === 0)
