@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import Image from "./Type/Image";
 import {Alert} from "react-bootstrap";

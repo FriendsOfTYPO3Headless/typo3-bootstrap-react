@@ -1,4 +1,4 @@
-import {Col} from "react-bootstrap";
+'use client'
 import React, {useState} from 'react';
 import ImageLightbox from "./ImageLightbox";
 import Image from "./Media/Type/Image";
@@ -36,10 +36,10 @@ const ImageCols: React.FC<{ data: any }> = (props) => {
                         {image}
                     </a>
                 }
-                return <Col className={"gallery-item  gallery-item-size-" + props.data.gallery.count.columns}
+                return <div className={"col gallery-item  gallery-item-size-" + props.data.gallery.count.columns}
                             key={rowKey + '-' + columnKey}>
                     {colContent}
-                </Col>
+                </div>
             })
         })
         }

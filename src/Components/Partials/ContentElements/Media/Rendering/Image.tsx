@@ -1,3 +1,4 @@
+'use client'
 import React from "react"
 import FigureImage from "react-bootstrap/FigureImage"
 import {IImageCompomentProperties} from "../../../../../Types/Image";

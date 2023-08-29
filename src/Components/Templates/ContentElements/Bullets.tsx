@@ -2,11 +2,9 @@ import React from 'react';
 import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
 
 const Bullets: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
-console.log(props.data)
+
     return <div className="bullets">
-
-        {Object.keys(props.data).map((key)=> {
-
+        {Object.keys(props.data).map(()=> {
 
                 switch (props.data.bulletsType) {
                     case  "1" :
@@ -15,12 +13,10 @@ console.log(props.data)
 
                     case "2":
                         break;
-
                     default:
                         <ul><li>{props.data}</li></ul>;
                         break;
                 }
-
 
         })}
             {/* <f:if condition="{bullets}">
