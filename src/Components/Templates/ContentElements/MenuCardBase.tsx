@@ -1,6 +1,5 @@
 import React from "react"
 import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces"
-import {Card} from "react-bootstrap"
 import AllHeader from "../../Partials/ContentElements/Header/All";
 
 const MenuCardDir: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
@@ -14,30 +13,31 @@ const MenuCardDir: React.FC<TYPO3BootstrapContentElementBaseInterface> = props =
             target,
             thumbnail
         } = item
-        return <div key={link} className={`card-menu-item ${( thumbnail && thumbnail[0]?.publicUrl ? 'hasImage': 'noImage')}`}>
-            <Card>
+        return <div key={link}
+                    className={`card-menu-item ${(thumbnail && thumbnail[0]?.publicUrl ? 'hasImage' : 'noImage')}`}>
+            <div className={'card'}>
                 {thumbnail && thumbnail.length > 0 &&
-                    <Card.Link href={link} target={target} title={title} data-toggle={"tooltip"}>
-                        <Card.Img variant={"top"} src={thumbnail[0].publicUrl}/>
-                    </Card.Link>
+                    <a href={link} className={'card-link'} target={target} title={title} data-toggle={"tooltip"}>
+                        <img className={"card-img-top"} src={thumbnail[0].publicUrl} alt={''}/>
+                    </a>
                 }
-                <Card.Body>
+                <div className={'card-body'}>
                     {title && title.length > 0 &&
-                        <Card.Title as={'h3'}>
-                            <Card.Link href={link} target={target} title={title}
-                                       data-toggle={"tooltip"}>{title}</Card.Link>
-                        </Card.Title>
+                        <h3 className={'card-title'}>
+                            <a href={link} target={target} title={title} className={'card-link'}
+                               data-toggle={"tooltip"}>{title}</a>
+                        </h3>
                     }
-                    {description &&
-                        <Card.Text as={"p"}>{description}</Card.Text> }
+
+                    {description && <p className={'card-text'}>{description}</p>}
                     {props.children}
-                </Card.Body>
-                {(readmoreLabel && readmoreLabel.length > 0) && <Card.Footer>
-                     <Card.Link href={link} target={target} title={title} data-toggle={"tooltip"}>
-                         {readmoreLabel}
-                    </Card.Link>
-                </Card.Footer>}
-            </Card>
+                </div>
+                {(readmoreLabel && readmoreLabel.length > 0) && <div className={'card-footer'}>
+                    <a href={link} target={target} title={title} data-toggle={"tooltip"} className={'card-link'}>
+                        {readmoreLabel}
+                    </a>
+                </div>}
+            </div>
         </div>
     })
     return <>

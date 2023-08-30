@@ -1,13 +1,13 @@
+'use client'
 import React from "react"
 import * as RBT from "react-bootstrap"
-import {Alert} from "react-bootstrap"
 import Image from "../../Partials/ContentElements/Media/Type/Image"
 import AllHeader from "../../Partials/ContentElements/Header/All"
 import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
 
-const carouselItem = (itemHeadless: any, isFirst = false): JSX.Element => {
+const carouselItem = (itemHeadless: any, isFirst = false) => {
     const {itemType, layout, image} = itemHeadless
-    let item = <></>
+    let item: React.JSX.Element;
     let itemClass = 'item carousel-item'
 
     if (isFirst) {
@@ -31,10 +31,10 @@ const carouselItem = (itemHeadless: any, isFirst = false): JSX.Element => {
             break;
         default:
             item = <div className={'carousel-text-inner'}>
-                <Alert variant={"danger"}>
-                    <Alert.Heading>Templatetype unknown</Alert.Heading>
+                <div className={"alert alert-danger"}>
+                    <h4 className={'alert-heading'}>Templatetype unknown</h4>
                     <p>{itemType} has no Template</p>
-                </Alert>
+                </div>
             </div>
     }
 
@@ -52,15 +52,14 @@ const Carousel: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
     const {content, flexform} = props.data
     const {items} = content
 
-    const itemsTemplate: JSX.Element[] = items.map((itemHeadless: any, index) => {
-        return carouselItem(itemHeadless, index === 0)
-    })
 
 
     return <>
         <AllHeader data={props.data}/>
         <RBT.Carousel fade={flexform.transition === 'fade'} interval={flexform.interval} wrap={flexform.wrap}>
-            {itemsTemplate}
+            {items.map((itemHeadless: any, index:number) => {
+                return carouselItem(itemHeadless, index === 0)
+            })}
         </RBT.Carousel>
     </>
 }

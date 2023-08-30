@@ -1,5 +1,4 @@
 import React from 'react'
-import {Col, Row} from "react-bootstrap"
 import ImageCols from "../../Partials/ContentElements/ImageCols"
 import AllHeader from "../../Partials/ContentElements/Header/All"
 import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces"
@@ -14,19 +13,18 @@ const Textpic: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
     if (props.data.content.gallery.position.horizontal === 'center') {
         textpicClassName = props.data.content.gallery.position.vertical;
     }
-    return <Row className={"textpic textpic-" + textpicClassName}>
-        <Col className="textpic-item textpic-gallery"
-             md={textpicClassName === props.data.content.gallery.position.vertical ? "auto" : "6"}>
-            <Row>
+    return <div className={"row textpic textpic-" + textpicClassName}>
+        <div className={`textpic-item textpic-gallery col col-md-${textpicClassName === props.data.content.gallery.position.vertical ? "auto" : "6"}`}>
+            <div className={'row'}>
                 <ImageCols data={props.data.content}/>
-            </Row>
-        </Col>
-        <Col className="textpic-item textpic-text" md="6">
+            </div>
+        </div>
+        <div className="col col-md-6 textpic-item textpic-text">
             <AllHeader data={props.data}/>
             <div dangerouslySetInnerHTML={{__html: props.data.content.bodytext}}/>
             {props.children}
-        </Col>
-    </Row>
+        </div>
+    </div>
 }
 export default Textpic;
 

@@ -1,5 +1,4 @@
 import React from "react"
-import {Card, Col, Row} from "react-bootstrap"
 import Link from "../../Partials/ContentElements/Link"
 import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces"
 import AllHeader from "../../Partials/ContentElements/Header/All";
@@ -9,9 +8,10 @@ const CardGroup: React.FC<TYPO3BootstrapContentElementBaseInterface> = (props) =
     const flexform = props.data.flexform;
     const cards = items.map((cardData: any, index_number: number) => {
         const {header, subheader, bodytext, image, link, linkTitle, linkClass} = cardData
-        const imageTemplate = image ? image.map((imageData: any, index) => <Card.Img key={`image-data-${index}`}
-                                                                                     variant={"top"}
-                                                                                     src={imageData.publicUrl}/>) : <></>
+        const imageTemplate = image ? image.map((imageData: any, index) => <img key={`image-data-${index}`}
+                                                                                className={"card-image-top"}
+                                                                                src={imageData.publicUrl}
+                                                                                alt={''}/>) : <></>
         let linkButton = <></>
         if (link) {
             if (linkTitle && linkTitle.length > 0) {
@@ -29,19 +29,19 @@ const CardGroup: React.FC<TYPO3BootstrapContentElementBaseInterface> = (props) =
                 linkText={link.linkText}
             />
         }
-        return <Col key={`card-group-col-${index_number}`}>
-            <Card>
-                {header.length > 0 && <Card.Header>{header}</Card.Header>}
+        return <div key={`col card-group-col-${index_number}`}>
+            <div className={'card'}>
+                {header.length > 0 && <div className={'card-header'}>{header}</div>}
                 {imageTemplate}
-                <Card.Body>
-                    {subheader.length > 0 && <Card.Title>{subheader}</Card.Title>}
-                    {bodytext.length > 0 && <Card.Text as={"div"}>
+                <div className={'card-body'}>
+                    {subheader.length > 0 && <div className={'card-title'}>{subheader}</div>}
+                    {bodytext.length > 0 && <div className={'card-text'}>
                         <div dangerouslySetInnerHTML={{__html: bodytext}}/>
-                    </Card.Text>}
+                    </div>}
                     {linkButton}
-                </Card.Body>
-            </Card>
-        </Col>
+                </div>
+            </div>
+        </div>
     })
 
 
@@ -51,9 +51,9 @@ const CardGroup: React.FC<TYPO3BootstrapContentElementBaseInterface> = (props) =
     }
     return <>
         <AllHeader data={props.data}/>
-        <Row xs={1} md={flexform.columns} className={`card-group ${alignment}`}>
-            {cards}
-        </Row>
+        <div className={`row row-xs-1 row-md-${flexform.columns} card-group ${alignment}`}>
+             {cards}
+        </div>
         {props.children}
     </>
 }

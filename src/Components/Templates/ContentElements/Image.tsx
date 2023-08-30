@@ -1,4 +1,3 @@
-import {Row} from "react-bootstrap";
 import React from 'react';
 import ImageCols from "../../Partials/ContentElements/ImageCols";
 import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces";
@@ -9,9 +8,9 @@ const Image: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
         <div className="image">
             <AllHeader data={props.data}/>
             <div className="gallery-row">
-                <Row>
+                <div className={'row'}>
                     <ImageCols data={props.data.content}/>
-                </Row>
+                </div>
             </div>
         </div>
         {props.children}

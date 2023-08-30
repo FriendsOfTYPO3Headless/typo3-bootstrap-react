@@ -1,7 +1,5 @@
-'use client'
 import React from "react";
 import Image from "./Type/Image";
-import {Alert} from "react-bootstrap";
 
 interface IType {
     file: any
@@ -22,7 +20,7 @@ const Type: React.FC<IType> = (props) => {
         case 'image':
             return <Image file={file}/>
         default:
-            return <Alert variant={"info"}>Filetype unknown {file.properties.filename}</Alert>
+            return <div className={"alert alert-info"}>Filetype unknown {file.properties.filename}</div>
     }
 }
 
