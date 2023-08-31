@@ -1,5 +1,4 @@
 import React from 'react'
-import {Col, Row} from "react-bootstrap"
 import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces"
 import AllHeader from "../../Partials/ContentElements/Header/All"
 
@@ -32,7 +31,7 @@ const Uploads: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
                     </h5>
                 </span>
 
-                    let content;
+                    let content: React.JSX.Element;
 
                     switch (props.data.content.displayInformation) {
                         case "1" :
@@ -63,15 +62,16 @@ const Uploads: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
                                              className={'img-fluid'}/>
                             }
 
-                            content = <Row>
-                                <Col className={'filelink-media'} xs={3} sm={3} md={3} lg={2} xl={2} xxl={2}>
+                            content = <div className={'row'}>
+                                <div
+                                    className={'filelink-media col col-xs-3 col-sm-3 col-md-3 col-lg-2 col-xl-2 col-xxl-2'}>
                                     {media}
-                                </Col>
-                                <Col className={'filelink-body'}>
+                                </div>
+                                <div className={'filelink-body col'}>
                                     {heading()}
                                     {description}
-                                </Col>
-                            </Row>
+                                </div>
+                            </div>
                             break;
 
                         default:
