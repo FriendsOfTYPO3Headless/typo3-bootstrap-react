@@ -1,5 +1,4 @@
 import React from "react";
-import {Col, Row} from "react-bootstrap";
 import Content from "../Content";
 import {TYPO3PagePropsInterface} from "../../Interfaces";
 
@@ -15,24 +14,15 @@ interface gridElementInterface {
 const getGridElement = (element: gridElementInterface, pageProps: TYPO3PagePropsInterface, index: number) => {
     switch (element.type) {
         case 'row':
-            const children = element.children.map((child: gridElementInterface, index: number) => {
-                return getGridElement(child, pageProps, index);
-            });
-
-            return <Row as={element.tag ?? 'div'} key={index}>
-                {children}
-            </Row>
+            return <div key={index} className={'row'}>
+                {element.children.map((child: gridElementInterface, index: number) => {
+                    return getGridElement(child, pageProps, index);
+                })}
+            </div>
         case 'col':
-            return <Col
-                as={element.tag ?? 'div'}
-                lg={element.colspan}
-                md={element.colspan}
-                sm={element.colspan} //TODO: raus?
-                xl={element.colspan}
-                key={index}
-            >
+            return <div key={index} className={`col col-lg${element.colspan} col-md-${element.colspan} col-sm-${element.colspan} col-xl=%{element.colspan}`}>
                 <Content colPos={element.colPos} pageProps={pageProps}/>
-            </Col>
+            </div>
 
         default:
             return <></>

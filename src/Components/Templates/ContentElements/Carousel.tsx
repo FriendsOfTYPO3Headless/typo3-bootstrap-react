@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from "react"
 import * as RBT from "react-bootstrap"
 import Image from "../../Partials/ContentElements/Media/Type/Image"

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, {useState} from 'react';
 import ImageLightbox from "./ImageLightbox";
 import Image from "./Media/Type/Image";

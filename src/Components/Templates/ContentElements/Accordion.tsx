@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from 'react'
 import {Accordion as ReactAccordion} from "react-bootstrap"
 import Gallery from "./Gallery"

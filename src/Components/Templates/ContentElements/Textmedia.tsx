@@ -3,7 +3,6 @@ import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces"
 import AllHeader from "../../Partials/ContentElements/Header/All";
 
 const Textmedia: React.FC<TYPO3BootstrapContentElementBaseInterface> = props => {
-
     let textmediaClassName;
     if (props.data.content.gallery.position.horizontal === 'left' || props.data.content.gallery.position.horizontal === 'right') {
         textmediaClassName = props.data.content.gallery.position.horizontal;
