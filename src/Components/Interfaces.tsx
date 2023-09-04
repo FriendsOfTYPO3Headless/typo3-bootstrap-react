@@ -16,7 +16,7 @@ export interface TYPO3PageHeadlessDataInterface {
 
 export interface TYPO3PagePropsInterface {
     headlessData: TYPO3PageHeadlessDataInterface;
-    pageLayouts: any | null;
+    pageLayouts: any | null; //React.FC<TYPO3PageLayoutProps>|null
     pageTemplates: any | null;
     contentElementLayouts: any | null;
     contentElementTemplates: any | null;
@@ -28,4 +28,10 @@ export interface TYPO3BootstrapContentElementBaseInterface {
     children?: any
     data: any,
     pageProps?: TYPO3PagePropsInterface
+}
+
+export interface TYPO3PageLayoutProps {
+    type: string,
+    pageProps: TYPO3PagePropsInterface,
+    pageTemplate: object
 }

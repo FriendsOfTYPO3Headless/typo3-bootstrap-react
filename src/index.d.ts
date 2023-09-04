@@ -5,11 +5,16 @@ import {default as Content} from './Components/Templates/Content';
 import * as ContentElements from './Components/Templates/ContentElements';
 import {default as AllHeader} from "./Components/Partials/ContentElements/Header/All";
 import {default as MediaType} from './Components/Partials/ContentElements/Media/Type'
+import {PageLayouts} from "./defaults/PageLayouts";
+import {PageTemplates} from "./defaults/PageTemplates";
+import {ContentElementLayouts} from "./defaults/ContentElementLayouts";
+import {ContentElementTemplates} from "./defaults/ContentElementTemplates";
 
 import {
     TYPO3PagePropsInterface,
     TYPO3PageHeadlessDataInterface,
-    TYPO3BootstrapContentElementBaseInterface
+    TYPO3BootstrapContentElementBaseInterface,
+    TYPO3PageLayoutProps
 } from "./Components/Interfaces";
 
 declare module 'typo3-bootstrap-react' {
@@ -23,6 +28,11 @@ declare module 'typo3-bootstrap-react' {
         Content,
         ContentElements,
         AllHeader,
-        MediaType
+        MediaType,
+        PageLayouts,
+        type TYPO3PageLayoutProps,
+        PageTemplates,
+        ContentElementLayouts,
+        ContentElementTemplates
     }
 }

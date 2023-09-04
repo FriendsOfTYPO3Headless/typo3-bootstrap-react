@@ -3,8 +3,10 @@ import resolve from "@rollup/plugin-node-resolve";
 import babel from 'rollup-plugin-babel';
 import typescript from "rollup-plugin-typescript2";
 import preserveDirectives from "rollup-plugin-preserve-directives";
+import peerDepsExternal from "rollup-plugin-peer-deps-external";
 
-import pkg from "./package.json";//  assert { type: "json" };
+
+import pkg from "./package.json"  assert { type: "json" };
 const babelRuntimeVersion = pkg.devDependencies['@babel/runtime'].replace(/^[^0-9]*/, '');
 
 const outputOptions = {
@@ -36,6 +38,7 @@ export default {
         },
     ],
     plugins: [
+        peerDepsExternal(),
         resolve(),
         commonjs({ include: ['node_modules/**'] }),
         babel({
