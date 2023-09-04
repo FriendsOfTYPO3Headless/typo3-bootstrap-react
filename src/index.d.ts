@@ -12,16 +12,17 @@ import {
     TYPO3BootstrapContentElementBaseInterface
 } from "./Components/Interfaces";
 
-
-export {
-    TYPO3Page,
-    type TYPO3PageHeadlessDataInterface,
-    type TYPO3PagePropsInterface,
-    type TYPO3BootstrapContentElementBaseInterface,
-    Page,
-    Section,
-    Content,
-    ContentElements,
-    AllHeader,
-    MediaType
+declare module 'typo3-bootstrap-react' {
+    export {
+        TYPO3Page,
+        type TYPO3PageHeadlessDataInterface,
+        type TYPO3PagePropsInterface,
+        type TYPO3BootstrapContentElementBaseInterface,
+        Page,
+        Section,
+        Content,
+        ContentElements,
+        AllHeader,
+        MediaType
+    }
 }

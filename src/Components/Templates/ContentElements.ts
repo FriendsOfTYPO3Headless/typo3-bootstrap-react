@@ -17,56 +17,16 @@ import Carousel from "./ContentElements/Carousel"
 import MenuCardList from "./ContentElements/MenuCardList"
 import MenuCardDir from './ContentElements/MenuCardDir'
 import MenuThumbnailBase from "./ContentElements/MenuThumbnailBase"
-import Type from "../Partials/ContentElements/Media/Type"
-//import ImageModal from './ContentElements/ImageModal'
-//import MenuSitemap from './ContentElements/MenuSitemap'
 
-
-// import MenuSitemap from './ContentElements/MenuSitemap'
-
-/* import FormFormFramework from './ContentElements/FormFormFramework'
-import Html from './ContentElements/Html'
-
-import List from './ContentElements/List'
-import Login from './ContentElements/Login'
-//import MenuAbstract from './ContentElements/MenuAbstract'
-import MenuCategorizedContent from './ContentElements/MenuCategorizedContent'
-import MenuCategorizedPages from './ContentElements/MenuCategorizedPages'
-import MenuPages from './ContentElements/MenuPages'
-import MenuRecentlyUpdated from './ContentElements/MenuRecentlyUpdated'
-import MenuRelatedPages from './ContentElements/MenuRelatedPages'
-//
-//import MenuSitemapPages from './ContentElements/MenuSitemapPages'
-import MenuSubpages from './ContentElements/MenuSubpages'
-import MenuSection from './ContentElements/MenuSection'*/
-
-// import Table from './ContentElements/Table'
 
 
 export {
-    //  ImageModal,
     Text,
     Html,
     Textpic,
     Image,
     ImageLightbox,
-    //Bullets,
     Div,
-    /*  FormFormFramework,
-   Html,
-   List,
-   Login,
- //  MenuAbstract,
-   MenuCategorizedContent,
-   MenuCategorizedPages,
-   MenuPages,
-   MenuRecentlyUpdated,
-   MenuRelatedPages,
-   MenuSection,
- //  MenuSitemapPages,
-   MenuSubpages,*/
-    //MenuSitemap,
-    //  Table,
     Shortcut,
     Textmedia,
     Uploads,
@@ -80,5 +40,4 @@ export {
     MenuCardList,
     MenuCardDir,
     MenuThumbnailBase,
-    Type as MediaType
 }
