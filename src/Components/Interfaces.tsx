@@ -30,8 +30,3 @@ export interface TYPO3BootstrapContentElementBaseInterface {
     pageProps?: TYPO3PagePropsInterface
 }
 
-export interface TYPO3PageLayoutProps {
-    type: string,
-    pageProps: TYPO3PagePropsInterface,
-    pageTemplate: object
-}

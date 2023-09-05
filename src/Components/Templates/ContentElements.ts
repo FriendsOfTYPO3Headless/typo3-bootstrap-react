@@ -20,13 +20,13 @@ import MenuThumbnailBase from "./ContentElements/MenuThumbnailBase"
 
 export {
     Text,
-    Html,
     Textpic,
     Image,
     ImageLightbox,
     Div,
-    Shortcut,
     Textmedia,
+    Shortcut,
+    Html,
     Uploads,
     Accordion,
     Gallery,

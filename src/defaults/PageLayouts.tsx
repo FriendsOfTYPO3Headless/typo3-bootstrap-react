@@ -1,32 +1,30 @@
 import React from "react";
 import Section from "../Components/Partials/Page/Section";
 import __GenericLayout from "../Components/Layouts/Page/__GenericLayout";
-import {TYPO3PageLayoutProps} from "../Components/Interfaces";
 
-const PageLayouts: React.FC<TYPO3PageLayoutProps> = props => {
+const PageLayouts = {
 
-    if (props.type === 'layout-0') {
+    'layout-0': async (pageProps, pageTemplate) => {
+        "use server";
         return <div
-            className={'backendlayout-' + props.pageProps.headlessData.appearance.backendLayout}>
+            className={'backendlayout-' + pageProps.headlessData.appearance.backendLayout}>
             <header>
             </header>
             <section>
-                <Section name={'main'} pageTemplate={props.pageTemplate} pageProps={props.pageProps}/>
+                <Section name={'main'} pageTemplate={pageTemplate} pageProps={pageProps}/>
             </section>
             <footer>
-                <Section name={'footer'} pageTemplate={props.pageTemplate} pageProps={props.pageProps}/>
+                <Section name={'footer'} pageTemplate={pageTemplate} pageProps={pageProps}/>
             </footer>
         </div>
-    } // else if (props.type === '__generic') {
-    //     return <__GenericLayout
-    //         pageProps={props.pageProps}
-    //         pageTemplate={props.pageTemplate}
-    //     />
-    // }
-    return <__GenericLayout
-        pageProps={props.pageProps}
-        pageTemplate={props.pageTemplate}
-    />
+    },
+    '__generic': async (pageProps, pageTemplate) => {
+        "use server";
+        return <__GenericLayout
+            pageProps={pageProps}
+            pageTemplate={pageTemplate}
+        />
+    }
 
 }
 

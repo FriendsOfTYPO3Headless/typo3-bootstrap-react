@@ -14,8 +14,7 @@ import {ContentElementTemplates} from "./defaults/ContentElementTemplates";
 import {
     TYPO3PagePropsInterface,
     TYPO3PageHeadlessDataInterface,
-    TYPO3BootstrapContentElementBaseInterface,
-    TYPO3PageLayoutProps
+    TYPO3BootstrapContentElementBaseInterface
 } from "./Components/Interfaces";
 
 
@@ -32,7 +31,6 @@ export {
     AllHeader,
     MediaType,
     PageLayouts,
-    type TYPO3PageLayoutProps,
     PageTemplates,
     ContentElementLayouts,
     ContentElementTemplates
