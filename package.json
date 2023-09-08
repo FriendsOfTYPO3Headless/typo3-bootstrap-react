@@ -37,6 +37,11 @@
     "rollup-plugin-typescript2": "^0.35.0",
     "typescript": "^5.2.2"
   },
+  "files": [
+    "build",
+    "dist",
+    "src"
+  ],
   "scripts": {
     "build": "rm -Rf ./dist/* && rollup -c",
     "dev": "rollup -c -w"
