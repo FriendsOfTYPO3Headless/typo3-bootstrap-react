@@ -4,7 +4,7 @@ import {TYPO3PagePropsInterface} from "../Interfaces";
 
 const PREFIX_COLPOS = 'colPos';
 
-const Content: React.FC<{ colPos: string, pageProps: TYPO3PagePropsInterface }> = props => {
+const Content: React.FC<{ colPos: string, pageProps: TYPO3PagePropsInterface }> = ({colPos, pageProps}) => {
 
     let content = <></>
 

@@ -1,14 +1,15 @@
 import React from "react";
+import content from "src/Components/Templates/Content";
 
-export const RenderContent = async (contentData, pageProps) => {
+export const RenderContent:React.FC<{contentData:any, pageProps: any}> = ({contentData, pageProps}) => {
     const {contentElementLayouts, contentElementTemplates} = pageProps;
 
 
     let template;
     if (contentElementTemplates.hasOwnProperty(contentData.type)) {
-        template =await contentElementTemplates[contentData.type](contentData, pageProps);
+        template = contentElementTemplates[contentData.type](contentData, pageProps);
     } else if (contentElementTemplates.hasOwnProperty('__generic')) {
-        template = await contentElementTemplates.__generic(contentData, pageProps);
+        template = contentElementTemplates.__generic(contentData, pageProps);
     } else {
         return <>CE-template not found: {contentData.type} </>
     }

@@ -2,7 +2,7 @@ import React from "react";
 import {TYPO3PagePropsInterface} from "../Interfaces";
 
 const Page = async (pageProps: TYPO3PagePropsInterface ) => {
-
+"use server";
     let pageTemplate;
     if (pageProps.pageTemplates.hasOwnProperty(pageProps.headlessData.appearance.backendLayout)) {
         pageTemplate = await pageProps.pageTemplates[pageProps.headlessData.appearance.backendLayout](pageProps);
@@ -12,7 +12,7 @@ const Page = async (pageProps: TYPO3PagePropsInterface ) => {
         return <>Page-template not found: {pageProps.headlessData.appearance.backendLayout} </>
     }
 
-    return pageProps.pageLayouts[pageProps.headlessData.appearance.layout](pageProps,pageTemplate)
+    return await pageProps.pageLayouts[pageProps.headlessData.appearance.layout](pageProps,pageTemplate)
 }
 
 
