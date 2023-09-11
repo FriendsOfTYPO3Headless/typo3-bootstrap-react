@@ -20,7 +20,7 @@
     "allowJs": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "outDir": "./dist",
+    "outDir": "./build",
     "rootDir": ".",
     "baseUrl": "."
   },

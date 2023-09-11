@@ -16,7 +16,7 @@ export interface TYPO3PageHeadlessDataInterface {
 
 export interface TYPO3PagePropsInterface {
     headlessData: TYPO3PageHeadlessDataInterface;
-    pageLayouts: any | null; //React.FC<TYPO3PageLayoutProps>|null
+    pageLayouts: any | null;
     pageTemplates: any | null;
     contentElementLayouts: any | null;
     contentElementTemplates: any | null;

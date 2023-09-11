@@ -1,26 +1,21 @@
 {
   "name": "typo3-bootstrap-react",
-  "version": "2.0.0-alpha-5.0.11",
+  "version": "2.0.0-alpha-5.0.18",
   "repository": "https://github.com/FriendsOfTYPO3Headless/typo3-bootstrap-react.git",
   "author": "Niels Seelhöfer <dev@seeli.net>",
   "license": "MIT",
-  "types": "./dist/esm/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/esm/src/index.js",
-      "require": "./dist/cjs/src/index.js"
+      "import": "build/esm/index.js",
+      "require": "build/cjs/index.js"
     }
   },
+  "types": "./build/esm/src/index.d.ts",
   "type": "module",
-  "sideEffects": false,
   "devDependencies": {
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-transform-runtime": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
-    "@babel/runtime": "^7.0.0",
     "@rollup/plugin-commonjs": "^25.0.4",
     "@rollup/plugin-node-resolve": "^15.2.1",
+    "@swc/core": "^1.3.83",
     "@types/node": "^20.5.7",
     "bootstrap": "^5.3.1",
     "fork-ts-checker-webpack-plugin": "^8.0.0",
@@ -30,11 +25,10 @@
     "react-dom": "^18.2.0",
     "react-image-lightbox": "^5.1.4",
     "rollup": "^3.28.1",
-    "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-preserve-directives": "^0.2.0",
     "rollup-plugin-scss": "^4.0.0",
     "rollup-plugin-typescript2": "^0.35.0",
+    "rollup-swc-preserve-directives": "^0.5.0",
     "typescript": "^5.2.2"
   },
   "files": [
@@ -47,7 +41,10 @@
     "dev": "rollup -c -w"
   },
   "peerDependencies": {
+    "@swc/core": "^1.3.83",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-bootstrap": "^2.8.0",
+    "react-dom": "^18.2.0",
+    "react-image-lightbox": "^5.1.4"
   }
 }
