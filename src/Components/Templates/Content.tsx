@@ -6,14 +6,11 @@ const PREFIX_COLPOS = 'colPos';
 
 const Content: React.FC<{ colPos: string, pageProps: TYPO3PagePropsInterface }> = ({colPos, pageProps}) => {
 
-    let content = <></>
+    return pageProps.headlessData.content.hasOwnProperty(PREFIX_COLPOS + colPos) ?
+            pageProps.headlessData.content[PREFIX_COLPOS + colPos].map((contentElements) => {
+            return <RenderContent contentData={ contentElements} pageProps={pageProps}  key={contentElements.id}/>
+        }) : <></>
 
-    if (props.pageProps.headlessData.content.hasOwnProperty(PREFIX_COLPOS + props.colPos)) {
-        content = props.pageProps.headlessData.content[PREFIX_COLPOS + props.colPos].map(content => {
-            return RenderContent(content, props.pageProps)
-        });
-    }
-    return content
 }
 
 export default Content;

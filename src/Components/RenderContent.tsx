@@ -16,5 +16,5 @@ export const RenderContent:React.FC<{contentData:any, pageProps: any}> = ({conte
 
     return <React.Fragment key={contentData.id}>
         {pageProps.contentElementLayouts[contentData.appearance.layout](contentData,template)}
-    </React.Fragment>
+        </React.Fragment>
 }//, args: _args
