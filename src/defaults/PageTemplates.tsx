@@ -5,12 +5,12 @@ import Content from "../Components/Templates/Content";
 import FooterContent from "../Components/Partials/Page/Structure/FooterContent";
 
 const PageTemplates = {
-    __generic: async (pageProps: TYPO3PagePropsInterface) => { "use server";
+    __generic:  (pageProps: TYPO3PagePropsInterface) => { 
         return {
             main: <GenericPage pageProps={pageProps}/>
         }
     },
-    default: async (pageProps: TYPO3PagePropsInterface) => { "use server";
+    default:  (pageProps: TYPO3PagePropsInterface) => { 
         return {
             border:
                 <div className={'row'}>
@@ -41,7 +41,7 @@ const PageTemplates = {
 
         }
     },
-    simple: async (pageProps: TYPO3PagePropsInterface) => { "use server";
+    simple:  (pageProps: TYPO3PagePropsInterface) => { 
         return {
             border:
                 <div className={'row'}>
@@ -72,7 +72,7 @@ const PageTemplates = {
         }
 
     },
-    '2_columns': async (pageProps: TYPO3PagePropsInterface) => { "use server";
+    '2_columns':  (pageProps: TYPO3PagePropsInterface) => { 
         return {
             border: <div className={'row'}>
                 <div className={'col'}>
@@ -108,7 +108,7 @@ const PageTemplates = {
             footer: <FooterContent pageProps={pageProps}/>,
         }
     },
-    '2_columns_25_75': async (pageProps: TYPO3PagePropsInterface) => { "use server";
+    '2_columns_25_75':  (pageProps: TYPO3PagePropsInterface) => { 
         return {
             border: <div className={'row'}>
                 <div className={'col'}>
@@ -142,7 +142,7 @@ const PageTemplates = {
             footer: <FooterContent pageProps={pageProps}/>,
         }
     },
-    '2_columns_50_50': async (pageProps: TYPO3PagePropsInterface) => { "use server";
+    '2_columns_50_50':  (pageProps: TYPO3PagePropsInterface) => { 
         return {
             border:
                 <div className={'row'}>
@@ -179,7 +179,7 @@ const PageTemplates = {
             footer: <FooterContent pageProps={pageProps}/>,
         }
     },
-    '3_columns': async (pageProps: TYPO3PagePropsInterface) => { "use server";
+    '3_columns':  (pageProps: TYPO3PagePropsInterface) => { 
         return {
             border: <div className={'row'}>
                 <div className={'col'}>
@@ -218,7 +218,7 @@ const PageTemplates = {
             footer: <FooterContent pageProps={pageProps}/>,
         }
     },
-    'special_feature': async (pageProps: TYPO3PagePropsInterface) => { "use server";
+    'special_feature':  (pageProps: TYPO3PagePropsInterface) => { 
         return {
             border:
                 <div className={'row'}>
@@ -315,7 +315,7 @@ const PageTemplates = {
             footer: <FooterContent pageProps={pageProps}/>,
         }
     },
-    'special_start': async (pageProps: TYPO3PagePropsInterface) => { "use server";
+    'special_start':  (pageProps: TYPO3PagePropsInterface) => { 
         return {
             border: <div className={'row'}>
                 <div className={'col'}>

@@ -1,5 +1,4 @@
 import React from "react";
-import content from "src/Components/Templates/Content";
 
 export const RenderContent:React.FC<{contentData:any, pageProps: any}> = ({contentData, pageProps}) => {
     const {contentElementLayouts, contentElementTemplates} = pageProps;
@@ -14,7 +13,9 @@ export const RenderContent:React.FC<{contentData:any, pageProps: any}> = ({conte
         return <>CE-template not found: {contentData.type} </>
     }
 
+    const Layout = contentElementLayouts[contentData.appearance.layout]
+
     return <React.Fragment key={contentData.id}>
-        {pageProps.contentElementLayouts[contentData.appearance.layout](contentData,template)}
+        <Layout data={contentData}  children={template} />
         </React.Fragment>
 }//, args: _args

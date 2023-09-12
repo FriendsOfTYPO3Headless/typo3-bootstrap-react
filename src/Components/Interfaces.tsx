@@ -25,7 +25,7 @@ export interface TYPO3PagePropsInterface {
 }
 
 export interface TYPO3BootstrapContentElementBaseInterface {
-    children?: any
+    children?: React.ReactNode
     data: any,
     pageProps?: TYPO3PagePropsInterface
 }

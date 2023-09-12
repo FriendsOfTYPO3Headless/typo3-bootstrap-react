@@ -1,18 +1,19 @@
 import React from "react";
 import {TYPO3PagePropsInterface} from "../Interfaces";
 
-const Page = async (pageProps: TYPO3PagePropsInterface ) => {
-"use server";
+const Page:React.FC<TYPO3PagePropsInterface> =  (pageProps ) => {
     let pageTemplate;
     if (pageProps.pageTemplates.hasOwnProperty(pageProps.headlessData.appearance.backendLayout)) {
-        pageTemplate = await pageProps.pageTemplates[pageProps.headlessData.appearance.backendLayout](pageProps);
+        pageTemplate =  pageProps.pageTemplates[pageProps.headlessData.appearance.backendLayout](pageProps);
     } else if (pageProps.pageTemplates.hasOwnProperty('__generic')) {
-        pageTemplate = await pageProps.pageTemplates.__generic(pageProps);
+        pageTemplate =  pageProps.pageTemplates.__generic(pageProps);
     } else {
         return <>Page-template not found: {pageProps.headlessData.appearance.backendLayout} </>
     }
 
-    return await pageProps.pageLayouts[pageProps.headlessData.appearance.layout](pageProps,pageTemplate)
+    const Layout = pageProps.pageLayouts[pageProps.headlessData.appearance.layout]
+
+    return  <Layout pageProps={pageProps} pageTemplate={pageTemplate} />
 }
 
 

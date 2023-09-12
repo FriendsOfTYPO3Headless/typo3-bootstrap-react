@@ -1,31 +1,27 @@
 import React from "react";
 import Section from "../Components/Partials/Page/Section";
 import __GenericLayout from "../Components/Layouts/Page/__GenericLayout";
+import {TYPO3PagePropsInterface} from "../Components/Interfaces";
+
+
+const Layout0:React.FC<{pageTemplate:any, pageProps:TYPO3PagePropsInterface}> = ({pageTemplate, pageProps}) => {
+    return <div
+        className={'backendlayout-' + pageProps.headlessData.appearance.backendLayout}>
+        <header>
+        </header>
+        <section>
+            <Section name={'main'} pageTemplate={pageTemplate} pageProps={pageProps}/>
+        </section>
+        <footer>
+            <Section name={'footer'} pageTemplate={pageTemplate} pageProps={pageProps}/>
+        </footer>
+    </div>
+}
+
 
 const PageLayouts = {
-
-    'layout-0': async (pageProps, pageTemplate) => {
-        "use server";
-        return <div
-            className={'backendlayout-' + pageProps.headlessData.appearance.backendLayout}>
-            <header>
-            </header>
-            <section>
-                <Section name={'main'} pageTemplate={pageTemplate} pageProps={pageProps}/>
-            </section>
-            <footer>
-                <Section name={'footer'} pageTemplate={pageTemplate} pageProps={pageProps}/>
-            </footer>
-        </div>
-    },
-    '__generic': async (pageProps, pageTemplate) => {
-        "use server";
-        return <__GenericLayout
-            pageProps={pageProps}
-            pageTemplate={pageTemplate}
-        />
-    }
-
+    'layout-0':  Layout0,
+    '__generic': __GenericLayout
 }
 
 export {PageLayouts}
