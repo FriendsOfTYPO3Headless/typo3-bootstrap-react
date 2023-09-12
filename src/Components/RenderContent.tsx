@@ -1,6 +1,6 @@
 import React from "react";
 
-export const RenderContent:React.FC<{contentData:any, pageProps: any}> = ({contentData, pageProps}) => {
+export const RenderContent: React.FC<{ contentData: any, pageProps: any }> = ({contentData, pageProps}) => {
     const {contentElementLayouts, contentElementTemplates} = pageProps;
 
 
@@ -16,6 +16,6 @@ export const RenderContent:React.FC<{contentData:any, pageProps: any}> = ({conte
     const Layout = contentElementLayouts[contentData.appearance.layout]
 
     return <React.Fragment key={contentData.id}>
-        <Layout data={contentData}  children={template} />
+        <Layout data={contentData}>{template}</Layout>
         </React.Fragment>
 }//, args: _args

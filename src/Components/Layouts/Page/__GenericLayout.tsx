@@ -7,7 +7,7 @@ const __GenericLayout: React.FC<{ pageProps:TYPO3PagePropsInterface, pageTemplat
     return <div className={'backendlayout-' + props.pageProps.headlessData.appearance.backendLayout}>
         {Object.keys(props.pageTemplate).map(sectionName => {
             return <section key={sectionName} className={sectionName}>
-                <Section name={sectionName} pageTemplate={props.pageTemplate} pageProps={props.pageProps} />
+                <Section name={sectionName} pageTemplate={props.pageTemplate} />
             </section>
         })}
     </div>

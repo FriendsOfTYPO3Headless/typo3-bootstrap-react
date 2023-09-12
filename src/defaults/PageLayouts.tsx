@@ -10,10 +10,10 @@ const Layout0:React.FC<{pageTemplate:any, pageProps:TYPO3PagePropsInterface}> = 
         <header>
         </header>
         <section>
-            <Section name={'main'} pageTemplate={pageTemplate} pageProps={pageProps}/>
+            <Section name={'main'} pageTemplate={pageTemplate} />
         </section>
         <footer>
-            <Section name={'footer'} pageTemplate={pageTemplate} pageProps={pageProps}/>
+            <Section name={'footer'} pageTemplate={pageTemplate} />
         </footer>
     </div>
 }

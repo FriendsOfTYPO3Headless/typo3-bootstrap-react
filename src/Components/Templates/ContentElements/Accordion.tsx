@@ -1,11 +1,11 @@
-'use client';
+'use client'
+
 import React from 'react'
 import {Accordion as ReactAccordion} from "react-bootstrap"
-import Gallery from "./Gallery"
-import {TYPO3BootstrapContentElementBaseInterface} from "../../Interfaces"
 import AllHeader from "../../Partials/ContentElements/Header/All";
+import Gallery from "./Gallery";
 
-const Accordion: React.FC<TYPO3BootstrapContentElementBaseInterface> = (props) => {
+const Accordion: React.FC<{data: any, children?: React.ReactNode}> = (props) => {
     const accordionItems = props.data.content.items
     const activeElement = props.data.flexform.default_element ?? ''
 

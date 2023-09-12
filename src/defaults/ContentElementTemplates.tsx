@@ -48,10 +48,7 @@ const ContentElementTemplates = {
                            pageProps={pageProps}/>
     },
     accordion:  (headlessContentData, pageProps) => {
-
-        return <CE.Accordion data={headlessContentData}
-                             children={headlessContentData.children}
-                             pageProps={pageProps}/>
+        return <CE.Accordion data={headlessContentData}>{headlessContentData.children}</CE.Accordion>
     },
     gallery:  (headlessContentData, pageProps) => {
 

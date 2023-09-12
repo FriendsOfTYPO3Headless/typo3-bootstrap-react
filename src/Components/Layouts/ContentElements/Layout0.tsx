@@ -28,18 +28,18 @@ const Layout0: React.FC<{ children?: React.ReactNode, data: any }> = props => {
             <BackgroundImage data={props.data}/>
             <div className="frame-container">
                 <div className="frame-inner">
-                    {props.data._localizedUid ? <a id={"c" + props.data._localizedUid}/> : null}
+                    {props.data._localizedUid && <a id={"c" + props.data._localizedUid}></a>}
                     {props.children}
                 </div>
             </div>
         </div>
     } else {
         content = <>
-            <a id={"c" + props.data.id}/>
-            {props.data._localizedUid ? <a id={"c" + props.data._localizedUid}/> : null}
-            {props.data.appearance.spaceBefore ? <div className={spaceBeforeClass} /> : null}
+            <a id={"c" + props.data.id}></a>
+            {props.data._localizedUid && <a id={"c" + props.data._localizedUid}></a>}
+            {props.data.appearance.spaceBefore && <div className={spaceBeforeClass} ></div>}
             {props.children}
-            {props.data.appearance.spaceAfter ? <div className={spaceAfterClass} /> : null}
+            {props.data.appearance.spaceAfter && <div className={spaceAfterClass}></div> }
         </>
     }
     return content
